@@ -41,7 +41,7 @@
 }
 .separatorLine
 {
-    color: #4a8ba0;
+    color: transparent;
     background-color: #4a8ba0;
     height: 2px;
 }

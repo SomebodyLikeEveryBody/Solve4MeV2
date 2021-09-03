@@ -9,8 +9,8 @@ light:
 	@if [ ! -d "./build/" ]; then mkdir ./build/; fi
 	/bin/cp ./htmlResources/index.htm ./build/
 	/bin/cp ./htmlResources/Solve4MeGUIStyle.css ./build/
-	/bin/cp ./htmlResources/main.js ./build/
 	/bin/cp -R ./htmlResources/imgs ./build/
+	@if [ -d "./build/Lib_WriteMath_build/" ]; then /bin/rm -R ./build/Lib_WriteMath_build; fi
 	/bin/cp -R ./Lib_WriteMath/build/ ./build/Lib_WriteMath_build/
 
 
@@ -35,7 +35,7 @@ cleanAll: cleanWriteMath clean
 	@echo ''
 	@echo '> Full Solve4Me Project cleaned'
 	@echo '/bin/rm ./build/'
-	@if [ -d "./build/" ]; then /bin/rm -r ./build/; fi
+	@if [ -d "./build/" ]; then /bin/rm -R ./build/; fi
 
 re: cleanAll all
 
