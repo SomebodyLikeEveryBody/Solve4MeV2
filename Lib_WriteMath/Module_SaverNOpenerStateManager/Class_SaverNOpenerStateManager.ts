@@ -1,26 +1,20 @@
 class SaverNOpenerStateManager {
     protected _jQEl: JQueryElement;
-    protected _inputScreen: JQueryElement;
     protected _textarea: JQueryElement;
     protected _action: String;
     protected _callingMathLineInput: MathLineInput;
 
-    public constructor(pInputScreen: JQueryElement) {
+    public constructor() {
         this._jQEl = $('<div id="SaverNOpenerStateManager"><textarea autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>');
         this._textarea = this._jQEl.find('textarea');
         this._callingMathLineInput = null;
-        this._inputScreen = pInputScreen;
 
-        this._jQEl.appendTo(this._inputScreen).hide(0)
+        this._jQEl.appendTo($('body')).hide(0);
         this.setEvents();
     }
 
     public get jQEl(): JQueryElement {
         return this._jQEl;
-    }
-
-    public get inputScreen(): JQueryElement {
-        return this._inputScreen;
     }
 
     public get action(): String {
@@ -47,7 +41,7 @@ class SaverNOpenerStateManager {
                 this._textarea.val(this.secureStr(this.getJSONState()));
                 this.disableEditing();
             } else if (this._action === "OPEN") {
-                this._textarea.val("{}");
+                this._textarea.val('{"MathLineInputsValues":[""]}');
                 this.enableEditing();
             }
     
@@ -120,8 +114,8 @@ class SaverNOpenerStateManager {
         if (this.checkState()) {
             if (pState.length !== 0) {
                 this.eraseMathLineInputs();
-                let mathLineInput = new MathLineInput(this._inputScreen, this);
-                mathLineInput.appendTo(this._inputScreen)
+                let mathLineInput = new MathLineInput(this._callingMathLineInput.container, this);
+                mathLineInput.appendToContainer()
                     .setValue(pState[0])
                     .setStyle();
     

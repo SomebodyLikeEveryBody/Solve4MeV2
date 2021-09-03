@@ -452,6 +452,10 @@ var MathLineInput = /** @class */ (function () {
         this._jQEl.appendTo(pElement);
         return this;
     };
+    MathLineInput.prototype.appendToContainer = function () {
+        this.appendTo(this._container);
+        return this;
+    };
     MathLineInput.prototype.insertAfter = function (pElement) {
         this._jQEl.insertAfter(pElement);
     };
@@ -1875,24 +1879,16 @@ var AutoCompleter = /** @class */ (function () {
     return AutoCompleter;
 }());
 var SaverNOpenerStateManager = /** @class */ (function () {
-    function SaverNOpenerStateManager(pInputScreen) {
+    function SaverNOpenerStateManager() {
         this._jQEl = $('<div id="SaverNOpenerStateManager"><textarea autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>');
         this._textarea = this._jQEl.find('textarea');
         this._callingMathLineInput = null;
-        this._inputScreen = pInputScreen;
-        this._jQEl.appendTo(this._inputScreen).hide(0);
+        this._jQEl.appendTo($('body')).hide(0);
         this.setEvents();
     }
     Object.defineProperty(SaverNOpenerStateManager.prototype, "jQEl", {
         get: function () {
             return this._jQEl;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(SaverNOpenerStateManager.prototype, "inputScreen", {
-        get: function () {
-            return this._inputScreen;
         },
         enumerable: false,
         configurable: true
@@ -1927,7 +1923,7 @@ var SaverNOpenerStateManager = /** @class */ (function () {
                 this.disableEditing();
             }
             else if (this._action === "OPEN") {
-                this._textarea.val("{}");
+                this._textarea.val('{"MathLineInputsValues":[""]}');
                 this.enableEditing();
             }
             this._jQEl.fadeIn(100, function () {
@@ -1988,8 +1984,8 @@ var SaverNOpenerStateManager = /** @class */ (function () {
         if (this.checkState()) {
             if (pState.length !== 0) {
                 this.eraseMathLineInputs();
-                var mathLineInput = new MathLineInput(this._inputScreen, this);
-                mathLineInput.appendTo(this._inputScreen)
+                var mathLineInput = new MathLineInput(this._callingMathLineInput.container, this);
+                mathLineInput.appendToContainer()
                     .setValue(pState[0])
                     .setStyle();
                 pState = pState.slice(1);

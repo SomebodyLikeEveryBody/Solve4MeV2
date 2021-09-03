@@ -145,6 +145,11 @@ class MathLineInput {
         return this;
     }
 
+    public appendToContainer(): MathLineInput {
+        this.appendTo(this._container);
+        return this;
+    }
+
     public insertAfter(pElement: JQueryElement): void {
         this._jQEl.insertAfter(pElement);
     }
