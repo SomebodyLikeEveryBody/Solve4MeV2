@@ -91,7 +91,8 @@ body
 {
     width: calc(100% - 20px);
     height: calc(100% - 60px);
-    background-color: lightblue;
+    /* background-color: lightblue; */
+    background-color: red;
     
     opacity: 1;
     padding: 10px;
