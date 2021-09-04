@@ -56,28 +56,27 @@ div#Solve4Me_app
     background-color: black;
     display:flex;
     flex-direction: row;
-    height: calc(100% - 10px);
+    justify-content: space-between;
+    height: calc(100% - 12px);
     margin: 0px;
     padding: 5px;
 }
 
 div#output_container
 {
-    width: 50%;
+    width: calc(50% - 1px);
     height: 100%;
     margin: 0px;
 }
 
 div#input_container
 {
-    width: 50%;
+    width: calc(50% - 1px);
     height: 100%;
     margin: 0px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* border-radius: 10px; */
-    border: black 1px solid;
     background-color: transparent;
 }
 
@@ -203,14 +202,14 @@ div.step
     justify-content: center;
 }
 
-div#solutions_container
+div#output_screen
 {
     margin: 0px;
     padding: 0px;
     background-color: transparent;
 }
 
-div#solutions_container hr
+div#output_screen hr
 {
     width: calc(100% - 20px);
     border-top: white 2px solid;
@@ -262,50 +261,6 @@ button
     font-size: 2.2vh;
     text-align: center;
     width: 100%;
-}
-
-ul#auto_completer
-{
-    display: none;
-    position: absolute;
-    z-index: 1;
-    top: 80px;
-    left: 60px;
-
-    border-radius: 3px;
-    border: 1px solid silver;
-    background-color: #4c8192;
-
-    width: auto;
-    max-height  : 100px;
-    list-style: none;
-
-    margin: 0px;
-    padding: 0px;
-    font-size: 0.8em;
-    
-    -webkit-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-    -moz-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-    box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-    
-
-    font-size: 90%;
-    font-family: monospace;
-    
-    max-height: 20em;
-    overflow: hidden;    
-}
-
-ul#auto_completer li
-{
-    border-radius: 3px;
-    padding: 3px;
-}
-
-ul#auto_completer li.selected_keyword
-{
-    background-color: #276c82;
-    color: white;
 }
 
 @media only screen and (max-width: 1000px)
