@@ -87,12 +87,18 @@ body
     background-size: 120px;
 }
 
+#input
+{
+    display: block;
+}
+
 #input_screen
 {
     width: calc(100% - 20px);
-    height: calc(100% - 60px);
-    /* background-color: lightblue; */
-    background-color: red;
+    height: calc(100% - 0px);
+    background-color: lightblue;
+    display: block;
+    /* background-color: red; */
     
     opacity: 1;
     padding: 10px;
@@ -103,6 +109,9 @@ body
     white-space: pre;
     display: block;
     overflow: auto;
+    scrollbar-color: #4a8ba0 transparent;
+    border: none;
+    border-bottom: black 1px solid;
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -117,6 +126,8 @@ button#do_solve
     height: calc(5% - 3px);
     opacity: 1;
     border: black 1px solid;
+    border-right: none;
+    border-left: none;
     border-radius: 10px;
     background-color: lightgrey;
 }
