@@ -33,8 +33,6 @@
 *MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
 ******************************************************************************/
 
-
-
 html
 {
     height: 100%;
@@ -71,7 +69,6 @@ body
     flex-direction: column;
     justify-content: space-between;
     border-radius: 10px;
-    /* border: black 1px solid; */
     background-color: black;
 }
 
@@ -87,20 +84,13 @@ body
     background-size: 120px;
 }
 
-#input
-{
-    display: block;
-}
-
 #input_screen
 {
     width: calc(100% - 20px);
     height: calc(100% - 0px);
     background-color: lightblue;
     display: block;
-    /* background-color: red; */
     
-    opacity: 1;
     padding: 10px;
     padding-top: 0px;
     font-family: monospace;
