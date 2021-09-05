@@ -1176,6 +1176,13 @@ var ShortcutsManager = /** @class */ (function () {
             case KeyCodes.E_KEY:
                 this._mathLineInput.appendCmdAtCursorPosition('\\varepsilon');
                 break;
+            //ctrl + F ==> Function()
+            case KeyCodes.F_KEY:
+                pEventObj.preventDefault();
+                this._mathLineInput.writeLatexAtCursorPosition('\\text{Function}\\left(_{}^{}\\right)');
+                this._mathLineInput.keyStroke('Left');
+                this._mathLineInput.keyStroke('Left');
+                break;
             //ctrl + O ==> o composition de fonction
             case KeyCodes.N0_KEY:
                 pEventObj.preventDefault();
@@ -1362,7 +1369,7 @@ var ShortcutsManager = /** @class */ (function () {
                 break;
             //alt + |
             case KeyCodes.PIPE_KEY:
-                this._mathLineInput.appendCmdAtCursorPosition('\\|');
+                this._mathLineInput.writeLatexAtCursorPosition('\\ |\\ ');
                 break;
             //alt + [
             case KeyCodes.OPENHOOK_KEY:
