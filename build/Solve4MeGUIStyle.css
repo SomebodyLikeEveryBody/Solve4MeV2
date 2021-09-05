@@ -33,8 +33,6 @@
 *MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
 ******************************************************************************/
 
-
-
 html
 {
     height: 100%;
@@ -51,25 +49,18 @@ body
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-div#Solve4Me_app
+#Solve4Me_app
 {
     background-color: black;
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-    height: calc(100% - 12px);
+    height: calc(100% - 10px);
     margin: 0px;
     padding: 5px;
 }
 
-div#output_container
-{
-    width: calc(50% - 1px);
-    height: 100%;
-    margin: 0px;
-}
-
-div#input_container
+#input_container
 {
     width: calc(50% - 1px);
     height: 100%;
@@ -77,28 +68,6 @@ div#input_container
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: transparent;
-}
-
-section#output
-{
-    width: calc(100% - 22px);
-    height: calc(95% - 18px);
-    background-color: #6ba7bb;
-    border: black 1px solid;
-    border-radius: 10px;
-    opacity: 1;
-    padding: 10px;
-    overflow: auto;
-    font-size: 1.5em;
-    display: block;
-}
-
-section#input
-{
-    padding: 0px;
-    width: calc(100%);
-    height: calc(100%);
     border-radius: 10px;
     background-color: black;
 }
@@ -118,10 +87,10 @@ section#input
 #input_screen
 {
     width: calc(100% - 20px);
-    height: calc(100% - 71px);
+    height: calc(100% - 0px);
     background-color: lightblue;
+    display: block;
     
-    opacity: 1;
     padding: 10px;
     padding-top: 0px;
     font-family: monospace;
@@ -130,6 +99,9 @@ section#input
     white-space: pre;
     display: block;
     overflow: auto;
+    scrollbar-color: #4a8ba0 transparent;
+    border: none;
+    border-bottom: black 1px solid;
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -138,31 +110,23 @@ section#input
     display: block;
 }
 
-div#helper
-{
-    display: block;
-    width: calc(100% - 25px);
-    height: calc(30% - 25px);
-    border-radius: 10px;
-    border: black 1px solid;
-    background-color: rgb(99, 99, 99);
-    opacity: 1;
-    padding: 10px;
-    color: white;
-    font-weight: bold;
-    overflow-wrap: normal;
-    white-space: pre;
-    overflow: auto;
-}
-
 button#do_solve
 {
-    width: 100%;
+    width: calc(100%);
     height: calc(5% - 3px);
     opacity: 1;
     border: black 1px solid;
+    border-right: none;
+    border-left: none;
     border-radius: 10px;
     background-color: lightgrey;
+}
+
+div#output_container
+{
+    width: calc(50% - 1px);
+    height: 100%;
+    margin: 0px;
 }
 
 button#looper, button#looper:hover
@@ -173,6 +137,20 @@ button#looper, button#looper:hover
     border: black 1px solid;
     border-radius: 10px;
     background-color: lightgrey;
+}
+
+#output
+{
+    width: calc(100% - 22px);
+    height: calc(95% - 18px);
+    background-color: #6ba7bb;
+    border: black 1px solid;
+    border-radius: 10px;
+    opacity: 1;
+    padding: 10px;
+    overflow: auto;
+    font-size: 1.5em;
+    display: block;
 }
 
 button#do_solve:focus, button#do_solve:hover
@@ -202,14 +180,14 @@ div.step
     justify-content: center;
 }
 
-div#output_screen
+#output_screen
 {
     margin: 0px;
     padding: 0px;
     background-color: transparent;
 }
 
-div#output_screen hr
+#output_screen hr
 {
     width: calc(100% - 20px);
     border-top: white 2px solid;
@@ -218,16 +196,7 @@ div#output_screen hr
     margin-bottom: 10px;
 }
 
-div#input_container hr
-{
-    width: calc(100% - 20px);
-    border-top: white 2px solid;
-    border-bottom: none;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-div.label
+.label
 {
     overflow: auto;
 }
@@ -262,6 +231,7 @@ button
     text-align: center;
     width: 100%;
 }
+
 
 @media only screen and (max-width: 1000px)
 {
@@ -300,7 +270,7 @@ button
         height: calc(10% - 3px);
         opacity: 1;
         border-radius: 10px;
-        background-color: lightgrey;
+        border: black 1px solid;
     }
 
     section#output
