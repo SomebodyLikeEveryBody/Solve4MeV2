@@ -1,0 +1,291 @@
+/******************************************************************************
+*MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMMWKOxdxOXWMMMMMMMWNXKK0OOO00KKXXNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMNk;..''..'l0NXOxl:;,''''''''''''',;cok0NWMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMNo..cxOOkd;..,'.,;codkO00KKK000OOxdlc;'.':d0NMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMO..l000000O; .o0XNNNNNNNNNNNNNNNNNNNNNKOo:'.,o0WMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMO..lO00000k; ;KNNNNNNNNNNNNNNNNNNNNNNNNNNNKxc'.;kNMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMNo..cxkOkd;..xNNNNNNNNNX0kdolcccclodk0XNNNNNNKd,.,kNMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMX:  ..'..'cONNNNNNNKx:'.            .;dKNNNNNNKd,.:0WMMMMMMMMMMMMMMM*
+*MMMMMMMMKc.'dkddxOKNNNNNNNKo'   .,:llooolc:'    ,ONNNNNNNKo..dNMMMMMMMMMMMMMM*
+*MMMMMMM0;.:0NNNNNNNNNNNNN0;   ,d0XNNNNNNNNNXd.   ;0NNNNNNNNk'.lXMMMMMMMMMMMMM*
+*MMMMMM0,.lKNNNNNNNNNNNNN0;   cKNNNNNNNNNNNNNNo.  .kNNNNNNNNNO,.lNMMMMMMMMMMMM*
+*MMMMMX:.cKNNNNNNNNNNNNNNo.  .kNNNNNNNNNNNNNNNO:,;oKNNNNNNNNNNO'.dWMMMMMMMMMMM*
+*MMMMWd.,ONNNNNNNNNNNNNNXl   .c0XNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNd..x0KXWMMMMMMM*
+*MMMMK,.oNNNNNNNNXK00XNNNO,    .,:oxO0XNNNNNNNNNNNNNXKXNNNNNNNO:. ...':xNMMMMM*
+*MMMMk..kNNNNNNNk;...'l0NN0l'        .';:coxOKNNNNNKl.;xXNNNXo..;lddoc'.;0MMMM*
+*MMMWd.,0NNNNNNK;     .oNNNNKkdl:,..        .'l0NNNNx'  ,dKNk..cOOOOOOx, cNMMM*
+*MMMWd ,0NNNNNNXk;....c0NNNNNNNNNXKOkdl:,'.    'xNNN0;  .c0Nx..oOOOOOOk; :XMMM*
+*MMMMx.'ONNNNNNNNX0O0KXXXNNNNNNNNNNNNNNNNXOc.   ,0NKc..:kXNN0;.'okOOOxc..xWMMM*
+*MMMMO..xNNNNNNNNNNNNx;',oKNNNNNNNNNNNNNNNNXc   'ONXOdOXNNNNN0l...,;,..;kWMMMM*
+*MMMMNc cKNNNNNNNNNNXc   ;KNNNNNNNNNNNNNNNN0,   lXNNNNNNNNNNNNNx..;lox0NMMMMMM*
+*MMMMMO..xNNNNNNNNNNXl   .dXNNNNNNNNNNNNNXk,   cKNNNNNNNNNNNNNXc.:XMMMMMMMMMMM*
+*MMMMMWd.'kNNNNNNNNNNO;   .:x0KXXXXXKOxl:,.  .dKNNNNNNNNNNNNNXo.'OMMMMMMMMMMMM*
+*MMMMMMNo.'kNNNNNNNNNN0c.    ..''''...    .,o0NNNNNNNNNNNNNNXo.'kWMMMMMMMMMMMM*
+*MMMMMMMNd..dXNNNXXXXNNN0dc,.........';cldOXNNNNNNNNNNNNNNN0c.,OWMMMMMMMMMMMMM*
+*MMMMMMMMWO,.;do:,'',:d0NNNXK00OOOO0KXNNNNNNNNNNNNNNNNNNNKd'.cKWMMMMMMMMMMMMMM*
+*MMMMMMMMMMXl. .,colc'.'xXNNNNNNNNNNNNNNNNNNNNNNNNNNNNNKx,.,kNMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMWd..oO0000Oc..xNNNNNNNNNNNNNNNNNNNNNNNNNNX0o,.,xNMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMNc ;O000000x' oNNNNNNNNNNNNNNNNNNNNNNNXOo;.'ckNMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMWx..lO0000kc. :k0KXNNNNNNNNNNNNNXK0xo:'.'cxKWMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMMNx'.':cc:'.';,''',;ccllllllcc:;,''',cdOXWMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMMMMXxl;;;:lkNWNKOxdllc:::::ccllodk0XWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+******************************************************************************/
+
+html
+{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+body
+{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    background-color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#Solve4Me_app
+{
+    background-color: black;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: calc(100% - 10px);
+    margin: 0px;
+    padding: 5px;
+}
+
+#input_container
+{
+    width: calc(50% - 1px);
+    height: 100%;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    background-color: black;
+}
+
+#logo_container
+{
+    width: calc(100%);
+    height: 60px;
+    background-color: lightblue;
+    border: none;
+    border-radius: 10px 10px 0px 0px;
+    background-image: url('./imgs/icon.svg');
+    background-repeat: no-repeat;
+    background-size: 120px;
+}
+
+#input_screen
+{
+    width: calc(100% - 20px);
+    height: calc(100% - 0px);
+    background-color: lightblue;
+    display: block;
+    
+    padding: 10px;
+    padding-top: 0px;
+    font-family: monospace;
+    font-size: 18px;
+    overflow-wrap: normal;
+    white-space: pre;
+    display: block;
+    overflow: auto;
+    scrollbar-color: #4a8ba0 transparent;
+    border: none;
+    border-bottom: black 1px solid;
+    border-radius: 0px 0px 10px 10px;
+}
+
+#input_screen p
+{
+    display: block;
+}
+
+button#do_solve
+{
+    width: calc(100%);
+    height: calc(5% - 3px);
+    opacity: 1;
+    border: black 1px solid;
+    border-right: none;
+    border-left: none;
+    border-radius: 10px;
+    background-color: lightgrey;
+}
+
+div#output_container
+{
+    width: calc(50% - 1px);
+    height: 100%;
+    margin: 0px;
+}
+
+button#looper, button#looper:hover
+{
+    width: 100%;
+    height: calc(5% - 3px);
+    opacity: 1;
+    border: black 1px solid;
+    border-radius: 10px;
+    background-color: lightgrey;
+}
+
+#output
+{
+    width: calc(100% - 22px);
+    height: calc(95% - 18px);
+    background-color: #6ba7bb;
+    border: black 1px solid;
+    border-radius: 10px;
+    opacity: 1;
+    padding: 10px;
+    overflow: auto;
+    font-size: 1.5em;
+    display: block;
+}
+
+button#do_solve:focus, button#do_solve:hover
+{
+    background-color: #b8b8b8;
+}
+
+div.formula
+{
+    border: black 1px solid;
+    background-color: #8fd5ed;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.step
+{
+    border: black 1px dashed;
+    border-radius: 10px;
+    background-color: #96e5ff;
+    padding: 10px;
+    margin: 10px;
+    color: #0964dc;
+    display: flex;
+    justify-content: center;
+}
+
+#output_screen
+{
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+}
+
+#output_screen hr
+{
+    width: calc(100% - 20px);
+    border-top: white 2px solid;
+    border-bottom: none;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.label
+{
+    overflow: auto;
+}
+
+div.solution
+{
+    border: white 3px solid;
+    border-radius: 10px;
+    background-color: #96e5ff;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+
+div.statement_id
+{
+    font-size: 1.8vh;
+    display: flex;
+    justify-content: center;
+}
+
+button
+{
+    font-size: 1.8vh;
+}
+
+.ma-block
+{
+    font-size: 2.2vh;
+    text-align: center;
+    width: 100%;
+}
+
+
+@media only screen and (max-width: 1000px)
+{
+    div#Solve4Me_app
+    {
+        flex-direction: column;
+    }
+
+    div#input_container
+    {
+        width: 100%;
+        height: calc(100%);
+    }
+
+    div#output_container
+    {
+        width: 100%;
+        height: 50%;   
+    }
+
+    textarea#input
+    {
+        width: calc(100% - 22px);
+        height: calc(90% - 70px);
+        font-family: 'Source Sans Pro';
+    }
+
+    div#helper
+    {
+        display: none
+    }
+
+    button#do_solve
+    {
+        width: calc(100%);
+        height: calc(10% - 3px);
+        opacity: 1;
+        border-radius: 10px;
+        border: black 1px solid;
+    }
+
+    section#output
+    {
+        width: calc(100% - 22px);
+        height: calc(90% - 21px);
+    }
+
+    button#looper, button#looper:hover
+    {
+        width: 100%;
+        height: calc(10% - 3px);
+        opacity: 1;
+        border: black 1px solid;
+        border-radius: 10px;
+        background-color: lightgrey;
+    }
+}

@@ -1,0 +1,72 @@
+specifications du S4ML:
+-----------------------
+
+// let b1 = new S4ML_Bool(BoolValue.TRUE);
+// let b2 = new S4ML_Bool(BoolValue.FALSE);
+// let b3 = new S4ML_Bool(BoolValue.UNDETERMINED);
+
+// console.log(b1.value);
+// console.log(b2.value);
+// console.log(b3.value);
+. chaque contenu de ligne correspond à une commande
+. une commande qui commence par Given est une definition de Statement, genre
+  Given Statement
+  ou
+  Given x = 42
+
+. Un statement correspond:
+  - soit a une déclaration de variable, genre (Given x in R) ou (Given x = 42) ou (Given f = Function(x, R->R)) ou (Given eq_1 = Equation(x + 3 = 42))
+  - soit à une declaration de contrainte sur une ou plusieurs variable préalablement déclarées, genre (x > 42) ou (x in R+) ou (f.isEven() = true) ou (x + 3 = 42)
+
+
+. il y a des constantes prefefinies, genre True ou False qui sont des Bool(True) et Bool(False)
+
+----
+. les objects Bool sont des objets qui comprennent un attribut value qui peut valoir True, False ou Undetermined 
+. Pour instanier un objet Bool, on fait Bool() ==> retourne un Bool de value Undetermined,
+  ou Bool(AutreBool) qui retourne un Booleen qui a la meme valeur que le bool passé en parametre
+----
+
+----
+. les objects fonction comprennent:
+  - un ensemble de depart
+  - un ensemble d'arrivée
+  - le nom des variables d'entrée
+  - l'expression de la sortie
+----
+
+----
+. les objets equation, contiennent
+  - la ou les variables a trouver en array
+  - la ou les expressions sur lesquelles se baser en array
+  - une methode solve qui retourne 
+----
+
+\int _{\Omega }^{ }\left(f\right)d_{\mu }
+
+remarque sur la mesure:
+une mesure deja c'est une mesure sur un ensemble E.
+et en gros une mesure sur l'ensemble E, c'est le fait d'associer un nombre reel (ou + infini) à une partie de cet ensemble E
+
+genre la temperature, c'est t'as l'ensemble des etats de températures possibles, et on va pouvoir associer un nombre reel a chaque partie des températures possibles
+
+du coup un mesure, c'est une fonction m definie sur P(E) à valeurs dans R+
+m: P(E) -> R+ U {+ infini}
+
+et cette fonction a 2 propriétés / contraintes
+pour A et B sous-ensembles de E disjoints,
+m(A U B) = M(A) + M(B)
+et
+M(0) = 0
+
+du coup pour le fait que m(A U B) = M(A) + M(B)
+c'est un peu comme si on avait un magma
+(P(E), U)
+et un autre magma
+(R, +)
+et du coup, m est un morphisme de magma de (P(E), U) dans (R, +)
+dans le cas où les 2 elements de P(E) sont disjoints
+
+pour faire une application qui mesure le nombre d'elements dans un ensemble E, on a l'application
+m: P(E) -> N, x -> card(x)
+
