@@ -1,6 +1,6 @@
 .PHONY: all cleanAll S4MLParser
 
-all: S4MLParser WriteMath light
+all: WriteMath light S4MLParser
 	@echo ''
 	@echo '> Full Solve4Me Project built'
 
