@@ -1,4 +1,6 @@
-all: WriteMath light
+.PHONY: all cleanAll S4MLParser
+
+all: S4MLParser WriteMath light
 	@echo ''
 	@echo '> Full Solve4Me Project built'
 
@@ -15,11 +17,19 @@ light:
 	@if [ -d "./build/Lib_WriteMath_build/" ]; then /bin/rm -R ./build/Lib_WriteMath_build; fi
 	/bin/cp -R ./Lib_WriteMath/build/ ./build/Lib_WriteMath_build/
 
+S4MLParser:
+	@echo ''
+	@echo '[Building S4ML Parser]'
+	cd ./S4MLParser/ && make && cd ..
+	cp ./S4MLParser/S4MLParser.js ./build/
 
 WriteMath:
 	@echo ''
 	@echo '[Building WriteMath Lib]'
 	cd ./Lib_WriteMath/ && /bin/make && cd ../
+
+cleanS4MLParser:
+	rm ./build/S4MLParser.js
 
 cleanWriteMath:
 	@echo ''
@@ -40,5 +50,3 @@ cleanAll: cleanWriteMath clean
 	@if [ -d "./build/" ]; then /bin/rm -R ./build/; fi
 
 re: cleanAll all
-
-

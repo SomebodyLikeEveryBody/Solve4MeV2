@@ -1,0 +1,3 @@
+start = Test
+
+Test = .*
