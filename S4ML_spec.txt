@@ -32,6 +32,11 @@ si c'est un \in, un objet mathématique d'ensemble (soit une variable préalable
 OU si c'est un =, suivie du truc affecté = objet mathématique (entier, autre variable, ensemble, fonction, etc ==> methodes constructeurs a definir) ==> [DEFINE MathObj]
 
 
+MeasureUnit:
+----------
+= "\\text{" [A-Za-z0-9]+ "}"
+==> pour definir des variables préalablement définies pour mesure des trucs genre des températures, distances, etc
+
 UndefinedVarIdentifier:
 ----------------------
 = VarIdentifier { checker s'il existe dans la memoire, si oui, throw, sinon on le return ==> permet d'être sûr qu'on ne re-définie pas une variable pré-existante}
