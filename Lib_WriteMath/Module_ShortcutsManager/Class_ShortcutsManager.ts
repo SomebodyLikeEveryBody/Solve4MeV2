@@ -162,7 +162,14 @@ class ShortcutsManager {
                 } else {
                     this._mathLineInput.becomeALetLine();
                 }
+                
+                break;
 
+            //ctrl + N
+            case KeyCodes.N_KEY:
+                pEventObj.preventDefault();
+                // this._mathLineInput.writeLatexAtCursorPosition("\\text{N}")
+                console.log('ok');
                 break;
 
             //ctrl + up arrow ==> delete if empty and focus down

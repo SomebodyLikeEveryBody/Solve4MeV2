@@ -12,11 +12,14 @@ suivie d'un espace obligatoire ==> [DEFINE   __ = Mandatory_Whitespace]OK
 suivie d'un espace optionnel _==> [DEFINE Whitespaces]OK
 suivie d'un identifiant de variable ==> [DEFINE UndefinedVarIdentifier]OK
 suivie d'un opérateur d'affectation (c'est a dire "=" ou "\\in") ==> [Define AffectationOperator]OK
+amk
 
 suivi d'un objet mathématique: ==> DEFINE [MathObj]
 et du coup, ce qu'il y a a droite de l'opérateur d'affectation,
 - soit c'est une variable ==> il faut que ca soit donc une DefinedVarIdentifier
-- soit c'est un objet mathématique créé à la volée, c'est à dire une instruction qui retourne un objet mathématique (genre f.isEven())
+- soit c'est un objet mathématique créé à la volée, c'est à dire une instruction qui retourne un objet mathématique (genre f.isEven() ou Function(t vers 2t, R dans R))
+
+SI l'opérateur est un \in, alors il faudra que le MathObj soit un Set
 
 
 

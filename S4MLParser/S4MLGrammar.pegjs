@@ -1,11 +1,36 @@
-start = Test
+start = VarIdentifier
 
-Test = "{salut}"
+Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectationOperator:AffectationOperator _ mathObjAffected:MathObj _ {
+   
+}
 
-Declaration = "\\text{Let}\\ " _ variableName:Identifier _ affectationOperator:AffectationOperator _ affectedExpression:Expression {
-   console.log(variableName);
-   console.log(affectationOperator);
-   console.log(affectedExpression);
+__ "MandatoryWhiteSpace" = "\\ "
+_ "OptionnalWhiteSpaces" = "\\ "*
+
+VarIdentifier = mainId:(Letter / SpecialLetter) index:IdentifierIndex?
+
+IdentifierIndex = SimpleIdentifierIndice / ComplexIdentifierIndex
+
+SimpleIdentifierIndice = "_" Char
+
+ComplexIdentifierIndex = "_" "{" (Char / Text / SpecialLetter) IdentifierIndex? "}"
+
+Letter = [A-Za-z]
+
+Char = [A-Za-z0-9]
+
+Text = "\\text{" [A-Za-z0-9]+ "}"
+
+SpecialLetter = value:("\\" [A-Za-z]+) { return (value[0] + value[1].join('')); }
+
+UndefinedVarIdentifier = varName:VarIdentifier { 
+   // check if var is not already defined
+   return (varName); 
+}
+
+DefinedVarIdentifier = varName:VarIdentifier { 
+   // check if var is already defined
+   return (varName); 
 }
 
 AffectationOperator = EqualOperator / InOperator
@@ -14,17 +39,6 @@ EqualOperator = "="
 
 InOperator = "\\in"
 
-Identifier = id:[a-zA-Z0-9_\{\\\}]+ { return (id.join('')); }
+MathObj = value:.+ { return (value.join('')) }
 
-VectorIdentifier = "\\vec{" Identifier "}"
-
-Expression = word:Word { return (word.join('')); }
-
-Instruction = word:Word { return (word.join('')); }
-
-
-Word = .+
-
-_ "Whitespace" = "\\ "*
-
-__ "Mandatory_Whitespace" = "\\ "+
+MeasureUnitVar = "\\text{" [A-Za-z0-9]+ "}"
