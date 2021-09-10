@@ -2,26 +2,36 @@ start = Declaration / Constraint / Instruction
 
 Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
    console.log('Declaration');
-   console.log(newVarName);
+   console.log('------------');
+   console.log('VarName: [' + newVarName + ']');
    console.log('Operator: ['+ affectationOperator +']');
    console.log('Affected: ['+ mathObjAffected +']');
 }
 
 Constraint = _ "\\text{Given}" __ _ statement:Statement {
    console.log('Constraint');
-   console.log(statement);
+   console.log('----------');
+   console.log('Statement' + statement + ']');
 }
 
-Instruction = value:.+ { 
+Instruction = value:.+ {
    console.log('Instruction');
-   console.log(value.join('')) 
+   console.log('-----------');
+   console.log(value.join(''))
+
+   return (value.join(''));
 }
 
-Statement = value:.+ { return (value.join('')); }
-
+Statement = value:.+ { 
+   return (value.join('')); 
+}
 
 __ "MandatoryWhiteSpace" = "\\ "
 _ "OptionnalWhiteSpaces" = "\\ "*
+
+VectorIdentifier = "\\vec{" varIdentifier:VarIdentifier "}" {
+   return ("Vector{" + varIdentifier + "}");
+}
 
 VarIdentifier = mainId:(Letter / SpecialLetter) index:IdentifierIndex? {
    let retArray = [mainId];
@@ -56,12 +66,12 @@ Text = prefix:"\\text{" str:[A-Za-z0-9]+ postfix:"}" {
 
 SpecialLetter = value:("\\" [A-Za-z]+) { return (value[0] + value[1].join('')); }
 
-UndefinedVarIdentifier = varName:VarIdentifier { 
+UndefinedVarIdentifier = varName:(VectorIdentifier / VarIdentifier) { 
    // check if var is not already defined
    return (varName); 
 }
 
-DefinedVarIdentifier = varName:VarIdentifier { 
+DefinedVarIdentifier = varName:(VectorIdentifier / VarIdentifier) { 
    // check if var is already defined
    return (varName); 
 }
