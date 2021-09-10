@@ -5,6 +5,16 @@ en gros une ligne de S4ML c'est:
 - soit une déclaration d'une contrainte sur une variable préalablement déclarée (genre given contrainte sur x) ==> [DEFINE Constraint]
 - soit une instruction = process un calcul, afficher un objet mathematique a l'ecran, etc ==> [DEFINE Instruction]
 
+
+Constraint:
+----------
+c'est la chaine _ "\\text{Given}\\"
+suivi d'un espace obligatoire __
+suivi d'un statement ==> [DEFINE Statement]
+suivi d'un _
+
+
+
 Declaration: [VarIdentifier] [Set] [MathObj]
 -----------
 c'est la chaine _ "\text{Let}\"

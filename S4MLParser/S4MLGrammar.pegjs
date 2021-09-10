@@ -1,10 +1,24 @@
-start = Declaration
+start = Declaration / Constraint / Instruction
 
-Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectationOperator:AffectationOperator _ mathObjAffected:MathObj _ {
+Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
+   console.log('Declaration');
    console.log(newVarName);
    console.log('Operator: ['+ affectationOperator +']');
    console.log('Affected: ['+ mathObjAffected +']');
 }
+
+Constraint = _ "\\text{Given}" __ _ statement:Statement {
+   console.log('Constraint');
+   console.log(statement);
+}
+
+Instruction = value:.+ { 
+   console.log('Instruction');
+   console.log(value.join('')) 
+}
+
+Statement = value:.+ { return (value.join('')); }
+
 
 __ "MandatoryWhiteSpace" = "\\ "
 _ "OptionnalWhiteSpaces" = "\\ "*
@@ -57,7 +71,5 @@ AffectationOperator = EqualOperator / InOperator
 EqualOperator = "="
 
 InOperator = "\\in"
-
-MathObj = value:.+ { return (value.join('')) }
 
 MeasureUnitVar = "\\text{" [A-Za-z0-9]+ "}"
