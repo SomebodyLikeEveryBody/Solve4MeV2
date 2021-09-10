@@ -16,10 +16,8 @@ VarIdentifier = mainId:(Letter / SpecialLetter) index:IdentifierIndex? {
       retArray = retArray.concat(index);
    }
 
-   return retArray;
+   return retArray.join('_');
 }
-
-
 
 IdentifierIndex = SimpleIdentifierIndex / ComplexIdentifierIndex
 

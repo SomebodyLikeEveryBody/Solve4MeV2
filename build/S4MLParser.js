@@ -159,7 +159,7 @@
               retArray = retArray.concat(index);
            }
 
-           return retArray;
+           return retArray.join('_');
         },
         peg$c8 = "_",
         peg$c9 = peg$literalExpectation("_", false),
