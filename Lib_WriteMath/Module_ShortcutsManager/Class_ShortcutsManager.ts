@@ -130,6 +130,7 @@ class ShortcutsManager {
                     this._mathLineInput.stopBeingAPrintLine();
                 } else {
                     this._mathLineInput.becomeAPrintLine();
+                    this._mathLineInput.keyStroke('Left');
                 }
                 break;
 
@@ -238,6 +239,7 @@ class ShortcutsManager {
                     this._mathLineInput.stopBeingAGraphLine();
                 } else {
                     this._mathLineInput.becomeAGraphLine();
+                    this._mathLineInput.keyStroke('Left');
                 }
                 break;
 

@@ -1227,6 +1227,7 @@ var ShortcutsManager = /** @class */ (function () {
                 }
                 else {
                     this._mathLineInput.becomeAPrintLine();
+                    this._mathLineInput.keyStroke('Left');
                 }
                 break;
             //ctrl + right arrow
@@ -1321,6 +1322,7 @@ var ShortcutsManager = /** @class */ (function () {
                 }
                 else {
                     this._mathLineInput.becomeAGraphLine();
+                    this._mathLineInput.keyStroke('Left');
                 }
                 break;
             //alt + right arrow
