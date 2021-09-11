@@ -758,12 +758,26 @@ var MathLineInput = /** @class */ (function () {
     MathLineInput.prototype.isACommentLine = function () {
         return this.value()[0] === "#";
     };
+    MathLineInput.prototype.isAPrintLine = function () {
+        return (this.value().substr(0, 18) === "\\text{Print}\\left(");
+    };
+    MathLineInput.prototype.isAGraphLine = function () {
+        return (this.value().substr(0, 18) === "\\text{Graph}\\left(");
+    };
     MathLineInput.prototype.stopBeingAGivenLine = function () {
         this.shiftKeywordInField('Given');
         return this;
     };
     MathLineInput.prototype.stopBeingALetLine = function () {
         this.shiftKeywordInField('Let');
+        return this;
+    };
+    MathLineInput.prototype.stopBeingAPrintLine = function () {
+        this.setValue(this.value().substring("\\text{Print}\\left(".length, this.value().length - "\\right)".length));
+        return this;
+    };
+    MathLineInput.prototype.stopBeingAGraphLine = function () {
+        this.setValue(this.value().substring("\\text{Graph}\\left(".length, this.value().length - "\\right)".length));
         return this;
     };
     MathLineInput.prototype.becomeAGivenLine = function () {
@@ -782,10 +796,26 @@ var MathLineInput = /** @class */ (function () {
             }
             this.prependToFieldKeyword('Let');
         }
+        return this;
     };
-    MathLineInput.prototype.prependToFieldKeyword = function (pKeyword) {
+    MathLineInput.prototype.becomeAPrintLine = function () {
+        if (!(this.isAPrintLine())) {
+            this.setValue("\\text{Print}\\left(" + this.value() + "\\right)");
+            this.saveUndoRedoState();
+        }
+        return this;
+    };
+    MathLineInput.prototype.becomeAGraphLine = function () {
+        if (!(this.isAGraphLine())) {
+            this.setValue("\\text{Graph}\\left(" + this.value() + "\\right)");
+            this.saveUndoRedoState();
+        }
+        return this;
+    };
+    MathLineInput.prototype.prependToFieldKeyword = function (pKeyword, pFollowingStr) {
+        if (pFollowingStr === void 0) { pFollowingStr = '\\ '; }
         var cursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
-        var keyWordInLatex = '\\text{' + pKeyword.valueOf() + '}\\ ';
+        var keyWordInLatex = '\\text{' + pKeyword.valueOf() + '}' + pFollowingStr;
         cursorConfiguration.cursor = __spreadArray(["endsL", "L", "L"], cursorConfiguration.cursor.slice(1));
         if (cursorConfiguration.anticursor) {
             cursorConfiguration.anticursor = __spreadArray(["endsL", "L", "L"], cursorConfiguration.anticursor.slice(1));
@@ -1188,10 +1218,16 @@ var ShortcutsManager = /** @class */ (function () {
                 pEventObj.preventDefault();
                 this._mathLineInput.appendValueAtCursorPosition(' \\circ ');
                 break;
-            //ctrl + P ==> print 
+            //ctrl + P ==> print encapsulation
             case KeyCodes.P_KEY:
                 pEventObj.preventDefault();
-                this._mathLineInput.appendValueAtCursorPosition('\\Print(');
+                // this._mathLineInput.appendValueAtCursorPosition('\\Print(');
+                if (this._mathLineInput.isAPrintLine()) {
+                    this._mathLineInput.stopBeingAPrintLine();
+                }
+                else {
+                    this._mathLineInput.becomeAPrintLine();
+                }
                 break;
             //ctrl + right arrow
             case KeyCodes.RIGHTARROW_KEY:
@@ -1276,6 +1312,16 @@ var ShortcutsManager = /** @class */ (function () {
             //alt + F
             case KeyCodes.F_KEY:
                 this._mathLineInput.appendCmdAtCursorPosition('\\forall');
+                break;
+            //alt + G ==> Graph encapsulation
+            case KeyCodes.G_KEY:
+                pEventObj.preventDefault();
+                if (this._mathLineInput.isAGraphLine()) {
+                    this._mathLineInput.stopBeingAGraphLine();
+                }
+                else {
+                    this._mathLineInput.becomeAGraphLine();
+                }
                 break;
             //alt + right arrow
             case KeyCodes.RIGHTARROW_KEY:

@@ -225,6 +225,9 @@
         peg$c38 = peg$literalExpectation("=", false),
         peg$c39 = "\\in",
         peg$c40 = peg$literalExpectation("\\in", false),
+        peg$c41 = function(str) {
+           return ("Text{" + str.join('') + "}");
+        },
 
         peg$currPos          = 0,
         peg$savedPos         = 0,
@@ -950,7 +953,10 @@
       s0 = peg$currPos;
       s1 = peg$parseVectorIdentifier();
       if (s1 === peg$FAILED) {
-        s1 = peg$parseVarIdentifier();
+        s1 = peg$parseConstant();
+        if (s1 === peg$FAILED) {
+          s1 = peg$parseVarIdentifier();
+        }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
@@ -967,7 +973,10 @@
       s0 = peg$currPos;
       s1 = peg$parseVectorIdentifier();
       if (s1 === peg$FAILED) {
-        s1 = peg$parseVarIdentifier();
+        s1 = peg$parseConstant();
+        if (s1 === peg$FAILED) {
+          s1 = peg$parseVarIdentifier();
+        }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
@@ -1017,7 +1026,7 @@
       return s0;
     }
 
-    function peg$parseMeasureUnitVar() {
+    function peg$parseConstant() {
       var s0, s1, s2, s3;
 
       s0 = peg$currPos;
@@ -1060,7 +1069,8 @@
             if (peg$silentFails === 0) { peg$fail(peg$c16); }
           }
           if (s3 !== peg$FAILED) {
-            s1 = [s1, s2, s3];
+            peg$savedPos = s0;
+            s1 = peg$c41(s2);
             s0 = s1;
           } else {
             peg$currPos = s0;

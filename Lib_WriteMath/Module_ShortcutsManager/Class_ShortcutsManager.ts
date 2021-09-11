@@ -122,10 +122,15 @@ class ShortcutsManager {
                 this._mathLineInput.appendValueAtCursorPosition(' \\circ ');
                 break;
         
-            //ctrl + P ==> print 
+            //ctrl + P ==> print encapsulation
             case KeyCodes.P_KEY:
                 pEventObj.preventDefault();
-                this._mathLineInput.appendValueAtCursorPosition('\\Print(');
+                // this._mathLineInput.appendValueAtCursorPosition('\\Print(');
+                if (this._mathLineInput.isAPrintLine()) {
+                    this._mathLineInput.stopBeingAPrintLine();
+                } else {
+                    this._mathLineInput.becomeAPrintLine();
+                }
                 break;
 
             //ctrl + right arrow
@@ -162,7 +167,7 @@ class ShortcutsManager {
                 } else {
                     this._mathLineInput.becomeALetLine();
                 }
-                
+
                 break;
 
             //ctrl + N
@@ -224,6 +229,16 @@ class ShortcutsManager {
             //alt + F
             case KeyCodes.F_KEY:
                 this._mathLineInput.appendCmdAtCursorPosition('\\forall');
+                break;
+
+            //alt + G ==> Graph encapsulation
+            case KeyCodes.G_KEY:
+                pEventObj.preventDefault();
+                if (this._mathLineInput.isAGraphLine()) {
+                    this._mathLineInput.stopBeingAGraphLine();
+                } else {
+                    this._mathLineInput.becomeAGraphLine();
+                }
                 break;
 
             //alt + right arrow

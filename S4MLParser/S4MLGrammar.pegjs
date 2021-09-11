@@ -66,12 +66,12 @@ Text = prefix:"\\text{" str:[A-Za-z0-9]+ postfix:"}" {
 
 SpecialLetter = value:("\\" [A-Za-z]+) { return (value[0] + value[1].join('')); }
 
-UndefinedVarIdentifier = varName:(VectorIdentifier / VarIdentifier) { 
+UndefinedVarIdentifier = varName:(VectorIdentifier /  Constant / VarIdentifier) { 
    // check if var is not already defined
    return (varName); 
 }
 
-DefinedVarIdentifier = varName:(VectorIdentifier / VarIdentifier) { 
+DefinedVarIdentifier = varName:(VectorIdentifier / Constant / VarIdentifier) { 
    // check if var is already defined
    return (varName); 
 }
@@ -82,4 +82,6 @@ EqualOperator = "="
 
 InOperator = "\\in"
 
-MeasureUnitVar = "\\text{" [A-Za-z0-9]+ "}"
+Constant = "\\text{" str:[A-Za-z0-9]+ "}" {
+   return ("Text{" + str.join('') + "}");
+}

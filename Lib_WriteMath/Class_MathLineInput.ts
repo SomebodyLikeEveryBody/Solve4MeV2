@@ -508,6 +508,14 @@ class MathLineInput {
         return this.value()[0] === "#";
     }
 
+    public isAPrintLine(): Boolean {
+        return (this.value().substr(0, 18) === "\\text{Print}\\left(");
+    }
+
+    public isAGraphLine(): Boolean {
+        return (this.value().substr(0, 18) === "\\text{Graph}\\left(");
+    }
+
     public stopBeingAGivenLine(): MathLineInput {
         this.shiftKeywordInField('Given');
         return this;
@@ -515,6 +523,16 @@ class MathLineInput {
 
     public stopBeingALetLine(): MathLineInput {
         this.shiftKeywordInField('Let');
+        return this;
+    }
+
+    public stopBeingAPrintLine(): MathLineInput {
+        this.setValue(this.value().substring("\\text{Print}\\left(".length, this.value().length - "\\right)".length));
+        return this;
+    }
+
+    public stopBeingAGraphLine(): MathLineInput {
+        this.setValue(this.value().substring("\\text{Graph}\\left(".length, this.value().length - "\\right)".length));
         return this;
     }
 
@@ -530,7 +548,7 @@ class MathLineInput {
         return this;
     }
 
-    public becomeALetLine() {
+    public becomeALetLine(): MathLineInput {
         if (!(this.isALetLine())) {
             if (this.isAGivenLine()) {
                 this.stopBeingAGivenLine();
@@ -538,11 +556,31 @@ class MathLineInput {
 
             this.prependToFieldKeyword('Let');
         }
+
+        return this;
     }
 
-    public prependToFieldKeyword(pKeyword: String): MathLineInput {
+    public becomeAPrintLine(): MathLineInput {
+        if (!(this.isAPrintLine())) {
+            this.setValue("\\text{Print}\\left(" + this.value() + "\\right)");
+            this.saveUndoRedoState();    
+        }
+
+        return this;
+    }
+
+    public becomeAGraphLine(): MathLineInput {
+        if (!(this.isAGraphLine())) {
+            this.setValue("\\text{Graph}\\left(" + this.value() + "\\right)");
+            this.saveUndoRedoState();
+        }
+
+        return this;
+    }
+
+    public prependToFieldKeyword(pKeyword: String, pFollowingStr: String='\\ '): MathLineInput {
         const cursorConfiguration: CursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
-        const keyWordInLatex = '\\text{' + pKeyword.valueOf() + '}\\ ';
+        const keyWordInLatex = '\\text{' + pKeyword.valueOf() + '}' + pFollowingStr;
 
         cursorConfiguration.cursor = ["endsL", "L", "L", ...cursorConfiguration.cursor.slice(1)];
         if (cursorConfiguration.anticursor) {
