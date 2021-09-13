@@ -29,6 +29,16 @@ Statement = value:.+ {
 __ "MandatoryWhiteSpace" = "\\ "
 _ "OptionnalWhiteSpaces" = "\\ "*
 
+VarAtLargeIdentifier = FunctionIdentifier / VectorIdentifier / Constant / VarIdentifier
+
+FunctionIdentifier = varName:(VectorIdentifier / VarIdentifier) functionVar:FunctionMarker {
+   return (varName + "(" + functionVar +")")
+}
+
+FunctionMarker = "\\left(" varName:(VectorIdentifier / VarIdentifier) "\\right)" {
+   return (varName)
+}
+
 VectorIdentifier = "\\vec{" varIdentifier:VarIdentifier "}" {
    return ("Vector{" + varIdentifier + "}");
 }
@@ -66,12 +76,12 @@ Text = prefix:"\\text{" str:[A-Za-z0-9]+ postfix:"}" {
 
 SpecialLetter = value:("\\" [A-Za-z]+) { return (value[0] + value[1].join('')); }
 
-UndefinedVarIdentifier = varName:(VectorIdentifier /  Constant / VarIdentifier) { 
+UndefinedVarIdentifier = varName:VarAtLargeIdentifier { 
    // check if var is not already defined
    return (varName); 
 }
 
-DefinedVarIdentifier = varName:(VectorIdentifier / Constant / VarIdentifier) { 
+DefinedVarIdentifier = varName:VarAtLargeIdentifier { 
    // check if var is already defined
    return (varName); 
 }

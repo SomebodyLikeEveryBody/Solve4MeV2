@@ -1,6 +1,6 @@
 .PHONY: all cleanAll S4MLParser
 
-all: WriteMath light S4MLParser
+all: WriteMath light S4MLParser main
 	@echo ''
 	@echo '> Full Solve4Me Project built'
 
@@ -10,23 +10,33 @@ light:
 	@echo 'mkdir ./build/'
 	@if [ -d "./build/" ]; then /bin/rm -r ./build/; fi
 	mkdir ./build/
-	/bin/cp ./htmlResources/index.htm ./build/
-	/bin/cp ./htmlResources/Solve4MeGUIStyle.css ./build/
-	/bin/cp -R ./htmlResources/main.js ./build/
-	/bin/cp -R ./htmlResources/imgs ./build/
+	/bin/cp ./src/htmlResources/index.htm ./build/
+	/bin/cp ./src/htmlResources/main.js ./build/
+	/bin/cp ./src/htmlResources/Solve4MeGUIStyle.css ./build/
+	/bin/cp -R ./src/htmlResources/imgs ./build/
 	@if [ -d "./build/Lib_WriteMath_build/" ]; then /bin/rm -R ./build/Lib_WriteMath_build; fi
-	/bin/cp -R ./Lib_WriteMath/build/ ./build/Lib_WriteMath_build/
+	/bin/cp -R ./src/Lib_WriteMath/build/ ./build/Lib_WriteMath_build/
+
+main:
+	@echo ''
+	@echo '[Building Solve4Me Project main.js (Solve4Me.js)]'
+	/usr/local/bin/tsc -t ES5 --outFile ./build/Solve4Me.js \
+	./src/main.ts
 
 S4MLParser:
 	@echo ''
 	@echo '[Building S4ML Parser]'
-	cd ./S4MLParser/ && make && cd ..
-	cp ./S4MLParser/S4MLParser.js ./build/
+	cd ./src/S4ML_Parser/ && /bin/make && cd ..
+	cp ./src/S4ML_Parser/S4MLParser.js ./build/
+
+S4MMemory:
+	@echo ''
+	@echo '[Building Solve4Me Memory]'
 
 WriteMath:
 	@echo ''
 	@echo '[Building WriteMath Lib]'
-	cd ./Lib_WriteMath/ && /bin/make && cd ../
+	cd ./src/Lib_WriteMath/ && /bin/make && cd ../
 
 cleanS4MLParser:
 	rm ./build/S4MLParser.js
@@ -34,7 +44,7 @@ cleanS4MLParser:
 cleanWriteMath:
 	@echo ''
 	@echo '[Cleaning WriteMath Lib]'
-	cd ./Lib_WriteMath/ && /bin/make clean && cd ../
+	cd ./src/Lib_WriteMath/ && /bin/make clean && cd ../
 
 clean:
 	@echo ''
