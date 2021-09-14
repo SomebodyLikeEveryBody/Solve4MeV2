@@ -14,7 +14,7 @@ on tape dans une MathLineInput une declaration let x = 42
     a déjà été déclaré préalablement
 
 ==> si je reviens sur le premier MathLineInput où j'ai déclaré x, et que je change sa valeur ==> ca doit modifier la valeur dans
-    S4MCoreMemory
+    S4MCoreMemory 
 
 ==> Si je supprime la mathLineInput qui contenait une definition de variable qui a été processée ==> ca delete l'entrée dans S4MCoreMemory
 
@@ -223,3 +223,40 @@ dans le cas où les 2 elements de P(E) sont disjoints
 pour faire une application qui mesure le nombre d'elements dans un ensemble E, on a l'application
 m: P(E) -> N, x -> card(x)
 
+constantes:
+----------
+\\text{m} = mètre
+\\text{°} = degré (angle)
+\\text{rad} = radian
+\\text{kg} = kilogramme
+\\text{s} = seconde
+\\text{A} = Ampère
+\\text{V} = Volt
+\\text{C} = Coulomb
+\\text{mol} = mole
+\\text{K} = Kelvin
+\\text{cd} = Candela
+\\text{lm} = Lumen (flux lumineux)
+\\text{lx} = Lux (eclairement lumineux)
+\\text{Pa} = Pascal
+\\text{J} = Joule
+\\text{N} = Newton
+\\text{Hz} = Hertz
+\\text{W} = Watt
+\\text{S} = Siemens (conductance)
+"\\Omega" = Ohm
+\\text{F} = Farad (capacité)
+\\text{H} = Henry (Inductance)
+\\text{T} = Tesla (induction magnétique)
+\\text{Wb} = Weber (flux d'induction magnetique)
+\\text{S} = Siemens (conductance)
+\\text{Bq} = Becquerel (activité radioactive)
+\\text{Gy} = Gray (dose absorbée)
+\\text{Sv} = Sievert (equivalent dose)
+
+\\text{e} = Constante d'Euler
+\\text{i} = Nombre imaginaire
+
+\\text{Na} = nombre d'avogadro
+\\text{k} = constante de Boltzman
+\\text{} = 
