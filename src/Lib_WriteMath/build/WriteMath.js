@@ -438,12 +438,15 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.appendValueAtCursorPosition = function (pValue) {
         this._mathField.typedText(pValue);
+        return this;
     };
     MathLineInput.prototype.appendCmdAtCursorPosition = function (pValue) {
         this._mathField.cmd(pValue);
+        return this;
     };
     MathLineInput.prototype.writeLatexAtCursorPosition = function (pLatex) {
         this._mathField.write(pLatex);
+        return this;
     };
     MathLineInput.prototype.isEmpty = function () {
         return this.value() === '';
@@ -458,9 +461,11 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.insertAfter = function (pElement) {
         this._jQEl.insertAfter(pElement);
+        return this;
     };
     MathLineInput.prototype.insertBefore = function (pElement) {
         this._jQEl.insertBefore(pElement);
+        return this;
     };
     MathLineInput.prototype.hasPreviousMathLineInput = function () {
         return this._previousMathLineInput !== null;
@@ -522,6 +527,7 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.removeFromDOM = function () {
         this._jQEl.remove();
+        return this;
     };
     MathLineInput.prototype.keyDown = function (pFunction) {
         this.jQEl.keydown(function (e) { return pFunction(e); });
@@ -839,6 +845,7 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.saveUndoRedoState = function () {
         this._undoRedoManager.saveState();
+        return this;
     };
     MathLineInput.prototype.AreCursorAndAnticursorAtSameLocation = function (pCursorConfiguration) {
         if ((!(pCursorConfiguration.anticursor))
@@ -880,6 +887,7 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.showCursor = function () {
         this._mathField.__controller.cursor.show();
+        return this;
     };
     MathLineInput.prototype.getTypedHistory = function () {
         return this._undoRedoManager.getTypedHistory();

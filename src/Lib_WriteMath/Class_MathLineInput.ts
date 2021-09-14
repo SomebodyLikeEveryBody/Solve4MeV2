@@ -123,25 +123,27 @@ class MathLineInput {
         return this;
     }
 
-    public appendValueAtCursorPosition(pValue: String): void {
+    public appendValueAtCursorPosition(pValue: String): MathLineInput {
         this._mathField.typedText(pValue);
+        return this;
     }
 
-    public appendCmdAtCursorPosition(pValue: String): void {
+    public appendCmdAtCursorPosition(pValue: String): MathLineInput {
         this._mathField.cmd(pValue);
+        return this;
     }
 
-    public writeLatexAtCursorPosition(pLatex: String): void {
+    public writeLatexAtCursorPosition(pLatex: String): MathLineInput {
         this._mathField.write(pLatex);
+        return this;
     }
 
     public isEmpty(): Boolean {
         return this.value() === '';
     }
     
-    public appendTo(pElement: JQueryElement): MathLineInput {        
+    public appendTo(pElement: JQueryElement): MathLineInput {
         this._jQEl.appendTo(pElement);
-
         return this;
     }
 
@@ -150,12 +152,14 @@ class MathLineInput {
         return this;
     }
 
-    public insertAfter(pElement: JQueryElement): void {
+    public insertAfter(pElement: JQueryElement): MathLineInput {
         this._jQEl.insertAfter(pElement);
+        return this;
     }
 
-    public insertBefore(pElement: JQueryElement): void {
+    public insertBefore(pElement: JQueryElement): MathLineInput {
         this._jQEl.insertBefore(pElement);
+        return this;
     }
 
     public hasPreviousMathLineInput(): Boolean {
@@ -234,8 +238,9 @@ class MathLineInput {
         return this;
     }
 
-    public removeFromDOM() {
+    public removeFromDOM(): MathLineInput {
         this._jQEl.remove();
+        return this;
     }
 
     public keyDown(pFunction: Function): MathLineInput {
@@ -610,8 +615,9 @@ class MathLineInput {
         return this;
     }
 
-    public saveUndoRedoState() {
+    public saveUndoRedoState(): MathLineInput {
         this._undoRedoManager.saveState();
+        return this;
     }
 
     public AreCursorAndAnticursorAtSameLocation(pCursorConfiguration: CursorConfiguration): Boolean {
@@ -662,8 +668,9 @@ class MathLineInput {
         return this;
     }
 
-    public showCursor(): void {
-        this._mathField.__controller.cursor.show()
+    public showCursor(): MathLineInput {
+        this._mathField.__controller.cursor.show();
+        return this;
     }
 
     public getTypedHistory(): HistoryStatement[] {

@@ -1,3 +1,31 @@
+13/09/2021:
+----------
+Bon ya des galere, il va falloir pas mal de cerveau:
+en gros l'idée est la suivante: quand on est dans S4M, et qu'on déclare des variables, le comportement doit être le suivant:
+on tape dans une MathLineInput une declaration let x = 42
+
+==> dès que ca perd le focus, ca process le contenu de ce qui a été tapé et si ya une erreur ca throw
+    (et on pourra gérer l'exception en mettant un background rouge dans le MathLineInput et le message
+    d'erreur dans l'écran d'output)
+
+==> si ya pas d'erreur, ca va stocker le nom de la variable déclarée et son affectation dans S4MCoreMemory ==> tout est cool
+
+==> si dans un autre MathLineInput je déclare à nouveau x ==> ca throw car x est déjà contenu dans le S4MCoreMemory parce qu'il
+    a déjà été déclaré préalablement
+
+==> si je reviens sur le premier MathLineInput où j'ai déclaré x, et que je change sa valeur ==> ca doit modifier la valeur dans
+    S4MCoreMemory
+
+==> Si je supprime la mathLineInput qui contenait une definition de variable qui a été processée ==> ca delete l'entrée dans S4MCoreMemory
+
+==> si je change le nom de la variable déclarée dans le MathLineInput ou j'ai defini x préalablement, ca doit delete l'entrée de x dans S4MCoreMemory
+    et créer une nouvelle entrée
+    ==> il faudra donc que chaque entrée de variable corresponde à une MathLineInput donnée ==> c'est l'élément discriminant (!)
+
+
+
+
+
 infos pour le parsing:
 ---------------------
 en gros une ligne de S4ML c'est:

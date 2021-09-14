@@ -21,6 +21,9 @@ main:
 	@echo ''
 	@echo '[Building Solve4Me Project main.js (Solve4Me.js)]'
 	/usr/local/bin/tsc -t ES5 --outFile ./build/Solve4Me.js \
+	./src/Interface_JQueryElement.ts \
+	./src/Interface_MathLineInput.ts \
+	./src/Class_MathObj.ts \
 	./src/main.ts
 
 S4MLParser:
