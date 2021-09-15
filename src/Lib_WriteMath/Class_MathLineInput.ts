@@ -1,4 +1,6 @@
-declare var MathQuill: any;
+declare const S4MLParser: any;
+declare const MathQuill: any;
+declare const s4mCoreMemory: any;
 declare function $(pStr: String): JQueryElement;
 
 class MathLineInput {
@@ -324,6 +326,12 @@ class MathLineInput {
             this._undoRedoManager.setSpecialKeysToUp();
             this._shortcutsManager.setSpecialKeysToUp();
             this.setStyle();
+
+            // S4M interactions:
+            if (!this.isEmpty() && S4MLParser !== undefined && s4mCoreMemory !== undefined) {
+                s4mCoreMemory.lastMathLineInputFocusedOut = this;
+                console.log(S4MLParser.parse(this.value()));
+            }
         });
 
         return this;
@@ -458,7 +466,7 @@ class MathLineInput {
     }
 
     public getCursorConfigurationWithCursorAndAnticursorFusion(): CursorConfiguration {
-        let retCursorConfiguration: CursorConfiguration = this.getCursorConfiguration();
+        const retCursorConfiguration: CursorConfiguration = this.getCursorConfiguration();
 
         if (this.AreCursorAndAnticursorAtSameLocation(retCursorConfiguration)) {
             delete retCursorConfiguration.anticursor;

@@ -24,6 +24,7 @@ main:
 	./src/Interface_JQueryElement.ts \
 	./src/Interface_MathLineInput.ts \
 	./src/Class_MathObj.ts \
+	./src/Class_S4MCoreMemory.ts \
 	./src/main.ts
 
 S4MLParser:

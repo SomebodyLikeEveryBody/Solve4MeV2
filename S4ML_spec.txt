@@ -14,7 +14,7 @@ on tape dans une MathLineInput une declaration let x = 42
     a déjà été déclaré préalablement
 
 ==> si je reviens sur le premier MathLineInput où j'ai déclaré x, et que je change sa valeur ==> ca doit modifier la valeur dans
-    S4MCoreMemory 
+    S4MCoreMemory
 
 ==> Si je supprime la mathLineInput qui contenait une definition de variable qui a été processée ==> ca delete l'entrée dans S4MCoreMemory
 

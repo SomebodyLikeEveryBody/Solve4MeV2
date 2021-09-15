@@ -144,24 +144,35 @@
         peg$c0 = "\\text{Let}",
         peg$c1 = peg$literalExpectation("\\text{Let}", false),
         peg$c2 = function(newVarName, affectationOperator, mathObjAffected) {
-           console.log('Declaration');
-           console.log('------------');
-           console.log('VarName: [' + newVarName + ']');
-           console.log('Operator: ['+ affectationOperator +']');
-           console.log('Affected: ['+ mathObjAffected +']');
+           // console.log('Declaration');
+           // console.log('------------');
+           // console.log('VarName: [' + newVarName + ']');
+           // console.log('Operator: ['+ affectationOperator +']');
+           // console.log('Affected: ['+ mathObjAffected +']');
+
+           console.log(s4mCoreMemory);
+
+           const newMemoryElement = {
+              declaringMathLineInput: s4mCoreMemory.lastMathLineInputFocusedOut,
+              varName: newVarName,
+              varValue: mathObjAffected;
+              processedVarValue: new MathObj();
+           }
+
+           s4mCoreMemory.setVar(newMemoryElement, s4mCoreMemory.lastMathLineInputFocusedOut);
         },
         peg$c3 = "\\text{Given}",
         peg$c4 = peg$literalExpectation("\\text{Given}", false),
         peg$c5 = function(statement) {
-           console.log('Constraint');
-           console.log('----------');
-           console.log('Statement' + statement + ']');
+           // console.log('Constraint');
+           // console.log('----------');
+           // console.log('Statement' + statement + ']');
         },
         peg$c6 = peg$anyExpectation(),
         peg$c7 = function(value) {
-           console.log('Instruction');
-           console.log('-----------');
-           console.log(value.join(''))
+           // console.log('Instruction');
+           // console.log('-----------');
+           // console.log(value.join(''))
 
            return (value.join(''));
         },

@@ -1,23 +1,34 @@
 start = Declaration / Constraint / Instruction
 
 Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
-   console.log('Declaration');
-   console.log('------------');
-   console.log('VarName: [' + newVarName + ']');
-   console.log('Operator: ['+ affectationOperator +']');
-   console.log('Affected: ['+ mathObjAffected +']');
+   // console.log('Declaration');
+   // console.log('------------');
+   // console.log('VarName: [' + newVarName + ']');
+   // console.log('Operator: ['+ affectationOperator +']');
+   // console.log('Affected: ['+ mathObjAffected +']');
+
+   console.log(s4mCoreMemory);
+
+   const newMemoryElement = {
+      declaringMathLineInput: s4mCoreMemory.lastMathLineInputFocusedOut,
+      varName: newVarName,
+      varValue: mathObjAffected;
+      processedVarValue: new MathObj();
+   }
+
+   s4mCoreMemory.setVar(newMemoryElement, s4mCoreMemory.lastMathLineInputFocusedOut);
 }
 
 Constraint = _ "\\text{Given}" __ _ statement:Statement {
-   console.log('Constraint');
-   console.log('----------');
-   console.log('Statement' + statement + ']');
+   // console.log('Constraint');
+   // console.log('----------');
+   // console.log('Statement' + statement + ']');
 }
 
 Instruction = value:.+ {
-   console.log('Instruction');
-   console.log('-----------');
-   console.log(value.join(''))
+   // console.log('Instruction');
+   // console.log('-----------');
+   // console.log(value.join(''))
 
    return (value.join(''));
 }

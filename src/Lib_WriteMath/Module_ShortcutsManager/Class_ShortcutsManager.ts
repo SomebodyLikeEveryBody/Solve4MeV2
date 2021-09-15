@@ -174,8 +174,6 @@ class ShortcutsManager {
             //ctrl + N
             case KeyCodes.N_KEY:
                 pEventObj.preventDefault();
-                // this._mathLineInput.writeLatexAtCursorPosition("\\text{N}")
-                console.log('ok');
                 break;
 
             //ctrl + up arrow ==> delete if empty and focus down
@@ -219,7 +217,6 @@ class ShortcutsManager {
     }
 
     protected bindAltShortcuts(pEventObj: EventObject): void {
-        console.log(pEventObj.which);
         switch (pEventObj.which) {
 
             //alt + D

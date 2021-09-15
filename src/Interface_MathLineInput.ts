@@ -1,4 +1,3 @@
-declare var MathQuill: any;
 declare function $(pStr: String): JQueryElement;
 
 interface MathLineInput {

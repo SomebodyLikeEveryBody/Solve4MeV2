@@ -1,1 +1,1 @@
-console.log('pouet');
+const s4mCoreMemory = new S4MCoreMemory();

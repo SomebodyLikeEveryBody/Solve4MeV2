@@ -594,6 +594,11 @@ var MathLineInput = /** @class */ (function () {
             _this._undoRedoManager.setSpecialKeysToUp();
             _this._shortcutsManager.setSpecialKeysToUp();
             _this.setStyle();
+            // S4M interactions:
+            if (!_this.isEmpty() && S4MLParser !== undefined && s4mCoreMemory !== undefined) {
+                s4mCoreMemory.lastMathLineInputFocusedOut = _this;
+                console.log(S4MLParser.parse(_this.value()));
+            }
         });
         return this;
     };
@@ -1274,8 +1279,6 @@ var ShortcutsManager = /** @class */ (function () {
             //ctrl + N
             case KeyCodes.N_KEY:
                 pEventObj.preventDefault();
-                // this._mathLineInput.writeLatexAtCursorPosition("\\text{N}")
-                console.log('ok');
                 break;
             //ctrl + up arrow ==> delete if empty and focus down
             case KeyCodes.UPARROW_KEY:
@@ -1312,7 +1315,6 @@ var ShortcutsManager = /** @class */ (function () {
         }
     };
     ShortcutsManager.prototype.bindAltShortcuts = function (pEventObj) {
-        console.log(pEventObj.which);
         switch (pEventObj.which) {
             //alt + D
             case KeyCodes.D_KEY:
