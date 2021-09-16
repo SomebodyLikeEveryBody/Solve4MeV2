@@ -375,9 +375,14 @@ class ShortcutsManager {
                 this._mathLineInput.writeLatexAtCursorPosition(']');
                 break;
 
+            //alt + 8
+            case KeyCodes.N8_KEY:
+                this._mathLineInput.appendCmdAtCursorPosition('\\infinity');
+                break;
+
             //alt + 9
             case KeyCodes.N9_KEY:
-                this._mathLineInput.appendCmdAtCursorPosition('\\infinity');
+                this._mathLineInput.writeLatexAtCursorPosition('\\text{°}');
                 break;
 
             //alt + 7

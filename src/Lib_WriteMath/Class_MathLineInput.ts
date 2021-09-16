@@ -14,6 +14,7 @@ class MathLineInput {
     protected _container: JQueryElement;
     protected _saverNOpenerStateManager: SaverNOpenerStateManager;
     protected _mathField: any;
+    protected _lastValueBeforeFocusOut: String;
 
     public constructor(pContainer: JQueryElement, pSaverNOpenerStateManager: SaverNOpenerStateManager) {
         this._jQEl = $('<p class="mathLineInput"></p>');
@@ -22,6 +23,7 @@ class MathLineInput {
         this._isDeletable = true;
         this._container = pContainer;
         this._saverNOpenerStateManager = pSaverNOpenerStateManager;
+        this._lastValueBeforeFocusOut = "";
 
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl[0], {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda mu nu pi rho sigma tau phi Phi chi psi Psi omega Omega',
@@ -178,6 +180,10 @@ class MathLineInput {
         return this;
     }
 
+    public hasBeenModifiedSinceLastFocusOut(): Boolean {
+        return (this.value() !== this._lastValueBeforeFocusOut);
+    }
+
     public createNewMathLineInputAndAppendBefore(pMathLineInput: MathLineInput): MathLineInput {
         const newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
               newMathLineInput.insertBefore(pMathLineInput.jQEl);
@@ -326,12 +332,21 @@ class MathLineInput {
             this._undoRedoManager.setSpecialKeysToUp();
             this._shortcutsManager.setSpecialKeysToUp();
             this.setStyle();
-
+            
             // S4M interactions:
-            if (!this.isEmpty() && S4MLParser !== undefined && s4mCoreMemory !== undefined) {
-                s4mCoreMemory.lastMathLineInputFocusedOut = this;
-                console.log(S4MLParser.parse(this.value()));
+            if (this.hasBeenModifiedSinceLastFocusOut()) {
+                if (S4MLParser !== undefined && s4mCoreMemory !== undefined) {
+                    s4mCoreMemory.lastMathLineInputFocusedOut = this;
+                    s4mCoreMemory.removeAllProducedBy(this);
+                    if (!this.isEmpty()) {
+                        console.log('parser Output:');
+                        console.log(S4MLParser.parse(this.value()));
+                        console.log('-------------');
+                    }
+                }
             }
+
+            this._lastValueBeforeFocusOut = this.value();
         });
 
         return this;

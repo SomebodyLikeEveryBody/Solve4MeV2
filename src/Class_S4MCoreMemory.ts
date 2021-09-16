@@ -59,6 +59,11 @@ class S4MCoreMemory {
         return this;
     }
 
+    public removeAllProducedBy(pMathLineInput: MathLineInput): S4MCoreMemory{
+        this.removeVarDeclaredBy(pMathLineInput);
+        return this;
+    }
+
     getMathLineInputwhichDeclared(pVarName: String): MathLineInput {
         if (this.hasAVarNamed(pVarName)) {
             for (let s4mMemoryElement of this._declaredVars) {

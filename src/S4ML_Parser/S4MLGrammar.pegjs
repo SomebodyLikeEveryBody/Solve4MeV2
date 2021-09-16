@@ -7,14 +7,12 @@ Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectati
    // console.log('Operator: ['+ affectationOperator +']');
    // console.log('Affected: ['+ mathObjAffected +']');
 
-   console.log(s4mCoreMemory);
-
    const newMemoryElement = {
       declaringMathLineInput: s4mCoreMemory.lastMathLineInputFocusedOut,
       varName: newVarName,
-      varValue: mathObjAffected;
-      processedVarValue: new MathObj();
-   }
+      varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
+      processedVarValue: new MathObj()
+   };
 
    s4mCoreMemory.setVar(newMemoryElement, s4mCoreMemory.lastMathLineInputFocusedOut);
 }

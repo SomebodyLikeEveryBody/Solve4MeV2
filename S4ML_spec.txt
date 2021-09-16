@@ -259,4 +259,19 @@ constantes:
 
 \\text{Na} = nombre d'avogadro
 \\text{k} = constante de Boltzman
-\\text{} = 
+
+\\mathbb{N} = ensemble N
+\\mathbb{Z} = ensemble Z
+\\mathbb{Q} = ensemble Q
+\\mathbb{R} = ensemble R
+\\mathbb{C} = ensemble C
+
+
+\\text{d} = opérateur différentiel
+\\text{d}_{x} = opérateur différentiel par rapport à la variable x
+
+
+
+
+
+

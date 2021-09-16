@@ -328,6 +328,7 @@ var MathLineInput = /** @class */ (function () {
         this._isDeletable = true;
         this._container = pContainer;
         this._saverNOpenerStateManager = pSaverNOpenerStateManager;
+        this._lastValueBeforeFocusOut = "";
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl[0], {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda mu nu pi rho sigma tau phi Phi chi psi Psi omega Omega',
             autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool',
@@ -478,6 +479,9 @@ var MathLineInput = /** @class */ (function () {
         this._shortcutsManager.setCtrlToDown();
         return this;
     };
+    MathLineInput.prototype.hasBeenModifiedSinceLastFocusOut = function () {
+        return (this.value() !== this._lastValueBeforeFocusOut);
+    };
     MathLineInput.prototype.createNewMathLineInputAndAppendBefore = function (pMathLineInput) {
         var newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
         newMathLineInput.insertBefore(pMathLineInput.jQEl);
@@ -595,10 +599,18 @@ var MathLineInput = /** @class */ (function () {
             _this._shortcutsManager.setSpecialKeysToUp();
             _this.setStyle();
             // S4M interactions:
-            if (!_this.isEmpty() && S4MLParser !== undefined && s4mCoreMemory !== undefined) {
-                s4mCoreMemory.lastMathLineInputFocusedOut = _this;
-                console.log(S4MLParser.parse(_this.value()));
+            if (_this.hasBeenModifiedSinceLastFocusOut()) {
+                if (S4MLParser !== undefined && s4mCoreMemory !== undefined) {
+                    s4mCoreMemory.lastMathLineInputFocusedOut = _this;
+                    s4mCoreMemory.removeAllProducedBy(_this);
+                    if (!_this.isEmpty()) {
+                        console.log('parser Output:');
+                        console.log(S4MLParser.parse(_this.value()));
+                        console.log('-------------');
+                    }
+                }
             }
+            _this._lastValueBeforeFocusOut = _this.value();
         });
         return this;
     };
@@ -1443,9 +1455,13 @@ var ShortcutsManager = /** @class */ (function () {
             case KeyCodes.CLOSEHOOK_KEY:
                 this._mathLineInput.writeLatexAtCursorPosition(']');
                 break;
+            //alt + 8
+            case KeyCodes.N8_KEY:
+                this._mathLineInput.appendCmdAtCursorPosition('\\infinity');
+                break;
             //alt + 9
             case KeyCodes.N9_KEY:
-                this._mathLineInput.appendCmdAtCursorPosition('\\infinity');
+                this._mathLineInput.writeLatexAtCursorPosition('\\text{°}');
                 break;
             //alt + 7
             case KeyCodes.N7_KEY:

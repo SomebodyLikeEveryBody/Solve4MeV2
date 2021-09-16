@@ -46,6 +46,10 @@ var S4MCoreMemory = /** @class */ (function () {
         this._declaringMathLineInputs = this._declaringMathLineInputs.filter(function (mathLineInput) { return (mathLineInput !== pMathLineInput); });
         return this;
     };
+    S4MCoreMemory.prototype.removeAllProducedBy = function (pMathLineInput) {
+        this.removeVarDeclaredBy(pMathLineInput);
+        return this;
+    };
     S4MCoreMemory.prototype.getMathLineInputwhichDeclared = function (pVarName) {
         if (this.hasAVarNamed(pVarName)) {
             for (var _i = 0, _a = this._declaredVars; _i < _a.length; _i++) {
