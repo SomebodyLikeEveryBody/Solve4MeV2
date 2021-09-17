@@ -36,6 +36,15 @@ var S4MCoreMemory = /** @class */ (function () {
         var filtered = this._declaredVars.filter(function (s4mMemoryElement) { return (s4mMemoryElement.varName === pVarName); });
         return (filtered.length !== 0);
     };
+    S4MCoreMemory.prototype.getMathLineInputWhichDeclared = function (pVarName) {
+        for (var _i = 0, _a = this._declaredVars; _i < _a.length; _i++) {
+            var memoryElement = _a[_i];
+            if (memoryElement.varName === pVarName) {
+                return memoryElement.declaringMathLineInput;
+            }
+        }
+        return null;
+    };
     S4MCoreMemory.prototype.addVar = function (pMemoryElement, pMathLineInput) {
         this._declaringMathLineInputs.push(pMathLineInput);
         this._declaredVars.push(pMemoryElement);

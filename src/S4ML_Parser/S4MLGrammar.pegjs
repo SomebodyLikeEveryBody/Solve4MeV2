@@ -7,14 +7,23 @@ Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectati
    // console.log('Operator: ['+ affectationOperator +']');
    // console.log('Affected: ['+ mathObjAffected +']');
 
-   const newMemoryElement = {
-      declaringMathLineInput: s4mCoreMemory.lastMathLineInputFocusedOut,
-      varName: newVarName,
-      varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
-      processedVarValue: new MathObj()
-   };
+   const processedMathLineInput = s4mCoreMemory.lastMathLineInputFocusedOut;
 
-   s4mCoreMemory.setVar(newMemoryElement, s4mCoreMemory.lastMathLineInputFocusedOut);
+   if (!s4mCoreMemory.hasAVarNamed(newVarName) || s4mCoreMemory.getMathLineInputWhichDeclared(newVarName) === processedMathLineInput) {
+      const newMemoryElement = {
+         declaringMathLineInput: s4mCoreMemory.lastMathLineInputFocusedOut,
+         varName: newVarName,
+         varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
+         processedVarValue: new MathObj()
+      };
+
+      s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
+      
+   } else {
+      console.log('Declaring a var already declared');
+   }
+
+   
 }
 
 Constraint = _ "\\text{Given}" __ _ statement:Statement {

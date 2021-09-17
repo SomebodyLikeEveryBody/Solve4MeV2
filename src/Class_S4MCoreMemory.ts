@@ -46,6 +46,17 @@ class S4MCoreMemory {
         return (filtered.length !== 0);
     }
 
+    public getMathLineInputWhichDeclared(pVarName: String): MathLineInput {
+        for (let memoryElement of this._declaredVars) {
+            if (memoryElement.varName === pVarName) {
+                return memoryElement.declaringMathLineInput;
+            }
+        }
+
+        return null;
+    }
+    
+
     public addVar(pMemoryElement: S4MMemoryElement, pMathLineInput: MathLineInput): S4MCoreMemory {
         this._declaringMathLineInputs.push(pMathLineInput);
         this._declaredVars.push(pMemoryElement);
