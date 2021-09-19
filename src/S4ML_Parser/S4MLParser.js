@@ -161,6 +161,7 @@
               };
 
               s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
+              
            } else {
               console.log('Declaring a var already declared');
            }

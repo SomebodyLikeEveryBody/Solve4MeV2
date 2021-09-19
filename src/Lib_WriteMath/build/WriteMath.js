@@ -769,6 +769,12 @@ var MathLineInput = /** @class */ (function () {
         }
         return false;
     };
+    MathLineInput.prototype.isAnUnprocessedLine = function () {
+        if (this.value().substr(0, 8) === '\\vdash\\ ') {
+            return true;
+        }
+        return false;
+    };
     MathLineInput.prototype.isASeparatorLine = function () {
         return this.value() == '--';
     };
@@ -788,7 +794,14 @@ var MathLineInput = /** @class */ (function () {
         return (this.value().substr(0, 18) === "\\text{Graph}\\left(");
     };
     MathLineInput.prototype.stopBeingAGivenLine = function () {
-        this.shiftKeywordInField('Given');
+        if (this.isAGivenLine()) {
+            this.shiftKeywordInField('Given');
+            this.saveUndoRedoState();
+        }
+        return this;
+    };
+    MathLineInput.prototype.stopBeingAnUnprocessedLine = function () {
+        this.shiftLatexInField('\\vdash\\ ');
         return this;
     };
     MathLineInput.prototype.stopBeingALetLine = function () {
@@ -809,6 +822,12 @@ var MathLineInput = /** @class */ (function () {
                 this.stopBeingALetLine();
             }
             this.prependToFieldKeyword('Given');
+        }
+        return this;
+    };
+    MathLineInput.prototype.becomeAnUnprocessedLine = function () {
+        if (!this.isAnUnprocessedLine()) {
+            this.prependToFieldLatex('\\vdash\\ ');
         }
         return this;
     };
@@ -844,6 +863,28 @@ var MathLineInput = /** @class */ (function () {
             cursorConfiguration.anticursor = __spreadArray(["endsL", "L", "L"], cursorConfiguration.anticursor.slice(1));
         }
         this.setValue(keyWordInLatex + this.value());
+        this.setCursorConfiguration(cursorConfiguration);
+        this.saveUndoRedoState();
+        return this;
+    };
+    MathLineInput.prototype.prependToFieldLatex = function (pLatexKeyword) {
+        var cursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
+        cursorConfiguration.cursor = __spreadArray(["endsL", "L", "L"], cursorConfiguration.cursor.slice(1));
+        if (cursorConfiguration.anticursor) {
+            cursorConfiguration.anticursor = __spreadArray(["endsL", "L", "L"], cursorConfiguration.anticursor.slice(1));
+        }
+        this.setValue(pLatexKeyword.valueOf() + this.value());
+        this.setCursorConfiguration(cursorConfiguration);
+        this.saveUndoRedoState();
+        return this;
+    };
+    MathLineInput.prototype.shiftLatexInField = function (pLatexKeyword) {
+        var cursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
+        cursorConfiguration.cursor = __spreadArray(["endsL"], cursorConfiguration.cursor.slice(3));
+        if (cursorConfiguration.anticursor) {
+            cursorConfiguration.anticursor = __spreadArray(["endsL"], cursorConfiguration.anticursor.slice(3));
+        }
+        this.setValue(this.value().slice(pLatexKeyword.length));
         this.setCursorConfiguration(cursorConfiguration);
         this.saveUndoRedoState();
         return this;
@@ -1287,6 +1328,17 @@ var ShortcutsManager = /** @class */ (function () {
                 else {
                     this._mathLineInput.becomeALetLine();
                 }
+                break;
+            //ctrl + ;
+            case KeyCodes.SEMICOLON_KEY:
+                pEventObj.preventDefault();
+                if (this._mathLineInput.isAnUnprocessedLine()) {
+                    this._mathLineInput.stopBeingAnUnprocessedLine();
+                }
+                else {
+                    this._mathLineInput.becomeAnUnprocessedLine();
+                }
+                //this._mathLineInput.appendValueAtCursorPosition('\\vdash ');
                 break;
             //ctrl + N
             case KeyCodes.N_KEY:

@@ -171,6 +171,18 @@ class ShortcutsManager {
 
                 break;
 
+            //ctrl + ;
+            case KeyCodes.SEMICOLON_KEY:
+                pEventObj.preventDefault();
+                if (this._mathLineInput.isAnUnprocessedLine()) {
+                    this._mathLineInput.stopBeingAnUnprocessedLine();
+                } else {
+                    this._mathLineInput.becomeAnUnprocessedLine();
+                }
+
+                //this._mathLineInput.appendValueAtCursorPosition('\\vdash ');
+                break;
+
             //ctrl + N
             case KeyCodes.N_KEY:
                 pEventObj.preventDefault();

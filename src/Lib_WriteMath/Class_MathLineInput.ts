@@ -520,6 +520,14 @@ class MathLineInput {
         return false;
     }
 
+    public isAnUnprocessedLine(): Boolean {
+        if (this.value().substr(0, 8) === '\\vdash\\ ') {
+            return true;
+        }
+
+        return false;
+    }
+
     public isASeparatorLine(): Boolean {
         return this.value() == '--';
     }
@@ -545,9 +553,18 @@ class MathLineInput {
     }
 
     public stopBeingAGivenLine(): MathLineInput {
-        this.shiftKeywordInField('Given');
+        if  (this.isAGivenLine()) {
+            this.shiftKeywordInField('Given');
+            this.saveUndoRedoState();
+        }
+        
         return this;
     }
+
+    public stopBeingAnUnprocessedLine(): MathLineInput {
+        this.shiftLatexInField('\\vdash\\ ');
+        return this;
+    }s
 
     public stopBeingALetLine(): MathLineInput {
         this.shiftKeywordInField('Let');
@@ -576,6 +593,15 @@ class MathLineInput {
         return this;
     }
 
+    
+    public becomeAnUnprocessedLine(): MathLineInput {
+        if (!this.isAnUnprocessedLine()) {
+            this.prependToFieldLatex('\\vdash\\ ');
+        }
+
+        return this;
+    }
+
     public becomeALetLine(): MathLineInput {
         if (!(this.isALetLine())) {
             if (this.isAGivenLine()) {
@@ -591,7 +617,7 @@ class MathLineInput {
     public becomeAPrintLine(): MathLineInput {
         if (!(this.isAPrintLine())) {
             this.setValue("\\text{Print}\\left(" + this.value() + "\\right)");
-            this.saveUndoRedoState();    
+            this.saveUndoRedoState();
         }
 
         return this;
@@ -616,6 +642,37 @@ class MathLineInput {
         }
 
         this.setValue(keyWordInLatex + this.value());
+        this.setCursorConfiguration(cursorConfiguration);
+        this.saveUndoRedoState();
+
+        return this;
+    }
+
+    public prependToFieldLatex(pLatexKeyword: String): MathLineInput {
+        const cursorConfiguration: CursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
+
+        cursorConfiguration.cursor = ["endsL", "L", "L", ...cursorConfiguration.cursor.slice(1)];
+        if (cursorConfiguration.anticursor) {
+            cursorConfiguration.anticursor = ["endsL", "L", "L", ...cursorConfiguration.anticursor.slice(1)];
+        }
+
+        this.setValue(pLatexKeyword.valueOf() + this.value());
+        this.setCursorConfiguration(cursorConfiguration);
+        this.saveUndoRedoState();
+
+        return this;
+    }
+
+    
+    public shiftLatexInField(pLatexKeyword: String): MathLineInput {
+        const cursorConfiguration: CursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
+
+        cursorConfiguration.cursor = ["endsL", ...cursorConfiguration.cursor.slice(3)];
+        if (cursorConfiguration.anticursor) {
+            cursorConfiguration.anticursor = ["endsL", ...cursorConfiguration.anticursor.slice(3)];
+        }
+        
+        this.setValue(this.value().slice(pLatexKeyword.length));
         this.setCursorConfiguration(cursorConfiguration);
         this.saveUndoRedoState();
 
