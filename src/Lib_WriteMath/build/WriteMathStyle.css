@@ -46,6 +46,12 @@
     height: 2px;
 }
 
+.errorLine
+{
+    background-color: #9d0000;
+    color: white;
+}
+
 #SaverNOpenerStateManager
 {
     position: absolute;

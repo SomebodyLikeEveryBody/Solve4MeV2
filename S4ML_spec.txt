@@ -1,3 +1,9 @@
+todo:
+----
+- faire le systeme qui permet de notifier une mathlineinput en error
+- faire le responsive pour la version mobile
+- faire un clavier visuel pour la version mobile
+
 13/09/2021:
 ----------
 Bon ya des galere, il va falloir pas mal de cerveau:

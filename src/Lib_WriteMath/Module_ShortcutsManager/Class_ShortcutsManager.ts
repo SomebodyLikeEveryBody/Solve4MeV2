@@ -155,9 +155,9 @@ class ShortcutsManager {
                 }
                 break;
 
-                //ctrl + *
-                case KeyCodes.N8_KEY:
-                this._mathLineInput.appendCmdAtCursorPosition('\\star');
+            //ctrl + 8
+            case KeyCodes.N8_KEY:
+                this._mathLineInput.appendCmdAtCursorPosition('\\infinity');
                 break;
 
             //ctrl + L
@@ -389,7 +389,7 @@ class ShortcutsManager {
 
             //alt + 8
             case KeyCodes.N8_KEY:
-                this._mathLineInput.appendCmdAtCursorPosition('\\infinity');
+                this._mathLineInput.appendCmdAtCursorPosition('\\ast');
                 break;
 
             //alt + 9

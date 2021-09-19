@@ -389,6 +389,16 @@ var MathLineInput = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(MathLineInput.prototype, "isErrored", {
+        get: function () {
+            return this._isErrored;
+        },
+        set: function (pValue) {
+            this._isErrored = pValue;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(MathLineInput.prototype, "previousMathLineInput", {
         get: function () {
             return this._previousMathLineInput;
@@ -597,19 +607,17 @@ var MathLineInput = /** @class */ (function () {
             _this._autoCompleter.hide();
             _this._undoRedoManager.setSpecialKeysToUp();
             _this._shortcutsManager.setSpecialKeysToUp();
-            _this.setStyle();
             // S4M interactions:
-            if (_this.hasBeenModifiedSinceLastFocusOut()) {
-                if (S4MLParser !== undefined && s4mCoreMemory !== undefined) {
-                    s4mCoreMemory.lastMathLineInputFocusedOut = _this;
-                    s4mCoreMemory.removeAllProducedBy(_this);
-                    if (!_this.isEmpty()) {
-                        console.log('parser Output:');
-                        console.log(S4MLParser.parse(_this.value()));
-                        console.log('-------------');
-                    }
+            if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
+                g_s4mCoreMemory.lastMathLineInputFocusedOut = _this;
+                if (_this.hasBeenModifiedSinceLastFocusOut()) {
+                    g_s4mCoreMemory.removeAllProducedBy(_this);
+                    console.log('parser Output:');
+                    console.log(S4MLParser.parse(_this.value()));
+                    console.log('-------------');
                 }
             }
+            _this.setStyle();
             _this._lastValueBeforeFocusOut = _this.value();
         });
         return this;
@@ -644,6 +652,12 @@ var MathLineInput = /** @class */ (function () {
         }
         else {
             this._jQEl.removeClass('emptyLine');
+        }
+        if (this.isErrored === true) {
+            this._jQEl.addClass('errorLine');
+        }
+        else {
+            this._jQEl.removeClass('errorLine');
         }
         return this;
     };
@@ -1315,9 +1329,9 @@ var ShortcutsManager = /** @class */ (function () {
                     this._mathLineInput.becomeAGivenLine();
                 }
                 break;
-            //ctrl + *
+            //ctrl + 8
             case KeyCodes.N8_KEY:
-                this._mathLineInput.appendCmdAtCursorPosition('\\star');
+                this._mathLineInput.appendCmdAtCursorPosition('\\infinity');
                 break;
             //ctrl + L
             case KeyCodes.L_KEY:
@@ -1509,7 +1523,7 @@ var ShortcutsManager = /** @class */ (function () {
                 break;
             //alt + 8
             case KeyCodes.N8_KEY:
-                this._mathLineInput.appendCmdAtCursorPosition('\\infinity');
+                this._mathLineInput.appendCmdAtCursorPosition('\\ast');
                 break;
             //alt + 9
             case KeyCodes.N9_KEY:

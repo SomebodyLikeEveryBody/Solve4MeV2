@@ -1,4 +1,4 @@
-start = Declaration / Constraint / Instruction
+start = Declaration / Constraint / Instruction / CommentaryLine / EmptyLine
 
 Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
    // console.log('Declaration');
@@ -7,23 +7,21 @@ Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectati
    // console.log('Operator: ['+ affectationOperator +']');
    // console.log('Affected: ['+ mathObjAffected +']');
 
-   const processedMathLineInput = s4mCoreMemory.lastMathLineInputFocusedOut;
+   const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
 
-   if (!s4mCoreMemory.hasAVarNamed(newVarName) || s4mCoreMemory.getMathLineInputWhichDeclared(newVarName) === processedMathLineInput) {
+   if (!g_s4mCoreMemory.hasAVarNamed(newVarName) || g_s4mCoreMemory.getMathLineInputWhichDeclared(newVarName) === processedMathLineInput) {
       const newMemoryElement = {
-         declaringMathLineInput: s4mCoreMemory.lastMathLineInputFocusedOut,
+         declaringMathLineInput: g_s4mCoreMemory.lastMathLineInputFocusedOut,
          varName: newVarName,
          varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
          processedVarValue: new MathObj()
       };
 
-      s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
+      g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
       
    } else {
       console.log('Declaring a var already declared');
    }
-
-   
 }
 
 Constraint = _ "\\text{Given}" __ _ statement:Statement {
@@ -32,12 +30,17 @@ Constraint = _ "\\text{Given}" __ _ statement:Statement {
    // console.log('Statement' + statement + ']');
 }
 
-Instruction = value:.+ {
-   // console.log('Instruction');
-   // console.log('-----------');
-   // console.log(value.join(''))
+Instruction = firstChar:[^#] followingChars:.* {
 
-   return (value.join(''));
+   const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+   const value = firstChar + followingChars.join('');
+   if (value.indexOf('error') !== -1) {
+      processedMathLineInput.isErrored = true;
+   } else {
+      processedMathLineInput.isErrored = false;
+   }
+
+   return (value);
 }
 
 Statement = value:.+ { 
@@ -112,4 +115,14 @@ InOperator = "\\in"
 
 Constant = "\\text{" str:[A-Za-z0-9]+ "}" {
    return ("Text{" + str.join('') + "}");
+}
+
+EmptyLine = "" {
+   const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+
+   processedMathLineInput.isErrored = false;
+}
+
+CommentaryLine = "#" .* {
+   
 }

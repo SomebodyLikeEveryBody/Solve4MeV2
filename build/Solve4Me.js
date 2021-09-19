@@ -6,6 +6,7 @@ var MathObj = /** @class */ (function () {
 var S4MCoreMemory = /** @class */ (function () {
     function S4MCoreMemory() {
         this._declaringMathLineInputs = [];
+        this._errorMathLineInputs = [];
         this._declaredVars = [];
         this._lastMathLineInputFocusedOut = null;
     }
@@ -83,4 +84,59 @@ var S4MCoreMemory = /** @class */ (function () {
     };
     return S4MCoreMemory;
 }());
-var s4mCoreMemory = new S4MCoreMemory();
+var InputScren = /** @class */ (function () {
+    function InputScren(pJQueryElement, pShowHideOutputScreenButton, pOutputScren) {
+        this._jQEl = pJQueryElement;
+        this._showHideOutputScreenButton = pShowHideOutputScreenButton;
+        this._outputScreen = pOutputScren;
+        this.setEvents();
+    }
+    InputScren.prototype.setEvents = function () {
+        var _this = this;
+        this._showHideOutputScreenButton.click(function () {
+            if (_this._outputScreen.isVisible()) {
+                _this._outputScreen.hide(function () {
+                    _this._jQEl.animate({
+                        'width': '100%',
+                    }, 300);
+                });
+            }
+            else {
+                _this._jQEl.animate({
+                    'width': '50%',
+                }, 300, function () {
+                    _this._outputScreen.show();
+                });
+            }
+            g_s4mCoreMemory.lastMathLineInputFocusedOut.focus();
+        });
+        return this;
+    };
+    return InputScren;
+}());
+var OutputScreen = /** @class */ (function () {
+    function OutputScreen(pJQueryElement) {
+        this._jQEl = pJQueryElement;
+        this._isVisible = true;
+    }
+    OutputScreen.prototype.isVisible = function () {
+        return this._isVisible;
+    };
+    OutputScreen.prototype.setVisibilityTo = function (pBool) {
+        this._isVisible = pBool;
+    };
+    OutputScreen.prototype.hide = function (pFunction) {
+        this._jQEl.fadeOut(100, pFunction);
+        this.setVisibilityTo(false);
+        return this;
+    };
+    OutputScreen.prototype.show = function (pFunction) {
+        this._jQEl.fadeIn(100, pFunction);
+        this.setVisibilityTo(true);
+        return this;
+    };
+    return OutputScreen;
+}());
+var g_s4mCoreMemory = new S4MCoreMemory();
+var g_outputScreen = new OutputScreen($('#output_container'));
+var g_inputScreen = new InputScren($('#input_container'), $('#logo_container'), g_outputScreen);

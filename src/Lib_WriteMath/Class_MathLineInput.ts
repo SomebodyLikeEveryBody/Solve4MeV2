@@ -1,6 +1,6 @@
 declare const S4MLParser: any;
 declare const MathQuill: any;
-declare const s4mCoreMemory: any;
+declare const g_s4mCoreMemory: any;
 declare function $(pStr: String): JQueryElement;
 
 class MathLineInput {
@@ -15,6 +15,7 @@ class MathLineInput {
     protected _saverNOpenerStateManager: SaverNOpenerStateManager;
     protected _mathField: any;
     protected _lastValueBeforeFocusOut: String;
+    protected _isErrored: Boolean;
 
     public constructor(pContainer: JQueryElement, pSaverNOpenerStateManager: SaverNOpenerStateManager) {
         this._jQEl = $('<p class="mathLineInput"></p>');
@@ -85,6 +86,15 @@ class MathLineInput {
     public set nextMathLineInput (pMathLineInput: MathLineInput) {
         this._nextMathLineInput = pMathLineInput;
 	}
+
+    public set isErrored (pValue: Boolean) {
+        this._isErrored = pValue;
+	}
+
+    public get isErrored (): Boolean {
+        return this._isErrored;
+    }
+
 
     public get previousMathLineInput (): MathLineInput {
         return this._previousMathLineInput;
@@ -331,21 +341,21 @@ class MathLineInput {
             this._autoCompleter.hide();
             this._undoRedoManager.setSpecialKeysToUp();
             this._shortcutsManager.setSpecialKeysToUp();
-            this.setStyle();
             
             // S4M interactions:
-            if (this.hasBeenModifiedSinceLastFocusOut()) {
-                if (S4MLParser !== undefined && s4mCoreMemory !== undefined) {
-                    s4mCoreMemory.lastMathLineInputFocusedOut = this;
-                    s4mCoreMemory.removeAllProducedBy(this);
-                    if (!this.isEmpty()) {
-                        console.log('parser Output:');
-                        console.log(S4MLParser.parse(this.value()));
-                        console.log('-------------');
-                    }
+            if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
+                g_s4mCoreMemory.lastMathLineInputFocusedOut = this;
+
+                if (this.hasBeenModifiedSinceLastFocusOut()) {
+                    g_s4mCoreMemory.removeAllProducedBy(this);
+
+                    console.log('parser Output:');
+                    console.log(S4MLParser.parse(this.value()));
+                    console.log('-------------');
                 }
             }
-
+            
+            this.setStyle();
             this._lastValueBeforeFocusOut = this.value();
         });
 
@@ -381,6 +391,12 @@ class MathLineInput {
             this._jQEl.addClass('emptyLine');
         } else {
             this._jQEl.removeClass('emptyLine');
+        }
+
+        if (this.isErrored === true) {
+            this._jQEl.addClass('errorLine');
+        } else {
+            this._jQEl.removeClass('errorLine');
         }
 
         return this;

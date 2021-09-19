@@ -1,4 +1,4 @@
-.PHONY: all cleanAll S4MLParser
+.PHONY: all cleanAll S4MLParser main
 
 all: WriteMath light S4MLParser main
 	@echo ''

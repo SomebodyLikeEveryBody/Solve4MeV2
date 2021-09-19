@@ -27,11 +27,12 @@ interface JQueryElement {
     blur(pFuction: Function): JQueryElement;
     addClass(pClassName: String): JQueryElement;
     removeClass(pClassName: String): JQueryElement;
-    animate(pCssObject: Object, pTime: Number): JQueryElement;
+    animate(pCssObject: Object, pTime: Number, pFunction?: Function): JQueryElement;
     scrollTop(pValue?: Number): Number;
     height(): Number;
     outerHeight(): Number;
     text(pStr: String): JQueryElement;
     val(pStr?: String): String;
     attr(pProp: String, pBool: Boolean);
+    click(pFunction?: Function): JQueryElement;
 }
