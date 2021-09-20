@@ -1282,10 +1282,6 @@ var ShortcutsManager = /** @class */ (function () {
                     this._mathLineInput.duplicateMathLine();
                 }
                 break;
-            //ctrl + E ==> varepsilon
-            case KeyCodes.E_KEY:
-                this._mathLineInput.appendCmdAtCursorPosition('\\varepsilon');
-                break;
             //ctrl + F ==> Function()
             case KeyCodes.F_KEY:
                 pEventObj.preventDefault();

@@ -1,12 +1,16 @@
+declare var g_s4mCoreMemory: any;
+
 class InputScren {
     protected _jQEl: JQueryElement;
     protected _showHideOutputScreenButton: JQueryElement;
     protected _outputScreen: OutputScreen;
+    protected _solveButton: JQueryElement;
 
-    public constructor(pJQueryElement: JQueryElement, pShowHideOutputScreenButton: JQueryElement, pOutputScren: OutputScreen) {
+    public constructor(pJQueryElement: JQueryElement, pShowHideOutputScreenButton: JQueryElement, pOutputScren: OutputScreen, pSolveButton: JQueryElement) {
         this._jQEl = pJQueryElement;
         this._showHideOutputScreenButton = pShowHideOutputScreenButton;
         this._outputScreen = pOutputScren;
+        this._solveButton = pSolveButton;
 
         this.setEvents();
     }
@@ -17,7 +21,11 @@ class InputScren {
                 this._outputScreen.hide(() => {
                     this._jQEl.animate({
                         'width': '100%',
+                        'height': '100%',
                     }, 300);
+
+                this._solveButton.addClass('alone');
+
                 });
             } else {
                 this._jQEl.animate({
@@ -31,6 +39,11 @@ class InputScren {
 
         });
 
+        return this;
+    }
+
+    public clickOnShowHideOutputScreenButton(): InputScren {
+        this._showHideOutputScreenButton.click();
         return this;
     }
 }
@@ -67,6 +80,36 @@ class OutputScreen {
     }
 }
 
-const g_s4mCoreMemory = new S4MCoreMemory();
-const g_outputScreen = new OutputScreen($('#output_container'));
-const g_inputScreen = new InputScren($('#input_container'), $('#logo_container'), g_outputScreen);
+class KeyBoardListener {
+    protected _inputScreen: InputScren;
+    protected _outputScreen: OutputScreen;
+    protected _isCtrlDown: Boolean;
+
+    public constructor(pInputScreen: InputScren, pOutputScreen: OutputScreen) {
+        this._inputScreen = pInputScreen;
+        this._outputScreen = pOutputScreen;
+        this._isCtrlDown = false;
+        this.setEvents();
+    }
+
+    protected setEvents(): KeyBoardListener {
+        $('body').keydown((e) => {
+            if (e.which === KeyCodes.CTRL_KEY) {
+                this._isCtrlDown = true;
+            }
+
+            if (e.which === KeyCodes.E_KEY && this._isCtrlDown) {
+                e.preventDefault();
+                this._inputScreen.clickOnShowHideOutputScreenButton();
+            }
+        });
+
+        $('body').keyup((e) => {
+            if (e.which === KeyCodes.CTRL_KEY) {
+                this._isCtrlDown = false;
+            }
+        });
+
+        return this;
+    }
+}
