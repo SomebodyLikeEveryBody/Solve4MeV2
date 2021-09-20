@@ -1,8 +1,26 @@
 todo:
 ----
-- faire le systeme qui permet de notifier une mathlineinput en error
-- faire le responsive pour la version mobile
+
+- faire le responsive pour la version mobile ==> voir si ya moyen de le faire en hard, sinon si trop compliqué, a faire avec un framework genre react ==> mais possiblement react utilise import et compagnie donc ca oblige a passer par un serveur ==> cassage de l'intérêt du truc
+
 - faire un clavier visuel pour la version mobile
+
+20/09/2021:
+----------
+
+ca bosse sur le parser:
+en gros la declaration de variable c'est ok
+là il faut travailler sur ce que sont les instructions
+
+une instruction c'est:
+soit une variable ==> c'est la valeur de la variable
+soit une fonction instanciée
+soit un nombre instancié
+soit un calcul
+
+la la classe Number a ete definie mais en fait c'est des entiers
+-> definir une classe Integer et une classeFloatNumber pour expliciter la classe Number
+
 
 13/09/2021:
 ----------

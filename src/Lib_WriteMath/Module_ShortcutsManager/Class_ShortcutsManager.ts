@@ -103,6 +103,13 @@ class ShortcutsManager {
                 
                 break;
 
+            "\\text{\\backslash}"
+            //ctrl + \ ==> \
+            case KeyCodes.PIPE_KEY:
+                pEventObj.preventDefault();
+                this._mathLineInput.appendValueAtCursorPosition(' \\backslash ');
+                break;
+
             //ctrl + F ==> Function()
             case KeyCodes.F_KEY:
                 pEventObj.preventDefault();

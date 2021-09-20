@@ -612,9 +612,16 @@ var MathLineInput = /** @class */ (function () {
                 g_s4mCoreMemory.lastMathLineInputFocusedOut = _this;
                 if (_this.hasBeenModifiedSinceLastFocusOut()) {
                     g_s4mCoreMemory.removeAllProducedBy(_this);
-                    console.log('parser Output:');
-                    console.log(S4MLParser.parse(_this.value()));
-                    console.log('-------------');
+                    try {
+                        console.log('parser Output:');
+                        console.log(S4MLParser.parse(_this.value()));
+                        console.log('-------------');
+                        _this.signalNoError();
+                    }
+                    catch (e) {
+                        console.log(e.message);
+                        _this.signalError();
+                    }
                 }
             }
             _this.setStyle();
@@ -999,6 +1006,16 @@ var MathLineInput = /** @class */ (function () {
         }
         return retMathlineInput;
     };
+    MathLineInput.prototype.signalError = function () {
+        this._isErrored = true;
+        this.setStyle();
+        return this;
+    };
+    MathLineInput.prototype.signalNoError = function () {
+        this._isErrored = false;
+        this.setStyle();
+        return this;
+    };
     return MathLineInput;
 }());
 var unaffectingKeys = [
@@ -1281,6 +1298,12 @@ var ShortcutsManager = /** @class */ (function () {
                     pEventObj.preventDefault();
                     this._mathLineInput.duplicateMathLine();
                 }
+                break;
+                "\\text{\\backslash}";
+            //ctrl + \ ==> \
+            case KeyCodes.PIPE_KEY:
+                pEventObj.preventDefault();
+                this._mathLineInput.appendValueAtCursorPosition(' \\backslash ');
                 break;
             //ctrl + F ==> Function()
             case KeyCodes.F_KEY:

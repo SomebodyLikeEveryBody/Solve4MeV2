@@ -28,7 +28,7 @@ class MathLineInput {
 
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl[0], {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda mu nu pi rho sigma tau phi Phi chi psi Psi omega Omega',
-            autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool',
+            autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max',
             handlers: {
                 edit: () => {
                 },
@@ -349,9 +349,16 @@ class MathLineInput {
                 if (this.hasBeenModifiedSinceLastFocusOut()) {
                     g_s4mCoreMemory.removeAllProducedBy(this);
 
-                    console.log('parser Output:');
-                    console.log(S4MLParser.parse(this.value()));
-                    console.log('-------------');
+                    try {
+                        console.log('parser Output:');
+                        console.log(S4MLParser.parse(this.value()));
+                        console.log('-------------');
+                        this.signalNoError();
+                    } catch (e) {
+                        console.log(e.message);
+                        this.signalError();
+                    }
+                    
                 }
             }
             
@@ -817,5 +824,19 @@ class MathLineInput {
         }
 
         return retMathlineInput;
+    }
+
+    public signalError(): MathLineInput {
+        this._isErrored = true;
+        this.setStyle();
+
+        return this;
+    }
+
+    public signalNoError(): MathLineInput {
+        this._isErrored = false;
+        this.setStyle();
+
+        return this;
     }
 }

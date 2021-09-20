@@ -1,11 +1,9 @@
-start = Declaration / Constraint / Instruction / CommentaryLine / EmptyLine
+// start = Declaration / Constraint / Instruction / CommentaryLine / EmptyLine
+start = Expression
 
-Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
-   // console.log('Declaration');
-   // console.log('------------');
-   // console.log('VarName: [' + newVarName + ']');
-   // console.log('Operator: ['+ affectationOperator +']');
-   // console.log('Affected: ['+ mathObjAffected +']');
+test = .+
+
+Declaration = _ "\\text{Let}" __ _ newVarName:VarIdentifier _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
 
    const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
 
@@ -18,34 +16,119 @@ Declaration = _ "\\text{Let}" __ _ newVarName:UndefinedVarIdentifier _ affectati
       };
 
       g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
+      processedMathLineInput.signalNoError();
       
    } else {
-      console.log('Declaring a var already declared');
+      processedMathLineInput.signalError();
+      throw "Declaring a var already declared somewhere";
    }
 }
 
 Constraint = _ "\\text{Given}" __ _ statement:Statement {
-   // console.log('Constraint');
-   // console.log('----------');
-   // console.log('Statement' + statement + ']');
-}
-
-Instruction = firstChar:[^#] followingChars:.* {
-
-   const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
-   const value = firstChar + followingChars.join('');
-   if (value.indexOf('error') !== -1) {
-      processedMathLineInput.isErrored = true;
-   } else {
-      processedMathLineInput.isErrored = false;
-   }
-
-   return (value);
 }
 
 Statement = value:.+ { 
    return (value.join('')); 
 }
+
+// Instruction = _ firstChar:[^#] followingChars:.* _ {
+
+//    const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+//    const instructionValue = firstChar + followingChars.join('');
+
+//    if (instructionValue.indexOf('error') !== -1) {
+//       processedMathLineInput.isErrored = true;
+//    } else {
+//       processedMathLineInput.isErrored = false;
+//    }
+
+//    return (instructionValue);
+// }
+
+Instruction = FunctionInstanciation / Number
+
+Expression
+ = _ termHead:Term _ expressionTail:ExpressionTail* {
+      let retValue = termHead;
+
+      if (expressionTail.length !== 0) {
+         for (let val of expressionTail) {
+            retValue += val;
+         }
+      }
+
+      return retValue;
+   }
+
+ExpressionTail
+ = _ operator:Operator1 _ termTail:Term {
+    return operator + termTail
+ }
+
+Term
+  = termHead:Factor termTail:TermTail* {
+     let retValue = termHead;
+
+     if (termTail.length !== 0) {
+        for (let val of termTail) {
+           retValue += val;
+        }
+     }
+
+     return retValue;
+   }
+
+TermTail
+ = _ operator:Operator2 _ factorTail:Factor {
+    return operator + factorTail;
+  }
+
+Fraction = "\\frac{" numerator:Expression "}{" denominator:Expression "}" {
+   return "((" + numerator + ")/(" +  denominator + "))";
+}
+
+Factor
+  = "\\left(" _ expr:Expression _ "\\right)" { return "(" + expr + ")"; }
+  / Fraction
+  / Number
+  / VarAtLargeIdentifier
+
+
+
+
+
+
+Operator1 = "+" / "-"
+Operator2
+ = "\\cdot" {return "*"; }
+
+Number = Float / Integer
+
+Integer = value:[0-9]+ {
+   return value.join('');
+}
+
+Float = integer:Integer "." decimals:Integer {
+   return integer + "." + decimals;
+}
+
+FunctionInstanciation = _ "\\text{Function}\\left(_{" _ startSet:Set _ "\\rightarrow" _ endSet:Set _ "}^{" _ varName:VarIdentifier _ "\\mapsto" _ instruction:Instruction _ "}\\right)" {
+   console.log('startSet: ' + startSet);
+   console.log('endset: ' + endSet);
+   console.log('varname: ' + varName);
+   console.log('instruction: ' + instruction);
+   return ('ok')
+}
+
+Set = SetInstanciation/ MathBBSet / VarIdentifier
+
+// SetInstanciation = VarIdentifier _ "\\cup" _ VarIdentifier
+SetInstanciation = setLeft:VarIdentifier operator:SetOperator setRight:VarIdentifier {
+   return setLeft + "\\cup " + setRight;
+}
+
+// union, inter, -, X, Complementaire = E - A, difference symetrique = A - AinterB, 
+SetOperator = "\\cup " / "\\cap" / "\\backslash" / "\\times"
 
 __ "MandatoryWhiteSpace" = "\\ "
 _ "OptionnalWhiteSpaces" = "\\ "*
@@ -64,7 +147,7 @@ VectorIdentifier = "\\vec{" varIdentifier:VarIdentifier "}" {
    return ("Vector{" + varIdentifier + "}");
 }
 
-VarIdentifier = mainId:(Letter / SpecialLetter) index:IdentifierIndex? {
+VarIdentifier = mainId:(Letter / MathBBLetter / SpecialLetter) index:IdentifierIndex? {
    let retArray = [mainId];
 
    if (index !== null) {
@@ -97,8 +180,31 @@ Text = prefix:"\\text{" str:[A-Za-z0-9]+ postfix:"}" {
 
 SpecialLetter = value:("\\" [A-Za-z]+) { return (value[0] + value[1].join('')); }
 
+MathBBLetter = value:("\\mathbb{" Letter "}") {
+   return value.join('');
+}
+
+MathBBSet = mathBBLetter:MathBBLetter indice:("_" [+-])? exposant:("^{" "\\ast" "}")? {
+   let retValue = mathBBLetter;
+   if (indice !== null) {
+      retValue += indice.join('');
+   }
+
+   if (exposant !== null) {
+      retValue += exposant.join('');
+   }
+
+   return retValue;
+}
+
 UndefinedVarIdentifier = varName:VarAtLargeIdentifier { 
+   const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+
    // check if var is not already defined
+   if (g_s4mCoreMemory.hasAVarNamed(varName) && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput) {
+      console.log('ERROR');
+   }
+
    return (varName); 
 }
 
