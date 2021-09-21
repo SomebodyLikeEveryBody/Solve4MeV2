@@ -331,7 +331,7 @@ var MathLineInput = /** @class */ (function () {
         this._lastValueBeforeFocusOut = "";
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl[0], {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda mu nu pi rho sigma tau phi Phi chi psi Psi omega Omega',
-            autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool',
+            autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max',
             handlers: {
                 edit: function () {
                 },
@@ -438,6 +438,9 @@ var MathLineInput = /** @class */ (function () {
      * * * * * */
     MathLineInput.prototype.focus = function () {
         this._mathField.focus();
+        if (g_s4mCoreMemory !== undefined) {
+            g_s4mCoreMemory.currentMathLineInputFocused = this;
+        }
         return this;
     };
     MathLineInput.prototype.value = function () {

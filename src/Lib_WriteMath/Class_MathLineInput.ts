@@ -125,6 +125,11 @@ class MathLineInput {
      * * * * * */
     public focus(): MathLineInput {
         this._mathField.focus();
+
+        if (g_s4mCoreMemory !== undefined) {
+            g_s4mCoreMemory.currentMathLineInputFocused = this;
+        }
+
         return this;
     }
 

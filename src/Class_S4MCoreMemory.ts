@@ -12,13 +12,14 @@ class S4MCoreMemory {
     protected _errorMathLineInputs: MathLineInput[];            //[M1, M2, ..., Mn]
     protected _declaredVars: S4MMemoryElement[];                //[V1, V2, ..., Vn]
     protected _lastMathLineInputFocusedOut: MathLineInput;
-    protected _firstMathLineInput: MathLineInput;
+    protected _currentMathLineInputFocused: MathLineInput;
 
     public constructor(pFirstMathLineInput) {
         this._declaringMathLineInputs = [];
         this._errorMathLineInputs = [];
         this._declaredVars = [];
         this._lastMathLineInputFocusedOut = pFirstMathLineInput;
+        this._currentMathLineInputFocused = pFirstMathLineInput;
     }
 
     public get lastMathLineInputFocusedOut(): MathLineInput {
@@ -27,6 +28,14 @@ class S4MCoreMemory {
 
     public set lastMathLineInputFocusedOut(pNewMathLineInput: MathLineInput) {
         this._lastMathLineInputFocusedOut = pNewMathLineInput;
+    }
+
+    public get currentMathLineInputFocused (): MathLineInput {
+        return this._currentMathLineInputFocused;
+    }
+
+    public set currentMathLineInputFocused (pMathLineInput: MathLineInput) {
+        this._currentMathLineInputFocused = pMathLineInput;
     }
 
     public getMemoryElementCreatedBy(pMathLineInput: MathLineInput): S4MMemoryElement {

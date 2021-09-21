@@ -67,6 +67,7 @@ var S4MCoreMemory = /** @class */ (function () {
         this._errorMathLineInputs = [];
         this._declaredVars = [];
         this._lastMathLineInputFocusedOut = pFirstMathLineInput;
+        this._currentMathLineInputFocused = pFirstMathLineInput;
     }
     Object.defineProperty(S4MCoreMemory.prototype, "lastMathLineInputFocusedOut", {
         get: function () {
@@ -74,6 +75,16 @@ var S4MCoreMemory = /** @class */ (function () {
         },
         set: function (pNewMathLineInput) {
             this._lastMathLineInputFocusedOut = pNewMathLineInput;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(S4MCoreMemory.prototype, "currentMathLineInputFocused", {
+        get: function () {
+            return this._currentMathLineInputFocused;
+        },
+        set: function (pMathLineInput) {
+            this._currentMathLineInputFocused = pMathLineInput;
         },
         enumerable: false,
         configurable: true
@@ -169,7 +180,7 @@ var InputScren = /** @class */ (function () {
                     _this._outputScreen.show();
                 });
             }
-            g_s4mCoreMemory.lastMathLineInputFocusedOut.focus();
+            g_s4mCoreMemory.currentMathLineInputFocused.focus();
         });
         return this;
     };

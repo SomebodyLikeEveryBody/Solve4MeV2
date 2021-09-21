@@ -35,7 +35,7 @@ class InputScren {
                 });
             }
 
-        g_s4mCoreMemory.lastMathLineInputFocusedOut.focus();
+        g_s4mCoreMemory.currentMathLineInputFocused.focus();
 
         });
 
