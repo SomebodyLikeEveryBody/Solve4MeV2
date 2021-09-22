@@ -147,11 +147,12 @@
         peg$c3 = function(newVarName, affectationOperator, mathObjAffected) {
 
            const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+           console.log(newVarName);
 
            // if newvarName is a Function Identifier
            if (typeof (newVarName) === typeof ([])) {
-              let funcVar = newVarName[1];
-              newVarName = newVarName[0]
+              let funcVar = newVarName.functionVar;
+              newVarName = newVarName.functionName
            }
 
            if (!g_s4mCoreMemory.hasAVarNamed(newVarName) || g_s4mCoreMemory.getMathLineInputWhichDeclared(newVarName) === processedMathLineInput) {
@@ -260,11 +261,14 @@
         peg$c56 = "}\\right)",
         peg$c57 = peg$literalExpectation("}\\right)", false),
         peg$c58 = function(startSet, endSet, varName, instruction) {
-           console.log('startSet: ' + startSet);
-           console.log('endset: ' + endSet);
-           console.log('varname: ' + varName);
-           console.log('instruction: ' + instruction);
-           return ('ok')
+            let funcObj = {
+               startSet: startSet,
+               endSet: endSet,
+               varName: varName,
+               instruction: instruction
+            };
+
+           return (funcObj);
          },
         peg$c59 = function(setLeft, operator, setRight) {
               return setLeft + "\\cup " + setRight;
