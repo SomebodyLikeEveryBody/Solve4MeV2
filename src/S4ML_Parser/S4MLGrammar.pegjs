@@ -17,7 +17,6 @@ Declaration
  = _ "\\text{Let}" __ _ newVarName:(FunctionIdentifier / VarAtLargeIdentifier) _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
 
    const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
-   console.log(newVarName);
 
    // if newvarName is a Function Identifier
    if (typeof (newVarName) === typeof ([])) {
@@ -84,6 +83,7 @@ Statement
 //--------------------------------
 Instruction
  = FunctionInstanciation
+ / SetInstanciation
  / Expression
 
 Expression
@@ -185,19 +185,29 @@ Set
  / VarIdentifier
 
 SetInstanciation
-= setLeft:VarIdentifier operator:SetOperator setRight:VarIdentifier {
-      return setLeft + "\\cup " + setRight;
+= _ "\\left\\{" _ firstEl:S4MLObject _ followingEls:(_ "," _ S4MLObject)* _ "\\right\\}" {
+   let setContent = followingEls.reduce((total, currentEl) => {
+      return (total + "," + currentEl[3]);
+   }, firstEl);
+
+   return "{" + setContent + "}";
+}
+/ _ "\\left\\{\\right\\}"_  {
+   return "{}";
+}
+/ "\\varnothing" {
+   return "{}";
 }
 
 // union, inter, -, X, Complementaire = E - A, difference symetrique = A - AinterB, 
 SetOperator
- = "\\cup " 
+ = "\\cup" 
  / "\\cap" 
  / "\\backslash" 
  / "\\times"
 
 __ "MandatoryWhiteSpace" = "\\ "
-_ "OptionnalWhiteSpaces" = "\\ "*
+_ "OptionnalWhiteSpaces" = ("\\ " / " ")*
 
 
 //--------------------------------
@@ -280,6 +290,7 @@ Constant
 //--------------------------------
 S4MLObject
  = VarAtLargeIdentifier
+ / Number
 
 MathBBSet
  = mathBBLetter:MathBBLetter indice:("_" [+-])? exposant:("^{" "\\ast" "}")? {

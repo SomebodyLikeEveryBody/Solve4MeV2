@@ -1,3 +1,12 @@
+22/09/2021
+----------
+
+a priori le parser est okay pour les declarations et les instructions
+maintenant le truc c'est qu'il y a:
+- le point qui permet d'acceder à des méthodes des objets mathématiques deja declarés, genre f.isEven(), n.isPrime(), etc
+
+
+
 21/09/2021
 ----------
 
@@ -337,4 +346,10 @@ constantes:
 
 
 
+TODO:
+----
+
+- faire une fonction S4ML qui prend en argument un expression, un ensemble de variables, et qui retourne l'expression exprimée en fonction de ces variables.
+==> par exemple, j'ai Q = 4*pi*l*p/r, et l = 2*g et p = 46*g^2
+==> si on veut f(Q, {r}) ==> ca retourne Q = 368*pi*g^3/r
 
