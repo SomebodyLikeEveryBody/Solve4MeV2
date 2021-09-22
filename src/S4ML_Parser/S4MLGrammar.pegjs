@@ -1,19 +1,28 @@
-// start
-//  = Declaration 
-//  / Constraint 
-//  / Instruction 
-//  / CommentaryLine 
-//  / SeparatorLine 
-//  / UnprocessedLine
-//  / EmptyLine
-start = Expression
+start
+ = UnprocessedLine
+ / CommentaryLine
+ / SeparatorLine
+ / Declaration
+ / Constraint
+ / Instruction
+ / EmptyLine
 
+// start = FunctionIdentifier
+ 
 test = .+
 
+
+//--------------------------------
 Declaration
- = _ "\\text{Let}" __ _ newVarName:VarIdentifier _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
+ = _ "\\text{Let}" __ _ newVarName:(FunctionIdentifier / VarAtLargeIdentifier) _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
 
    const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+
+   // if newvarName is a Function Identifier
+   if (typeof (newVarName) === typeof ([])) {
+      let funcVar = newVarName[1];
+      newVarName = newVarName[0]
+   }
 
    if (!g_s4mCoreMemory.hasAVarNamed(newVarName) || g_s4mCoreMemory.getMathLineInputWhichDeclared(newVarName) === processedMathLineInput) {
       const newMemoryElement = {
@@ -31,227 +40,6 @@ Declaration
       throw "Declaring a var already declared somewhere";
    }
 }
-
-Constraint
- = _ "\\text{Given}" __ _ statement:Statement {
-   }
-
-Statement
- = value:.+ { 
-      return (value.join('')); 
-   }
-
-// Instruction = _ firstChar:[^#] followingChars:.* _ {
-
-//    const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
-//    const instructionValue = firstChar + followingChars.join('');
-
-//    if (instructionValue.indexOf('error') !== -1) {
-//       processedMathLineInput.isErrored = true;
-//    } else {
-//       processedMathLineInput.isErrored = false;
-//    }
-
-//    return (instructionValue);
-// }
-
-Instruction = FunctionInstanciation / Number
-
-Expression
- = _ termHead:Term _ expressionTail:ExpressionTail* {
-      let retValue = termHead;
-
-      if (expressionTail.length !== 0) {
-         for (let val of expressionTail) {
-            retValue += val;
-         }
-      }
-
-      return retValue;
-   }
-
-ExpressionTail
- = _ operator:Operator_plusorminus _ termTail:Term {
-    return operator + termTail
- }
-
-Term
- = termHead:Factor termTail:(TermTail_pow / TermTail_multiply)* {
-     let retValue = termHead;
-
-     if (termTail.length !== 0) {
-        for (let val of termTail) {
-           retValue += val;
-        }
-     }
-
-     return retValue;
- }
-
-TermTail_multiply
- = _ operator:Operator_multiply _ factorTail:Factor {
-    return operator + factorTail;
- }
-
-TermTail_pow
- = _ operator:OperatorPow "{"? _ exponent:Expression "}"? {
-    return operator + "(" + exponent + ")";
- }
-
-Fraction
-= "\\frac{" numerator:Expression "}{" denominator:Expression "}" {
-   return "((" + numerator + ")/(" +  denominator + "))";
-}
-
-Factor
-  = "\\left(" _ expr:Expression _ "\\right)" {
-      return "(" + expr + ")";
-  }
-  / Fraction
-  / VarAtLargeIdentifier
-  / Number
-
-
-Operator_plusorminus
- = "+" 
- / "-"
-
-Operator_multiply
- = "\\cdot " / "\\cdot" {
-      return "*";
- }
-
- OperatorPow
-  = "^"
-
-Number
-= Float
-/ Integer
-
-Integer
-= value:[0-9]+ {
-   return value.join('');
-}
-
-Float
- = integer:Integer "." decimals:Integer {
-   return integer + "." + decimals;
- }
-
-FunctionInstanciation
- = _ "\\text{Function}\\left(_{" _ startSet:Set _ "\\rightarrow" _ endSet:Set _ "}^{" _ varName:VarIdentifier _ "\\mapsto" _ instruction:Instruction _ "}\\right)" {
-   console.log('startSet: ' + startSet);
-   console.log('endset: ' + endSet);
-   console.log('varname: ' + varName);
-   console.log('instruction: ' + instruction);
-   return ('ok')
- }
-
-Set
- = SetInstanciation
- / MathBBSet 
- / VarIdentifier
-
-SetInstanciation
-= setLeft:VarIdentifier operator:SetOperator setRight:VarIdentifier {
-      return setLeft + "\\cup " + setRight;
-}
-
-// union, inter, -, X, Complementaire = E - A, difference symetrique = A - AinterB, 
-SetOperator
- = "\\cup " 
- / "\\cap" 
- / "\\backslash" 
- / "\\times"
-
-__ "MandatoryWhiteSpace" = "\\ "
-_ "OptionnalWhiteSpaces" = "\\ "*
-
-VarAtLargeIdentifier
- = FunctionIdentifier 
- / VectorIdentifier 
- / Constant 
- / VarIdentifier
-
-FunctionIdentifier
- = varName:(VectorIdentifier / VarIdentifier) functionVar:FunctionMarker {
-      return (varName + "(" + functionVar +")")
- }
-
-FunctionMarker
- = "\\left(" varName:(VectorIdentifier / VarIdentifier) "\\right)" {
-      return (varName)
- }
-
-VectorIdentifier
- = "\\vec{" varIdentifier:VarIdentifier "}" {
-      return ("Vector{" + varIdentifier + "}");
- }
-
-VarIdentifier
- = mainId:(Letter / MathBBLetter / SpecialLetter) index:IdentifierIndex? {
-      let retArray = [mainId];
-
-      if (index !== null) {
-         retArray = retArray.concat(index);
-      }
-
-      return retArray.join('_');
- }
-
-IdentifierIndex
- = SimpleIdentifierIndex 
- / ComplexIdentifierIndex
-
-SimpleIdentifierIndex
- = "_" char:Char { 
-      return ([char]);
- }
-
-ComplexIdentifierIndex
- = "_" "{" indexIdentifier:(Char / Text / SpecialLetter) nextIndex:IdentifierIndex? "}" {
-      let retArray = [indexIdentifier];
-      if (nextIndex !== null) {
-         retArray = retArray.concat(nextIndex);
-      }
-
-      return retArray;
- }
-
-Letter
- = [A-Za-z]
-
-Char
- = [A-Za-z0-9]
-
-Text
- = prefix:"\\text{" str:[A-Za-z0-9]+ postfix:"}" {
-      return prefix + str.join('') + postfix;
- }
-
-SpecialLetter
- = value:("\\" [A-Za-z]+) {
-      return (value[0] + value[1].join('')); 
- }
-
-MathBBLetter
- = value:("\\mathbb{" Letter "}") {
-      return value.join('');
- }
-
-MathBBSet
- = mathBBLetter:MathBBLetter indice:("_" [+-])? exposant:("^{" "\\ast" "}")? {
-      let retValue = mathBBLetter;
-      if (indice !== null) {
-         retValue += indice.join('');
-      }
-
-      if (exposant !== null) {
-         retValue += exposant.join('');
-      }
-
-      return retValue;
- }
 
 UndefinedVarIdentifier
  = varName:VarAtLargeIdentifier { 
@@ -281,11 +69,229 @@ EqualOperator
 InOperator
  = "\\in"
 
+//--------------------------------
+Constraint
+ = _ "\\text{Given}" __ _ statement:Statement {
+ }
+
+Statement
+ = value:.+ { 
+      return (value.join('')); 
+ }
+
+
+//--------------------------------
+Instruction
+ = FunctionInstanciation
+ / Expression
+
+Expression
+  = head:Term tail:(_ Operator_plus _ Term)* {
+      return tail.reduce(function(result, element) {
+        return (result + element[1] + element[3]);
+      }, head);
+    }
+
+Term
+  = head:Factor tail:(_ OperatorTerm _ Factor)* {
+      return tail.reduce(function(result, element) {
+        return result + element[1] + element[3];
+      }, head);
+    }
+
+OperatorTerm
+ = Operator_minus
+ / Operator_multiply
+ / Operator_pow   
+
+Factor
+  = Factor_bracketed
+  / Fraction
+  / Factor_braced
+  / VarAtLargeIdentifier
+  / Number
+
+
+Factor_braced
+ = "{" _ expr:Expression _ "}" {
+    return ("(" + expr + ")");
+ }
+
+Factor_bracketed
+ = "\\left(" _ expr:Expression _ "\\right)" {
+      return ("(" + expr + ")");
+ }
+
+Fraction
+= "\\frac{" _ numerator:Expression _ "}{" _ denominator:Expression _ "}" {
+      return ("((" + numerator + ")/(" + denominator + "))");
+}
+
+ Operator
+  = Operator_plus
+  / Operator_minus
+  / Operator_multiply
+  / Operator_pow
+
+Operator_plus
+ = "+"
+
+Operator_minus
+ = "-"
+
+Operator_multiply
+ = ("\\cdot " / "\\cdot") {
+      return "*";
+ }
+
+ Operator_pow
+  = "^"
+
+Number
+= Float
+/ Integer
+
+Integer
+= value:[0-9]+ {
+   return value.join('');
+}
+
+Float
+ = integer:Integer "." decimals:Integer {
+   return integer + "." + decimals;
+ }
+
+
+//--------------------------------
+FunctionInstanciation
+ = _ "\\text{Function}\\left(_{" _ startSet:Set _ "\\rightarrow" _ endSet:Set _ "}^{" _ varName:(VarIdentifier / VectorIdentifier) _ "\\mapsto" _ instruction:Instruction _ "}\\right)" {
+   console.log('startSet: ' + startSet);
+   console.log('endset: ' + endSet);
+   console.log('varname: ' + varName);
+   console.log('instruction: ' + instruction);
+   return ('ok')
+ }
+
+
+
+//--------------------------------
+Set
+ = SetInstanciation
+ / MathBBSet 
+ / VarIdentifier
+
+SetInstanciation
+= setLeft:VarIdentifier operator:SetOperator setRight:VarIdentifier {
+      return setLeft + "\\cup " + setRight;
+}
+
+// union, inter, -, X, Complementaire = E - A, difference symetrique = A - AinterB, 
+SetOperator
+ = "\\cup " 
+ / "\\cap" 
+ / "\\backslash" 
+ / "\\times"
+
+__ "MandatoryWhiteSpace" = "\\ "
+_ "OptionnalWhiteSpaces" = "\\ "*
+
+
+//--------------------------------
+VarAtLargeIdentifier
+ = VectorIdentifier 
+ / Constant 
+ / VarIdentifier
+
+FunctionIdentifier
+ = funcName:(VectorIdentifier / VarIdentifier) funcVar:FunctionMarker {
+      return ({functionName: funcName, functionVar: funcVar})
+ }
+
+FunctionMarker
+ = "\\left(" varName:(VarAtLargeIdentifier) "\\right)" {
+      return (varName)
+ }
+
+VectorIdentifier
+ = "\\vec{" varIdentifier:VarIdentifier "}" {
+      return ("Vector{" + varIdentifier + "}");
+ }
+
+VarIdentifier
+ = mainId:(Letter / MathBBLetter / SpecialLetter) index:IdentifierIndex? {
+      let retArray = [mainId];
+
+      if (index !== null) {
+         retArray = retArray.concat(index);
+      }
+
+      return retArray.join('_');
+ }
+
+IdentifierIndex
+ = SimpleIdentifierIndex 
+ / ComplexIdentifierIndex
+
+SimpleIdentifierIndex
+ = "_" char:Char { 
+      return ([char]);
+ }
+
+ComplexIdentifierIndex
+ = "_" "{" indexIdentifier:(Number / Char / Text / SpecialLetter) nextIndex:IdentifierIndex? "}" {
+      let retArray = [indexIdentifier];
+      if (nextIndex !== null) {
+         retArray = retArray.concat(nextIndex);
+      }
+
+      return retArray;
+ }
+
+Letter
+ = [A-Za-z]
+
+Char
+ = [A-Za-z0-9]
+
+Text
+ = prefix:"\\text{" str:[A-Za-z0-9]+ postfix:"}" {
+      return prefix + str.join('') + postfix;
+ }
+
+SpecialLetter
+ = value:("\\" [A-Za-z]+) {
+      return (value[0] + value[1].join('')); 
+ }
+
+MathBBLetter
+ = value:("\\mathbb{" Letter "}") {
+      return value.join('');
+ }
+
 Constant
  = "\\text{" str:[A-Za-z0-9]+ "}" {
       return ("Text{" + str.join('') + "}");
  }
 
+//--------------------------------
+S4MLObject
+ = VarAtLargeIdentifier
+
+MathBBSet
+ = mathBBLetter:MathBBLetter indice:("_" [+-])? exposant:("^{" "\\ast" "}")? {
+      let retValue = mathBBLetter;
+      if (indice !== null) {
+         retValue += indice.join('');
+      }
+
+      if (exposant !== null) {
+         retValue += exposant.join('');
+      }
+
+      return retValue;
+ }
+
+//--------------------------------
 EmptyLine
  = "" {
       const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;

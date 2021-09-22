@@ -1,3 +1,42 @@
+21/09/2021
+----------
+
+C'est la galere le parser, on reprend tout depuis le debut.
+
+une instruction c'est:
+- soit un instanciation / fonction
+  - de fonction
+  - d'ensemble
+  - d'équation
+  - reunion d'ensembles, etc
+  - etc
+  ==> Qui retourne un objet mathématique (nombre, fonction, ensemble, etc)
+  ==> d'ou l'importance de bien les parser pour transformer la syntaxe intuitive (intégrale, sommme, etc) en expression utilisable par un programme
+  ==> c'est un facteur en fait, c'est a dire une unité dans une expression
+
+- soit un calcul, c'est a dire un ensemble de facteurs et des opérateurs entre ces facteurs (+, -, *, div, modulo, n'importe quel symbole entré dans le parseur comme etant des opérateurs
+
+- une expression, c'est:
+un facteur<a definir>,
+- suivi éventuellement par un opérateur puis d'un autre facteur<a definir>
+
+- facteur c'est soit:
+  - une puissance = <expression>^{expression}
+  - une fraction = \\frac{expression>}{expression}
+  - un element unitaire
+
+- un opérateur c'est:
+  - '+'
+  - '-'
+  - '*'
+  ==> on peut pas avoir le "/" parce qu'on utilise des fractions et donc la notation \\frac{num}{denom}
+  ==> pareil pour la puissance, c'est pas '**' c'est ^{expression}
+
+
+- un element unitaire, c'est soit:
+  - un nombre
+  - une variable au sens large
+
 todo:
 ----
 
