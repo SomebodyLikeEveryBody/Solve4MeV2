@@ -88,14 +88,14 @@ Instruction
 
 Expression
   = head:Term tail:(_ Operator_plus _ Term)* {
-      return tail.reduce(function(result, element) {
+      return tail.reduce((result, element) => {
         return (result + element[1] + element[3]);
       }, head);
     }
 
 Term
   = head:Factor tail:(_ OperatorTerm _ Factor)* {
-      return tail.reduce(function(result, element) {
+      return tail.reduce((result, element) => {
         return result + element[1] + element[3];
       }, head);
     }
@@ -212,9 +212,11 @@ _ "OptionnalWhiteSpaces" = ("\\ " / " ")*
 
 //--------------------------------
 VarAtLargeIdentifier
- = VectorIdentifier 
+ = varName:(VectorIdentifier 
  / Constant 
- / VarIdentifier
+ / VarIdentifier) {
+    return "<VAR[" + varName + "]>";
+ }
 
 FunctionIdentifier
  = funcName:(VectorIdentifier / VarIdentifier) funcVar:FunctionMarker {
