@@ -54,8 +54,13 @@ UndefinedVarIdentifier
  }
 
 DefinedVarIdentifier
- = varName:VarAtLargeIdentifier { 
+ = varName:VarAtLargeIdentifier {
+
       // check if var is already defined
+      if !(g_s4mCoreMemory.hasAVarNamed(varName) && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput) {
+         console.log('ERROR');
+      }
+
       return (varName); 
  }
 
