@@ -11,7 +11,6 @@ start
  
 test = .+
 
-
 //--------------------------------
 Declaration
  = _ "\\text{Let}" __ _ newVarName:(FunctionIdentifier / VarAtLargeIdentifier) _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
@@ -46,7 +45,8 @@ UndefinedVarIdentifier
       const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
 
       // check if var is not already defined
-      if (g_s4mCoreMemory.hasAVarNamed(varName) && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput) {
+      if (g_s4mCoreMemory.hasAVarNamed(varName)
+         && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput) {
          console.log('ERROR');
       }
 
@@ -57,7 +57,9 @@ DefinedVarIdentifier
  = varName:VarAtLargeIdentifier {
 
       // check if var is already defined
-      if !(g_s4mCoreMemory.hasAVarNamed(varName) && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput) {
+      if (!(
+            g_s4mCoreMemory.hasAVarNamed(varName)
+            && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput)) {
          console.log('ERROR');
       }
 
@@ -87,9 +89,12 @@ Statement
 
 //--------------------------------
 Instruction
+ = Instanciation
+ / Expression
+
+Instanciation
  = FunctionInstanciation
  / SetInstanciation
- / Expression
 
 Expression
   = head:Term tail:(_ Operator_plus _ Term)* {
@@ -190,19 +195,32 @@ Set
  / VarIdentifier
 
 SetInstanciation
-= _ "\\left\\{" _ firstEl:S4MLObject _ followingEls:(_ "," _ S4MLObject)* _ "\\right\\}" {
+ = SetInstanciationByBraces
+ / SetInstanciationByVARNOTHING
+ / SetInstanciationByHooks
+
+SetInstanciationByBraces
+ = _ "\\left\\{" _ firstEl:S4MLObject _ followingEls:(_ "," _ S4MLObject)* _ "\\right\\}" {
    let setContent = followingEls.reduce((total, currentEl) => {
       return (total + "," + currentEl[3]);
    }, firstEl);
 
-   return "{" + setContent + "}";
+   return "<SET[Elements["+ setContent + "]]>";
 }
 / _ "\\left\\{\\right\\}"_  {
-   return "{}";
+   return "<SET[Elements[]]>";
 }
-/ "\\varnothing" {
-   return "{}";
-}
+
+SetInstanciationByVARNOTHING
+ = "\\varnothing" {
+      return "<SET[Elements[]]>";
+ }
+
+SetInstanciationByHooks
+ = firstHook:("[" / "]") _ firstBoundary:(Instruction) _ "," _ secondBoundary:(Instruction) _ secondHook:("]" / "[") "_{" _ includedIn:(MathBBSet / VarIdentifier) "}" {
+      // return ("<SET[boundary1[" + firstBoundary + "][" + (firstHook === "[" ? "included" : "excluded ") + "]]boundary2[" + secondBoundary + "][" (secondHook === "[" ? "included" : "excluded ") + "]>");
+      return ("<SET[boundary1[" + firstBoundary + "][" + (firstHook === "[" ? "included" : "excluded") + "]]boundary2[" + secondBoundary + "][" + (secondHook === "]" ? "included" : "excluded") + "]subSetOf[" + includedIn + "]>");
+ }
 
 // union, inter, -, X, Complementaire = E - A, difference symetrique = A - AinterB, 
 SetOperator

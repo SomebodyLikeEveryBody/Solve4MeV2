@@ -19,6 +19,11 @@ maintenant le truc c'est qu'il y a:
 
 La dans l'immédiat il faut travailler sur le parser des varIdentifier pour que l'expression sortante soit plus clair dans le nom des variables
 
+dans un instruction, quand on fait +quelque chose ==> c'est juste ce quelque chose
+quand on fait - ce quelque chose (genre -a), ca renvoit -1*a
+==> en fin de compte, quand on fait -objetMathematique, ca ne fait que faire objetMathematique.opposite() et ca fait ce que ca doit faire. C'est une methode de l'objet tout simplement
+
+
 21/09/2021
 ----------
 
