@@ -330,8 +330,8 @@ var MathLineInput = /** @class */ (function () {
         this._saverNOpenerStateManager = pSaverNOpenerStateManager;
         this._lastValueBeforeFocusOut = "";
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl[0], {
-            autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda mu nu pi rho sigma tau phi Phi chi psi Psi omega Omega',
-            autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max',
+            autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
+            autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln',
             handlers: {
                 edit: function () {
                 },

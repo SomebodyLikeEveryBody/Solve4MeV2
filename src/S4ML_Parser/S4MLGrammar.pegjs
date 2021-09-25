@@ -7,12 +7,12 @@ start
  / Instruction
  / EmptyLine
 
-// start = FunctionIdentifier
+// start = ContiguousMathObj
  
 test = .+
 
 //--------------------------------
-Declaration
+Declaration "Declaration"
  = _ "\\text{Let}" __ _ newVarName:(FunctionIdentifier / VarAtLargeIdentifier) _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
 
    const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
@@ -67,13 +67,13 @@ DefinedVarIdentifier
  }
 
 AffectationOperator
- = EqualOperator 
+ = EqualOperator
  / InOperator
 
 EqualOperator
  = "="
 
-InOperator
+InOperator  
  = "\\in"
 
 //--------------------------------
@@ -97,31 +97,57 @@ Instanciation
  / SetInstanciation
 
 Expression
-  = head:Term tail:(_ Operator_plus _ Term)* {
+ = head:Term tail:(_ Operator_plus _ Term)* {
       return tail.reduce((result, element) => {
-        return (result + element[1] + element[3]);
+         return (result + element[1] + element[3]);
       }, head);
-    }
+ }
 
 Term
-  = head:Factor tail:(_ OperatorTerm _ Factor)* {
+ = head:Factor tail:(_ OperatorTerm _ Factor)* {
       return tail.reduce((result, element) => {
-        return result + element[1] + element[3];
+         return result + element[1] + element[3];
       }, head);
-    }
+ }
 
 OperatorTerm
  = Operator_minus
  / Operator_multiply
- / Operator_pow   
+ / Operator_cross
+ / Operator_pow
+
+Operator_empty
+ = __ {
+    return "*";
+ }
 
 Factor
-  = Factor_bracketed
-  / Fraction
-  / Factor_braced
-  / VarAtLargeIdentifier
-  / Number
+ = ContiguousMathObj
+ / Factor_bracketed
+ / Fraction
+ / Factor_braced
+ / S4MLObject
+ / Number
 
+ContiguousMathObj
+ = _ firstObject:S4MLObject _ list:(_ Expression _)+ {
+      let varsArray = list.reduce((result, currentEl) => {
+         result.push(currentEl[1]);
+         return result;
+      }, [firstObject]);
+
+      return (varsArray.join('*'));
+ }
+
+PlusFactor
+ = _ "+" _ factor:Factor{
+      return (factor);
+ }
+
+MinusFactor
+ = _ "-" _ factor:Factor {
+    return ('(-1)*' + factor)
+ }
 
 Factor_braced
  = "{" _ expr:Expression _ "}" {
@@ -140,9 +166,7 @@ Fraction
 
  Operator
   = Operator_plus
-  / Operator_minus
-  / Operator_multiply
-  / Operator_pow
+  / OperatorTerm
 
 Operator_plus
  = "+"
@@ -158,13 +182,28 @@ Operator_multiply
  Operator_pow
   = "^"
 
+Operator_cross
+ = ("\\times " / "\\times") {
+    return "[X]";
+ }
+
 Number
 = Float
 / Integer
 
 Integer
-= value:[0-9]+ {
-   return value.join('');
+= _ sign:"-"? _ digits:[0-9]+ {
+   let retStr = '';
+
+   if (sign !== null) {
+      retStr += sign;
+   }
+
+   for (let el of digits) {
+      retStr += el;
+   }
+
+   return retStr;
 }
 
 Float
@@ -189,9 +228,9 @@ FunctionInstanciation
 
 
 //--------------------------------
-Set
+Set "Set"
  = SetInstanciation
- / MathBBSet 
+ / MathBBSet
  / VarIdentifier
 
 SetInstanciation
@@ -298,9 +337,42 @@ Text
  }
 
 SpecialLetter
- = value:("\\" [A-Za-z]+) {
-      return (value[0] + value[1].join('')); 
- }
+ = "\\alpha"
+ / "\\beta"
+ / "\\Gamma"
+ / "\\gamma"
+ / "\\Delta"
+ / "\\delta"
+ / "\\epsilon"
+ / "\\varepsilon"
+ / "\\zeta"
+ / "\\eta"
+ / "\\eta"
+ / "\\Theta"
+ / "\\theta"
+ / "\\iota"
+ / "\\kappa"
+ / "\\Lambda"
+ / "\\lambda"
+ / "\\mu"
+ / "\\nu"
+ / "\\Xi"
+ / "\\xi"
+ / "\\Pi"
+ / "\\pi"
+ / "\\rho"
+ / "\\Sigma"
+ / "\\sigma"
+ / "\\tau"
+ / "\\Upsilon"
+ / "\\upsilon"
+ / "\\Phi"
+ / "\\phi"
+ / "\\chi"
+ / "\\Psi"
+ / "\\psi"
+ / "\\Omega"
+ / "\\omega"
 
 MathBBLetter
  = value:("\\mathbb{" Letter "}") {
@@ -315,6 +387,8 @@ Constant
 //--------------------------------
 S4MLObject
  = VarAtLargeIdentifier
+ / Factor_bracketed
+ / Fraction
  / Number
 
 MathBBSet
