@@ -49,7 +49,11 @@ UndefinedVarIdentifier
       // check if var is not already defined
       if (g_s4mCoreMemory.hasAVarNamed(varName)
          && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput) {
-         console.log('ERROR');
+
+         throw {
+            name: "VarError",
+            message: "Variable [" + varName + "] is already defined."
+         };
       }
 
       return (varName); 
@@ -62,7 +66,11 @@ DefinedVarIdentifier
       if (!(
             g_s4mCoreMemory.hasAVarNamed(varName)
             && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput)) {
-         console.log('ERROR');
+
+            throw {
+               name: "VarError",
+               message: "Variable [" + varName + "] is undefined."
+            };
       }
 
       return (varName); 
@@ -223,18 +231,24 @@ Float
 
 //--------------------------------
 FunctionInstanciation
- = _ "\\text{Function}\\left(_{" _ startSet:Set _ "\\rightarrow" _ endSet:Set _ "}^{" _ varName:(VarIdentifier / VectorIdentifier) _ "\\mapsto" _ instruction:Instruction _ "}\\right)" {
+ = _ "\\text{Function}\\left(_{" _ startSet:Set _ "\\rightarrow" _ endSet:Set _ "}^" functionVarDef:FunctionVarDefinition "\\right)" {
     let funcObj = {
        startSet: startSet,
        endSet: endSet,
-       varName: varName,
-       instruction: instruction
+       varName: functionVarDef.varName,
+       instruction: functionVarDef.instruction
     };
 
    return (funcObj);
  }
 
-
+FunctionVarDefinition
+ = "{" varName:(VarIdentifier / VectorIdentifier) _ "\\mapsto" _ instruction:(Instruction / "?") _ "}" {
+       return ({
+         varName: varName,
+         instruction: (instruction !== "?" ? instruction : null)
+      });
+ }
 
 //--------------------------------
 Set "Set"

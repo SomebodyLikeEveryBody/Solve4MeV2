@@ -160,7 +160,11 @@ var S4MCoreMemory = /** @class */ (function () {
         return this;
     };
     S4MCoreMemory.prototype.processAllErroredMathLineInputs = function () {
-        this._errorMathLineInputs.forEach(function (mathLineInput) { return mathLineInput.processContent(); });
+        // for (let mathLineInput of this._errorMathLineInputs) {
+        //     mathLineInput.processContent();
+        // }
+        this._errorMathLineInputs[0].processContent();
+        // this._errorMathLineInputs.forEach((mathLineInput) => mathLineInput.processContent());
         return this;
     };
     return S4MCoreMemory;

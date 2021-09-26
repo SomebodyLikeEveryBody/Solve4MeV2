@@ -351,14 +351,14 @@ class MathLineInput {
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
                 g_s4mCoreMemory.lastMathLineInputFocusedOut = this;
 
-                if (this.hasBeenModifiedSinceLastFocusOut()) {
+                if (this.hasBeenModifiedSinceLastFocusOut() || this._isErrored) {
                     g_s4mCoreMemory.removeAllProducedBy(this);
                     this.processContent();
-                    g_s4mCoreMemory.processAllErroredMathLineInputs();
                 }
+            } else {
+                this.setStyle();
             }
-            
-            this.setStyle();
+
             this._lastValueBeforeFocusOut = this.value();
         });
 
@@ -366,6 +366,8 @@ class MathLineInput {
     }
 
     public processContent(): MathLineInput {
+        g_s4mCoreMemory.unstoreErroredMathLineInput(this);
+        
         try {
             console.log('parser Output:');
             console.log(S4MLParser.parse(this.value()));                    

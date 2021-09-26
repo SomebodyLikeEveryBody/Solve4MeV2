@@ -613,18 +613,20 @@ var MathLineInput = /** @class */ (function () {
             // S4M interactions:
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
                 g_s4mCoreMemory.lastMathLineInputFocusedOut = _this;
-                if (_this.hasBeenModifiedSinceLastFocusOut()) {
+                if (_this.hasBeenModifiedSinceLastFocusOut() || _this._isErrored) {
                     g_s4mCoreMemory.removeAllProducedBy(_this);
                     _this.processContent();
-                    g_s4mCoreMemory.processAllErroredMathLineInputs();
                 }
             }
-            _this.setStyle();
+            else {
+                _this.setStyle();
+            }
             _this._lastValueBeforeFocusOut = _this.value();
         });
         return this;
     };
     MathLineInput.prototype.processContent = function () {
+        g_s4mCoreMemory.unstoreErroredMathLineInput(this);
         try {
             console.log('parser Output:');
             console.log(S4MLParser.parse(this.value()));
