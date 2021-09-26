@@ -50,4 +50,5 @@ interface MathLineInput {
     duplicateMathLine(): MathLineInput;
     getFirstMathLineInput(): MathLineInput;
     getLastMathLineInput(): MathLineInput;
+    processContent(): MathLineInput;
 }

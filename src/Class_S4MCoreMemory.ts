@@ -113,4 +113,22 @@ class S4MCoreMemory {
 
         return this;
     }
+
+    public storeErroredMathLineInput(pMathLineInput: MathLineInput): S4MCoreMemory {
+        this._errorMathLineInputs.push(pMathLineInput);
+
+        return this;
+    }
+
+    public unstoreErroredMathLineInput(pMathLineInput): S4MCoreMemory {
+        this._errorMathLineInputs = this._errorMathLineInputs.filter((el) => (el !== pMathLineInput));
+
+        return this;
+    }
+
+    public processAllErroredMathLineInputs(): S4MCoreMemory {
+        this._errorMathLineInputs.forEach((mathLineInput) => mathLineInput.processContent());
+
+        return this;
+    }
 }

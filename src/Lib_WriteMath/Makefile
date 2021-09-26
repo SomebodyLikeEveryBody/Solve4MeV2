@@ -11,6 +11,7 @@ all:
     ./Interfaces/Interface_HistoryStatement.ts \
     ./Interfaces/Interface_CursorConfiguration.ts \
     ./Interfaces/Interface_EventObject.ts \
+    ./Interfaces/Interface_ErrorObject.ts \
     ./Module_AutoCompleter/Class_AutoCompleterKeywordsList.ts \
     ./Class_MathLineInput.ts \
     ./Module_UndoRedoManager/Class_UndoRedoManager.ts \

@@ -353,23 +353,27 @@ class MathLineInput {
 
                 if (this.hasBeenModifiedSinceLastFocusOut()) {
                     g_s4mCoreMemory.removeAllProducedBy(this);
-
-                    try {
-                        console.log('parser Output:');
-                        console.log(S4MLParser.parse(this.value()));
-                        console.log('-------------');
-                        this.signalNoError();
-                    } catch (e) {
-                        console.log(e.message);
-                        this.signalError();
-                    }
-                    
+                    this.processContent();
+                    g_s4mCoreMemory.processAllErroredMathLineInputs();
                 }
             }
             
             this.setStyle();
             this._lastValueBeforeFocusOut = this.value();
         });
+
+        return this;
+    }
+
+    public processContent(): MathLineInput {
+        try {
+            console.log('parser Output:');
+            console.log(S4MLParser.parse(this.value()));                    
+            console.log('-------------');
+            this.signalNoError();
+        } catch (e) {
+            this.signalError(e);
+        }
 
         return this;
     }
@@ -831,17 +835,23 @@ class MathLineInput {
         return retMathlineInput;
     }
 
-    public signalError(): MathLineInput {
+    public signalError(errorObject: ErrorObject): MathLineInput {
         this._isErrored = true;
+        this._jQEl.attr('title', "[" + errorObject.name + "]: " + errorObject.message)
         this.setStyle();
+
+        g_s4mCoreMemory.storeErroredMathLineInput(this);
 
         return this;
     }
 
     public signalNoError(): MathLineInput {
         this._isErrored = false;
+        this._jQEl.attr('title', this.value());
         this.setStyle();
 
+        g_s4mCoreMemory.unstoreErroredMathLineInput(this);
+        
         return this;
     }
 }

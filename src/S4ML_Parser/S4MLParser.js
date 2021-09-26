@@ -167,8 +167,10 @@
               processedMathLineInput.signalNoError();
               
            } else {
-              processedMathLineInput.signalError();
-              throw "Declaring a var already declared somewhere";
+              throw {
+                 name: "DeclarationError",
+                 message: "Declaring a var already declared somewhere."
+              };
            }
         },
         peg$c5 = function(varName) { 
@@ -1169,6 +1171,26 @@
               if (s0 === peg$FAILED) {
                 s0 = peg$parseNumber();
               }
+            }
+          }
+        }
+      }
+
+      return s0;
+    }
+
+    function peg$parseS4MLObject() {
+      var s0;
+
+      s0 = peg$parseInstanciation();
+      if (s0 === peg$FAILED) {
+        s0 = peg$parseVarAtLargeIdentifier();
+        if (s0 === peg$FAILED) {
+          s0 = peg$parseFactor_bracketed();
+          if (s0 === peg$FAILED) {
+            s0 = peg$parseFraction();
+            if (s0 === peg$FAILED) {
+              s0 = peg$parseNumber();
             }
           }
         }
@@ -3173,23 +3195,6 @@
       } else {
         peg$currPos = s0;
         s0 = peg$FAILED;
-      }
-
-      return s0;
-    }
-
-    function peg$parseS4MLObject() {
-      var s0;
-
-      s0 = peg$parseVarAtLargeIdentifier();
-      if (s0 === peg$FAILED) {
-        s0 = peg$parseFactor_bracketed();
-        if (s0 === peg$FAILED) {
-          s0 = peg$parseFraction();
-          if (s0 === peg$FAILED) {
-            s0 = peg$parseNumber();
-          }
-        }
       }
 
       return s0;

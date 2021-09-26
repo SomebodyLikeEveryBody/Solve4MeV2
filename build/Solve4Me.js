@@ -151,6 +151,18 @@ var S4MCoreMemory = /** @class */ (function () {
         this.addVar(pMemoryElement, pMathLineInput);
         return this;
     };
+    S4MCoreMemory.prototype.storeErroredMathLineInput = function (pMathLineInput) {
+        this._errorMathLineInputs.push(pMathLineInput);
+        return this;
+    };
+    S4MCoreMemory.prototype.unstoreErroredMathLineInput = function (pMathLineInput) {
+        this._errorMathLineInputs = this._errorMathLineInputs.filter(function (el) { return (el !== pMathLineInput); });
+        return this;
+    };
+    S4MCoreMemory.prototype.processAllErroredMathLineInputs = function () {
+        this._errorMathLineInputs.forEach(function (mathLineInput) { return mathLineInput.processContent(); });
+        return this;
+    };
     return S4MCoreMemory;
 }());
 var InputScren = /** @class */ (function () {

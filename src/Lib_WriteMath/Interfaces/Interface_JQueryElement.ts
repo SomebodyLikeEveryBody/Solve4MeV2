@@ -34,5 +34,5 @@ interface JQueryElement {
     outerHeight(): Number;
     text(pStr: String): JQueryElement;
     val(pStr?: String): String;
-    attr(pProp: String, pBool: Boolean);
+    attr(pProp: String, pBool: Boolean|String);
 }

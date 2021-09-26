@@ -615,21 +615,25 @@ var MathLineInput = /** @class */ (function () {
                 g_s4mCoreMemory.lastMathLineInputFocusedOut = _this;
                 if (_this.hasBeenModifiedSinceLastFocusOut()) {
                     g_s4mCoreMemory.removeAllProducedBy(_this);
-                    try {
-                        console.log('parser Output:');
-                        console.log(S4MLParser.parse(_this.value()));
-                        console.log('-------------');
-                        _this.signalNoError();
-                    }
-                    catch (e) {
-                        console.log(e.message);
-                        _this.signalError();
-                    }
+                    _this.processContent();
+                    g_s4mCoreMemory.processAllErroredMathLineInputs();
                 }
             }
             _this.setStyle();
             _this._lastValueBeforeFocusOut = _this.value();
         });
+        return this;
+    };
+    MathLineInput.prototype.processContent = function () {
+        try {
+            console.log('parser Output:');
+            console.log(S4MLParser.parse(this.value()));
+            console.log('-------------');
+            this.signalNoError();
+        }
+        catch (e) {
+            this.signalError(e);
+        }
         return this;
     };
     MathLineInput.prototype.setStyle = function () {
@@ -1009,14 +1013,18 @@ var MathLineInput = /** @class */ (function () {
         }
         return retMathlineInput;
     };
-    MathLineInput.prototype.signalError = function () {
+    MathLineInput.prototype.signalError = function (errorObject) {
         this._isErrored = true;
+        this._jQEl.attr('title', "[" + errorObject.name + "]: " + errorObject.message);
         this.setStyle();
+        g_s4mCoreMemory.storeErroredMathLineInput(this);
         return this;
     };
     MathLineInput.prototype.signalNoError = function () {
         this._isErrored = false;
+        this._jQEl.attr('title', this.value());
         this.setStyle();
+        g_s4mCoreMemory.unstoreErroredMathLineInput(this);
         return this;
     };
     return MathLineInput;

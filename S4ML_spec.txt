@@ -281,7 +281,7 @@ specifications du S4ML:
 . les objets equation, contiennent
   - la ou les variables a trouver en array
   - la ou les expressions sur lesquelles se baser en array
-  - une methode solve qui retourne 
+  - une methode solve qui retourne
 ----
 
 \int _{\Omega }^{ }\left(f\right)d_{\mu }

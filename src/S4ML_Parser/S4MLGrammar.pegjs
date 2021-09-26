@@ -7,7 +7,7 @@ start
  / Instruction
  / EmptyLine
 
-// start = ContiguousMathObj
+// start = .+
  
 test = .+
 
@@ -35,8 +35,10 @@ Declaration "Declaration"
       processedMathLineInput.signalNoError();
       
    } else {
-      processedMathLineInput.signalError();
-      throw "Declaring a var already declared somewhere";
+      throw {
+         name: "DeclarationError",
+         message: "Declaring a var already declared somewhere."
+      };
    }
 }
 
@@ -127,6 +129,13 @@ Factor
  / Fraction
  / Factor_braced
  / S4MLObject
+ / Number
+
+S4MLObject
+ = Instanciation
+ / VarAtLargeIdentifier
+ / Factor_bracketed
+ / Fraction
  / Number
 
 ContiguousMathObj
@@ -385,11 +394,6 @@ Constant
  }
 
 //--------------------------------
-S4MLObject
- = VarAtLargeIdentifier
- / Factor_bracketed
- / Fraction
- / Number
 
 MathBBSet
  = mathBBLetter:MathBBLetter indice:("_" [+-])? exposant:("^{" "\\ast" "}")? {
