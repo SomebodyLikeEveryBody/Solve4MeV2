@@ -7,7 +7,7 @@ start
  / Instruction
  / EmptyLine
 
-// start = .+
+// start = 
  
 test = .+
 
@@ -42,7 +42,7 @@ Declaration "Declaration"
    }
 }
 
-UndefinedVarIdentifier
+UndefinedVarIdentifier  
  = varName:VarAtLargeIdentifier { 
       const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
 
@@ -83,7 +83,7 @@ AffectationOperator
 EqualOperator
  = "="
 
-InOperator  
+InOperator
  = "\\in"
 
 //--------------------------------
@@ -99,45 +99,55 @@ Statement
 
 //--------------------------------
 Instruction
- = Instanciation
- / Expression
+ = Expression
 
 Instanciation
  = FunctionInstanciation
  / SetInstanciation
 
 Expression
- = head:Term tail:(_ Operator_plus _ Term)* {
+ = head:firstTerm tail:(_ (Operator_plus / Operator_minus) _ Term)* {
       return tail.reduce((result, element) => {
          return (result + element[1] + element[3]);
       }, head);
  }
 
+firstTerm
+ = _ sign:UnaryOperator? _ term:Term {
+      return (sign !== null ? sign : '') + term;
+ }
+
 Term
- = head:Factor tail:(_ OperatorTerm _ Factor)* {
+ = head:Factor tail:(_ BinaryOperator _ Factor)* {
       return tail.reduce((result, element) => {
          return result + element[1] + element[3];
       }, head);
  }
 
-OperatorTerm
+BinaryOperator
  = Operator_minus
  / Operator_multiply
  / Operator_cross
  / Operator_pow
 
-Operator_empty
- = __ {
-    return "*";
+UnaryOperation
+ = _ operator:UnaryOperator _ expression:Expression {
+      return (operator + "(" + expression + ")")
  }
 
+UnaryOperator
+ = Operator_opposite
+ / Operator_identity
+
 Factor
- = ContiguousMathObj
+ = ContiguousS4MLObjects
  / Factor_bracketed
  / Fraction
  / Factor_braced
  / S4MLObject
+ / Instanciation
  / Number
+ 
 
 S4MLObject
  = Instanciation
@@ -146,24 +156,15 @@ S4MLObject
  / Fraction
  / Number
 
-ContiguousMathObj
- = _ firstObject:S4MLObject _ list:(_ Expression _)+ {
+//peut etre mettre factor plutot que expression
+   ContiguousS4MLObjects
+ = _ firstObject:S4MLObject _ list:(_ Factor _)+ {
       let varsArray = list.reduce((result, currentEl) => {
          result.push(currentEl[1]);
          return result;
       }, [firstObject]);
 
-      return (varsArray.join('*'));
- }
-
-PlusFactor
- = _ "+" _ factor:Factor{
-      return (factor);
- }
-
-MinusFactor
- = _ "-" _ factor:Factor {
-    return ('(-1)*' + factor)
+      return (varsArray.join('<Operator[Multiply]>'));
  }
 
 Factor_braced
@@ -183,44 +184,61 @@ Fraction
 
  Operator
   = Operator_plus
-  / OperatorTerm
+  / BinaryOperator
+  / UnaryOperator
+  / SetOperator
 
 Operator_plus
- = "+"
+ = "+" {
+    return "<Operator[Plus]>";
+ }
 
 Operator_minus
- = "-"
+ = "-" {
+    return "<Operator[Minus]>";
+ }
 
 Operator_multiply
  = ("\\cdot " / "\\cdot") {
-      return "*";
+      return "<Operator[Multiply]>";
  }
 
- Operator_pow
-  = "^"
+Operator_pow
+ = "^"
 
 Operator_cross
  = ("\\times " / "\\times") {
-    return "[X]";
+    return "[Cross]";
+ }
+
+Operator_opposite
+ = "-" {
+    return "<Operator[Opposite]>"
+ }
+
+ Operator_identity
+ = "+" {
+    return "<Operator[Identity]>"
  }
 
 Number
-= Float
-/ Integer
-
-Integer
-= _ sign:"-"? _ digits:[0-9]+ {
+= sign:"-"? digits:(Float/ Integer) {
    let retStr = '';
 
    if (sign !== null) {
       retStr += sign;
    }
 
-   for (let el of digits) {
-      retStr += el;
-   }
+   retStr += digits;
 
    return retStr;
+}
+
+Integer
+= _ digits:[0-9]+ {
+   return digits.reduce((total, currentEl) => {
+      return (total + currentEl);
+   }, '');
 }
 
 Float
@@ -261,6 +279,9 @@ SetInstanciation
  / SetInstanciationByVARNOTHING
  / SetInstanciationByHooks
 
+SetInstanciationByOperations
+ = Set Operator_cross Set
+
 SetInstanciationByBraces
  = _ "\\left\\{" _ firstEl:S4MLObject _ followingEls:(_ "," _ S4MLObject)* _ "\\right\\}" {
    let setContent = followingEls.reduce((total, currentEl) => {
@@ -298,13 +319,13 @@ _ "OptionnalWhiteSpaces" = ("\\ " / " ")*
 //--------------------------------
 VarAtLargeIdentifier
  = varName:(VectorIdentifier 
- / Constant 
+ / Constant
  / VarIdentifier) {
     return "<VAR[" + varName + "]>";
  }
 
 FunctionIdentifier
- = funcName:(VectorIdentifier / VarIdentifier) funcVar:FunctionMarker {
+ = funcName:VarAtLargeIdentifier funcVar:FunctionMarker {
       return ({functionName: funcName, functionVar: funcVar})
  }
 
@@ -402,6 +423,7 @@ MathBBLetter
       return value.join('');
  }
 
+//need to be this following pattern AND NOT an operator
 Constant
  = "\\text{" str:[A-Za-z0-9]+ "}" {
       return ("Text{" + str.join('') + "}");

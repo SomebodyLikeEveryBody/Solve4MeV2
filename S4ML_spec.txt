@@ -1,3 +1,40 @@
+28/09/2021
+----------
+bon c'est galere intergalactique
+
+il faudrait faire en sorte que quand on fait
+a-b	==> a<operator[-]>b
+-a	==> <operator[Opposite]>a
+(a+b)	==> (a<operator[+]>b)
+-(a+b)	==> <operator[Opposite]>(a<operator[+]>b)
+
+
+si ya un moins -,
+ca vaut opposite que si c'est le debut de l'expression (parenthese par exemple)
+
+
+
+notes pour plus tard:
+
+faire qu'une instanciation d'ensemble puisse l'être par produit cartésien d'ensembles
+--> A X B
+--> A^n
+
+==> de maniere generale, faire qu'une instanciation en regle generale soit le resultat d'une instruction et parser le resultat de l'instruction pour voir si c'est un type ensemble, etc, ca sera peut-être plus simple que de parser des syntaxes
+
+ensuite il faudra faire en sorte qu'on puisse apeller des fonctions dans les expressions, genre cos(), sin(), elof(), etc
+
+pour l'histoire de checker si les variables sont definies dans une expression:
+on pourrait faire une ExpressionToProcess et du coup, l'Expression normale, renverrait un objet avec l'expression en format string, et l'ensemble des variables contenues dedans, afin que le ExpressionToProcess puisse parser les variables
+et checker si elles sont definies ou si elles ont le nom de la variable muette definie dans la structure
+
+
+
+
+
+
+
+
 22/09/2021
 ----------
 
