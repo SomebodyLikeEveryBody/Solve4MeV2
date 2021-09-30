@@ -4,13 +4,15 @@ class InputScren {
     protected _outputScreen: OutputScreen;
     protected _solveButton: JQueryElement;
     protected _showHideVirtualKeyboard: JQueryElement;
+    protected _virtualKeyboard: VirtualKeyboard;
 
-    public constructor(pJQueryElement: JQueryElement, pShowHideOutputScreenButton: JQueryElement, pOutputScren: OutputScreen, pSolveButton: JQueryElement) {
+    public constructor(pJQueryElement: JQueryElement, pShowHideOutputScreenButton: JQueryElement, pOutputScren: OutputScreen, pSolveButton: JQueryElement, pVirtualKeyboard: VirtualKeyboard) {
         this._jQEl = pJQueryElement;
         this._showHideOutputScreenButton = pShowHideOutputScreenButton;
         this._showHideVirtualKeyboard = this._showHideOutputScreenButton.children().first();
         this._outputScreen = pOutputScren;
         this._solveButton = pSolveButton;
+        this._virtualKeyboard = pVirtualKeyboard;
 
         this.setEvents();
     }
@@ -47,7 +49,7 @@ class InputScren {
         this._showHideVirtualKeyboard.click((e) => {
             e.preventDefault();
             e.stopPropagation();
-            console.log('afficher le clavier virtuel');
+            this._virtualKeyboard.toggle();
         });
 
         return this;

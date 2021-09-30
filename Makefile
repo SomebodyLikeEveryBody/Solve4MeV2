@@ -23,6 +23,10 @@ main:
 	./src/Interface_MathLineInput.ts \
 	./src/Class_MathObj.ts \
 	./src/Class_S4MCoreMemory.ts \
+	./src/Class_InputScreen.ts \
+	./src/Class_OutputScreen.ts \
+	./src/Class_KeyboardListener.ts \
+	./src/Class_VirtualKeyboard.ts \
 	./src/main.ts
 
 S4MLParser:

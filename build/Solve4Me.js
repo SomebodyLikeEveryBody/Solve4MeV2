@@ -170,12 +170,13 @@ var S4MCoreMemory = /** @class */ (function () {
     return S4MCoreMemory;
 }());
 var InputScren = /** @class */ (function () {
-    function InputScren(pJQueryElement, pShowHideOutputScreenButton, pOutputScren, pSolveButton) {
+    function InputScren(pJQueryElement, pShowHideOutputScreenButton, pOutputScren, pSolveButton, pVirtualKeyboard) {
         this._jQEl = pJQueryElement;
         this._showHideOutputScreenButton = pShowHideOutputScreenButton;
         this._showHideVirtualKeyboard = this._showHideOutputScreenButton.children().first();
         this._outputScreen = pOutputScren;
         this._solveButton = pSolveButton;
+        this._virtualKeyboard = pVirtualKeyboard;
         this.setEvents();
     }
     InputScren.prototype.setEvents = function () {
@@ -207,7 +208,7 @@ var InputScren = /** @class */ (function () {
         this._showHideVirtualKeyboard.click(function (e) {
             e.preventDefault();
             e.stopPropagation();
-            console.log('afficher le clavier virtuel');
+            _this._virtualKeyboard.toggle();
         });
         return this;
     };
@@ -240,6 +241,7 @@ var OutputScreen = /** @class */ (function () {
     };
     return OutputScreen;
 }());
+//Do nothing for the moment
 var KeyBoardListener = /** @class */ (function () {
     function KeyBoardListener(pInputScreen, pOutputScreen) {
         this._inputScreen = pInputScreen;
@@ -250,4 +252,35 @@ var KeyBoardListener = /** @class */ (function () {
         return this;
     };
     return KeyBoardListener;
+}());
+var VirtualKeyboard = /** @class */ (function () {
+    function VirtualKeyboard(pJQueryElement) {
+        this._jQEl = pJQueryElement;
+        this._jQEl.hide(0);
+        this._isVisible = false;
+    }
+    VirtualKeyboard.prototype.show = function () {
+        var _this = this;
+        this._jQEl.fadeIn(500, function () {
+            _this._isVisible = true;
+        });
+        return this;
+    };
+    VirtualKeyboard.prototype.hide = function () {
+        var _this = this;
+        this._jQEl.fadeOut(500, function () {
+            _this._isVisible = false;
+        });
+        return this;
+    };
+    VirtualKeyboard.prototype.toggle = function () {
+        if (this._isVisible) {
+            this.hide();
+        }
+        else {
+            this.show();
+        }
+        return this;
+    };
+    return VirtualKeyboard;
 }());

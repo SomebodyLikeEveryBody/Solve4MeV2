@@ -247,7 +247,7 @@ button.alone
     height: 46px;
     color: white;
     border-radius: 10px;
-    opacity: 0.5;
+    opacity: 0.3;
     margin-right: 10px;
 
     background-color: transparent;
@@ -255,6 +255,13 @@ button.alone
     background-repeat: no-repeat;
     background-size: 50px;
     background-position: center;
+}
+
+#virtual_keyboard
+{
+    width: 100%;
+    height: 170px;
+    background-color: lightgreen;
 }
 
 @media only screen and (max-width: 1000px)

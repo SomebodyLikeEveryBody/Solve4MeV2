@@ -7,6 +7,7 @@ interface JQueryElement {
     remove(): JQueryElement;
     show(pTime: number, pFunction?: Function): JQueryElement;
     hide(pTime: number, pFunction?: Function): JQueryElement;
+    slideUp(pTime: number, pFunction?: Function): JQueryElement;
     fadeIn(pNumber: Number, pFunction?: Function): JQueryElement;
     fadeOut(pTime: Number, pFunction?: Function): JQueryElement;
     select(): JQueryElement;
