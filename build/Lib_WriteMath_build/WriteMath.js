@@ -629,7 +629,7 @@ var MathLineInput = /** @class */ (function () {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
         try {
             console.log('parser Output:');
-            console.log(S4MLParser.parse(this.value()));
+            console.log(S4MLParser.parse(this.value(), { processedMathLineInput: this }));
             console.log('-------------');
             this.signalNoError();
         }

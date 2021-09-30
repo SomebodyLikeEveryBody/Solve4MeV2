@@ -1,3 +1,41 @@
+
+/******************************************************************************
+*MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMMWKOxdxOXWMMMMMMMWNXKK0OOO00KKXXNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMNk;..''..'l0NXOxl:;,''''''''''''',;cok0NWMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMNo..cxOOkd;..,'.,;codkO00KKK000OOxdlc;'.':d0NMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMO..l000000O; .o0XNNNNNNNNNNNNNNNNNNNNNKOo:'.,o0WMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMO..lO00000k; ;KNNNNNNNNNNNNNNNNNNNNNNNNNNNKxc'.;kNMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMNo..cxkOkd;..xNNNNNNNNNX0kdolcccclodk0XNNNNNNKd,.,kNMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMX:  ..'..'cONNNNNNNKx:'.            .;dKNNNNNNKd,.:0WMMMMMMMMMMMMMMM*
+*MMMMMMMMKc.'dkddxOKNNNNNNNKo'   .,:llooolc:'    ,ONNNNNNNKo..dNMMMMMMMMMMMMMM*
+*MMMMMMM0;.:0NNNNNNNNNNNNN0;   ,d0XNNNNNNNNNXd.   ;0NNNNNNNNk'.lXMMMMMMMMMMMMM*
+*MMMMMM0,.lKNNNNNNNNNNNNN0;   cKNNNNNNNNNNNNNNo.  .kNNNNNNNNNO,.lNMMMMMMMMMMMM*
+*MMMMMX:.cKNNNNNNNNNNNNNNo.  .kNNNNNNNNNNNNNNNO:,;oKNNNNNNNNNNO'.dWMMMMMMMMMMM*
+*MMMMWd.,ONNNNNNNNNNNNNNXl   .c0XNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNd..x0KXWMMMMMMM*
+*MMMMK,.oNNNNNNNNXK00XNNNO,    .,:oxO0XNNNNNNNNNNNNNXKXNNNNNNNO:. ...':xNMMMMM*
+*MMMMk..kNNNNNNNk;...'l0NN0l'        .';:coxOKNNNNNKl.;xXNNNXo..;lddoc'.;0MMMM*
+*MMMWd.,0NNNNNNK;     .oNNNNKkdl:,..        .'l0NNNNx'  ,dKNk..cOOOOOOx, cNMMM*
+*MMMWd ,0NNNNNNXk;....c0NNNNNNNNNXKOkdl:,'.    'xNNN0;  .c0Nx..oOOOOOOk; :XMMM*
+*MMMMx.'ONNNNNNNNX0O0KXXXNNNNNNNNNNNNNNNNXOc.   ,0NKc..:kXNN0;.'okOOOxc..xWMMM*
+*MMMMO..xNNNNNNNNNNNNx;',oKNNNNNNNNNNNNNNNNXc   'ONXOdOXNNNNN0l...,;,..;kWMMMM*
+*MMMMNc cKNNNNNNNNNNXc   ;KNNNNNNNNNNNNNNNN0,   lXNNNNNNNNNNNNNx..;lox0NMMMMMM*
+*MMMMMO..xNNNNNNNNNNXl   .dXNNNNNNNNNNNNNXk,   cKNNNNNNNNNNNNNXc.:XMMMMMMMMMMM*
+*MMMMMWd.'kNNNNNNNNNNO;   .:x0KXXXXXKOxl:,.  .dKNNNNNNNNNNNNNXo.'OMMMMMMMMMMMM*
+*MMMMMMNo.'kNNNNNNNNNN0c.    ..''''...    .,o0NNNNNNNNNNNNNNXo.'kWMMMMMMMMMMMM*
+*MMMMMMMNd..dXNNNXXXXNNN0dc,.........';cldOXNNNNNNNNNNNNNNN0c.,OWMMMMMMMMMMMMM*
+*MMMMMMMMWO,.;do:,'',:d0NNNXK00OOOO0KXNNNNNNNNNNNNNNNNNNNKd'.cKWMMMMMMMMMMMMMM*
+*MMMMMMMMMMXl. .,colc'.'xXNNNNNNNNNNNNNNNNNNNNNNNNNNNNNKx,.,kNMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMWd..oO0000Oc..xNNNNNNNNNNNNNNNNNNNNNNNNNNX0o,.,xNMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMNc ;O000000x' oNNNNNNNNNNNNNNNNNNNNNNNXOo;.'ckNMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMWx..lO0000kc. :k0KXNNNNNNNNNNNNNXK0xo:'.'cxKWMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMMNx'.':cc:'.';,''',;ccllllllcc:;,''',cdOXWMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMMMMXxl;;;:lkNWNKOxdllc:::::ccllodk0XWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+*MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
+******************************************************************************/
+/* S4MLGrammar.pegjs *
+ ********************/
+
 start
  = UnprocessedLine
  / CommentaryLine
@@ -7,15 +45,14 @@ start
  / Instruction
  / EmptyLine
 
-// start = 
- 
-test = .+
-
-//--------------------------------
+/***********************************
+ * Declaration: Let a = 42
+ *              Let x \in R
+ * */
 Declaration "Declaration"
  = _ "\\text{Let}" __ _ newVarName:(FunctionIdentifier / VarAtLargeIdentifier) _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
 
-   const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+   const processedMathLineInput = options.processedMathLineInput;
 
    // if newvarName is a Function Identifier
    if (typeof (newVarName) === typeof ([])) {
@@ -42,9 +79,14 @@ Declaration "Declaration"
    }
 }
 
-UndefinedVarIdentifier  
+/***********************************
+ * UndefinedVarIdentifier: 
+ * --> a VarIdentifier that is not
+ *     already declared in memory
+ * */
+UndefinedVarIdentifier
  = varName:VarAtLargeIdentifier { 
-      const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+      const processedMathLineInput = options.processedMathLineInput;
 
       // check if var is not already defined
       if (g_s4mCoreMemory.hasAVarNamed(varName)
@@ -59,8 +101,14 @@ UndefinedVarIdentifier
       return (varName); 
  }
 
+/***********************************
+ * DefinedVarIdentifier: 
+ * --> a VarIdentifier that is
+ *     already declared in memery
+ * */
 DefinedVarIdentifier
  = varName:VarAtLargeIdentifier {
+      const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
 
       // check if var is already defined
       if (!(
@@ -76,6 +124,13 @@ DefinedVarIdentifier
       return (varName); 
  }
 
+/***********************************
+ * AffectationOperator:
+ * [.] Operator used to affect a 
+ *     MathObj to a variable
+ * [.] = value --> affect value
+ * [.] \in set --> affect elof(set)
+ * */
 AffectationOperator
  = EqualOperator
  / InOperator
@@ -86,37 +141,74 @@ EqualOperator
 InOperator
  = "\\in"
 
-//--------------------------------
+/***********************************
+ * Constraint: Given a > 0
+ * [.] Defines and set a constraint on a
+ *     previously declared variable(s)
+ * --> <UNDER CONSTRUCTION>
+ * */
 Constraint
  = _ "\\text{Given}" __ _ statement:Statement {
  }
 
+/***********************************
+ * Statement: a > 0, a - b <= 10,
+ *            negA=True, etc
+ * [.] Defines a statement that is a
+ *     constraint on a variable(s) 
+ * --> <UNDER CONSTRUCTION>
+ * */
 Statement
  = value:.+ { 
       return (value.join('')); 
  }
 
-
-//--------------------------------
+/***********************************
+ * Instruction: a+b, integral, derivation, etc
+ * [.] An expression to process
+ * */
 Instruction
  = Expression
 
+/***********************************
+ * Instanciation: Function(), Set(), etc
+ * [.] An expression resulting into
+ *     an instanciated MathObj
+ * */
 Instanciation
  = FunctionInstanciation
  / SetInstanciation
 
+/***********************************
+ * Expression: a+b, integral, derivation, etc
+ * [.] An expression to process
+ * [.] firstTerm ("+"/"-" term)*
+ * */
 Expression
- = head:firstTerm tail:(_ (Operator_plus / Operator_minus) _ Term)* {
+ = head:FirstTerm tail:(_ (Operator_plus / Operator_minus) _ Term)* {
       return tail.reduce((result, element) => {
          return (result + element[1] + element[3]);
       }, head);
  }
 
-firstTerm
+/***********************************
+ * FirstTerm:
+ * [.] a term which can be preceded
+ *     by a "+" or "-" or another
+ *     unary operator to have its
+ *     opposite value
+ * [.] essential to have expressions
+ *     like -a*b, -(a+b), b^(-a), etc
+ * */
+FirstTerm
  = _ sign:UnaryOperator? _ term:Term {
       return (sign !== null ? sign : '') + term;
  }
 
+/***********************************
+ * Term:
+ * [.] Factor (("*" / "/" / ...) Factor)*
+ * */
 Term
  = head:Factor tail:(_ BinaryOperator _ Factor)* {
       return tail.reduce((result, element) => {
@@ -124,23 +216,41 @@ Term
       }, head);
  }
 
+/***********************************
+ * BinaryOperator:
+ * [.] Operator that takes 2 arguments
+ *     (+, -, *, /, Union, Inter, etc)
+ * */
 BinaryOperator
  = Operator_minus
  / Operator_multiply
  / Operator_cross
  / Operator_pow
 
+/***********************************
+ * UnaryOperation: -3, -A, +Infinity, etc
+ * [.] UnaryOperator Expression
+ * */
 UnaryOperation
  = _ operator:UnaryOperator _ expression:Expression {
       return (operator + "(" + expression + ")")
  }
 
+/***********************************
+ * UnaryOperator:
+ * [.] Operator that takes 1 argument
+ *     (+, -, etc)
+ * */
 UnaryOperator
  = Operator_opposite
  / Operator_identity
 
+/***********************************
+ * Factor:
+ * [.] Primary element of Expressions
+ * */
 Factor
- = ContiguousS4MLObjects
+ = ContiguousFactors
  / Factor_bracketed
  / Fraction
  / Factor_braced
@@ -148,17 +258,31 @@ Factor
  / Instanciation
  / Number
  
-
+/***********************************
+ * S4MLObject: x, Vect{v}, Instanciation(), etc
+ * [.] Variable or Instanciation or
+ *     anything that is a built 
+ *     S4ML object
+ * */
 S4MLObject
  = Instanciation
  / VarAtLargeIdentifier
- / Factor_bracketed
- / Fraction
- / Number
 
-//peut etre mettre factor plutot que expression
-   ContiguousS4MLObjects
- = _ firstObject:S4MLObject _ list:(_ Factor _)+ {
+/***********************************
+ * ContiguousFactors: ab, cdef, a(b+c), etc
+ * [.] The purpose of this rule is to permit
+ *     syntaxs with following factors to
+ *     write products, instead of write
+ *     "*" between each terms which is
+ *     onerous, like
+ *     ab -> a*b
+ *     a(b+c) -> a*(b+c)
+ *     (a+b)c -> (a+b)*c
+ *     ax^2 +bx + c -> a*x^2 +b*x + c
+ *    
+ * */
+ContiguousFactors
+ = _ firstObject:FirstContiguousFactor _ list:(_ Factor _)+ {
       let varsArray = list.reduce((result, currentEl) => {
          result.push(currentEl[1]);
          return result;
@@ -167,73 +291,54 @@ S4MLObject
       return (varsArray.join('<Operator[Multiply]>'));
  }
 
+/***********************************
+ * FirstContiguousFactor:
+ * [.] First factor of an expression
+ *     like "ab" or "(-a + b)" or "a(b+c)"
+ * */
+FirstContiguousFactor
+= S4MLObject
+/ Factor_bracketed
+/ Fraction
+/ Number
+
+/***********************************
+ * Factor_braced: {a+b}
+ * [.] {expression}
+ * */
 Factor_braced
  = "{" _ expr:Expression _ "}" {
     return ("(" + expr + ")");
  }
 
+/***********************************
+ * Factor_bracketed: (a+b)
+ * [.] (expression)
+ * */
 Factor_bracketed
  = "\\left(" _ expr:Expression _ "\\right)" {
       return ("(" + expr + ")");
  }
 
+/***********************************
+ * Fraction: 2+a/3-a -> \frac{2+a}{3-a} -> ((2+a)/(3-a))
+ * [.] \frac{numerator}{denominator}
+ * */
 Fraction
 = "\\frac{" _ numerator:Expression _ "}{" _ denominator:Expression _ "}" {
       return ("((" + numerator + ")/(" + denominator + "))");
 }
 
- Operator
-  = Operator_plus
-  / BinaryOperator
-  / UnaryOperator
-  / SetOperator
-
-Operator_plus
- = "+" {
-    return "<Operator[Plus]>";
- }
-
-Operator_minus
- = "-" {
-    return "<Operator[Minus]>";
- }
-
-Operator_multiply
- = ("\\cdot " / "\\cdot") {
-      return "<Operator[Multiply]>";
- }
-
-Operator_pow
- = "^"
-
-Operator_cross
- = ("\\times " / "\\times") {
-    return "[Cross]";
- }
-
-Operator_opposite
- = "-" {
-    return "<Operator[Opposite]>"
- }
-
- Operator_identity
- = "+" {
-    return "<Operator[Identity]>"
- }
-
+/***********************************
+ * Number: 43 or 5.65 etc
+ * */
 Number
-= sign:"-"? digits:(Float/ Integer) {
-   let retStr = '';
+= Float
+/ Integer
 
-   if (sign !== null) {
-      retStr += sign;
-   }
-
-   retStr += digits;
-
-   return retStr;
-}
-
+/***********************************
+ * Integer: 42
+ * */
 Integer
 = _ digits:[0-9]+ {
    return digits.reduce((total, currentEl) => {
@@ -241,13 +346,19 @@ Integer
    }, '');
 }
 
+/***********************************
+ * Float: 42.84
+ * */
 Float
  = integer:Integer "." decimals:Integer {
    return integer + "." + decimals;
  }
 
-
-//--------------------------------
+/***********************************
+ * FunctionInstanciation: Function(x->x R->R)
+ * [.] Syntax to instanciate an S4ML
+ *     Function Object
+ * */
 FunctionInstanciation
  = _ "\\text{Function}\\left(_{" _ startSet:Set _ "\\rightarrow" _ endSet:Set _ "}^" functionVarDef:FunctionVarDefinition "\\right)" {
     let funcObj = {
@@ -260,6 +371,17 @@ FunctionInstanciation
    return (funcObj);
  }
 
+/***********************************
+ * FunctionVarDefinition: f(t)
+ * [.] Syntax to declare a variable
+ *     and affect a function to it,
+ *     but to simplify readability,
+ *     instead of writing
+ *     Let f = Function(x->x R->R)
+ *     which is still possible,
+ *     we can write
+ *     Let f(x) = Function(x->x R->R)
+ * */
 FunctionVarDefinition
  = "{" varName:(VarIdentifier / VectorIdentifier) _ "\\mapsto" _ instruction:(Instruction / "?") _ "}" {
        return ({
@@ -268,20 +390,34 @@ FunctionVarDefinition
       });
  }
 
-//--------------------------------
-Set "Set"
+/***********************************
+ * Set: {1, 2, 3} or [-1, 1]R or E
+ * */
+Set
  = SetInstanciation
  / MathBBSet
  / VarIdentifier
 
+/***********************************
+ * SetInstanciation:
+ * [.] Syntax to instanciate an S4ML
+ *     Set Object
+ * */
 SetInstanciation
  = SetInstanciationByBraces
  / SetInstanciationByVARNOTHING
  / SetInstanciationByHooks
 
+/***********************************
+ * SetInstanciationByOperations: 
+ * --> <UNDER CONSTRUCTION>
+ * */
 SetInstanciationByOperations
  = Set Operator_cross Set
 
+/***********************************
+ * SetInstanciationByBraces: {1, 2, 3}
+ * */
 SetInstanciationByBraces
  = _ "\\left\\{" _ firstEl:S4MLObject _ followingEls:(_ "," _ S4MLObject)* _ "\\right\\}" {
    let setContent = followingEls.reduce((total, currentEl) => {
@@ -294,29 +430,35 @@ SetInstanciationByBraces
    return "<SET[Elements[]]>";
 }
 
+/***********************************
+ * SetInstanciationByVARNOTHING: \\varnothing --> {}
+ * */
 SetInstanciationByVARNOTHING
  = "\\varnothing" {
       return "<SET[Elements[]]>";
  }
 
+/***********************************
+ * SetInstanciationByHooks: [1, 42]N or [-pi/2, pi/2]R etc
+ * */
 SetInstanciationByHooks
  = firstHook:("[" / "]") _ firstBoundary:(Instruction) _ "," _ secondBoundary:(Instruction) _ secondHook:("]" / "[") "_{" _ includedIn:(MathBBSet / VarIdentifier) "}" {
-      // return ("<SET[boundary1[" + firstBoundary + "][" + (firstHook === "[" ? "included" : "excluded ") + "]]boundary2[" + secondBoundary + "][" (secondHook === "[" ? "included" : "excluded ") + "]>");
       return ("<SET[boundary1[" + firstBoundary + "][" + (firstHook === "[" ? "included" : "excluded") + "]]boundary2[" + secondBoundary + "][" + (secondHook === "]" ? "included" : "excluded") + "]subSetOf[" + includedIn + "]>");
  }
 
-// union, inter, -, X, Complementaire = E - A, difference symetrique = A - AinterB, 
+/***********************************
+ * SetOperator: U, Inter, \, X, ^ etc
+ * */
 SetOperator
- = "\\cup" 
- / "\\cap" 
- / "\\backslash" 
- / "\\times"
+ = Operator_union
+ / Operator_intersection
+ / Operator_backslash
+ / Operator_cross
 
-__ "MandatoryWhiteSpace" = "\\ "
-_ "OptionnalWhiteSpaces" = ("\\ " / " ")*
-
-
-//--------------------------------
+/***********************************
+ * VarAtLargeIdentifier: A or Vect{A} or text{Pa}
+ * [.] Syntax to name an S4ML variable
+ * */
 VarAtLargeIdentifier
  = varName:(VectorIdentifier 
  / Constant
@@ -324,21 +466,51 @@ VarAtLargeIdentifier
     return "<VAR[" + varName + "]>";
  }
 
+/***********************************
+ * FunctionIdentifier: f(x)
+ * [.] varName "(" varName ")"
+ * [.] rule to recognize id(var) syntax
+ *     like f(x) or g(t)
+ * */
 FunctionIdentifier
  = funcName:VarAtLargeIdentifier funcVar:FunctionMarker {
       return ({functionName: funcName, functionVar: funcVar})
  }
 
+/***********************************
+ * FunctionMarker: (x) or (t_x) etc
+ * [.] "(" varName ")" 
+ * [.] rule to recognize the syntax
+ *     following a varName that is
+ *     specific to functions
+ *     (t) in f(t) for example
+ * */
 FunctionMarker
  = "\\left(" varName:(VarAtLargeIdentifier) "\\right)" {
       return (varName)
  }
 
+
+/***********************************
+ * VectorIdentifier: vec{u} -> Vector{u}
+ * [.] vec{varName}
+ * [.] rule to recognize the syntax
+ *     to define a variable with an
+ *     an arrow over its name
+ * */
 VectorIdentifier
  = "\\vec{" varIdentifier:VarIdentifier "}" {
       return ("Vector{" + varIdentifier + "}");
  }
 
+/***********************************
+ * VarIdentifier: x or x_1 or x_{pouet} or v_M_x_0 etc
+ * [.] Syntax of a variable name
+ * [.] mainId followed or not by an index
+ * [.] a variable name can only be ONE letter, with
+ *     as many indexes as needed to explicit the variable
+ *     so x_{initial} is okay, but {initial}_x is not
+ * */
 VarIdentifier
  = mainId:(Letter / MathBBLetter / SpecialLetter) index:IdentifierIndex? {
       let retArray = [mainId];
@@ -350,15 +522,34 @@ VarIdentifier
       return retArray.join('_');
  }
 
+/***********************************
+ * IdentifierIndex: _1 or _x or _y_0_f
+ * [.] Syntax of the index of a variable
+ * [.] can be simple, that is on one
+ *     level with one char, (like in var x_1)
+ *     or complex, that is on multiple
+ *     levels and/or with multiple chars
+ *     (like in var x_1_f_{pouet})
+ * */
 IdentifierIndex
- = SimpleIdentifierIndex 
+ = SimpleIdentifierIndex
  / ComplexIdentifierIndex
 
+/***********************************
+ * SimpleIdentifierIndex: _1 or _x
+ * [.] variable index on one level and
+ *     with one char
+ * */
 SimpleIdentifierIndex
  = "_" char:Char { 
       return ([char]);
  }
 
+/***********************************
+ * ComplexIdentifierIndex: _{pouet} or _x_1_f
+ * [.] variable index on multiple levels and/or
+ *     with multiple chars
+ * */
 ComplexIdentifierIndex
  = "_" "{" indexIdentifier:(Number / Char / Text / SpecialLetter) nextIndex:IdentifierIndex? "}" {
       let retArray = [indexIdentifier];
@@ -369,17 +560,32 @@ ComplexIdentifierIndex
       return retArray;
  }
 
+/***********************************
+ * Letter: A b etc
+ * */
 Letter
  = [A-Za-z]
 
+/***********************************
+ * Char: A b 0 etc
+ * */
 Char
  = [A-Za-z0-9]
 
+/***********************************
+ * Text: \text{pouet}
+ * [.] \text{str}
+ * [.] rule to recognize Latex Text syntax
+ * */
 Text
- = prefix:"\\text{" str:[A-Za-z0-9]+ postfix:"}" {
-      return prefix + str.join('') + postfix;
+ = "\\text{" str:[A-Za-z0-9]+ "}" {
+      return ("Text{" + str.join('') + "}");
  }
 
+/***********************************
+ * SpecialLetter: alpha, Gamma, etc
+ * [.] All special letters used in S4ML
+ * */
 SpecialLetter
  = "\\alpha"
  / "\\beta"
@@ -418,19 +624,28 @@ SpecialLetter
  / "\\Omega"
  / "\\omega"
 
+/***********************************
+ * MathBBLetter: R, Z, Q, etc
+ * [.] \mathbb{letter}
+ * [.] All Latex letters used in S4ML
+ *     to define Sets in maths
+ * */
 MathBBLetter
  = value:("\\mathbb{" Letter "}") {
       return value.join('');
  }
 
-//need to be this following pattern AND NOT an operator
+/***********************************
+ * Constant: \text{Pa} or \text{m} etc
+ * [.] 
+ * */
 Constant
- = "\\text{" str:[A-Za-z0-9]+ "}" {
-      return ("Text{" + str.join('') + "}");
- }
+ = Text
 
-//--------------------------------
-
+/***********************************
+ * MathBBSet: R+*, Z- etc
+ * [.] a set defined with a MathBB Letter
+ * */
 MathBBSet
  = mathBBLetter:MathBBLetter indice:("_" [+-])? exposant:("^{" "\\ast" "}")? {
       let retValue = mathBBLetter;
@@ -445,21 +660,146 @@ MathBBSet
       return retValue;
  }
 
-//--------------------------------
+/***********************************
+ * EmptyLine: ""
+ * */
 EmptyLine
  = "" {
-      const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+      const processedMathLineInput = options.processedMathLineInput;
 
-      processedMathLineInput.isErrored = false;
+      processedMathLineInput.signalNoError();
  }
 
+/***********************************
+ * CommentaryLine: #coucou tout le monde
+ * [.] Syntax to define a specific comment line
+ * */
 CommentaryLine
  = "#" .* {
 
  }
 
+/***********************************
+ * SeparatorLine: --
+ * [.] Syntax to define a line that is
+ *     used to separate 2 parts of the input screen
+ *     (like an <hr />)
+ * */
 SeparatorLine
 = "--"
 
+/***********************************
+ * UnprocessedLine: "\\vdash" followed by anything
+ * [.] Syntax to define a line we don't want
+ *     it to be processed (to simply write maths
+ *     or use syntax that is not allowed yet but
+ *     usefull to visualize certain things)
+ * */
 UnprocessedLine
 = "\\vdash" .*
+
+
+/***********************************
+ * MandatoryWhiteSpace:
+ * [.] space wich is mandatory
+ * */
+__ "MandatoryWhiteSpace" = "\\ "
+
+/***********************************
+ * OptionnalWhiteSpaces:
+ * [.] space wich is not mandatory
+ * */
+_ "OptionnalWhiteSpaces" = ("\\ " / " ")*
+
+
+/***************************************************************************
+ * OPERATORS *
+ ************/
+
+/***********************************
+ * Operator_plus: a + b
+ * [.] Binary operator
+ * */
+Operator_plus
+ = "+" {
+    return "<Operator[Plus]>";
+ }
+
+/***********************************
+ * Operator_minus: a - b
+ * [.] Binary operator
+ * */
+Operator_minus
+ = "-" {
+    return "<Operator[Minus]>";
+ }
+
+/***********************************
+ * Operator_multiply: a * b
+ * [.] Binary operator
+ * */
+Operator_multiply
+ = ("\\cdot " / "\\cdot") {
+      return "<Operator[Multiply]>";
+ }
+
+/***********************************
+ * Operator_pow: a^b
+ * [.] Binary operator
+ * */
+Operator_pow
+ = "^"
+
+/***********************************
+ * Operator_cross: A X B
+ * [.] Binary operator
+ * */
+Operator_cross
+ = ("\\times " / "\\times") {
+    return "[Cross]";
+ }
+
+/***********************************
+ * Operator_union: A U B
+ * [.] Binary operator
+ * */
+Operator_union
+ = "\\cup" {
+    return "<Operator[Union]>";
+ }
+
+/***********************************
+ * Operator_intersection: A Inter B
+ * [.] Binary operator
+ * */
+ Operator_intersection
+  = "\\cap" {
+     return "<Operator[Intersection]>";
+  }
+
+/***********************************
+ * Operator_backslash: A \ B
+ * [.] Binary operator
+ * */
+Operator_backslash
+ = "\\backslash" {
+    return "<Operator[Backslash]>";
+ }
+
+/***********************************
+ * Operator_opposite: -a
+ * [.] Unary operator
+ * */
+Operator_opposite
+ = "-" {
+    return "<Operator[Opposite]>"
+ }
+
+/***********************************
+ * Operator_identity: +Infinity
+ * [.] Unary operator
+ * */
+Operator_identity
+ = "+" {
+    return "<Operator[Identity]>"
+ }

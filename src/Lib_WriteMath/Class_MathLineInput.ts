@@ -370,7 +370,7 @@ class MathLineInput {
         
         try {
             console.log('parser Output:');
-            console.log(S4MLParser.parse(this.value()));                    
+            console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
             console.log('-------------');
             this.signalNoError();
         } catch (e) {

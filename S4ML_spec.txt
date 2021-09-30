@@ -407,3 +407,8 @@ TODO:
 ==> par exemple, j'ai Q = 4*pi*l*p/r, et l = 2*g et p = 46*g^2
 ==> si on veut f(Q, {r}) ==> ca retourne Q = 368*pi*g^3/r
 
+- implementer operateurs Complementaire = E - A, difference symetrique = A - AinterB,
+
+- dans la definition des Sets, pouvoir faire des opérations genre ^* = privé de 0, _- = que les valeurs négatives, etc
+
+

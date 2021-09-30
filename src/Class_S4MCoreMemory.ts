@@ -131,7 +131,7 @@ class S4MCoreMemory {
         //     mathLineInput.processContent();
         // }
 
-        this._errorMathLineInputs[0].processContent();
+        // this._errorMathLineInputs[0].processContent();
 
         // this._errorMathLineInputs.forEach((mathLineInput) => mathLineInput.processContent());
 
