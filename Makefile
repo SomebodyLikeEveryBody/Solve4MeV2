@@ -1,4 +1,4 @@
-.PHONY: all cleanAll S4MLParser main
+.PHONY: all cleanAll S4MLParser main light
 
 all: WriteMath light S4MLParser main
 	@echo ''
@@ -8,14 +8,11 @@ light:
 	@echo ''
 	@echo '[Building Solve4Me Project Lightly]'
 	@echo 'mkdir ./build/'
-	@if [ -d "./build/" ]; then /bin/rm -r ./build/; fi
-	mkdir ./build/
+	@if [ ! -d "./build/" ]; then /usr/bin/mkdir ./build/; fi
 	/bin/cp ./src/htmlResources/index.htm ./build/
 	/bin/cp ./src/htmlResources/main.js ./build/
 	/bin/cp ./src/htmlResources/Solve4MeGUIStyle.css ./build/
 	/bin/cp -R ./src/htmlResources/imgs ./build/
-	@if [ -d "./build/Lib_WriteMath_build/" ]; then /bin/rm -R ./build/Lib_WriteMath_build; fi
-	/bin/cp -R ./src/Lib_WriteMath/build/ ./build/Lib_WriteMath_build/
 
 main:
 	@echo ''

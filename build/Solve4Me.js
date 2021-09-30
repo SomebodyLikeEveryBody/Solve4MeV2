@@ -233,26 +233,21 @@ var KeyBoardListener = /** @class */ (function () {
     function KeyBoardListener(pInputScreen, pOutputScreen) {
         this._inputScreen = pInputScreen;
         this._outputScreen = pOutputScreen;
-        this._isCtrlDown = false;
         this.setEvents();
     }
     KeyBoardListener.prototype.setEvents = function () {
         var _this = this;
         $('body').keydown(function (e) {
-            if (e.which === KeyCodes.CTRL_KEY) {
-                _this._isCtrlDown = true;
-            }
-            if (e.which === KeyCodes.E_KEY && _this._isCtrlDown) {
+            if (e.which === KeyCodes.E_KEY && e.ctrlKey) {
                 e.preventDefault();
                 _this._inputScreen.clickOnShowHideOutputScreenButton();
-            }
-        });
-        $('body').keyup(function (e) {
-            if (e.which === KeyCodes.CTRL_KEY) {
-                _this._isCtrlDown = false;
             }
         });
         return this;
     };
     return KeyBoardListener;
 }());
+$('#virtual_keyboard_show_button').click(function (e) {
+    e.preventDefault();
+    console.log('show rien');
+});

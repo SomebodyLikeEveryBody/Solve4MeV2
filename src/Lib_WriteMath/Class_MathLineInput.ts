@@ -189,12 +189,6 @@ class MathLineInput {
         return this._nextMathLineInput !== null
     }
 
-    public setCtrlToDown(): MathLineInput {
-        this._undoRedoManager.setCtrlToDown();
-        this._shortcutsManager.setCtrlToDown();
-        return this;
-    }
-
     public hasBeenModifiedSinceLastFocusOut(): Boolean {
         return (this.value() !== this._lastValueBeforeFocusOut);
     }
@@ -344,8 +338,6 @@ class MathLineInput {
 
         this._jQEl.focusout(() => {
             this._autoCompleter.hide();
-            this._undoRedoManager.setSpecialKeysToUp();
-            this._shortcutsManager.setSpecialKeysToUp();
             
             // S4M interactions:
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
@@ -797,11 +789,7 @@ class MathLineInput {
     }
 
     public addNewMathLineInputOverMe(): MathLineInput {
-        const newMathlineInput = this.createNewMathLineInputAndAppendBefore(this)
-            .focus()
-            .setCtrlToDown();
-
-        this._undoRedoManager.setSpecialKeysToUp(); 
+        const newMathlineInput = this.createNewMathLineInputAndAppendBefore(this).focus()
 
         return newMathlineInput;
     }
@@ -810,11 +798,9 @@ class MathLineInput {
         const newMathlineInput: MathLineInput = this.createNewMathLineInputAndAppendAfter(this)
             .setValue(this.value())
             .focus()
-            .setCtrlToDown();
 
         newMathlineInput._undoRedoManager = this._undoRedoManager.getCopy(newMathlineInput);
         newMathlineInput.setCursorConfiguration(this.getCursorConfigurationWithCursorAndAnticursorFusion());
-        this._undoRedoManager.setSpecialKeysToUp(); 
 
         return newMathlineInput;
     }

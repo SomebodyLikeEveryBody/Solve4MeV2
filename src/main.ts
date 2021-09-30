@@ -83,33 +83,26 @@ class OutputScreen {
 class KeyBoardListener {
     protected _inputScreen: InputScren;
     protected _outputScreen: OutputScreen;
-    protected _isCtrlDown: Boolean;
 
     public constructor(pInputScreen: InputScren, pOutputScreen: OutputScreen) {
         this._inputScreen = pInputScreen;
         this._outputScreen = pOutputScreen;
-        this._isCtrlDown = false;
         this.setEvents();
     }
 
     protected setEvents(): KeyBoardListener {
         $('body').keydown((e) => {
-            if (e.which === KeyCodes.CTRL_KEY) {
-                this._isCtrlDown = true;
-            }
-
-            if (e.which === KeyCodes.E_KEY && this._isCtrlDown) {
+            if (e.which === KeyCodes.E_KEY && e.ctrlKey) {
                 e.preventDefault();
                 this._inputScreen.clickOnShowHideOutputScreenButton();
-            }
-        });
-
-        $('body').keyup((e) => {
-            if (e.which === KeyCodes.CTRL_KEY) {
-                this._isCtrlDown = false;
             }
         });
 
         return this;
     }
 }
+
+$('#virtual_keyboard_show_button').click((e) => {
+    e.preventDefault();
+    console.log('show rien');
+});

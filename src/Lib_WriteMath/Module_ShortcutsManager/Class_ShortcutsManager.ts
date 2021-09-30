@@ -5,52 +5,17 @@ class ShortcutsManager {
     
     public constructor(pMathLineInput: MathLineInput) {
         this._mathLineInput = pMathLineInput;
-        this._ctrlIsDown = false;
-        this._altIsDown = false;
 
         this.setEvents();
-    }
-
-    public setCtrlToDown(): void {
-        this._ctrlIsDown = true;   
-    }
-
-    protected checkIfSpecialKeysAreUpAndSetStates(pUppedKey: KeyCodes): void {
-        switch (pUppedKey) {
-            case KeyCodes.CTRL_KEY:
-                this._ctrlIsDown = false;
-                break;
-
-            case KeyCodes.ALT_KEY:
-                this._altIsDown = false;
-                break;
-        }
-    }
-
-    protected checkIfSpecialKeysAreDownAndSetStates(pDownedKey: KeyCodes): void {
-        switch (pDownedKey) {
-            case KeyCodes.CTRL_KEY:
-                this._ctrlIsDown = true;
-                break;
-
-            case KeyCodes.ALT_KEY:
-                this._altIsDown = true;
-                break;
-        }
     }
 
     protected setEvents(): void {
         this.setKeyUpEvents();
         this.setKeyDownEvents();
-
-        window.addEventListener('blur', () => {
-            this.setSpecialKeysToUp();
-        });
     }
 
     protected setKeyUpEvents(): void {
         this._mathLineInput.keyUp((e) => {
-            this.checkIfSpecialKeysAreUpAndSetStates(e.which);
 
             if (e.which === KeyCodes.ALT_KEY) {
                 e.preventDefault();
@@ -60,23 +25,17 @@ class ShortcutsManager {
 
     protected setKeyDownEvents(): void {
         this._mathLineInput.keyDown((e) => {
-            this.checkIfSpecialKeysAreDownAndSetStates(e.which);
 
             //set CTRL shortcuts
-            if (this._ctrlIsDown) {
+            if (e.ctrlKey) {
                 this.bindCtrlShortcuts(e);
             }
 
-            if (this._altIsDown) {
+            if (e.altKey) {
                 e.preventDefault();
                 this.bindAltShortcuts(e);
             }
         });
-    }
-
-    public setSpecialKeysToUp(): void {
-        this._ctrlIsDown = false;
-        this._altIsDown = false;
     }
 
     protected bindCtrlShortcuts(pEventObj: EventObject): void {
@@ -195,17 +154,11 @@ class ShortcutsManager {
                 pEventObj.preventDefault();
                 if (this._mathLineInput.isEmpty()) {
                     if (this._mathLineInput.hasNextMathLineInput()) {
-                        this._mathLineInput.nextMathLineInput
-                            .focus()
-                            .setCtrlToDown();
-
+                        this._mathLineInput.nextMathLineInput.focus()
                         this._mathLineInput.erase();
 
                     } else if (this._mathLineInput.hasPreviousMathLineInput()) {
-                        this._mathLineInput.previousMathLineInput
-                            .focus()
-                            .setCtrlToDown();
-
+                        this._mathLineInput.previousMathLineInput.focus()
                         this._mathLineInput.erase();
                     }
                 }
