@@ -1214,7 +1214,6 @@ var ShortcutsManager = /** @class */ (function () {
                     this._mathLineInput.duplicateMathLine();
                 }
                 break;
-                "\\text{\\backslash}";
             //ctrl + \ ==> \
             case KeyCodes.PIPE_KEY:
                 pEventObj.preventDefault();
@@ -1226,6 +1225,16 @@ var ShortcutsManager = /** @class */ (function () {
                 this._mathLineInput.writeLatexAtCursorPosition('\\text{Function}\\left(_{}^{}\\right)');
                 this._mathLineInput.keyStroke('Left');
                 this._mathLineInput.keyStroke('Left');
+                console.log('functions');
+                break;
+            //ctrl + E ==> show / hide outputScreen
+            case KeyCodes.E_KEY:
+                if (g_inputScreen) {
+                    g_inputScreen.clickOnShowHideOutputScreenButton();
+                }
+                else {
+                    console.log('ko');
+                }
                 break;
             //ctrl + O ==> o composition de fonction
             case KeyCodes.N0_KEY:

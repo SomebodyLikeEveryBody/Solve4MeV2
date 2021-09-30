@@ -1,6 +1,7 @@
-declare const S4MLParser: any;
+    declare const S4MLParser: any;
 declare const MathQuill: any;
 declare const g_s4mCoreMemory: any;
+declare const g_inputScreen: any;
 declare function $(pStr: String): JQueryElement;
 
 class MathLineInput {

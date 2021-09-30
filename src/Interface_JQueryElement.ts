@@ -35,4 +35,7 @@ interface JQueryElement {
     val(pStr?: String): String;
     attr(pProp: String, pBool: Boolean);
     click(pFunction?: Function): JQueryElement;
+    mousedown(pFunction?: Function): JQueryElement;
+    children(): JQueryElement;
+    first(): JQueryElement;
 }

@@ -487,11 +487,6 @@ var MathLineInput = /** @class */ (function () {
     MathLineInput.prototype.hasNextMathLineInput = function () {
         return this._nextMathLineInput !== null;
     };
-    MathLineInput.prototype.setCtrlToDown = function () {
-        this._undoRedoManager.setCtrlToDown();
-        this._shortcutsManager.setCtrlToDown();
-        return this;
-    };
     MathLineInput.prototype.hasBeenModifiedSinceLastFocusOut = function () {
         return (this.value() !== this._lastValueBeforeFocusOut);
     };
@@ -608,8 +603,6 @@ var MathLineInput = /** @class */ (function () {
         });
         this._jQEl.focusout(function () {
             _this._autoCompleter.hide();
-            _this._undoRedoManager.setSpecialKeysToUp();
-            _this._shortcutsManager.setSpecialKeysToUp();
             // S4M interactions:
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
                 g_s4mCoreMemory.lastMathLineInputFocusedOut = _this;
@@ -985,20 +978,15 @@ var MathLineInput = /** @class */ (function () {
         return this;
     };
     MathLineInput.prototype.addNewMathLineInputOverMe = function () {
-        var newMathlineInput = this.createNewMathLineInputAndAppendBefore(this)
-            .focus()
-            .setCtrlToDown();
-        this._undoRedoManager.setSpecialKeysToUp();
+        var newMathlineInput = this.createNewMathLineInputAndAppendBefore(this).focus();
         return newMathlineInput;
     };
     MathLineInput.prototype.duplicateMathLine = function () {
         var newMathlineInput = this.createNewMathLineInputAndAppendAfter(this)
             .setValue(this.value())
-            .focus()
-            .setCtrlToDown();
+            .focus();
         newMathlineInput._undoRedoManager = this._undoRedoManager.getCopy(newMathlineInput);
         newMathlineInput.setCursorConfiguration(this.getCursorConfigurationWithCursorAndAnticursorFusion());
-        this._undoRedoManager.setSpecialKeysToUp();
         return newMathlineInput;
     };
     MathLineInput.prototype.getFirstMathLineInput = function () {
@@ -1050,8 +1038,6 @@ var unaffectingKeys = [
 var UndoRedoManager = /** @class */ (function () {
     function UndoRedoManager(pMathLineInput) {
         this._mathLineInput = pMathLineInput;
-        this._ctrlIsDown = false;
-        this._altIsDown = false;
         this._YIsDown = false;
         this._ZIsDown = false;
         this._currentState = 0;
@@ -1073,9 +1059,6 @@ var UndoRedoManager = /** @class */ (function () {
     UndoRedoManager.prototype.setCurrentStateAt = function (pState) {
         this._currentState = pState;
     };
-    UndoRedoManager.prototype.setCtrlToDown = function () {
-        this._ctrlIsDown = true;
-    };
     UndoRedoManager.prototype.rearrangeTypedHistoryArray = function () {
         if (this._typedHistory.length > this._buffSize) {
             var sizeOverflow = ((this._typedHistory.length) - this._buffSize.valueOf());
@@ -1091,38 +1074,6 @@ var UndoRedoManager = /** @class */ (function () {
             }
         }
         return false;
-    };
-    UndoRedoManager.prototype.checkIfSpecialKeysAreUpAndSetStates = function (pUppedKey) {
-        switch (pUppedKey) {
-            case KeyCodes.CTRL_KEY:
-                this._ctrlIsDown = false;
-                break;
-            case KeyCodes.ALT_KEY:
-                this._altIsDown = false;
-                break;
-            case KeyCodes.Y_KEY:
-                this._YIsDown = false;
-                break;
-            case KeyCodes.Z_KEY:
-                this._ZIsDown = false;
-                break;
-        }
-    };
-    UndoRedoManager.prototype.checkIfSpecialKeysAreDownAndSetStates = function (pDownedKey) {
-        switch (pDownedKey) {
-            case KeyCodes.CTRL_KEY:
-                this._ctrlIsDown = true;
-                break;
-            case KeyCodes.ALT_KEY:
-                this._altIsDown = true;
-                break;
-            case KeyCodes.Y_KEY:
-                this._YIsDown = true;
-                break;
-            case KeyCodes.Z_KEY:
-                this._ZIsDown = true;
-                break;
-        }
     };
     UndoRedoManager.prototype.isCurrentStateIsLastHistoryState = function () {
         return (this._currentState === (this._typedHistory.length - 1));
@@ -1170,22 +1121,17 @@ var UndoRedoManager = /** @class */ (function () {
         }
     };
     UndoRedoManager.prototype.setEvents = function () {
-        var _this = this;
         this.setKeyUpEvents();
         this.setKeyDownEvents();
-        window.addEventListener('blur', function () {
-            _this.setSpecialKeysToUp();
-        });
     };
     UndoRedoManager.prototype.setKeyUpEvents = function () {
         var _this = this;
         this._mathLineInput.keyUp(function (e) {
-            _this.checkIfSpecialKeysAreUpAndSetStates(e.which);
             if (e.which === KeyCodes.ALT_KEY) {
                 e.preventDefault();
             }
             if ((_this.isKeyIsUnaffecting(e.which) === false)
-                && (_this._ctrlIsDown === false || (_this._ctrlIsDown && e.which === KeyCodes.V_KEY))) {
+                && (e.ctrlKey === false || (e.ctrlKey === true && e.which === KeyCodes.V_KEY))) {
                 _this.saveState();
             }
         });
@@ -1193,25 +1139,17 @@ var UndoRedoManager = /** @class */ (function () {
     UndoRedoManager.prototype.setKeyDownEvents = function () {
         var _this = this;
         this._mathLineInput.keyDown(function (e) {
-            // console.log(this._mathLineInput.getCursorConfiguration());
-            _this.checkIfSpecialKeysAreDownAndSetStates(e.which);
             // ctrl + Z ==> undo
-            if (_this._ctrlIsDown && _this._ZIsDown) {
+            if (e.ctrlKey && e.which === KeyCodes.Z_KEY) {
                 e.preventDefault();
                 _this.undo();
             }
             // ctrl + Y ==> redo
-            if (_this._ctrlIsDown && _this._YIsDown) {
+            if (e.ctrlKey && e.which === KeyCodes.Y_KEY) {
                 e.preventDefault();
                 _this.redo();
             }
         });
-    };
-    UndoRedoManager.prototype.setSpecialKeysToUp = function () {
-        this._ctrlIsDown = false;
-        this._altIsDown = false;
-        this._YIsDown = false;
-        this._ZIsDown = false;
     };
     UndoRedoManager.prototype.getCopy = function (pMathLineInput) {
         var retUndoRedoManager = new UndoRedoManager(pMathLineInput);
@@ -1231,45 +1169,14 @@ var UndoRedoManager = /** @class */ (function () {
 var ShortcutsManager = /** @class */ (function () {
     function ShortcutsManager(pMathLineInput) {
         this._mathLineInput = pMathLineInput;
-        this._ctrlIsDown = false;
-        this._altIsDown = false;
         this.setEvents();
     }
-    ShortcutsManager.prototype.setCtrlToDown = function () {
-        this._ctrlIsDown = true;
-    };
-    ShortcutsManager.prototype.checkIfSpecialKeysAreUpAndSetStates = function (pUppedKey) {
-        switch (pUppedKey) {
-            case KeyCodes.CTRL_KEY:
-                this._ctrlIsDown = false;
-                break;
-            case KeyCodes.ALT_KEY:
-                this._altIsDown = false;
-                break;
-        }
-    };
-    ShortcutsManager.prototype.checkIfSpecialKeysAreDownAndSetStates = function (pDownedKey) {
-        switch (pDownedKey) {
-            case KeyCodes.CTRL_KEY:
-                this._ctrlIsDown = true;
-                break;
-            case KeyCodes.ALT_KEY:
-                this._altIsDown = true;
-                break;
-        }
-    };
     ShortcutsManager.prototype.setEvents = function () {
-        var _this = this;
         this.setKeyUpEvents();
         this.setKeyDownEvents();
-        window.addEventListener('blur', function () {
-            _this.setSpecialKeysToUp();
-        });
     };
     ShortcutsManager.prototype.setKeyUpEvents = function () {
-        var _this = this;
         this._mathLineInput.keyUp(function (e) {
-            _this.checkIfSpecialKeysAreUpAndSetStates(e.which);
             if (e.which === KeyCodes.ALT_KEY) {
                 e.preventDefault();
             }
@@ -1278,20 +1185,15 @@ var ShortcutsManager = /** @class */ (function () {
     ShortcutsManager.prototype.setKeyDownEvents = function () {
         var _this = this;
         this._mathLineInput.keyDown(function (e) {
-            _this.checkIfSpecialKeysAreDownAndSetStates(e.which);
             //set CTRL shortcuts
-            if (_this._ctrlIsDown) {
+            if (e.ctrlKey) {
                 _this.bindCtrlShortcuts(e);
             }
-            if (_this._altIsDown) {
+            if (e.altKey) {
                 e.preventDefault();
                 _this.bindAltShortcuts(e);
             }
         });
-    };
-    ShortcutsManager.prototype.setSpecialKeysToUp = function () {
-        this._ctrlIsDown = false;
-        this._altIsDown = false;
     };
     ShortcutsManager.prototype.bindCtrlShortcuts = function (pEventObj) {
         switch (pEventObj.which) {
@@ -1312,7 +1214,6 @@ var ShortcutsManager = /** @class */ (function () {
                     this._mathLineInput.duplicateMathLine();
                 }
                 break;
-                "\\text{\\backslash}";
             //ctrl + \ ==> \
             case KeyCodes.PIPE_KEY:
                 pEventObj.preventDefault();
@@ -1324,6 +1225,16 @@ var ShortcutsManager = /** @class */ (function () {
                 this._mathLineInput.writeLatexAtCursorPosition('\\text{Function}\\left(_{}^{}\\right)');
                 this._mathLineInput.keyStroke('Left');
                 this._mathLineInput.keyStroke('Left');
+                console.log('functions');
+                break;
+            //ctrl + E ==> show / hide outputScreen
+            case KeyCodes.E_KEY:
+                if (g_inputScreen) {
+                    g_inputScreen.clickOnShowHideOutputScreenButton();
+                }
+                else {
+                    console.log('ko');
+                }
                 break;
             //ctrl + O ==> o composition de fonction
             case KeyCodes.N0_KEY:
@@ -1395,15 +1306,11 @@ var ShortcutsManager = /** @class */ (function () {
                 pEventObj.preventDefault();
                 if (this._mathLineInput.isEmpty()) {
                     if (this._mathLineInput.hasNextMathLineInput()) {
-                        this._mathLineInput.nextMathLineInput
-                            .focus()
-                            .setCtrlToDown();
+                        this._mathLineInput.nextMathLineInput.focus();
                         this._mathLineInput.erase();
                     }
                     else if (this._mathLineInput.hasPreviousMathLineInput()) {
-                        this._mathLineInput.previousMathLineInput
-                            .focus()
-                            .setCtrlToDown();
+                        this._mathLineInput.previousMathLineInput.focus();
                         this._mathLineInput.erase();
                     }
                 }

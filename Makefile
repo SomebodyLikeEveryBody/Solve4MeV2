@@ -1,4 +1,4 @@
-.PHONY: all cleanAll S4MLParser main light
+.PHONY: all cleanAll S4MLParser main light WriteMath
 
 all: WriteMath light S4MLParser main
 	@echo ''
@@ -39,6 +39,8 @@ WriteMath:
 	@echo ''
 	@echo '[Building WriteMath Lib]'
 	cd ./src/Lib_WriteMath/ && /bin/make && cd ../
+	@if [ -d "./build/Lib_WriteMath_build" ]; then /bin/rm -R ./build/Lib_WriteMath_build; fi
+	/usr/bin/cp -R ./src/Lib_WriteMath/build/ ./build/Lib_WriteMath_build
 
 cleanS4MLParser:
 	rm ./build/S4MLParser.js

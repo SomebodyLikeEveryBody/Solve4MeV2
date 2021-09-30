@@ -173,13 +173,17 @@ var InputScren = /** @class */ (function () {
     function InputScren(pJQueryElement, pShowHideOutputScreenButton, pOutputScren, pSolveButton) {
         this._jQEl = pJQueryElement;
         this._showHideOutputScreenButton = pShowHideOutputScreenButton;
+        this._showHideVirtualKeyboard = this._showHideOutputScreenButton.children().first();
         this._outputScreen = pOutputScren;
         this._solveButton = pSolveButton;
         this.setEvents();
     }
     InputScren.prototype.setEvents = function () {
         var _this = this;
-        this._showHideOutputScreenButton.click(function () {
+        this._showHideOutputScreenButton.mousedown(function (e) {
+            e.preventDefault();
+        });
+        this._showHideOutputScreenButton.click(function (e) {
             if (_this._outputScreen.isVisible()) {
                 _this._outputScreen.hide(function () {
                     _this._jQEl.animate({
@@ -196,7 +200,14 @@ var InputScren = /** @class */ (function () {
                     _this._outputScreen.show();
                 });
             }
-            g_s4mCoreMemory.currentMathLineInputFocused.focus();
+        });
+        this._showHideVirtualKeyboard.mousedown(function (e) {
+            e.preventDefault();
+        });
+        this._showHideVirtualKeyboard.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('afficher le clavier virtuel');
         });
         return this;
     };
@@ -236,18 +247,7 @@ var KeyBoardListener = /** @class */ (function () {
         this.setEvents();
     }
     KeyBoardListener.prototype.setEvents = function () {
-        var _this = this;
-        $('body').keydown(function (e) {
-            if (e.which === KeyCodes.E_KEY && e.ctrlKey) {
-                e.preventDefault();
-                _this._inputScreen.clickOnShowHideOutputScreenButton();
-            }
-        });
         return this;
     };
     return KeyBoardListener;
 }());
-$('#virtual_keyboard_show_button').click(function (e) {
-    e.preventDefault();
-    console.log('show rien');
-});
