@@ -170,13 +170,14 @@ var S4MCoreMemory = /** @class */ (function () {
     return S4MCoreMemory;
 }());
 var InputScren = /** @class */ (function () {
-    function InputScren(pJQueryElement, pShowHideOutputScreenButton, pOutputScren, pSolveButton, pVirtualKeyboard) {
+    function InputScren(pJQueryElement, pShowHideOutputScreenButton, pOutputScren, pSolveButton, pVirtualKeyboard, pApp) {
         this._jQEl = pJQueryElement;
         this._showHideOutputScreenButton = pShowHideOutputScreenButton;
         this._showHideVirtualKeyboard = this._showHideOutputScreenButton.children().first();
         this._outputScreen = pOutputScren;
         this._solveButton = pSolveButton;
         this._virtualKeyboard = pVirtualKeyboard;
+        this._app = pApp;
         this.setEvents();
     }
     InputScren.prototype.setEvents = function () {
@@ -259,16 +260,19 @@ var VirtualKeyboard = /** @class */ (function () {
         this._jQEl.hide(0);
         this._isVisible = false;
     }
+    VirtualKeyboard.prototype.isVisible = function () {
+        return this._isVisible;
+    };
     VirtualKeyboard.prototype.show = function () {
         var _this = this;
-        this._jQEl.fadeIn(500, function () {
+        this._jQEl.fadeIn(70, function () {
             _this._isVisible = true;
         });
         return this;
     };
     VirtualKeyboard.prototype.hide = function () {
         var _this = this;
-        this._jQEl.fadeOut(500, function () {
+        this._jQEl.fadeOut(70, function () {
             _this._isVisible = false;
         });
         return this;

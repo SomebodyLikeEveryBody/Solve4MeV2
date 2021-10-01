@@ -5,14 +5,16 @@ class InputScren {
     protected _solveButton: JQueryElement;
     protected _showHideVirtualKeyboard: JQueryElement;
     protected _virtualKeyboard: VirtualKeyboard;
+    protected _app: JQueryElement;
 
-    public constructor(pJQueryElement: JQueryElement, pShowHideOutputScreenButton: JQueryElement, pOutputScren: OutputScreen, pSolveButton: JQueryElement, pVirtualKeyboard: VirtualKeyboard) {
+    public constructor(pJQueryElement: JQueryElement, pShowHideOutputScreenButton: JQueryElement, pOutputScren: OutputScreen, pSolveButton: JQueryElement, pVirtualKeyboard: VirtualKeyboard, pApp: JQueryElement) {
         this._jQEl = pJQueryElement;
         this._showHideOutputScreenButton = pShowHideOutputScreenButton;
         this._showHideVirtualKeyboard = this._showHideOutputScreenButton.children().first();
         this._outputScreen = pOutputScren;
         this._solveButton = pSolveButton;
         this._virtualKeyboard = pVirtualKeyboard;
+        this._app = pApp;
 
         this.setEvents();
     }
@@ -49,12 +51,14 @@ class InputScren {
         this._showHideVirtualKeyboard.click((e) => {
             e.preventDefault();
             e.stopPropagation();
+
             this._virtualKeyboard.toggle();
+
         });
 
         return this;
     }
-
+    
     public clickOnShowHideOutputScreenButton(): InputScren {
         this._showHideOutputScreenButton.click();
         return this;

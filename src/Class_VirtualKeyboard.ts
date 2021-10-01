@@ -8,17 +8,23 @@ class VirtualKeyboard {
         this._isVisible = false;
     }
 
+    public isVisible(): Boolean {
+        return this._isVisible
+    }
+
     public show(): VirtualKeyboard {
-        this._jQEl.fadeIn(500, () => {
+        this._jQEl.fadeIn(70, () => {
             this._isVisible = true;
         });
+
         return this;
     }
 
     public hide(): VirtualKeyboard {
-        this._jQEl.fadeOut(500, () => {
+        this._jQEl.fadeOut(70, () => {
             this._isVisible = false;
         });
+
         return this;
     }
 
