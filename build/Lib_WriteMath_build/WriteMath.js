@@ -39,6 +39,7 @@ var KeyCodes;
     KeyCodes[KeyCodes["F_KEY"] = 70] = "F_KEY";
     KeyCodes[KeyCodes["G_KEY"] = 71] = "G_KEY";
     KeyCodes[KeyCodes["I_KEY"] = 73] = "I_KEY";
+    KeyCodes[KeyCodes["K_KEY"] = 75] = "K_KEY";
     KeyCodes[KeyCodes["L_KEY"] = 76] = "L_KEY";
     KeyCodes[KeyCodes["N_KEY"] = 78] = "N_KEY";
     KeyCodes[KeyCodes["O_KEY"] = 79] = "O_KEY";
@@ -332,10 +333,11 @@ var MathLineInput = /** @class */ (function () {
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl[0], {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
             autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln',
+            substituteTextarea: (function () {
+                var JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
+                return JQTextarea[0];
+            }),
             handlers: {
-                substituteTextarea: function () {
-                    return $('<textarea readonly="readonly"></textarea>')[0];
-                },
                 edit: function () {
                 },
                 enter: function () {
@@ -1239,6 +1241,13 @@ var ShortcutsManager = /** @class */ (function () {
                     console.log('ko');
                 }
                 break;
+            //ctrl + K ==> display or hide virtual keyboard
+            case KeyCodes.K_KEY:
+                if (g_virtualKeyboard) {
+                    pEventObj.preventDefault();
+                    g_virtualKeyboard.toggle();
+                }
+                break;
             //ctrl + O ==> o composition de fonction
             case KeyCodes.N0_KEY:
                 pEventObj.preventDefault();
@@ -1247,7 +1256,6 @@ var ShortcutsManager = /** @class */ (function () {
             //ctrl + P ==> print encapsulation
             case KeyCodes.P_KEY:
                 pEventObj.preventDefault();
-                // this._mathLineInput.appendValueAtCursorPosition('\\Print(');
                 if (this._mathLineInput.isAPrintLine()) {
                     this._mathLineInput.stopBeingAPrintLine();
                 }
@@ -1467,7 +1475,7 @@ var ShortcutsManager = /** @class */ (function () {
             case KeyCodes.N8_KEY:
                 this._mathLineInput.appendCmdAtCursorPosition('\\ast');
                 break;
-            //alt + 9
+            //alt + 9 ==> degree symbol
             case KeyCodes.N9_KEY:
                 this._mathLineInput.writeLatexAtCursorPosition('\\text{°}');
                 break;

@@ -53,12 +53,11 @@ class InputScren {
             e.stopPropagation();
 
             this._virtualKeyboard.toggle();
-
         });
 
         return this;
     }
-    
+
     public clickOnShowHideOutputScreenButton(): InputScren {
         this._showHideOutputScreenButton.click();
         return this;

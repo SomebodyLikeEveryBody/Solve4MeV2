@@ -87,6 +87,15 @@ class ShortcutsManager {
 
                 break;
 
+            //ctrl + K ==> display or hide virtual keyboard
+            case KeyCodes.K_KEY:
+                if (g_virtualKeyboard) {
+                    pEventObj.preventDefault();
+                    g_virtualKeyboard.toggle();
+                }
+
+                break;
+
             //ctrl + O ==> o composition de fonction
             case KeyCodes.N0_KEY:
                 pEventObj.preventDefault();
@@ -96,7 +105,6 @@ class ShortcutsManager {
             //ctrl + P ==> print encapsulation
             case KeyCodes.P_KEY:
                 pEventObj.preventDefault();
-                // this._mathLineInput.appendValueAtCursorPosition('\\Print(');
                 if (this._mathLineInput.isAPrintLine()) {
                     this._mathLineInput.stopBeingAPrintLine();
                 } else {
@@ -116,7 +124,7 @@ class ShortcutsManager {
                 this._mathLineInput.addNewMathLineInputOverMe();
                 break;
 
-            //ctrl + G
+            //ctrl + G ==> become given line
             case KeyCodes.G_KEY:
                 pEventObj.preventDefault();
                 if (this._mathLineInput.isAGivenLine()) {
@@ -357,7 +365,7 @@ class ShortcutsManager {
                 this._mathLineInput.appendCmdAtCursorPosition('\\ast');
                 break;
 
-            //alt + 9
+            //alt + 9 ==> degree symbol
             case KeyCodes.N9_KEY:
                 this._mathLineInput.writeLatexAtCursorPosition('\\text{°}');
                 break;

@@ -22,6 +22,7 @@ interface JQueryElement {
     prev(): JQueryElement;
     keydown(pFunction: Function): JQueryElement;
     keyup(pFunction: Function): JQueryElement;
+    keypress(pFunction: Function): JQueryElement;
     focusout(pFunction: Function): JQueryElement;
     focusin(pFunction: Function): JQueryElement;    
     blur(pFuction: Function): JQueryElement;
@@ -35,4 +36,5 @@ interface JQueryElement {
     text(pStr: String): JQueryElement;
     val(pStr?: String): String;
     attr(pProp: String, pBool: Boolean|String);
+    data(pStr: String, pValue: String): JQueryElement;
 }

@@ -259,21 +259,22 @@ var VirtualKeyboard = /** @class */ (function () {
         this._jQEl = pJQueryElement;
         this._jQEl.hide(0);
         this._isVisible = false;
+        this.setEvents();
     }
     VirtualKeyboard.prototype.isVisible = function () {
         return this._isVisible;
     };
     VirtualKeyboard.prototype.show = function () {
         var _this = this;
-        this._jQEl.fadeIn(70, function () {
+        this._jQEl.animate({ width: 'toggle' }, 250, function () {
             _this._isVisible = true;
         });
         return this;
     };
     VirtualKeyboard.prototype.hide = function () {
         var _this = this;
-        this._jQEl.fadeOut(70, function () {
-            _this._isVisible = false;
+        this._jQEl.animate({ width: 'toggle' }, 250, function () {
+            _this._isVisible = true;
         });
         return this;
     };
@@ -284,6 +285,13 @@ var VirtualKeyboard = /** @class */ (function () {
         else {
             this.show();
         }
+        return this;
+    };
+    VirtualKeyboard.prototype.setEvents = function () {
+        this._jQEl.mousedown(function (e) {
+            e.preventDefault();
+            console.log('pouet');
+        });
         return this;
     };
     return VirtualKeyboard;

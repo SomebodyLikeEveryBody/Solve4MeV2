@@ -578,7 +578,7 @@ Char
  * [.] rule to recognize Latex Text syntax
  * */
 Text
- = "\\text{" str:[A-Za-z0-9]+ "}" {
+ = "\\text{" str:[A-Za-z0-9°]+ "}" {
       return ("Text{" + str.join('') + "}");
  }
 

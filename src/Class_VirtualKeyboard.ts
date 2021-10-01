@@ -6,6 +6,8 @@ class VirtualKeyboard {
         this._jQEl = pJQueryElement;
         this._jQEl.hide(0);
         this._isVisible = false;
+
+        this.setEvents();
     }
 
     public isVisible(): Boolean {
@@ -13,7 +15,7 @@ class VirtualKeyboard {
     }
 
     public show(): VirtualKeyboard {
-        this._jQEl.fadeIn(70, () => {
+        this._jQEl.animate({width:'toggle'},250, () => {
             this._isVisible = true;
         });
 
@@ -21,8 +23,8 @@ class VirtualKeyboard {
     }
 
     public hide(): VirtualKeyboard {
-        this._jQEl.fadeOut(70, () => {
-            this._isVisible = false;
+        this._jQEl.animate({width:'toggle'},250, () => {
+            this._isVisible = true;
         });
 
         return this;
@@ -34,6 +36,15 @@ class VirtualKeyboard {
         } else {
             this.show();
         }
+
+        return this;
+    }
+
+    protected setEvents(): VirtualKeyboard {
+        this._jQEl.mousedown((e) => {
+            e.preventDefault();
+            console.log('pouet');
+        });
 
         return this;
     }

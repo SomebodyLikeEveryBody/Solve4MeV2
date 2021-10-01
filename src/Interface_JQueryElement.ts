@@ -24,6 +24,7 @@ interface JQueryElement {
     prev(): JQueryElement;
     keydown(pFunction: Function): JQueryElement;
     keyup(pFunction: Function): JQueryElement;
+    keypress(pFunction: Function): JQueryElement;
     focusout(pFunction: Function): JQueryElement;
     focusin(pFunction: Function): JQueryElement;    
     blur(pFuction: Function): JQueryElement;
@@ -40,4 +41,6 @@ interface JQueryElement {
     mousedown(pFunction?: Function): JQueryElement;
     children(): JQueryElement;
     first(): JQueryElement;
+
+    data(pstr: String, pvalue: any): void;
 }

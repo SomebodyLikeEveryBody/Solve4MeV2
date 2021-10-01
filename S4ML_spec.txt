@@ -1,3 +1,134 @@
+01/10/2021
+----------
+
+c'est ok pour le parsing
+
+maintenant faut bosser sur le clavier virtuel pour l'utilisation mobile.
+
+il faut que
+Let
+Given
+dash
+==> soient tout le temps accessibles
+
+4 menus:
+- (123) ==> chiffres et trucs de base
+- (ABC) ==> lettres
+- (Sym) ==> symboles genre alpha et tout
+- (sig) ==> signes genre \in et tout
+- f()   ==> fonctions pré-définies genre sin, cos, tan, operateurs genre somme, intégrale, etc
+
+il faudrait des touches pour les symboles
+========
+- alpha
+- beta
+- gamma
+- Gamma
+- delta
+- Delta
+- varepsilon
+- zeta
+- eta
+- theta
+- Theta
+- iota
+- kappa
+- lambda
+- Lambda
+- mu
+- nu
+- ksi
+- pi
+- Pi
+- rho
+- sigma
+- Sigma
+- tau
+- upsilon
+- phi
+- Phi
+- chi
+- psi
+- Psi
+- omega
+- Omega
+- R
+- C
+- Q
+- Z
+- N
+- emptyset
+- \\text{°}
+- \\text{rad}
+- \\neg
+========
+- lfloor
+- rfloor
+- pipe (\\ |\\ 	)
+- backslash
+- \\circ 
+- \\in
+- mapsto
+- infinity
+- \\partial
+- \\differential
+- \\rightarrow
+- \\leftarrow
+- vec
+- \\union
+- \\cap
+- supset
+- supseteq
+- subset
+- subseteq
+- \\simeq
+- exists
+- neq
+- land
+- lor
+- overline
+- 
+========
+- duplicate line
+- insert line over
+- select all
+- Function
++ Let
++ Given
++ dash
+- Function
++ #
+- save
+- open
+- print
+=========
+- sum
+- prod
+- sqrt
+- differentiation totale
+- differentiation partielle
+- X
+
+
+
+(123)
+[ABC] [_][^] [7][8][9][/][\][Back]
+[Sym] [(][)] [4][5][6][*][*][Enter]
+[Sig] [[][]] [1][2][3][-]   [U]
+[f()] [L][#] [0][.][=][+][L][D][R]
+----------------------------------
+34
+
+(ABC)
+[q][w][e][r][t][y][u][i][o][p] [#]
+[a][s][d][f][g][h][j][k][l][B] [let]
+[Shif][z][x][c][v][b][n][m][E] [dash]
+[123] [ ][ ][ ][ ][ ][[][]][|] [vc]
+----------------------------------
+34
+
+
+
 28/09/2021
 ----------
 bon c'est galere intergalactique

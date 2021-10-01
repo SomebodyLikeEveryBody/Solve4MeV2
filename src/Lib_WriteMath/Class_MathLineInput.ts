@@ -1,7 +1,8 @@
-    declare const S4MLParser: any;
+declare const S4MLParser: any;
 declare const MathQuill: any;
 declare const g_s4mCoreMemory: any;
 declare const g_inputScreen: any;
+declare const g_virtualKeyboard: any;
 declare function $(pStr: String): JQueryElement;
 
 class MathLineInput {
@@ -30,11 +31,13 @@ class MathLineInput {
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl[0], {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
             autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln',
-            handlers: {
-                substituteTextarea: () => {
-                    return $('<textarea readonly="readonly"></textarea>')[0];
-                },
+            substituteTextarea: (() => {
+                const JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
+                
+                return JQTextarea[0];
+            }),
 
+            handlers: {
                 edit: () => {
                 },
     
