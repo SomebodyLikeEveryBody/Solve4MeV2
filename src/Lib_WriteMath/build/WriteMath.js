@@ -355,6 +355,7 @@ var MathLineInput = /** @class */ (function () {
                         }
                     }
                 },
+                substituteTextarea: function () { return document.createElement('span'); },
             }
         });
         this._autoCompleter = new AutoCompleter(this, g_keywordsList);

@@ -58,6 +58,8 @@ class MathLineInput {
                         }
                     }
                 },
+
+                substituteTextarea: () => document.createElement('span'),
             }
         });
 
