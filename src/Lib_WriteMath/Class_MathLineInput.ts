@@ -31,6 +31,10 @@ class MathLineInput {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
             autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln',
             handlers: {
+                substituteTextarea: () => {
+                    return $('<textarea readonly="readonly"></textarea>')[0];
+                },
+
                 edit: () => {
                 },
     
@@ -58,8 +62,6 @@ class MathLineInput {
                         }
                     }
                 },
-
-                substituteTextarea: () => document.createElement('span'),
             }
         });
 

@@ -86,6 +86,7 @@ body
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    cursor: pointer;
 }
 
 #input_screen
@@ -255,6 +256,7 @@ button.alone
     background-repeat: no-repeat;
     background-size: 50px;
     background-position: center;
+    cursor: pointer;
 }
 
 #virtual_keyboard
