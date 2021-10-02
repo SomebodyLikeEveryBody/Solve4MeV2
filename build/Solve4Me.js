@@ -255,12 +255,31 @@ var KeyBoardListener = /** @class */ (function () {
     return KeyBoardListener;
 }());
 var VirtualKeyboard = /** @class */ (function () {
+    // protected _numbersPanel: KeyboardPanel;
+    // protected _lettersPanel: KeyboardPanel;
+    // protected _symbolsPanel: KeyboardPanel;
+    // protected _signsPanel: KeyboardPanel;
+    // protected _functionsPanel: KeyboardPanel;
     function VirtualKeyboard(pJQueryElement) {
         this._jQEl = pJQueryElement;
-        this._jQEl.hide(0);
-        this._isVisible = false;
-        this.setEvents();
+        // this._jQEl.hide(0);
+        // this._isVisible = false;
+        this._jQEl.show(0);
+        this._isVisible = true;
+        this._panels = {};
+        this._panels.numbersPanel = new KeyboardPanel([
+            ["a^b", "b^a", "\\ge", "\\le", "\\sqrt{x}"],
+            ["a", "b", "c", "d", "e"],
+            ["a", "b", "c", "d", "e"],
+            ["a", "b", "c", "d", "e"],
+        ]);
+        this._panels.numbersPanel.appendTo(this._jQEl);
+        this.setPanels()
+            .setEvents();
     }
+    VirtualKeyboard.prototype.setPanels = function () {
+        return this;
+    };
     VirtualKeyboard.prototype.isVisible = function () {
         return this._isVisible;
     };
@@ -295,4 +314,86 @@ var VirtualKeyboard = /** @class */ (function () {
         return this;
     };
     return VirtualKeyboard;
+}());
+var KeyboardPanel = /** @class */ (function () {
+    function KeyboardPanel(pLabels) {
+        this._jQEl = $('<div class="keyboard_panel"></div>');
+        this.createLineKeysArray(pLabels)
+            .includeLineKeys();
+    }
+    KeyboardPanel.prototype.createLineKeysArray = function (pLabels) {
+        this._lineKeysArray = [];
+        for (var _i = 0, pLabels_1 = pLabels; _i < pLabels_1.length; _i++) {
+            var pLabelsArray = pLabels_1[_i];
+            this._lineKeysArray.push(new LineKeys(pLabelsArray));
+        }
+        return this;
+    };
+    KeyboardPanel.prototype.includeLineKeys = function () {
+        for (var _i = 0, _a = this._lineKeysArray; _i < _a.length; _i++) {
+            var lineKeys = _a[_i];
+            lineKeys.appendTo(this._jQEl);
+        }
+        return this;
+    };
+    KeyboardPanel.prototype.appendTo = function (pElement) {
+        this._jQEl.appendTo(pElement);
+        return this;
+    };
+    KeyboardPanel.prototype.append = function (pElement) {
+        this._jQEl.append(pElement);
+        return this;
+    };
+    return KeyboardPanel;
+}());
+var LineKeys = /** @class */ (function () {
+    function LineKeys(pLatexKeyLabels) {
+        this._jQEl = $('<div class="line_key"></div>');
+        this.createTouchKeys(pLatexKeyLabels)
+            .includeKeys();
+    }
+    LineKeys.prototype.createTouchKeys = function (pLatexLabels) {
+        this._touchKeys = [];
+        for (var _i = 0, pLatexLabels_1 = pLatexLabels; _i < pLatexLabels_1.length; _i++) {
+            var latexLabel = pLatexLabels_1[_i];
+            this._touchKeys.push(new TouchKey(latexLabel));
+        }
+        return this;
+    };
+    LineKeys.prototype.includeKeys = function () {
+        for (var _i = 0, _a = this._touchKeys; _i < _a.length; _i++) {
+            var key = _a[_i];
+            key.appendTo(this._jQEl);
+        }
+        return this;
+    };
+    LineKeys.prototype.appendTo = function (pElement) {
+        this._jQEl.appendTo(pElement);
+        return this;
+    };
+    LineKeys.prototype.append = function (pElement) {
+        this._jQEl.append(pElement);
+        return this;
+    };
+    return LineKeys;
+}());
+var TouchKey = /** @class */ (function () {
+    function TouchKey(pLatexLabel) {
+        this._jQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
+        this._mathField = MathQuill.getInterface(2).StaticMath(this._jQEl.find('span')[0]);
+        this.setLatexLabel(pLatexLabel);
+    }
+    TouchKey.prototype.setLatexLabel = function (pLatexLabel) {
+        this._mathField.latex(pLatexLabel);
+        return this;
+    };
+    TouchKey.prototype.appendTo = function (pElement) {
+        this._jQEl.appendTo(pElement);
+        return this;
+    };
+    TouchKey.prototype.append = function (pElement) {
+        this._jQEl.append(pElement);
+        return this;
+    };
+    return TouchKey;
 }());

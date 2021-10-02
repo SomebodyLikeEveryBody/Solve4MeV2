@@ -1273,7 +1273,7 @@ var ShortcutsManager = /** @class */ (function () {
                 pEventObj.preventDefault();
                 this._mathLineInput.addNewMathLineInputOverMe();
                 break;
-            //ctrl + G
+            //ctrl + G ==> become given line
             case KeyCodes.G_KEY:
                 pEventObj.preventDefault();
                 if (this._mathLineInput.isAGivenLine()) {

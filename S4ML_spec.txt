@@ -18,6 +18,24 @@ dash
 - (sig) ==> signes genre \in et tout
 - f()   ==> fonctions pré-définies genre sin, cos, tan, operateurs genre somme, intégrale, etc
 
+(123)
+[ABC] [_][^] [7][8][9][/][\][Back]
+[Sym] [(][)] [4][5][6][*][*][Enter]
+[Sig] [[][]] [1][2][3][-]   [U]
+[f()] [L][#] [0][.][=][+][L][D][R]
+----------------------------------
+34
+
+(ABC)
+[q][w][e][r][t][y][u][i][o][p] [#]
+[a][s][d][f][g][h][j][k][l][B] [let]
+[Shif][z][x][c][v][b][n][m][E] [dash]
+[123] [ ][ ][ ][ ][ ][[][]][|] [vc]
+----------------------------------
+34
+
+
+
 il faudrait des touches pour les symboles
 ========
 - alpha
@@ -108,24 +126,10 @@ il faudrait des touches pour les symboles
 - differentiation totale
 - differentiation partielle
 - X
+=========
+- degres
 
 
-
-(123)
-[ABC] [_][^] [7][8][9][/][\][Back]
-[Sym] [(][)] [4][5][6][*][*][Enter]
-[Sig] [[][]] [1][2][3][-]   [U]
-[f()] [L][#] [0][.][=][+][L][D][R]
-----------------------------------
-34
-
-(ABC)
-[q][w][e][r][t][y][u][i][o][p] [#]
-[a][s][d][f][g][h][j][k][l][B] [let]
-[Shif][z][x][c][v][b][n][m][E] [dash]
-[123] [ ][ ][ ][ ][ ][[][]][|] [vc]
-----------------------------------
-34
 
 
 
