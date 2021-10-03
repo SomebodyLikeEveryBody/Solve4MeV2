@@ -268,6 +268,7 @@ var VirtualKeyboard = /** @class */ (function () {
         this._isVisible = true;
         this._panels = {};
         this._panels.numbersPanel = new KeyboardPanel([
+            //gerer la taille avec flex-grow: 1 ou 0.5 ou 2 etc
             ["[ABC]", "", "\\text{_}", "\\text{^}", "", "7", "8", "9", "\\text{/}", "\\text{\\}", "", "[Back]"],
             ["[Sym]", "", "(", ")", "", "4", "5", "6", "\\cdot", "\\star", "", "[Enter]"],
             ["[Sig]", "", "[", "]", "", "1", "2", "3", "-", "", "\\uparrow", ""],
