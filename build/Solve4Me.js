@@ -268,10 +268,10 @@ var VirtualKeyboard = /** @class */ (function () {
         this._isVisible = true;
         this._panels = {};
         this._panels.numbersPanel = new KeyboardPanel([
-            ["a^b", "b^a", "\\ge", "\\le", "\\sqrt{x}"],
-            ["a", "b", "c", "d", "e"],
-            ["a", "b", "c", "d", "e"],
-            ["a", "b", "c", "d", "e"],
+            ["[ABC]", "", "\\text{_}", "\\text{^}", "", "7", "8", "9", "\\text{/}", "\\text{\\}", "", "[Back]"],
+            ["[Sym]", "", "(", ")", "", "4", "5", "6", "\\cdot", "\\star", "", "[Enter]"],
+            ["[Sig]", "", "[", "]", "", "1", "2", "3", "-", "", "\\uparrow", ""],
+            ["f()", "", "\\vdash", "#", "", "0", ".", "=", "+", "\\leftarrow", "\\downarrow", "\\rightarrow"],
         ]);
         this._panels.numbersPanel.appendTo(this._jQEl);
         this.setPanels()
@@ -379,8 +379,8 @@ var LineKeys = /** @class */ (function () {
 }());
 var TouchKey = /** @class */ (function () {
     function TouchKey(pLatexLabel) {
-        this._jQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
-        this._mathField = MathQuill.getInterface(2).StaticMath(this._jQEl.find('span')[0]);
+        this._jQEl = $('<div class="keyboard_key unselectable"><span class="unselectable"></span></div>');
+        this._mathField = MathQuill.getInterface(2).StaticMath(this._jQEl.find('span    ')[0]);
         this.setLatexLabel(pLatexLabel);
     }
     TouchKey.prototype.setLatexLabel = function (pLatexLabel) {

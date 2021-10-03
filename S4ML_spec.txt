@@ -16,7 +16,7 @@ dash
 - (ABC) ==> lettres
 - (Sym) ==> symboles genre alpha et tout
 - (sig) ==> signes genre \in et tout
-- f()   ==> fonctions pré-définies genre sin, cos, tan, operateurs genre somme, intégrale, etc
+	- f()   ==> fonctions pré-définies genre sin, cos, tan, operateurs genre somme, intégrale, etc
 
 (123)
 [ABC] [_][^] [7][8][9][/][\][Back]
