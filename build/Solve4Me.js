@@ -370,16 +370,13 @@ var VirtualKeyboard = /** @class */ (function () {
                     label: "\\text{(}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () {
-                        g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\left(\\right)');
-                        g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Left');
-                    }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('('); }
                 }),
                 new TouchKey({
                     label: "\\text{)}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\right)'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition(')'); }
                 }),
                 new TouchKey({
                     label: "4",
@@ -435,16 +432,13 @@ var VirtualKeyboard = /** @class */ (function () {
                     label: "\\text{[}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () {
-                        g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\left[\\right]');
-                        g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Left');
-                    }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('['); }
                 }),
                 new TouchKey({
                     label: "\\text{]}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\right]'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition(']'); }
                 }),
                 new TouchKey({
                     label: "1",

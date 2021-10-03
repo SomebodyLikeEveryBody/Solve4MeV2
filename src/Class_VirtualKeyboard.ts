@@ -102,15 +102,13 @@ class VirtualKeyboard {
                     label: "\\text{(}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\left(\\right)');
-                                    g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Left');
-                    }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('('); }
                 }),
                 new TouchKey({
                     label: "\\text{)}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\right)'); }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition(')'); }
                 }),
                 new TouchKey({
                     label: "4",
@@ -166,15 +164,13 @@ class VirtualKeyboard {
                     label: "\\text{[}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\left[\\right]');
-                                    g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Left');
-                    }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('['); }
                 }),
                 new TouchKey({
                     label: "\\text{]}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\right]'); }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition(']'); }
                 }),
                 new TouchKey({
                     label: "1",
