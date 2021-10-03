@@ -306,7 +306,6 @@ button.alone
     margin: 1px;
     padding: 0px;
     display: inline;
-    border: #d8d8d8 1px solid;
     width: 25%;
     font-size:110%;
     text-align: center;
@@ -316,7 +315,6 @@ button.alone
     flex-grow: 1;
     justify-content: center;
 
-    background-color: #fdfdfd;
     border: 1px solid #d8d8d8;
     border-radius: 2px;
     box-shadow: inset 0 1px rgba(255,255,255,0.25), inset 0 -1px rgba(0,0,0,0.02);
@@ -324,14 +322,49 @@ button.alone
     user-select: none;
 }
 
-.keyboard_key:hover
+.keyboard_key span
+{
+    cursor: pointer;
+}
+
+.keyboard_key_light
+{
+    border: #d8d8d8 1px solid;
+    background-color: #fdfdfd;
+}
+
+.keyboard_key_light:hover
 {
     background-color: #f5f5f5;
 }
 
-.keyboard_key span
+.keyboard_key_dark
 {
-    cursor: pointer;
+    border: #bbb 1px solid;
+    background-color: #CCCCCC;
+}
+
+.keyboard_key_dark:hover
+{
+    background-color: #C7C7C7;
+}
+
+.keyboard_key_blue
+{
+    border: #bbb 1px solid;
+    background-color: #4781b9;
+}
+
+.keyboard_key_blue:hover
+{
+    background-color: #3f73a6;
+}
+
+.keyboard_key_empty, .keyboard_key_empty span
+{
+    border: none;
+    background-color: transparent;
+    cursor: default;
 }
 
 .unselectable 
