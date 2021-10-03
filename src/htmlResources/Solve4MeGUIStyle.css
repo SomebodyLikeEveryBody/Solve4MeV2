@@ -461,4 +461,8 @@ button.alone
     {
         width: 100%;
     }
+    .keyboard_key
+    {
+        font-size:80%;
+    }
 }
