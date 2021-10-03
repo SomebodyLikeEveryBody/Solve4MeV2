@@ -311,20 +311,20 @@ var VirtualKeyboard = /** @class */ (function () {
                     action: function () { }
                 }),
                 new TouchKey({
-                    label: "\\text{_}",
+                    label: "[L]",
                     width: 1 / 12,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { console.log("_"); }
                 }),
                 new TouchKey({
-                    label: "\\text{^}",
+                    label: "\\star",
                     width: 1 / 12,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { console.log("^"); }
                 }),
                 new TouchKey({
                     label: "",
-                    width: 1 / 12,
+                    width: 0 / 12,
                     style: VirtualKeyboardKeyStyle.EMPTY,
                     action: function () { console.log("_"); }
                 }),
@@ -347,7 +347,7 @@ var VirtualKeyboard = /** @class */ (function () {
                     action: function () { console.log("_"); }
                 }),
                 new TouchKey({
-                    label: "\\text{/}",
+                    label: "\\frac{a}{b}",
                     width: 1 / 12,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { console.log("_"); }
@@ -366,7 +366,7 @@ var VirtualKeyboard = /** @class */ (function () {
                 }),
                 new TouchKey({
                     label: "\\Longleftarrow",
-                    width: 2 / 12,
+                    width: 3 / 12,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("_"); }
                 }),
@@ -379,12 +379,6 @@ var VirtualKeyboard = /** @class */ (function () {
                     action: function () { console.log("go to panel [special letters]"); }
                 }),
                 new TouchKey({
-                    label: "",
-                    width: 0 / 12,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: function () { }
-                }),
-                new TouchKey({
                     label: "\\text{(}",
                     width: 1 / 12,
                     style: VirtualKeyboardKeyStyle.LIGHT,
@@ -395,12 +389,6 @@ var VirtualKeyboard = /** @class */ (function () {
                     width: 1 / 12,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { console.log("^"); }
-                }),
-                new TouchKey({
-                    label: "",
-                    width: 1 / 12,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: function () { }
                 }),
                 new TouchKey({
                     label: "4",
@@ -427,19 +415,19 @@ var VirtualKeyboard = /** @class */ (function () {
                     action: function () { console.log("_"); }
                 }),
                 new TouchKey({
-                    label: "\\star",
+                    label: "a^b",
                     width: 1 / 12,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { console.log("_"); }
                 }),
                 new TouchKey({
                     label: "\\uparrow",
-                    width: 1 / 12,
+                    width: (2) / 12,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("_"); }
                 }),
                 new TouchKey({
-                    label: "",
+                    label: "a_b",
                     width: 1 / 12,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { }
@@ -453,12 +441,6 @@ var VirtualKeyboard = /** @class */ (function () {
                     action: function () { console.log("go to panel [symbols]"); }
                 }),
                 new TouchKey({
-                    label: "",
-                    width: 0 / 12,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: function () { }
-                }),
-                new TouchKey({
                     label: "\\text{[}",
                     width: 1 / 12,
                     style: VirtualKeyboardKeyStyle.LIGHT,
@@ -469,12 +451,6 @@ var VirtualKeyboard = /** @class */ (function () {
                     width: 1 / 12,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { console.log("^"); }
-                }),
-                new TouchKey({
-                    label: "",
-                    width: 1 / 12,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: function () { console.log("_"); }
                 }),
                 new TouchKey({
                     label: "1",
@@ -502,19 +478,19 @@ var VirtualKeyboard = /** @class */ (function () {
                 }),
                 new TouchKey({
                     label: "\\leftarrow",
-                    width: 1 / 12,
+                    width: (1 + 1 / 3) / 12,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("left arrow"); }
                 }),
                 new TouchKey({
                     label: "\\downarrow",
-                    width: 1 / 12,
+                    width: (1 + 1 / 3) / 12,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("down arrow"); }
                 }),
                 new TouchKey({
                     label: "\\rightarrow",
-                    width: 1 / 12,
+                    width: (1 + 1 / 3) / 12,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("right arrow"); }
                 }),
@@ -525,12 +501,6 @@ var VirtualKeyboard = /** @class */ (function () {
                     width: 2 / 12,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("go to panel [f()]"); }
-                }),
-                new TouchKey({
-                    label: "",
-                    width: 0 / 12,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: function () { }
                 }),
                 new TouchKey({
                     label: "\\vdash",
@@ -545,21 +515,15 @@ var VirtualKeyboard = /** @class */ (function () {
                     action: function () { console.log("#"); }
                 }),
                 new TouchKey({
-                    label: "",
-                    width: 1 / 12,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: function () { }
-                }),
-                new TouchKey({
                     label: "0",
                     width: 1 / 12,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("_"); }
                 }),
                 new TouchKey({
                     label: ".",
                     width: 1 / 12,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("_"); }
                 }),
                 new TouchKey({
@@ -575,15 +539,9 @@ var VirtualKeyboard = /** @class */ (function () {
                     action: function () { console.log("_"); }
                 }),
                 new TouchKey({
-                    label: "",
-                    width: 0 / 12,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: function () { }
-                }),
-                new TouchKey({
-                    label: "",
-                    width: 0 / 12,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
+                    label: "\\dagger",
+                    width: 1 / 12,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { }
                 }),
                 new TouchKey({
