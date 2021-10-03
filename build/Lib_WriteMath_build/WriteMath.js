@@ -868,6 +868,23 @@ var MathLineInput = /** @class */ (function () {
         }
         return this;
     };
+    MathLineInput.prototype.letLineToggle = function () {
+        if (this.isALetLine()) {
+            this.stopBeingALetLine();
+        }
+        else {
+            this.becomeALetLine();
+        }
+        return this;
+    };
+    MathLineInput.prototype.unprocessedLineToggle = function () {
+        if (this.isAnUnprocessedLine()) {
+            this.stopBeingAnUnprocessedLine();
+        }
+        else {
+            this.becomeAnUnprocessedLine();
+        }
+    };
     MathLineInput.prototype.becomeAPrintLine = function () {
         if (!(this.isAPrintLine())) {
             this.setValue("\\text{Print}\\left(" + this.value() + "\\right)");
@@ -1290,23 +1307,12 @@ var ShortcutsManager = /** @class */ (function () {
             //ctrl + L
             case KeyCodes.L_KEY:
                 pEventObj.preventDefault();
-                if (this._mathLineInput.isALetLine()) {
-                    this._mathLineInput.stopBeingALetLine();
-                }
-                else {
-                    this._mathLineInput.becomeALetLine();
-                }
+                this._mathLineInput.letLineToggle();
                 break;
             //ctrl + ;
             case KeyCodes.SEMICOLON_KEY:
                 pEventObj.preventDefault();
-                if (this._mathLineInput.isAnUnprocessedLine()) {
-                    this._mathLineInput.stopBeingAnUnprocessedLine();
-                }
-                else {
-                    this._mathLineInput.becomeAnUnprocessedLine();
-                }
-                //this._mathLineInput.appendValueAtCursorPosition('\\vdash ');
+                this._mathLineInput.unprocessedLineToggle();
                 break;
             //ctrl + N
             case KeyCodes.N_KEY:

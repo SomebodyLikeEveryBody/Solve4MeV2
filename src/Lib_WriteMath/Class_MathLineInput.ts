@@ -648,6 +648,24 @@ class MathLineInput {
         return this;
     }
 
+    public letLineToggle(): MathLineInput {
+        if (this.isALetLine()) {
+            this.stopBeingALetLine();
+        } else {
+            this.becomeALetLine();
+        }
+
+        return this;
+    }
+
+    public unprocessedLineToggle() {
+        if (this.isAnUnprocessedLine()) {
+            this.stopBeingAnUnprocessedLine();
+        } else {
+            this.becomeAnUnprocessedLine();
+        }
+    }
+
     public becomeAPrintLine(): MathLineInput {
         if (!(this.isAPrintLine())) {
             this.setValue("\\text{Print}\\left(" + this.value() + "\\right)");

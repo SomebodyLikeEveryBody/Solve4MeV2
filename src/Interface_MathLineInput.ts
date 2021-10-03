@@ -51,4 +51,6 @@ interface MathLineInput {
     getFirstMathLineInput(): MathLineInput;
     getLastMathLineInput(): MathLineInput;
     processContent(): MathLineInput;
+    letLineToggle(): MathLineInput;
+    unprocessedLineToggle(): MathLineInput;
 }

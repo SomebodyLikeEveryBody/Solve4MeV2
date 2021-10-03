@@ -142,24 +142,14 @@ class ShortcutsManager {
             //ctrl + L
             case KeyCodes.L_KEY:
                 pEventObj.preventDefault();
-                if (this._mathLineInput.isALetLine()) {
-                    this._mathLineInput.stopBeingALetLine();
-                } else {
-                    this._mathLineInput.becomeALetLine();
-                }
+                this._mathLineInput.letLineToggle();
 
                 break;
 
             //ctrl + ;
             case KeyCodes.SEMICOLON_KEY:
                 pEventObj.preventDefault();
-                if (this._mathLineInput.isAnUnprocessedLine()) {
-                    this._mathLineInput.stopBeingAnUnprocessedLine();
-                } else {
-                    this._mathLineInput.becomeAnUnprocessedLine();
-                }
-
-                //this._mathLineInput.appendValueAtCursorPosition('\\vdash ');
+                this._mathLineInput.unprocessedLineToggle();
                 break;
 
             //ctrl + N
