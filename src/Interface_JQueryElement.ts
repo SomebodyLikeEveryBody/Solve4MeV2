@@ -42,6 +42,7 @@ interface JQueryElement {
     children(): JQueryElement;
     first(): JQueryElement;
     replaceWith(pEl: JQueryElement): JQueryElement;
+    clone(Boolean?): JQueryElement;
 
     data(pstr: String, pvalue: any): void;
 }

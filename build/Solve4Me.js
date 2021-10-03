@@ -352,6 +352,7 @@ var LineKeys = /** @class */ (function () {
         this._jQEl = $('<div class="line_key"></div>');
         this.createTouchKeys(pLatexKeyLabels)
             .includeKeys();
+        // .disableSelectOnKeys();
     }
     LineKeys.prototype.createTouchKeys = function (pLatexLabels) {
         this._touchKeys = [];
@@ -380,15 +381,17 @@ var LineKeys = /** @class */ (function () {
 }());
 var TouchKey = /** @class */ (function () {
     function TouchKey(pLatexLabel) {
+        this._jQEl = this.generateMathfieldJQEl(pLatexLabel);
+    }
+    TouchKey.prototype.generateMathfieldJQEl = function (pLatexLabel) {
         var tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
         this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span')[0]);
-        //remove all events of mathfield span element
-        // $(tempJQEl[0].cloneNode(true)).appendTo($('body'))
-        this._jQEl = tempJQEl;
-        // this._jQEl = $(tempJQEl[0].cloneNode(true));
-        // tempJQEl.replaceWith(this._jQEl);
         this.setLatexLabel(pLatexLabel);
-    }
+        //remove all events of mathfield span element
+        var retJQEl = tempJQEl.clone();
+        tempJQEl.replaceWith(retJQEl);
+        return retJQEl;
+    };
     TouchKey.prototype.setLatexLabel = function (pLatexLabel) {
         this._mathField.latex(pLatexLabel);
         return this;

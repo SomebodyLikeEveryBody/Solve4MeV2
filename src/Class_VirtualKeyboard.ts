@@ -123,6 +123,7 @@ class LineKeys {
         this._jQEl = $('<div class="line_key"></div>');
         this.createTouchKeys(pLatexKeyLabels)
             .includeKeys();
+            // .disableSelectOnKeys();
     }
 
     protected createTouchKeys(pLatexLabels: String[]): LineKeys {
@@ -159,25 +160,21 @@ class TouchKey {
     protected _mathField: any;
 
     public constructor (pLatexLabel: String) {
-        const tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
-        this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span')[0]);
-
-        // ca ca fonctionne dane le navigateur, faut l'implementer ici
-        // $('.keyboard_key').each(function () {
-        //     let clone = this.cloneNode(true);
-        //     $(this).replaceWith(clone);
-        //     });
-
-        //remove all events of mathfield span element
-        // $(tempJQEl[0].cloneNode(true)).appendTo($('body'))
-        this._jQEl = tempJQEl;
-        // this._jQEl = $(tempJQEl[0].cloneNode(true));
-        // tempJQEl.replaceWith(this._jQEl);
-
-        this.setLatexLabel(pLatexLabel);
+        this._jQEl = this.generateMathfieldJQEl(pLatexLabel);
     }
 
-    public setLatexLabel(pLatexLabel: String): TouchKey {
+    protected generateMathfieldJQEl(pLatexLabel: String): JQueryElement {
+        const tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
+        this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span')[0]);
+        this.setLatexLabel(pLatexLabel);
+
+        //remove all events of mathfield span element
+        const retJQEl = tempJQEl.clone();
+        tempJQEl.replaceWith(retJQEl);
+        return retJQEl;
+    }
+
+    protected setLatexLabel(pLatexLabel: String): TouchKey {
         this._mathField.latex(pLatexLabel);
         return this;
     }
