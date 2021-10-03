@@ -312,7 +312,9 @@ button.alone
     text-align: center;
     color: black;
     display:flex;
-    justify-content: space-around;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
 
     background-color: #fdfdfd;
     border: 1px solid #d8d8d8;

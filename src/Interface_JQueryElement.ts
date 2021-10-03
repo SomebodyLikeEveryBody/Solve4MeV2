@@ -41,6 +41,7 @@ interface JQueryElement {
     mousedown(pFunction?: Function): JQueryElement;
     children(): JQueryElement;
     first(): JQueryElement;
+    replaceWith(pEl: JQueryElement): JQueryElement;
 
     data(pstr: String, pvalue: any): void;
 }
