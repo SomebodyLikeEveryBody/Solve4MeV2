@@ -20,15 +20,182 @@ class VirtualKeyboard {
         this._jQEl.show(0);
         this._isVisible = true;
 
-        // this._panels.numbersPanel = new KeyboardPanel([
-        //     //gerer la taille avec flex-grow: 1 ou 0.5 ou 2 etc
-        //     ["[ABC]",  "", "\\text{_}", "\\text{^}", "", "7", "8", "9", "\\text{/}", "\\text{\\}",    "",            "[\\Longleftarrow]"],
-        //     ["[Sym]",  "", "(",          ")",        "", "4", "5", "6", "\\cdot",    "\\star",        "\\uparrow",   ""],
-        //     ["[Sig]",  "", "[",          "]",        "", "1", "2", "3", "-",         "\\leftarrow",   "\\downarrow", "\\rightarrow"],
-        //     ["[f()]",    "", "\\vdash",    "#",        "", "0", ".", "=", "+",       "",              "",            "[\\square]"],
-        // ]);
+        this._panels.numbersPanel = new NumbersPanel();
 
-        this._panels.numbersPanel = new KeyboardPanel([
+        this._panels.numbersPanel.appendTo(this._jQEl);
+        this.setPanels()
+            .setEvents();
+    }
+
+    protected setPanels(): VirtualKeyboard {
+        return this;
+    }
+
+    public isVisible(): Boolean {
+        return this._isVisible
+    }
+
+    public show(): VirtualKeyboard {
+        this._jQEl.animate({width:'toggle'},250, () => {
+            this._isVisible = true;
+        });
+
+        return this;
+    }
+
+    public hide(): VirtualKeyboard {
+        this._jQEl.animate({width:'toggle'},250, () => {
+            this._isVisible = true;
+        });
+
+        return this;
+    }
+
+    public toggle(): VirtualKeyboard {
+        if (this._isVisible) {
+            this.hide();
+        } else {
+            this.show();
+        }
+
+        return this;
+    }
+
+    protected setEvents(): VirtualKeyboard {
+        this._jQEl.mousedown((e) => {
+            e.preventDefault();
+        });
+
+        return this;
+    }
+}
+
+class KeyboardPanel {
+    protected _jQEl: JQueryElement;
+    protected _lineKeysArray: LineKeys[];
+
+    public constructor(pLineKeysArray: Array<LineKeys>) {
+        this._jQEl = $('<div class="keyboard_panel"></div>');
+        this._lineKeysArray = pLineKeysArray;
+        this.includeLineKeysInJQEl();
+    }
+
+    protected includeLineKeysInJQEl(): KeyboardPanel {
+        for (let lineKeys of this._lineKeysArray) {
+            lineKeys.appendTo(this._jQEl);
+        }
+
+        return this;
+    }
+
+    public appendTo(pElement: JQueryElement): KeyboardPanel {
+        this._jQEl.appendTo(pElement);
+        return this;
+    }
+
+    public append(pElement: JQueryElement): KeyboardPanel {
+        this._jQEl.append(pElement);
+        return this;
+    }
+}
+
+class LineKeys {
+    protected _jQEl: JQueryElement;
+    protected _touchKeys: Array<TouchKey>;
+
+    public constructor(pKeys: Array<TouchKey>) {
+        this._jQEl = $('<div class="line_key"></div>');
+        this._touchKeys = pKeys;
+        this.includeKeysInJQEl();
+    }
+
+    public includeKeysInJQEl(): LineKeys {
+        for (let key of this._touchKeys) {
+            key.appendTo(this._jQEl);
+        }
+
+        return this;
+    }
+
+    public appendTo(pElement: JQueryElement): LineKeys {
+        this._jQEl.appendTo(pElement);
+        return this;
+    }
+
+    public append(pElement: JQueryElement): LineKeys {
+        this._jQEl.append(pElement);
+        return this;
+    }
+}
+
+interface KeyConfiguration {
+    label: String;
+    action: Function,
+    width: Number;
+    style: VirtualKeyboardKeyStyle;
+}
+
+class TouchKey {
+    protected _jQEl: JQueryElement;
+    protected _label: String
+    protected _width: Number;
+    protected _style: VirtualKeyboardKeyStyle;
+    protected _mathField: any;
+
+    public constructor (pKeyConfiguration: KeyConfiguration) {
+        this._label = pKeyConfiguration.label;
+        this._width = pKeyConfiguration.width;
+        this._style = pKeyConfiguration.style;
+        this._jQEl = this.generateMathfieldJQEl(this._label);
+
+        this.setEvent(pKeyConfiguration.action)
+            .setStyle();
+    }
+
+    protected setStyle(): TouchKey {
+        this._jQEl.addClass('keyboard_key_' + this._style);
+        this._jQEl.css({ 'flex-grow' : this._width + '' });
+        return this;
+    }   
+
+    protected setEvent(pFunction: Function): TouchKey {
+        this._jQEl.click(() => {
+            pFunction();
+        });
+
+        return this;
+    }
+
+    protected generateMathfieldJQEl(pLatexLabel: String): JQueryElement {
+        const tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
+        this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span')[0]);
+        this.setLatexLabel(pLatexLabel);
+
+        //remove all events of mathfield span element
+        const retJQEl = tempJQEl.clone();
+        tempJQEl.replaceWith(retJQEl);
+        return retJQEl;
+    }
+
+    protected setLatexLabel(pLatexLabel: String): TouchKey {
+        this._mathField.latex(pLatexLabel);
+        return this;
+    }
+
+    public appendTo(pElement: JQueryElement): TouchKey {
+        this._jQEl.appendTo(pElement);
+        return this;
+    }
+
+    public append(pElement:JQueryElement): TouchKey {
+        this._jQEl.append(pElement);
+        return this;
+    }
+}
+
+class NumbersPanel extends KeyboardPanel {
+    public constructor () {
+        super([
             new LineKeys([
                 new TouchKey({
                     label: "[ABC]",
@@ -88,7 +255,8 @@ class VirtualKeyboard {
                     label: "\\Longleftarrow",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace') }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
+                                    g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace(); }
                 }),
             ]),
             new LineKeys([
@@ -234,7 +402,6 @@ class VirtualKeyboard {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('#'); }
                 }),
-                
                 new TouchKey({
                     label: "0",
                     width: 1,
@@ -275,182 +442,9 @@ class VirtualKeyboard {
                     label: "[\\text{OK}]",
                     width: 30,
                     style: VirtualKeyboardKeyStyle.BLUE,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Enter') }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
                 }),
             ])
         ]);
-
-        this._panels.numbersPanel.appendTo(this._jQEl);
-        this.setPanels()
-            .setEvents();
     }
-
-    protected setPanels(): VirtualKeyboard {
-        return this;
-    }
-
-    public isVisible(): Boolean {
-        return this._isVisible
-    }
-
-    public show(): VirtualKeyboard {
-        this._jQEl.animate({width:'toggle'},250, () => {
-            this._isVisible = true;
-        });
-
-        return this;
-    }
-
-    public hide(): VirtualKeyboard {
-        this._jQEl.animate({width:'toggle'},250, () => {
-            this._isVisible = true;
-        });
-
-        return this;
-    }
-
-    public toggle(): VirtualKeyboard {
-        if (this._isVisible) {
-            this.hide();
-        } else {
-            this.show();
-        }
-
-        return this;
-    }
-
-    protected setEvents(): VirtualKeyboard {
-        this._jQEl.mousedown((e) => {
-            e.preventDefault();
-        });
-
-        return this;
-    }
-}
-
-class KeyboardPanel {
-    protected _jQEl: JQueryElement;
-    protected _lineKeysArray: LineKeys[];
-
-    public constructor(pLineKeysArray: Array<LineKeys>) {
-        this._jQEl = $('<div class="keyboard_panel"></div>');
-        this._lineKeysArray = pLineKeysArray;
-        this.includeLineKeysInJQEl();
-    }
-
-    protected includeLineKeysInJQEl(): KeyboardPanel {
-        for (let lineKeys of this._lineKeysArray) {
-            lineKeys.appendTo(this._jQEl);
-        }
-
-        return this;
-    }
-
-    public appendTo(pElement: JQueryElement): KeyboardPanel {
-        this._jQEl.appendTo(pElement);
-        return this;
-    }
-
-    public append(pElement: JQueryElement): KeyboardPanel {
-        this._jQEl.append(pElement);
-        return this;
-    }
-}
-
-class LineKeys {
-    protected _jQEl: JQueryElement;
-    protected _touchKeys: Array<TouchKey>;
-
-    public constructor(pKeys: Array<TouchKey>) {
-        this._jQEl = $('<div class="line_key"></div>');
-        this._touchKeys = pKeys;
-        this.includeKeysInJQEl();
-    }
-
-    public includeKeysInJQEl(): LineKeys {
-        for (let key of this._touchKeys) {
-            key.appendTo(this._jQEl);
-        }
-
-        return this;
-    }
-
-    public appendTo(pElement: JQueryElement): LineKeys {
-        this._jQEl.appendTo(pElement);
-        return this;
-    }
-
-    public append(pElement: JQueryElement): LineKeys {
-        this._jQEl.append(pElement);
-        return this;
-    }
-}
-
-interface KeyConfiguration {
-    label: String;
-    action: Function,
-    width: Number;
-    style: VirtualKeyboardKeyStyle;
-}
-
-class TouchKey {
-    protected _jQEl: JQueryElement;
-    protected _label: String
-    protected _width: Number;
-    protected _style: VirtualKeyboardKeyStyle;
-    protected _mathField: any;
-
-    public constructor (pKeyConfiguration: KeyConfiguration) {
-        this._label = pKeyConfiguration.label;
-        this._width = pKeyConfiguration.width;
-        this._style = pKeyConfiguration.style;
-        this._jQEl = this.generateMathfieldJQEl(this._label);
-
-        this.setEvent(pKeyConfiguration.action)
-            .setStyle();
-    }
-
-    protected setStyle(): TouchKey {
-        this._jQEl.addClass('keyboard_key_' + this._style);
-        this._jQEl.css({ 'flex-grow' : this._width + '' });
-        return this;
-    }
-
-    protected setEvent(pFunction: Function): TouchKey {
-        this._jQEl.click(() => {
-            pFunction();
-        });
-
-        return this;
-    }
-
-    protected generateMathfieldJQEl(pLatexLabel: String): JQueryElement {
-        const tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
-        this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span')[0]);
-        this.setLatexLabel(pLatexLabel);
-
-        //remove all events of mathfield span element
-        const retJQEl = tempJQEl.clone();
-        tempJQEl.replaceWith(retJQEl);
-        return retJQEl;
-    }
-
-    protected setLatexLabel(pLatexLabel: String): TouchKey {
-        this._mathField.latex(pLatexLabel);
-        return this;
-    }
-
-    public appendTo(pElement: JQueryElement): TouchKey {
-        this._jQEl.appendTo(pElement);
-        return this;
-    }
-
-    public append(pElement:JQueryElement): TouchKey {
-        this._jQEl.append(pElement);
-        return this;
-    }
-}
-
-class NumbersPanel extends KeyboardPanel {
-
 }

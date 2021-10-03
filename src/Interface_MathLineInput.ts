@@ -53,4 +53,6 @@ interface MathLineInput {
     processContent(): MathLineInput;
     letLineToggle(): MathLineInput;
     unprocessedLineToggle(): MathLineInput;
+    doIfKeyEnter(): MathLineInput;
+    doIfKeyBackspace(): MathLineInput;
 }

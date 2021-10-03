@@ -341,10 +341,7 @@ var MathLineInput = /** @class */ (function () {
                 edit: function () {
                 },
                 enter: function () {
-                    if ((_this._autoCompleter.isVisible() === false)) {
-                        var newMathLineInput = _this.createNewMathLineInputAndAppendAfter(_this);
-                        newMathLineInput.focus();
-                    }
+                    _this.doIfKeyEnter();
                 },
                 upOutOf: function () {
                     if (_this.hasPreviousMathLineInput()) {
@@ -692,10 +689,7 @@ var MathLineInput = /** @class */ (function () {
                 //press backspace ==> delete if is empty
             }
             else if (e.which === KeyCodes.BACKSPACE_KEY && _this.isDeletable) {
-                if (_this.hasPreviousMathLineInput() && _this.isEmpty()) {
-                    _this.erase();
-                    _this.previousMathLineInput.focus();
-                }
+                _this.doIfKeyBackspace();
                 //press escape
             }
             else if (e.which === KeyCodes.ESCAPE_KEY) {
@@ -884,6 +878,7 @@ var MathLineInput = /** @class */ (function () {
         else {
             this.becomeAnUnprocessedLine();
         }
+        return this;
     };
     MathLineInput.prototype.becomeAPrintLine = function () {
         if (!(this.isAPrintLine())) {
@@ -1037,6 +1032,20 @@ var MathLineInput = /** @class */ (function () {
         this._jQEl.attr('title', this.value());
         this.setStyle();
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
+        return this;
+    };
+    MathLineInput.prototype.doIfKeyEnter = function () {
+        if ((this._autoCompleter.isVisible() === false)) {
+            var newMathLineInput = this.createNewMathLineInputAndAppendAfter(this);
+            newMathLineInput.focus();
+        }
+        return this;
+    };
+    MathLineInput.prototype.doIfKeyBackspace = function () {
+        if (this.hasPreviousMathLineInput() && this.isEmpty()) {
+            this.erase();
+            this.previousMathLineInput.focus();
+        }
         return this;
     };
     return MathLineInput;

@@ -42,11 +42,7 @@ class MathLineInput {
                 },
     
                 enter: () => {
-                    if ((this._autoCompleter.isVisible() === false)) {  
-                        const newMathLineInput = this.createNewMathLineInputAndAppendAfter(this);
-                    
-                        newMathLineInput.focus();
-                    }
+                    this.doIfKeyEnter();
                 },
 
                 upOutOf: () => {
@@ -437,10 +433,7 @@ class MathLineInput {
 
             //press backspace ==> delete if is empty
             } else if (e.which === KeyCodes.BACKSPACE_KEY && this.isDeletable) {
-                if (this.hasPreviousMathLineInput() && this.isEmpty()) {
-                    this.erase();
-                    this.previousMathLineInput.focus();
-                }
+                this.doIfKeyBackspace();
 
             //press escape
             } else if (e.which === KeyCodes.ESCAPE_KEY) {
@@ -658,12 +651,14 @@ class MathLineInput {
         return this;
     }
 
-    public unprocessedLineToggle() {
+    public unprocessedLineToggle(): MathLineInput {
         if (this.isAnUnprocessedLine()) {
             this.stopBeingAnUnprocessedLine();
         } else {
             this.becomeAnUnprocessedLine();
         }
+
+        return this;
     }
 
     public becomeAPrintLine(): MathLineInput {
@@ -865,6 +860,25 @@ class MathLineInput {
         this.setStyle();
 
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
+        
+        return this;
+    }
+
+    public doIfKeyEnter(): MathLineInput {
+        if ((this._autoCompleter.isVisible() === false)) {  
+            const newMathLineInput = this.createNewMathLineInputAndAppendAfter(this);
+        
+            newMathLineInput.focus();
+        }
+
+        return this;
+    }
+
+    public doIfKeyBackspace(): MathLineInput {
+        if (this.hasPreviousMathLineInput() && this.isEmpty()) {
+            this.erase();
+            this.previousMathLineInput.focus();
+        }
         
         return this;
     }
