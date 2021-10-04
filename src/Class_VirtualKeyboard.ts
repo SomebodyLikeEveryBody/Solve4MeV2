@@ -75,7 +75,7 @@ class KeyboardPanel {
     protected _lineKeysArray: LineKeys[];
 
     public constructor(pLineKeysArray: Array<LineKeys>) {
-        this._jQEl = $('<div class="keyboard_panel"></div>');
+        this._jQEl = $('<table class="keyboard_panel"></div>');
         this._lineKeysArray = pLineKeysArray;
         this.includeLineKeysInJQEl();
     }
@@ -103,8 +103,8 @@ class LineKeys {
     protected _jQEl: JQueryElement;
     protected _touchKeys: Array<TouchKey>;
 
-    public constructor(pKeys: Array<TouchKey>) {
-        this._jQEl = $('<div class="line_key"></div>');
+    public constructor(pKeys:   Array<TouchKey>) {
+        this._jQEl = $('<tr class="line_key"></tr>');
         this._touchKeys = pKeys;
         this.includeKeysInJQEl();
     }
@@ -167,7 +167,7 @@ class TouchKey {
     }
 
     protected generateMathfieldJQEl(pLatexLabel: String): JQueryElement {
-        const tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
+        const tempJQEl = $('<td class="keyboard_key unselectable"><span></span></td>');
         this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span')[0]);
         this.setLatexLabel(pLatexLabel);
 

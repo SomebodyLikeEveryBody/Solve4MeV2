@@ -333,7 +333,7 @@ var VirtualKeyboard = /** @class */ (function () {
 }());
 var KeyboardPanel = /** @class */ (function () {
     function KeyboardPanel(pLineKeysArray) {
-        this._jQEl = $('<div class="keyboard_panel"></div>');
+        this._jQEl = $('<table class="keyboard_panel"></div>');
         this._lineKeysArray = pLineKeysArray;
         this.includeLineKeysInJQEl();
     }
@@ -356,7 +356,7 @@ var KeyboardPanel = /** @class */ (function () {
 }());
 var LineKeys = /** @class */ (function () {
     function LineKeys(pKeys) {
-        this._jQEl = $('<div class="line_key"></div>');
+        this._jQEl = $('<tr class="line_key"></tr>');
         this._touchKeys = pKeys;
         this.includeKeysInJQEl();
     }
@@ -398,7 +398,7 @@ var TouchKey = /** @class */ (function () {
         return this;
     };
     TouchKey.prototype.generateMathfieldJQEl = function (pLatexLabel) {
-        var tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
+        var tempJQEl = $('<td class="keyboard_key unselectable"><span></span></td>');
         this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span')[0]);
         this.setLatexLabel(pLatexLabel);
         //remove all events of mathfield span element
