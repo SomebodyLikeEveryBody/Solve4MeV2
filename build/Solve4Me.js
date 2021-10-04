@@ -388,7 +388,7 @@ var TouchKey = /** @class */ (function () {
     }
     TouchKey.prototype.setStyle = function () {
         this._jQEl.addClass('keyboard_key_' + this._style);
-        this._jQEl.css({ 'flex-grow': this._width + '' });
+        this._jQEl.css({ 'width': 'calc(' + (this._width.valueOf() / 10) * 100 + '% - 4px)' });
         return this;
     };
     TouchKey.prototype.setEvent = function (pFunction) {
@@ -656,21 +656,21 @@ var NumbersPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('+'); }
                 }),
-                new TouchKey({
-                    label: "",
-                    width: 30,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: function () { console.log("enter"); }
-                }),
-                new TouchKey({
-                    label: "",
-                    width: 30,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: function () { console.log("enter"); }
-                }),
+                // new TouchKey({
+                //     label: "",
+                //     width: 30,
+                //     style: VirtualKeyboardKeyStyle.EMPTY,
+                //     action: () => { console.log("enter")}
+                // }),
+                // new TouchKey({
+                //     label: "",
+                //     width: 30,
+                //     style: VirtualKeyboardKeyStyle.EMPTY,
+                //     action: () => { console.log("enter")}
+                // }),
                 new TouchKey({
                     label: "[\\text{OK}]",
-                    width: 30,
+                    width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
                 }),

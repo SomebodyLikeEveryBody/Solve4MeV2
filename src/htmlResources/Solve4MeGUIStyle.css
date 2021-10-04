@@ -312,7 +312,6 @@ button.alone
     margin: 1px;
     padding: 0px;
     display: inline;
-    width: calc(10% - 4px);
     font-size:110%;
     text-align: center;
     color: black;
@@ -320,6 +319,8 @@ button.alone
     flex-direction: column;
     flex-grow: 1;
     justify-content: center;
+    /* width: calc(10% - 4px); */
+
 
     border: 1px solid #d8d8d8;
     border-radius: 2px;

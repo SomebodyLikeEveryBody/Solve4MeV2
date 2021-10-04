@@ -154,7 +154,7 @@ class TouchKey {
 
     protected setStyle(): TouchKey {
         this._jQEl.addClass('keyboard_key_' + this._style);
-        this._jQEl.css({ 'flex-grow' : this._width + '' });
+        this._jQEl.css({ 'width' : 'calc(' + (this._width.valueOf() / 10) * 100 + '% - 4px)' });
         return this;
     }   
 
@@ -426,21 +426,21 @@ class NumbersPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('+'); }
                 }),
-                new TouchKey({
-                    label: "",
-                    width: 30,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: () => { console.log("enter")}
-                }),
-                new TouchKey({
-                    label: "",
-                    width: 30,
-                    style: VirtualKeyboardKeyStyle.EMPTY,
-                    action: () => { console.log("enter")}
-                }),
+                // new TouchKey({
+                //     label: "",
+                //     width: 30,
+                //     style: VirtualKeyboardKeyStyle.EMPTY,
+                //     action: () => { console.log("enter")}
+                // }),
+                // new TouchKey({
+                //     label: "",
+                //     width: 30,
+                //     style: VirtualKeyboardKeyStyle.EMPTY,
+                //     action: () => { console.log("enter")}
+                // }),
                 new TouchKey({
                     label: "[\\text{OK}]",
-                    width: 30,
+                    width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
                 }),
