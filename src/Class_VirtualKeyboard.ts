@@ -198,7 +198,7 @@ class NumbersPanel extends KeyboardPanel {
         super([
             new LineKeys([
                 new TouchKey({
-                    label: "[ABC]",
+                    label: "[AB]",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: () => { console.log("go to panel [ABC]")}

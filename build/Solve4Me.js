@@ -426,7 +426,7 @@ var NumbersPanel = /** @class */ (function (_super) {
         return _super.call(this, [
             new LineKeys([
                 new TouchKey({
-                    label: "[ABC]",
+                    label: "[AB]",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("go to panel [ABC]"); }
