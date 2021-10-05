@@ -319,7 +319,7 @@ button.alone
     flex-direction: column;
     flex-grow: 1;
     justify-content: center;
-    width: calc(10% - 4px);
+    /* width: calc(10% - 4px); */
 
 
     border: 1px solid #d8d8d8;
