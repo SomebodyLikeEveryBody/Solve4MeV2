@@ -330,12 +330,13 @@ var MathLineInput = /** @class */ (function () {
         this._container = pContainer;
         this._saverNOpenerStateManager = pSaverNOpenerStateManager;
         this._lastValueBeforeFocusOut = "";
-        this._mathField = MathQuill.getInterface(2).MathField(this._jQEl[0], {
+        this._isErrored = false;
+        this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
             autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln',
             substituteTextarea: (function () {
                 var JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
-                return JQTextarea[0];
+                return JQTextarea.get(0);
             }),
             handlers: {
                 edit: function () {
@@ -362,7 +363,8 @@ var MathLineInput = /** @class */ (function () {
         this._autoCompleter = new AutoCompleter(this, g_keywordsList);
         this._undoRedoManager = new UndoRedoManager(this);
         this._shortcutsManager = new ShortcutsManager(this);
-        this.setEvents();
+        this.setEvents()
+            .setStyle();
     }
     Object.defineProperty(MathLineInput.prototype, "jQEl", {
         /* * * * * * * * * * * *
@@ -484,10 +486,10 @@ var MathLineInput = /** @class */ (function () {
         return this;
     };
     MathLineInput.prototype.hasPreviousMathLineInput = function () {
-        return this._previousMathLineInput !== null;
+        return (this._previousMathLineInput !== null);
     };
     MathLineInput.prototype.hasNextMathLineInput = function () {
-        return this._nextMathLineInput !== null;
+        return (this._nextMathLineInput !== null);
     };
     MathLineInput.prototype.hasBeenModifiedSinceLastFocusOut = function () {
         return (this.value() !== this._lastValueBeforeFocusOut);
@@ -585,7 +587,7 @@ var MathLineInput = /** @class */ (function () {
         var _this = this;
         this.setKeyDownEvents();
         this.setKeyUpEvents();
-        this._jQEl.focusin(function (e) {
+        this._jQEl.focusin(function () {
             var scrollUpAdjust = 20;
             var scrollDownAdjust = 45;
             if (_this.getTopCoord() < _this.getContainerTopCoord()) {
@@ -1605,28 +1607,26 @@ var AutoCompleterManager = /** @class */ (function () {
     * display the suggested keywords according to what the user is currently typing.
     * */
     AutoCompleterManager.prototype.getCurrentlyTypingWord = function () {
-        var words = this.getInputStr()
-            .replace(/_/g, ' ')
-            .replace(/\^/g, ' ')
-            .replace(/\{/g, ' ')
-            .replace(/\}/g, ' [END_BRACKET]')
-            .replace(/\\left\(/g, ' ')
-            .replace(/\\right\)/g, ' [END_PARENTHESIS]')
-            .replace('\\', ' ')
-            .split(' ');
-        // console.log(words);
-        var typingWord = '[END_BRACKET]';
-        while (typingWord === '[END_BRACKET]' || typingWord === '[END_PARENTHESIS]') {
-            typingWord = words.pop();
-        }
-        if (typingWord.indexOf('[END_BRACKET]') !== -1) {
-            typingWord = typingWord.replace(/\[END_BRACKET\]/g, '');
-        }
-        if (typingWord.indexOf('[END_PARENTHESIS]') !== -1) {
-            typingWord = typingWord.replace(/\[END_PARENTHESIS\]/g, '');
-        }
-        // console.log('total: ', this.inputTextElement.getValue());
-        // console.log('last: ', content);
+        // const words = this.getInputStr()
+        //                 .replace(/_/g, ' ')
+        //                 .replace(/\^/g, ' ')
+        //                 .replace(/\{/g, ' ')
+        //                 .replace(/\}/g, ' [END_BRACKET]')
+        //                 .replace(/\\left\(/g, ' ')
+        //                 .replace(/\\right\)/g, ' [END_PARENTHESIS]')
+        //                 .replace('\\', ' ')
+        //                 .split(' ');
+        // let typingWord = '[END_BRACKET]';
+        // while (typingWord === '[END_BRACKET]' || typingWord === '[END_PARENTHESIS]') {
+        //     typingWord = (words.at(-1) !== undefined ? words.pop() : '');
+        // }
+        // if (typingWord.indexOf('[END_BRACKET]') !== -1) {
+        //     typingWord = typingWord.replace(/\[END_BRACKET\]/g, '')
+        // }
+        // if (typingWord.indexOf('[END_PARENTHESIS]') !== -1) {
+        //     typingWord = typingWord.replace(/\[END_PARENTHESIS\]/g, '')
+        // }
+        var typingWord = 'pouet';
         return typingWord;
     };
     ;
@@ -1668,13 +1668,6 @@ var AutoCompleterManager = /** @class */ (function () {
 * */
 var AutoCompletionWidget = /** @class */ (function () {
     function AutoCompletionWidget(pAutoCompleterManager) {
-        /*
-        * AutoCompletionWidget.show():
-        * Displays the auto-completion widget in the AutoCompleterManager
-        * */
-        this.show = function () {
-            this._jQEl.fadeIn(100);
-        };
         this._jQEl = $('<ul id="auto_completer"></ul>');
         this.hide(0);
         this.appendTo($('body'));
@@ -1683,6 +1676,14 @@ var AutoCompletionWidget = /** @class */ (function () {
         this._isVisible = false;
         this._autoCompleterManager = pAutoCompleterManager;
     }
+    /*
+    * AutoCompletionWidget.show():
+    * Displays the auto-completion widget in the AutoCompleterManager
+    * */
+    AutoCompletionWidget.prototype.show = function () {
+        this._jQEl.fadeIn(100);
+    };
+    ;
     AutoCompletionWidget.prototype.isVisible = function () {
         return this._isVisible;
     };
@@ -1787,7 +1788,7 @@ var AutoCompletionWidget = /** @class */ (function () {
     * Returns the selected Li element in the widget
     * */
     AutoCompletionWidget.prototype.getSelectedLiEl = function () {
-        return $(this.getLiElements()[this._currentKeywordSelectedIndex]);
+        return $(this.getLiElements().get(this._currentKeywordSelectedIndex));
     };
     /*
     * AutoCompletionWidget.getSelectedKeyword():
@@ -2000,7 +2001,8 @@ var SaverNOpenerStateManager = /** @class */ (function () {
     function SaverNOpenerStateManager() {
         this._jQEl = $('<div id="SaverNOpenerStateManager"><textarea autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>');
         this._textarea = this._jQEl.find('textarea');
-        this._callingMathLineInput = null;
+        this._callingMathLineInput = [];
+        this._action = "";
         this._jQEl.appendTo($('body')).hide(0);
         this.setEvents();
     }
@@ -2025,7 +2027,7 @@ var SaverNOpenerStateManager = /** @class */ (function () {
     });
     Object.defineProperty(SaverNOpenerStateManager.prototype, "callingMathLineInput", {
         set: function (pValue) {
-            this._callingMathLineInput = pValue;
+            this._callingMathLineInput = [pValue];
         },
         enumerable: false,
         configurable: true
@@ -2055,9 +2057,12 @@ var SaverNOpenerStateManager = /** @class */ (function () {
         this._jQEl.fadeOut(100, function () {
             _this._textarea.val('');
             _this._action = "";
-            _this._callingMathLineInput.focus();
+            _this.getCallingMathLineInput().focus();
         });
         return this;
+    };
+    SaverNOpenerStateManager.prototype.getCallingMathLineInput = function () {
+        return this._callingMathLineInput[0];
     };
     SaverNOpenerStateManager.prototype.enableEditing = function () {
         this._textarea.attr('readonly', false);
@@ -2087,7 +2092,7 @@ var SaverNOpenerStateManager = /** @class */ (function () {
         });
     };
     SaverNOpenerStateManager.prototype.eraseMathLineInputs = function () {
-        var currentMathLineInput = this._callingMathLineInput.getLastMathLineInput();
+        var currentMathLineInput = this.getCallingMathLineInput().getLastMathLineInput();
         while (currentMathLineInput !== null) {
             currentMathLineInput.nextMathLineInput = null;
             currentMathLineInput.removeFromDOM();
@@ -2102,7 +2107,7 @@ var SaverNOpenerStateManager = /** @class */ (function () {
         if (this.checkState()) {
             if (pState.length !== 0) {
                 this.eraseMathLineInputs();
-                var mathLineInput = new MathLineInput(this._callingMathLineInput.container, this);
+                var mathLineInput = new MathLineInput(this.getCallingMathLineInput().container, this);
                 mathLineInput.appendToContainer()
                     .setValue(pState[0])
                     .setStyle();
@@ -2119,9 +2124,9 @@ var SaverNOpenerStateManager = /** @class */ (function () {
     };
     SaverNOpenerStateManager.prototype.getJSONState = function () {
         var retObj = {
-            MathLineInputsValues: []
+            MathLineInputsValues: Array()
         };
-        var mathLineInput = this._callingMathLineInput.getFirstMathLineInput();
+        var mathLineInput = this.getCallingMathLineInput().getFirstMathLineInput();
         while (mathLineInput !== null) {
             retObj.MathLineInputsValues.push(this.secureStr(mathLineInput.value()));
             mathLineInput = mathLineInput.nextMathLineInput;

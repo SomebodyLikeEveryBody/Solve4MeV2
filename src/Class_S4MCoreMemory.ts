@@ -14,7 +14,7 @@ class S4MCoreMemory {
     protected _lastMathLineInputFocusedOut: MathLineInput;
     protected _currentMathLineInputFocused: MathLineInput;
 
-    public constructor(pFirstMathLineInput) {
+    public constructor(pFirstMathLineInput: MathLineInput) {
         this._declaringMathLineInputs = [];
         this._errorMathLineInputs = [];
         this._declaredVars = [];
@@ -45,7 +45,7 @@ class S4MCoreMemory {
             }
         }
 
-        return (null);
+        throw "The specified MathLineInput created no MemoryElement.";
     }
 
     public hasAVarDeclaredBy(pMathLineInput: MathLineInput): Boolean {
@@ -65,7 +65,7 @@ class S4MCoreMemory {
             }
         }
 
-        return null;
+        throw "No MathLineInput declared var [" + pVarName + "]";
     }
     
 
@@ -87,21 +87,9 @@ class S4MCoreMemory {
         return this;
     }
 
-    getMathLineInputwhichDeclared(pVarName: String): MathLineInput {
-        if (this.hasAVarNamed(pVarName)) {
-            for (let s4mMemoryElement of this._declaredVars) {
-                if (s4mMemoryElement.varName === pVarName) {
-                    return s4mMemoryElement.declaringMathLineInput;
-                }
-            }
-        }
-
-        return null;
-    }
-
     public removeVarNamed(pVarName: String): S4MCoreMemory {
         if (this.hasAVarNamed(pVarName)) {
-            this.removeVarDeclaredBy(this.getMathLineInputwhichDeclared(pVarName));
+            this.removeVarDeclaredBy(this.getMathLineInputWhichDeclared(pVarName));
         }
 
         return this;
@@ -120,7 +108,7 @@ class S4MCoreMemory {
         return this;
     }
 
-    public unstoreErroredMathLineInput(pMathLineInput): S4MCoreMemory {
+    public unstoreErroredMathLineInput(pMathLineInput: MathLineInput): S4MCoreMemory {
         this._errorMathLineInputs = this._errorMathLineInputs.filter((el) => (el !== pMathLineInput));
 
         return this;

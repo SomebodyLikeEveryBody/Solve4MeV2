@@ -109,32 +109,30 @@ class AutoCompleterManager {
     * display the suggested keywords according to what the user is currently typing.
     * */
     public getCurrentlyTypingWord(): String {
-        const words = this.getInputStr()
-                        .replace(/_/g, ' ')
-                        .replace(/\^/g, ' ')
-                        .replace(/\{/g, ' ')
-                        .replace(/\}/g, ' [END_BRACKET]')
-                        .replace(/\\left\(/g, ' ')
-                        .replace(/\\right\)/g, ' [END_PARENTHESIS]')
-                        .replace('\\', ' ')
-                        .split(' ');
+        // const words = this.getInputStr()
+        //                 .replace(/_/g, ' ')
+        //                 .replace(/\^/g, ' ')
+        //                 .replace(/\{/g, ' ')
+        //                 .replace(/\}/g, ' [END_BRACKET]')
+        //                 .replace(/\\left\(/g, ' ')
+        //                 .replace(/\\right\)/g, ' [END_PARENTHESIS]')
+        //                 .replace('\\', ' ')
+        //                 .split(' ');
 
-        // console.log(words);
-        let typingWord = '[END_BRACKET]';
-        while (typingWord === '[END_BRACKET]' || typingWord === '[END_PARENTHESIS]') {
-            typingWord = words.pop();
-        }
+        // let typingWord = '[END_BRACKET]';
+        // while (typingWord === '[END_BRACKET]' || typingWord === '[END_PARENTHESIS]') {
+        //     typingWord = (words.at(-1) !== undefined ? words.pop() : '');
+        // }
 
-        if (typingWord.indexOf('[END_BRACKET]') !== -1) {
-            typingWord = typingWord.replace(/\[END_BRACKET\]/g, '')
-        }
+        // if (typingWord.indexOf('[END_BRACKET]') !== -1) {
+        //     typingWord = typingWord.replace(/\[END_BRACKET\]/g, '')
+        // }
 
-        if (typingWord.indexOf('[END_PARENTHESIS]') !== -1) {
-            typingWord = typingWord.replace(/\[END_PARENTHESIS\]/g, '')
-        }
+        // if (typingWord.indexOf('[END_PARENTHESIS]') !== -1) {
+        //     typingWord = typingWord.replace(/\[END_PARENTHESIS\]/g, '')
+        // }
 
-        // console.log('total: ', this.inputTextElement.getValue());
-        // console.log('last: ', content);
+        const typingWord = 'pouet';
         return typingWord;
     };
 
@@ -199,7 +197,7 @@ class AutoCompletionWidget {
     * AutoCompletionWidget.show():
     * Displays the auto-completion widget in the AutoCompleterManager
     * */
-    public show = function () {
+    public show() {
         this._jQEl.fadeIn(100);
     };
 
@@ -316,7 +314,7 @@ class AutoCompletionWidget {
     * Returns the selected Li element in the widget
     * */
     protected getSelectedLiEl(): JQueryElement {
-        return $(this.getLiElements()[this._currentKeywordSelectedIndex]);
+        return $(this.getLiElements().get(this._currentKeywordSelectedIndex));
         
     }
 
@@ -383,7 +381,7 @@ class ClickAndKeyListener {
     *  .  ESCAPE ==> hide auto-completer widget
     * */
     protected setKeyDownEventsToAutoCompleterManager(pController: AutoCompleter) {
-        this._autoCompleterManager.keyDown((e) => {
+        this._autoCompleterManager.keyDown((e: EventObject) => {
             if (e.which === KeyCodes.CTRL_KEY) {
                 this._IsCtrlKeyIsDown = true;
             }
@@ -458,7 +456,7 @@ class ClickAndKeyListener {
     * Very usefull to manage the navigation into the auto-completionWidget
     * */
     protected setKeyUpEventsToAutoCompleterManager(pController: AutoCompleter) {
-        this._autoCompleterManager.keyUp((e) => {
+        this._autoCompleterManager.keyUp((e: EventObject) => {
             if (this._autoCompleterManager.isVisible()
                 && (e.which !== KeyCodes.UPARROW_KEY) 
                 && (e.which !== KeyCodes.DOWNARROW_KEY)) {
@@ -491,7 +489,7 @@ class AutoCompleter {
     protected _autoCompleterManager: AutoCompleterManager;
     protected _clickAndKeyListener: ClickAndKeyListener;
 
-    public constructor(pInputTextElement, pKeywordsList) {
+    public constructor(pInputTextElement: InputTextElement, pKeywordsList: KeywordObject[]) {
         this._keywordsList = pKeywordsList;
         this._autoCompleterManager = new AutoCompleterManager(pInputTextElement);
         this._clickAndKeyListener = new ClickAndKeyListener(this._autoCompleterManager);

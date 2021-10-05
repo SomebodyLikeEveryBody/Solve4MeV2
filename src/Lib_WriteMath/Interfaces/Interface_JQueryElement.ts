@@ -16,7 +16,7 @@ interface JQueryElement {
     first(): JQueryElement;
     addClass(pClassName: String): JQueryElement;
     removeClass(pClassName: String): JQueryElement;
-    append(JQueryElement): JQueryElement;
+    append(JQueryElement: JQueryElement): JQueryElement;
     text(): String;
     next(): JQueryElement;
     prev(): JQueryElement;
@@ -35,6 +35,7 @@ interface JQueryElement {
     outerHeight(): Number;
     text(pStr: String): JQueryElement;
     val(pStr?: String): String;
-    attr(pProp: String, pBool: Boolean|String);
+    attr(pProp: String, pBool: Boolean|String): JQueryElement;
     data(pStr: String, pValue: String): JQueryElement;
+    get(pIndex: Number): JQueryElement;
 }

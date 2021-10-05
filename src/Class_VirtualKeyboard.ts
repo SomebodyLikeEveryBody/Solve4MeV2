@@ -20,19 +20,22 @@ class VirtualKeyboard {
         this._panels.symbolsPanel = new SymbolsPanel(this);
         this._panels.signsPanel = new SignsPanel(this);
         this._panels.functionsPanel = new FunctionsPanel(this);
-
         this._currentlyDisplayedPanel = this._panels.numbersPanel;
-        this._panels.numbersPanel.appendTo(this._jQEl);
-        this.displayPanel(this._panels.numbersPanel);
-        this.setPanels()
-            .setEvents();
+
+        this.appendPanelsToKeyboard()
+            .setEvents()
+            .displayPanel(this._panels.numbersPanel);
     }
 
     public get panels (): any {
         return this._panels;
     }
 
-    protected setPanels(): VirtualKeyboard {
+    protected appendPanelsToKeyboard(): VirtualKeyboard {
+        for (let panelIndex in this._panels) {
+            this._panels[panelIndex].appendTo(this._jQEl);
+        }
+
         return this;
     }
 
@@ -41,11 +44,9 @@ class VirtualKeyboard {
     }
 
     public displayPanel(pKeyboardPanel: KeyboardPanel): VirtualKeyboard {
-        console.log('pouet');
         this._currentlyDisplayedPanel.fadeOut(() => {
-            this._currentlyDisplayedPanel.replaceWith(pKeyboardPanel);
-            pKeyboardPanel.fadeIn();
             this._currentlyDisplayedPanel = pKeyboardPanel;
+            this._currentlyDisplayedPanel.fadeIn(); 
         });
 
         return this;
@@ -78,7 +79,7 @@ class VirtualKeyboard {
     }
 
     protected setEvents(): VirtualKeyboard {
-        this._jQEl.mousedown((e) => {
+        this._jQEl.mousedown((e: EventObject) => {
             e.preventDefault();
         });
 
@@ -203,7 +204,7 @@ class TouchKey {
 
     protected generateMathfieldJQEl(pLatexLabel: String): JQueryElement {
         const tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
-        this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span')[0]);
+        this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span').get(0));
         this.setLatexLabel(pLatexLabel);
 
         //remove all events of mathfield span element

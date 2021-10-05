@@ -3,7 +3,7 @@ declare const MathQuill: any;
 declare const g_s4mCoreMemory: any;
 declare const g_inputScreen: any;
 declare const g_virtualKeyboard: any;
-declare function $(pStr: String): JQueryElement;
+declare function $(pStr: String | JQueryElement): JQueryElement;
 
 class MathLineInput {
     protected _jQEl: JQueryElement;
@@ -27,14 +27,15 @@ class MathLineInput {
         this._container = pContainer;
         this._saverNOpenerStateManager = pSaverNOpenerStateManager;
         this._lastValueBeforeFocusOut = "";
+        this._isErrored = false;
 
-        this._mathField = MathQuill.getInterface(2).MathField(this._jQEl[0], {
+        this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
             autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln',
             substituteTextarea: (() => {
                 const JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
                 
-                return JQTextarea[0];
+                return JQTextarea.get(0);
             }),
 
             handlers: {
@@ -69,7 +70,8 @@ class MathLineInput {
         this._shortcutsManager = new ShortcutsManager(this);
         
 
-        this.setEvents();
+        this.setEvents()
+            .setStyle();
     }
 
     /* * * * * * * * * * * * 
@@ -186,11 +188,11 @@ class MathLineInput {
     }
 
     public hasPreviousMathLineInput(): Boolean {
-        return this._previousMathLineInput !== null;
+        return (this._previousMathLineInput !== null);
     }
 
     public hasNextMathLineInput(): Boolean {
-        return this._nextMathLineInput !== null
+        return (this._nextMathLineInput !== null);
     }
 
     public hasBeenModifiedSinceLastFocusOut(): Boolean {
@@ -265,13 +267,13 @@ class MathLineInput {
     }
 
     public keyDown(pFunction: Function): MathLineInput {
-        this.jQEl.keydown((e) => pFunction(e));
+        this.jQEl.keydown((e: EventObject) => pFunction(e));
 
         return this;
     }
 
     public keyUp(pFunction: Function): MathLineInput {
-        this.jQEl.keyup((e) => pFunction(e));
+        this.jQEl.keyup((e: EventObject) => pFunction(e));
         return this;
     }
 
@@ -321,7 +323,7 @@ class MathLineInput {
         this.setKeyDownEvents();
         this.setKeyUpEvents();
 
-        this._jQEl.focusin((e) => {
+        this._jQEl.focusin(() => {
             const scrollUpAdjust = 20;
             const scrollDownAdjust = 45;
             
@@ -417,7 +419,7 @@ class MathLineInput {
     }
 
     protected setKeyDownEvents(): MathLineInput {
-        this.keyDown((e) => {
+        this.keyDown((e: EventObject) => {
 
             //press delete ==> delete line if is empty
             if (e.which === KeyCodes.DELETE_KEY && this.isEmpty()) {
@@ -454,7 +456,7 @@ class MathLineInput {
     }
 
     protected setKeyUpEvents(): MathLineInput {
-        this.keyUp((e) => {
+        this.keyUp((e: EventObject) => {
             if (this.isEmpty()) {
                 this.isDeletable = true;
             } else {
@@ -591,7 +593,7 @@ class MathLineInput {
     public stopBeingAnUnprocessedLine(): MathLineInput {
         this.shiftLatexInField('\\vdash\\ ');
         return this;
-    }s
+    }
 
     public stopBeingALetLine(): MathLineInput {
         this.shiftKeywordInField('Let');

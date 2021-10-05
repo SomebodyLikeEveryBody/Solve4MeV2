@@ -2,12 +2,13 @@ class SaverNOpenerStateManager {
     protected _jQEl: JQueryElement;
     protected _textarea: JQueryElement;
     protected _action: String;
-    protected _callingMathLineInput: MathLineInput;
+    protected _callingMathLineInput: Array<MathLineInput>;
 
     public constructor() {
         this._jQEl = $('<div id="SaverNOpenerStateManager"><textarea autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>');
         this._textarea = this._jQEl.find('textarea');
-        this._callingMathLineInput = null;
+        this._callingMathLineInput = [];
+        this._action = "";
 
         this._jQEl.appendTo($('body')).hide(0);
         this.setEvents();
@@ -28,7 +29,7 @@ class SaverNOpenerStateManager {
     }
 
     public set callingMathLineInput(pValue: MathLineInput) {
-        this._callingMathLineInput = pValue;
+        this._callingMathLineInput = [pValue];
     }
 
     protected secureStr(pStr: String): String {
@@ -57,10 +58,14 @@ class SaverNOpenerStateManager {
         this._jQEl.fadeOut(100, () => {
             this._textarea.val('');
             this._action = "";
-            this._callingMathLineInput.focus();
+            this.getCallingMathLineInput().focus();
         });
 
         return this;
+    }
+
+    public getCallingMathLineInput(): MathLineInput {
+        return this._callingMathLineInput[0];
     }
 
     public enableEditing(): SaverNOpenerStateManager {
@@ -74,7 +79,7 @@ class SaverNOpenerStateManager {
     }
 
     protected setEvents(): void {
-        this._jQEl.keydown((pEventObj) => {
+        this._jQEl.keydown((pEventObj: EventObject) => {
             switch (pEventObj.which) {
                 case KeyCodes.ESCAPE_KEY:
                     this.hide();
@@ -95,7 +100,7 @@ class SaverNOpenerStateManager {
     }
 
     public eraseMathLineInputs(): SaverNOpenerStateManager {
-        let currentMathLineInput = this._callingMathLineInput.getLastMathLineInput();
+        let currentMathLineInput: (MathLineInput | null) = this.getCallingMathLineInput().getLastMathLineInput();
 
         while (currentMathLineInput !== null) {
             currentMathLineInput.nextMathLineInput = null;
@@ -114,7 +119,7 @@ class SaverNOpenerStateManager {
         if (this.checkState()) {
             if (pState.length !== 0) {
                 this.eraseMathLineInputs();
-                let mathLineInput = new MathLineInput(this._callingMathLineInput.container, this);
+                let mathLineInput = new MathLineInput(this.getCallingMathLineInput().container, this);
                 mathLineInput.appendToContainer()
                     .setValue(pState[0])
                     .setStyle();
@@ -135,10 +140,10 @@ class SaverNOpenerStateManager {
 
     public getJSONState(): String {
         const retObj = {
-            MathLineInputsValues: []
+            MathLineInputsValues: Array<String>()
         };
 
-        let mathLineInput = this._callingMathLineInput.getFirstMathLineInput();
+        let mathLineInput = this.getCallingMathLineInput().getFirstMathLineInput();
         while (mathLineInput !== null) {
             retObj.MathLineInputsValues.push(this.secureStr(mathLineInput.value()));
             mathLineInput = mathLineInput.nextMathLineInput;

@@ -60,7 +60,7 @@ class UndoRedoManager {
         }
     }
 
-    protected isKeyIsUnaffecting(pKey: KeyCodes): Boolean {
+    protected isKeyIsUnaffecting(pKey: Number): Boolean {
 
         for (let keyCode of unaffectingKeys) {
             if (keyCode === pKey) {
@@ -129,7 +129,7 @@ class UndoRedoManager {
     }
 
     protected setKeyUpEvents(): void {
-        this._mathLineInput.keyUp((e) => {
+        this._mathLineInput.keyUp((e: EventObject) => {
 
             if (e.which === KeyCodes.ALT_KEY) {
                 e.preventDefault();
@@ -143,7 +143,7 @@ class UndoRedoManager {
     }
 
     protected setKeyDownEvents(): void {
-        this._mathLineInput.keyDown((e) => {
+        this._mathLineInput.keyDown((e: EventObject) => {
 
             // ctrl + Z ==> undo
             if (e.ctrlKey && e.which === KeyCodes.Z_KEY) {

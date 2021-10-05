@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -118,7 +119,7 @@ var S4MCoreMemory = /** @class */ (function () {
                 return s4mMemoryElement_1;
             }
         }
-        return (null);
+        throw "The specified MathLineInput created no MemoryElement.";
     };
     S4MCoreMemory.prototype.hasAVarDeclaredBy = function (pMathLineInput) {
         var filteredArray = this._declaringMathLineInputs.filter(function (mathLineInput) { return (mathLineInput === pMathLineInput); });
@@ -135,7 +136,7 @@ var S4MCoreMemory = /** @class */ (function () {
                 return memoryElement.declaringMathLineInput;
             }
         }
-        return null;
+        throw "No MathLineInput declared var [" + pVarName + "]";
     };
     S4MCoreMemory.prototype.addVar = function (pMemoryElement, pMathLineInput) {
         this._declaringMathLineInputs.push(pMathLineInput);
@@ -151,20 +152,9 @@ var S4MCoreMemory = /** @class */ (function () {
         this.removeVarDeclaredBy(pMathLineInput);
         return this;
     };
-    S4MCoreMemory.prototype.getMathLineInputwhichDeclared = function (pVarName) {
-        if (this.hasAVarNamed(pVarName)) {
-            for (var _i = 0, _a = this._declaredVars; _i < _a.length; _i++) {
-                var s4mMemoryElement_2 = _a[_i];
-                if (s4mMemoryElement_2.varName === pVarName) {
-                    return s4mMemoryElement_2.declaringMathLineInput;
-                }
-            }
-        }
-        return null;
-    };
     S4MCoreMemory.prototype.removeVarNamed = function (pVarName) {
         if (this.hasAVarNamed(pVarName)) {
-            this.removeVarDeclaredBy(this.getMathLineInputwhichDeclared(pVarName));
+            this.removeVarDeclaredBy(this.getMathLineInputWhichDeclared(pVarName));
         }
         return this;
     };
@@ -207,7 +197,7 @@ var InputScren = /** @class */ (function () {
         this._showHideOutputScreenButton.mousedown(function (e) {
             e.preventDefault();
         });
-        this._showHideOutputScreenButton.click(function (e) {
+        this._showHideOutputScreenButton.click(function () {
             if (_this._outputScreen.isVisible()) {
                 _this._outputScreen.hide(function () {
                     _this._jQEl.animate({
@@ -290,10 +280,9 @@ var VirtualKeyboard = /** @class */ (function () {
         this._panels.signsPanel = new SignsPanel(this);
         this._panels.functionsPanel = new FunctionsPanel(this);
         this._currentlyDisplayedPanel = this._panels.numbersPanel;
-        this._panels.numbersPanel.appendTo(this._jQEl);
-        this.displayPanel(this._panels.numbersPanel);
-        this.setPanels()
-            .setEvents();
+        this.appendPanelsToKeyboard()
+            .setEvents()
+            .displayPanel(this._panels.numbersPanel);
     }
     Object.defineProperty(VirtualKeyboard.prototype, "panels", {
         get: function () {
@@ -302,7 +291,10 @@ var VirtualKeyboard = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    VirtualKeyboard.prototype.setPanels = function () {
+    VirtualKeyboard.prototype.appendPanelsToKeyboard = function () {
+        for (var panelIndex in this._panels) {
+            this._panels[panelIndex].appendTo(this._jQEl);
+        }
         return this;
     };
     VirtualKeyboard.prototype.isVisible = function () {
@@ -310,11 +302,9 @@ var VirtualKeyboard = /** @class */ (function () {
     };
     VirtualKeyboard.prototype.displayPanel = function (pKeyboardPanel) {
         var _this = this;
-        console.log('pouet');
         this._currentlyDisplayedPanel.fadeOut(function () {
-            _this._currentlyDisplayedPanel.replaceWith(pKeyboardPanel);
-            pKeyboardPanel.fadeIn();
             _this._currentlyDisplayedPanel = pKeyboardPanel;
+            _this._currentlyDisplayedPanel.fadeIn();
         });
         return this;
     };
@@ -431,7 +421,7 @@ var TouchKey = /** @class */ (function () {
     };
     TouchKey.prototype.generateMathfieldJQEl = function (pLatexLabel) {
         var tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
-        this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span')[0]);
+        this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span').get(0));
         this.setLatexLabel(pLatexLabel);
         //remove all events of mathfield span element
         var retJQEl = tempJQEl.clone();

@@ -20,11 +20,11 @@ class InputScren {
     }
 
     protected setEvents(): InputScren {
-        this._showHideOutputScreenButton.mousedown((e) => {
+        this._showHideOutputScreenButton.mousedown((e: EventObject) => {
             e.preventDefault();
         });
 
-        this._showHideOutputScreenButton.click((e) => {
+        this._showHideOutputScreenButton.click(() => {
             if (this._outputScreen.isVisible()) {
                 this._outputScreen.hide(() => {
                     this._jQEl.animate({
@@ -44,11 +44,11 @@ class InputScren {
             }
         });
 
-        this._showHideVirtualKeyboard.mousedown((e) => {
+        this._showHideVirtualKeyboard.mousedown((e: EventObject) => {
             e.preventDefault();
         });
 
-        this._showHideVirtualKeyboard.click((e) => {
+        this._showHideVirtualKeyboard.click((e: EventObject) => {
             e.preventDefault();
             e.stopPropagation();
 

@@ -1,7 +1,5 @@
 class ShortcutsManager {
     protected _mathLineInput: MathLineInput;
-    protected _ctrlIsDown: Boolean;
-    protected _altIsDown: Boolean;
     
     public constructor(pMathLineInput: MathLineInput) {
         this._mathLineInput = pMathLineInput;
@@ -15,7 +13,7 @@ class ShortcutsManager {
     }
 
     protected setKeyUpEvents(): void {
-        this._mathLineInput.keyUp((e) => {
+        this._mathLineInput.keyUp((e: EventObject) => {
 
             if (e.which === KeyCodes.ALT_KEY) {
                 e.preventDefault();
@@ -24,7 +22,7 @@ class ShortcutsManager {
     }
 
     protected setKeyDownEvents(): void {
-        this._mathLineInput.keyDown((e) => {
+        this._mathLineInput.keyDown((e: EventObject) => {
 
             //set CTRL shortcuts
             if (e.ctrlKey) {

@@ -18,7 +18,7 @@ interface JQueryElement {
     first(): JQueryElement;
     addClass(pClassName: String): JQueryElement;
     removeClass(pClassName: String): JQueryElement;
-    append(JQueryElement): JQueryElement;
+    append(pElement: JQueryElement): JQueryElement;
     text(): String;
     next(): JQueryElement;
     prev(): JQueryElement;
@@ -36,13 +36,13 @@ interface JQueryElement {
     outerHeight(): Number;
     text(pStr: String): JQueryElement;
     val(pStr?: String): String;
-    attr(pProp: String, pBool: Boolean);
+    attr(pProp: String, pBool: Boolean): JQueryElement;
     click(pFunction?: Function): JQueryElement;
     mousedown(pFunction?: Function): JQueryElement;
     children(): JQueryElement;
     first(): JQueryElement;
     replaceWith(pEl: JQueryElement): JQueryElement;
-    clone(Boolean?): JQueryElement;
-
+    clone(pBool?: Boolean): JQueryElement;
+    get(pIndex: Number): JQueryElement;
     data(pstr: String, pvalue: any): void;
 }

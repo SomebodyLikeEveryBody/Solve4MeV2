@@ -17,11 +17,12 @@ light:
 main:
 	@echo ''
 	@echo '[Building Solve4Me Project main.js (Solve4Me.js)]'
-	/usr/local/bin/tsc -t ES5 --outFile ./build/Solve4Me.js \
+	/usr/local/bin/tsc -t ES5 --strict --outFile ./build/Solve4Me.js \
 	./src/Enum_KeyCodes.ts \
 	./src/Enum_VirtualKeyboardKeyStyle.ts \
 	./src/Interface_JQueryElement.ts \
 	./src/Interface_MathLineInput.ts \
+	./src/Interface_EventObject.ts \
 	./src/Class_MathObj.ts \
 	./src/Class_S4MCoreMemory.ts \
 	./src/Class_InputScreen.ts \
