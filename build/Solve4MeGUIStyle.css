@@ -360,6 +360,7 @@ button.alone
 {
     border: #bbb 1px solid;
     background-color: #4781b9;
+    color: white;
 }
 
 .keyboard_key_blue:hover
