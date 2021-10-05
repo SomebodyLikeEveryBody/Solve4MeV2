@@ -235,7 +235,7 @@ class NumbersPanel extends KeyboardPanel {
         super(pVirtualKeyboardContainer, [
             new LineKeys([
                 new TouchKey({
-                    label: "[AB]",
+                    label: "[ab]",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: () => { 
@@ -678,10 +678,22 @@ class LettersPanel extends KeyboardPanel{
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
                 }),
                 new TouchKey({
+                    label: "a^b\\uparrow",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
+                }),
+                new TouchKey({
                     label: "",
-                    width: 3,
+                    width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Space'); }
+                }),
+                new TouchKey({
+                    label: "a_b\\downarrow",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
                 }),
                 new TouchKey({
                     label: "\\text{\\}",
@@ -905,7 +917,19 @@ class MajLettersPanel extends KeyboardPanel{
                 }),
                 new TouchKey({
                     label: "",
-                    width: 3,
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Space'); }
+                }),
+                new TouchKey({
+                    label: "",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Space'); }
+                }),
+                new TouchKey({
+                    label: "",
+                    width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Space'); }
                 }),
