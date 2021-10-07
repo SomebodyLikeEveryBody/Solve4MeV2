@@ -34,7 +34,10 @@ dash
 ----------------------------------
 34
 
-
+[a][b][g][G][d][D][e][z][e][back][t]
+[T][i][k][l][L][m][n][k][p][P]
+[r][s][S][t][u][p][P][c][p][P]
+[o][O][C][R][Q][Z][N][0][°][]
 
 il faudrait des touches pour les symboles
 ========
@@ -78,7 +81,6 @@ il faudrait des touches pour les symboles
 - emptyset
 - \\text{°}
 - \\text{rad}
-- \\neg
 ========
 - lfloor
 - rfloor
@@ -105,7 +107,7 @@ il faudrait des touches pour les symboles
 - land
 - lor
 - overline
-- 
+- \\neg
 ========
 - duplicate line
 - insert line over
