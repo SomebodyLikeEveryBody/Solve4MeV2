@@ -562,10 +562,10 @@ class LettersPanel extends KeyboardPanel{
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('o'); }
                 }),
-                new LatexTouchKey({
-                    label: "\\Longleftarrow",
+                new ImgTouchKey({
+                    label: "backspace",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.DARK,
+                    style: VirtualKeyboardKeyStyle.RED,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
                                     g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace(); }
                 }),
@@ -798,10 +798,10 @@ class MajLettersPanel extends KeyboardPanel{
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('O'); }
                 }),
-                new LatexTouchKey({
-                    label: "\\Longleftarrow",
+                new ImgTouchKey({
+                    label: "backspace",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.DARK,
+                    style: VirtualKeyboardKeyStyle.RED,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
                                     g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace(); }
                 }),
@@ -1035,10 +1035,10 @@ class SymbolsPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\iota'); }
                 }),
-                new LatexTouchKey({
-                    label: "\\Longleftarrow",
+                new ImgTouchKey({
+                    label: "backspace",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.DARK,
+                    style: VirtualKeyboardKeyStyle.RED,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
                                     g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace(); }
                 }),
@@ -1272,10 +1272,10 @@ class MajSymbolsPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Omega'); }
                 }),
-                new LatexTouchKey({
-                    label: "\\Longleftarrow",
+                new ImgTouchKey({
+                    label: "backspace",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.DARK,
+                    style: VirtualKeyboardKeyStyle.RED,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
                                     g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace(); }
                 }),
@@ -1508,10 +1508,10 @@ class SignsPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Omega'); }
                 }),
-                new LatexTouchKey({
-                    label: "\\Longleftarrow",
+                new ImgTouchKey({
+                    label: "backspace",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.DARK,
+                    style: VirtualKeyboardKeyStyle.RED,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
                                     g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace(); }
                 }),
