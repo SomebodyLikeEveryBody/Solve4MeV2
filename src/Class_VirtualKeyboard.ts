@@ -122,12 +122,12 @@ class KeyboardPanel {
     }
 
     public fadeIn(pCallback?: Function): KeyboardPanel {
-        this._jQEl.fadeIn(50, pCallback);
+        this._jQEl.fadeIn(0, pCallback);
         return this;
     }
 
     public fadeOut(pCallback?: Function): KeyboardPanel {
-        this._jQEl.fadeOut(50, pCallback);
+        this._jQEl.fadeOut(0, pCallback);
         return this;
     }
 
@@ -314,10 +314,10 @@ class NumbersPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A') }
                 }),
-                new LatexTouchKey({
-                    label: "\\Longleftarrow",
+                new ImgTouchKey({
+                    label: "backspace",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.DARK,
+                    style: VirtualKeyboardKeyStyle.RED,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
                                     g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace(); }
                 }),
@@ -730,7 +730,7 @@ class LettersPanel extends KeyboardPanel{
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
                 new ImgTouchKey({
-                    label: "[OK]",
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
@@ -965,8 +965,8 @@ class MajLettersPanel extends KeyboardPanel{
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
-                new LatexTouchKey({
-                    label: "[OK]",
+                new ImgTouchKey({
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
@@ -1202,8 +1202,8 @@ class SymbolsPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition("\\ \\mapsto\\ "); }
                 }),
-                new LatexTouchKey({
-                    label: "[OK]",
+                new ImgTouchKey({
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
@@ -1439,8 +1439,8 @@ class MajSymbolsPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
-                new LatexTouchKey({
-                    label: "[OK]",
+                new ImgTouchKey({
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
@@ -1675,8 +1675,8 @@ class SignsPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
-                new LatexTouchKey({
-                    label: "[OK]",
+                new ImgTouchKey({
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }

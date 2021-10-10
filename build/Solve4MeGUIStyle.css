@@ -409,6 +409,18 @@ button.alone
     cursor: default;
 }
 
+.keyboard_key_red
+{
+    border: #bbb 1px solid;
+    background-color: #b94747;
+    color: white;
+}
+
+.keyboard_key_red:hover
+{
+    background-color: #ac4343;
+}
+
 .unselectable 
 {
     -webkit-touch-callout : none !important;

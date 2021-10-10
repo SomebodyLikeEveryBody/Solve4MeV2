@@ -77,6 +77,7 @@ var VirtualKeyboardKeyStyle;
     VirtualKeyboardKeyStyle["LIGHT"] = "light";
     VirtualKeyboardKeyStyle["DARK"] = "dark";
     VirtualKeyboardKeyStyle["BLUE"] = "blue";
+    VirtualKeyboardKeyStyle["RED"] = "red";
     VirtualKeyboardKeyStyle["EMPTY"] = "empty";
 })(VirtualKeyboardKeyStyle || (VirtualKeyboardKeyStyle = {}));
 var MathObj = /** @class */ (function () {
@@ -384,11 +385,11 @@ var KeyboardPanel = /** @class */ (function () {
         return this;
     };
     KeyboardPanel.prototype.fadeIn = function (pCallback) {
-        this._jQEl.fadeIn(50, pCallback);
+        this._jQEl.fadeIn(0, pCallback);
         return this;
     };
     KeyboardPanel.prototype.fadeOut = function (pCallback) {
-        this._jQEl.fadeOut(50, pCallback);
+        this._jQEl.fadeOut(0, pCallback);
         return this;
     };
     KeyboardPanel.prototype.replaceWith = function (pKeyboardPanel) {
@@ -550,10 +551,10 @@ var NumbersPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A'); }
                 }),
-                new LatexTouchKey({
-                    label: "\\Longleftarrow",
+                new ImgTouchKey({
+                    label: "backspace",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.DARK,
+                    style: VirtualKeyboardKeyStyle.RED,
                     action: function () {
                         g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
                         g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace();
@@ -972,7 +973,7 @@ var LettersPanel = /** @class */ (function (_super) {
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
                 new ImgTouchKey({
-                    label: "[OK]",
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
@@ -1211,8 +1212,8 @@ var MajLettersPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
-                new LatexTouchKey({
-                    label: "[OK]",
+                new ImgTouchKey({
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
@@ -1451,8 +1452,8 @@ var SymbolsPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition("\\ \\mapsto\\ "); }
                 }),
-                new LatexTouchKey({
-                    label: "[OK]",
+                new ImgTouchKey({
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
@@ -1691,8 +1692,8 @@ var MajSymbolsPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
-                new LatexTouchKey({
-                    label: "[OK]",
+                new ImgTouchKey({
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
@@ -1931,8 +1932,8 @@ var SignsPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
-                new LatexTouchKey({
-                    label: "[OK]",
+                new ImgTouchKey({
+                    label: "enter",
                     width: 3,
                     style: VirtualKeyboardKeyStyle.BLUE,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
