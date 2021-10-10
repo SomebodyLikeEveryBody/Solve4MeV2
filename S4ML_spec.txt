@@ -41,77 +41,89 @@ dash
 
 il faudrait des touches pour les symboles
 ========
-- alpha
-- beta
-- gamma
-- Gamma
-- delta
-- Delta
-- varepsilon
-- zeta
-- eta
-- theta
-- Theta
-- iota
-- kappa
-- lambda
-- Lambda
-- mu
-- nu
-- ksi
-- pi
-- Pi
-- rho
-- sigma
-- Sigma
-- tau
-- upsilon
-- phi
-- Phi
-- chi
-- psi
-- Psi
-- omega
-- Omega
-- R
-- C
-- Q
-- Z
-- N
-- emptyset
-- \\text{°}
-- \\text{rad}
++ alpha
++ beta
++ gamma
++ Gamma
++ delta
++ Delta
++ varepsilon
++ zeta
++ eta
++ theta
++ Theta
++ iota
++ kappa
++ lambda
++ Lambda
++ mu
++ nu
++ ksi
++ pi
++ Pi
++ rho
++ sigma
++ Sigma
++ tau
++ upsilon
++ phi
++ Phi
++ chi
++ psi
++ Psi
++ omega
++ Omega
++ R
++ C
++ Q
++ Z
++ N
++ emptyset
++ \\text{°}
++ \\text{rad}
+
 ========
-- lfloor
-- rfloor
-- pipe (\\ |\\ 	)
-- backslash
-- \\circ 
-- \\in
-- mapsto
-- infinity
-- \\partial
-- \\differential
-- \\rightarrow
-- \\leftarrow
-- vec
-- \\union
-- \\cap
-- supset
-- supseteq
-- subset
-- subseteq
-- \\simeq
-- exists
-- neq
-- land
-- lor
-- overline
-- \\neg
+[ 7][ 9][ 5][ 6][11][15][17][18][27][ <]
+[ 8][10][ 1][ 2][12][21][23][25][28][19]
+[      ][ 3][ 4][13][22][24][26][29][20]
+[ 123  ][14][16][30][31][  ][   o k    ]
+
+1- lfloor
+2- rfloor
+3- lceil
+4- rceil
+5- [
+6- ]
+7- \\in
+8 infinity
+9- \\vec
+10 overline
+11- \\neg
+12- land
+13- lor
+14- neq
+15- exists
+16- \\simeq
+17- pipe (\\ |\\)
+18 \\circ
+19- \\partial
+20- \\differential
+21- \\union
+22- \\cap
+23 supset
+24 supseteq
+25- subset
+26- subseteq
+27- \\rightarrow
+28- \\leftarrow
+29- \\mapsto
+30- \\forall
+31- \\equiv
+32- \\star
 ========
 - duplicate line
 - insert line over
-- select all
++ select all
 - Function
 + Let
 + Given
@@ -121,16 +133,16 @@ il faudrait des touches pour les symboles
 - save
 - open
 - print
+- add mathlineOver
+- delete line
 =========
 - sum
 - prod
 - sqrt
 - differentiation totale
-- differentiation partielle
+- differentiation partie	lle
 - X
 =========
-- degres
-
 
 
 

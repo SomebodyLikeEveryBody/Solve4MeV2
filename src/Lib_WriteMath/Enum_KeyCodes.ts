@@ -50,6 +50,7 @@ enum KeyCodes {
     Z_KEY = 90,
     MINUS_KEY = 173,
     OPENCHEVRON_KEY = 188,
+    SLASH_KEY = 191,
     CLOSECHEVRON_KEY = 190,
     OPENHOOK_KEY = 219,
     PIPE_KEY = 220,

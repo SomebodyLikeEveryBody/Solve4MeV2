@@ -56,6 +56,7 @@ var KeyCodes;
     KeyCodes[KeyCodes["Z_KEY"] = 90] = "Z_KEY";
     KeyCodes[KeyCodes["MINUS_KEY"] = 173] = "MINUS_KEY";
     KeyCodes[KeyCodes["OPENCHEVRON_KEY"] = 188] = "OPENCHEVRON_KEY";
+    KeyCodes[KeyCodes["SLASH_KEY"] = 191] = "SLASH_KEY";
     KeyCodes[KeyCodes["CLOSECHEVRON_KEY"] = 190] = "CLOSECHEVRON_KEY";
     KeyCodes[KeyCodes["OPENHOOK_KEY"] = 219] = "OPENHOOK_KEY";
     KeyCodes[KeyCodes["PIPE_KEY"] = 220] = "PIPE_KEY";
@@ -1320,8 +1321,8 @@ var ShortcutsManager = /** @class */ (function () {
                 pEventObj.preventDefault();
                 this._mathLineInput.letLineToggle();
                 break;
-            //ctrl + ;
-            case KeyCodes.SEMICOLON_KEY:
+            //ctrl + /
+            case KeyCodes.SLASH_KEY:
                 pEventObj.preventDefault();
                 this._mathLineInput.unprocessedLineToggle();
                 break;
@@ -1343,14 +1344,14 @@ var ShortcutsManager = /** @class */ (function () {
                     }
                 }
                 break;
-            //save
+            //ctrl + S ==> save
             case KeyCodes.S_KEY:
                 pEventObj.preventDefault();
                 this._mathLineInput.saverNOpenerManager.action = "SAVE";
                 this._mathLineInput.saverNOpenerManager.callingMathLineInput = this._mathLineInput;
                 this._mathLineInput.saverNOpenerManager.show();
                 break;
-            //open
+            //ctrl + O ==> open
             case KeyCodes.O_KEY:
                 pEventObj.preventDefault();
                 this._mathLineInput.saverNOpenerManager.action = "OPEN";
@@ -1496,7 +1497,7 @@ var ShortcutsManager = /** @class */ (function () {
             case KeyCodes.N9_KEY:
                 this._mathLineInput.writeLatexAtCursorPosition('\\text{°}');
                 break;
-            //alt + 7
+            //alt + 7 ==> differentiate
             case KeyCodes.N7_KEY:
                 this._mathLineInput.writeLatexAtCursorPosition('\\frac{\\text{d}}{\\text{d}_{ }}');
                 this._mathLineInput.keyStroke('Left');

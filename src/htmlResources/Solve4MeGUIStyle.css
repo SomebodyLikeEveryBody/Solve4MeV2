@@ -259,6 +259,40 @@ button.alone
     cursor: pointer;
 }
 
+#do_let_button
+{
+    width: 50px;
+    height: 46px;
+    color: white;
+    border-radius: 10px;
+    opacity: 0.7;
+    margin-right: 10px;
+
+    background-color: transparent;
+    background-image: url('./imgs/let_button.png');
+    background-repeat: no-repeat;
+    background-size: 50px;
+    background-position: center;
+    cursor: pointer;
+}
+
+#do_unprocess_button
+{
+    width: 50px;
+    height: 46px;
+    color: white;
+    border-radius: 10px;
+    opacity: 0.7;
+    margin-right: 10px;
+
+    background-color: transparent;
+    background-image: url('./imgs/unprocess_button.png');
+    background-repeat: no-repeat;
+    background-size: 50px;
+    background-position: center;
+    cursor: pointer;
+}
+
 #virtual_keyboard
 {
     position: absolute;

@@ -144,8 +144,8 @@ class ShortcutsManager {
 
                 break;
 
-            //ctrl + ;
-            case KeyCodes.SEMICOLON_KEY:
+            //ctrl + /
+            case KeyCodes.SLASH_KEY:
                 pEventObj.preventDefault();
                 this._mathLineInput.unprocessedLineToggle();
                 break;
@@ -171,7 +171,7 @@ class ShortcutsManager {
                 
                 break;
 
-            //save
+            //ctrl + S ==> save
             case KeyCodes.S_KEY:
                 pEventObj.preventDefault();
                 this._mathLineInput.saverNOpenerManager.action = "SAVE";
@@ -179,7 +179,7 @@ class ShortcutsManager {
                 this._mathLineInput.saverNOpenerManager.show();
                 break;
 
-            //open
+            //ctrl + O ==> open
             case KeyCodes.O_KEY:
                 pEventObj.preventDefault();
                 this._mathLineInput.saverNOpenerManager.action = "OPEN";
@@ -358,7 +358,7 @@ class ShortcutsManager {
                 this._mathLineInput.writeLatexAtCursorPosition('\\text{°}');
                 break;
 
-            //alt + 7
+            //alt + 7 ==> differentiate
             case KeyCodes.N7_KEY:
                 this._mathLineInput.writeLatexAtCursorPosition('\\frac{\\text{d}}{\\text{d}_{ }}');
                 this._mathLineInput.keyStroke('Left');

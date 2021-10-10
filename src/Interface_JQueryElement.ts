@@ -45,4 +45,5 @@ interface JQueryElement {
     clone(pBool?: Boolean): JQueryElement;
     get(pIndex: Number): JQueryElement;
     data(pstr: String, pvalue: any): void;
+    eq(pIndex: Number): JQueryElement;
 }

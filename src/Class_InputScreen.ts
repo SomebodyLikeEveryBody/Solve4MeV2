@@ -3,14 +3,23 @@ class InputScren {
     protected _showHideOutputScreenButton: JQueryElement;
     protected _outputScreen: OutputScreen;
     protected _solveButton: JQueryElement;
-    protected _showHideVirtualKeyboard: JQueryElement;
+    protected _showHideVirtualKeyboardButtonEl: JQueryElement;
+    protected _letLineToggleButtonEl: JQueryElement;
+    protected _unprocessLineToggleButtonEl: JQueryElement;
     protected _virtualKeyboard: VirtualKeyboard;
     protected _app: JQueryElement;
 
-    public constructor(pJQueryElement: JQueryElement, pShowHideOutputScreenButton: JQueryElement, pOutputScren: OutputScreen, pSolveButton: JQueryElement, pVirtualKeyboard: VirtualKeyboard, pApp: JQueryElement) {
+    public constructor(pJQueryElement: JQueryElement,
+                       pShowHideOutputScreenButtonEl: JQueryElement,
+                       pOutputScren: OutputScreen,
+                       pSolveButton: JQueryElement,
+                       pVirtualKeyboard: VirtualKeyboard,
+                       pApp: JQueryElement) {
         this._jQEl = pJQueryElement;
-        this._showHideOutputScreenButton = pShowHideOutputScreenButton;
-        this._showHideVirtualKeyboard = this._showHideOutputScreenButton.children().first();
+        this._showHideOutputScreenButton = pShowHideOutputScreenButtonEl;
+        this._letLineToggleButtonEl = this._showHideOutputScreenButton.children().eq(0);
+        this._unprocessLineToggleButtonEl = this._showHideOutputScreenButton.children().eq(1);
+        this._showHideVirtualKeyboardButtonEl = this._showHideOutputScreenButton.children().eq(2);
         this._outputScreen = pOutputScren;
         this._solveButton = pSolveButton;
         this._virtualKeyboard = pVirtualKeyboard;
@@ -44,19 +53,41 @@ class InputScren {
             }
         });
 
-        this._showHideVirtualKeyboard.mousedown((e: EventObject) => {
+        this._showHideVirtualKeyboardButtonEl.mousedown((e: EventObject) => {
             e.preventDefault();
         });
 
-        this._showHideVirtualKeyboard.click((e: EventObject) => {
+        this._letLineToggleButtonEl.mousedown((e: EventObject) => {
+            e.preventDefault();
+        });
+
+        this._unprocessLineToggleButtonEl.mousedown((e: EventObject) => {
+            e.preventDefault();
+        });
+
+        this._showHideVirtualKeyboardButtonEl.click((e: EventObject) => {
             e.preventDefault();
             e.stopPropagation();
 
             this._virtualKeyboard.toggle();
         });
 
+        this._letLineToggleButtonEl.click((e: EventObject) => {
+            e.preventDefault();
+            e.stopPropagation();
+            g_s4mCoreMemory.currentMathLineInputFocused.letLineToggle();
+        });
+
+        this._unprocessLineToggleButtonEl.click((e: EventObject) => {
+            e.preventDefault();
+            e.stopPropagation();
+            g_s4mCoreMemory.currentMathLineInputFocused.unprocessedLineToggle();
+        });
+
         return this;
     }
+
+    //unprocessedLineToggle
 
     public clickOnShowHideOutputScreenButton(): InputScren {
         this._showHideOutputScreenButton.click();
