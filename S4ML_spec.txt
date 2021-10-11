@@ -86,7 +86,7 @@ il faudrait des touches pour les symboles
 [ 7][ 9][ 5][ 6][11][15][17][18][27][ <]
 [ 8][10][ 1][ 2][12][21][23][25][28][19]
 [      ][ 3][ 4][13][22][24][26][29][20]
-[ 123  ][14][16][30][31][  ][   o k    ]
+[ 123  ][14][16][30][31][33][   o k    ]
 
 1- lfloor
 2- rfloor
@@ -95,9 +95,9 @@ il faudrait des touches pour les symboles
 5- [
 6- ]
 7- \\in
-8 infinity
+8- infinity
 9- \\vec
-10 overline
+10- overline
 11- \\neg
 12- land
 13- lor
@@ -110,8 +110,8 @@ il faudrait des touches pour les symboles
 20- \\differential
 21- \\union
 22- \\cap
-23 supset
-24 supseteq
+23- supset
+24- supseteq
 25- subset
 26- subseteq
 27- \\rightarrow
@@ -120,6 +120,20 @@ il faudrait des touches pour les symboles
 30- \\forall
 31- \\equiv
 32- \\star
+33- nexist
+========
++ >
++ <
++ >=
++ <=
++ int
++ oint
++ nabla
++ d/dx
++ d/dx
+
+
+
 ========
 - duplicate line
 - insert line over
@@ -135,12 +149,14 @@ il faudrait des touches pour les symboles
 - print
 - add mathlineOver
 - delete line
+- undo
+- redo
 =========
 - sum
 - prod
 - sqrt
 - differentiation totale
-- differentiation partie	lle
+- differentiation partielle
 - X
 =========
 

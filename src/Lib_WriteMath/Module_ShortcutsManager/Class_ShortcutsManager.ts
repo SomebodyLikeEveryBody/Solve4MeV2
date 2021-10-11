@@ -72,7 +72,6 @@ class ShortcutsManager {
                 this._mathLineInput.writeLatexAtCursorPosition('\\text{Function}\\left(_{}^{}\\right)');
                 this._mathLineInput.keyStroke('Left');
                 this._mathLineInput.keyStroke('Left');
-                console.log('functions');
                 break;
             
             //ctrl + E ==> show / hide outputScreen
@@ -363,7 +362,6 @@ class ShortcutsManager {
                 this._mathLineInput.writeLatexAtCursorPosition('\\frac{\\text{d}}{\\text{d}_{ }}');
                 this._mathLineInput.keyStroke('Left');
                 this._mathLineInput.keyStroke('Left');
-                this._mathLineInput
                 break;
 
             //alt + 6

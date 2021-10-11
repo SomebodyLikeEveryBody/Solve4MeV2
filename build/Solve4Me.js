@@ -200,7 +200,8 @@ var InputScren = /** @class */ (function () {
         this._showHideOutputScreenButton.mousedown(function (e) {
             e.preventDefault();
         });
-        this._showHideOutputScreenButton.click(function () {
+        this._showHideOutputScreenButton.click(function (e) {
+            e.preventDefault();
             if (_this._outputScreen.isVisible()) {
                 _this._outputScreen.hide(function () {
                     _this._jQEl.animate({
@@ -244,7 +245,6 @@ var InputScren = /** @class */ (function () {
         });
         return this;
     };
-    //unprocessedLineToggle
     InputScren.prototype.clickOnShowHideOutputScreenButton = function () {
         this._showHideOutputScreenButton.click();
         return this;
@@ -298,8 +298,9 @@ var VirtualKeyboard = /** @class */ (function () {
         this._panels.lettersPanel = new LettersPanel(this);
         this._panels.majLettersPanel = new MajLettersPanel(this);
         this._panels.symbolsPanel = new SymbolsPanel(this);
-        this._panels.majSymbolsPanel = new MajSymbolsPanel(this);
-        this._panels.signsPanel = new SignsPanel(this);
+        this._panels.majSymbolsPanel = new OtherSymbolsPanel(this);
+        this._panels.signsPanel = new OperatorsPanel(this);
+        this._panels.OtherSignsPanel = new OtherOperatorsPanel(this);
         this._panels.functionsPanel = new FunctionsPanel(this);
         this._currentlyDisplayedPanel = this._panels.numbersPanel;
         this.appendPanelsToKeyboard()
@@ -424,6 +425,7 @@ var LineKeys = /** @class */ (function () {
 var TouchKey = /** @class */ (function () {
     function TouchKey(pKeyConfiguration) {
         this._label = pKeyConfiguration.label;
+        this._title = (pKeyConfiguration.title ? pKeyConfiguration.title : pKeyConfiguration.label);
         this._width = pKeyConfiguration.width;
         this._style = pKeyConfiguration.style;
         this._jQEl = $('');
@@ -453,7 +455,7 @@ var ImgTouchKey = /** @class */ (function (_super) {
     __extends(ImgTouchKey, _super);
     function ImgTouchKey(pKeyConfiguration) {
         var _this = _super.call(this, pKeyConfiguration) || this;
-        _this._jQEl = $('<div class="keyboard_key unselectable"><span></span</div>');
+        _this._jQEl = $('<div class="keyboard_key unselectable" title="' + _this._title + '"><span></span</div>');
         _this._jQEl.css({
             'background-image': "url('./imgs/" + pKeyConfiguration.label + ".png')",
             'background-repeat': 'no-repeat',
@@ -470,13 +472,13 @@ var LatexTouchKey = /** @class */ (function (_super) {
     __extends(LatexTouchKey, _super);
     function LatexTouchKey(pKeyConfiguration) {
         var _this = _super.call(this, pKeyConfiguration) || this;
-        _this._jQEl = _this.generateMathfieldJQEl(_this._label);
+        _this._jQEl = _this.generateMathfieldJQEl(_this._label, _this._title);
         _this.setEvent(pKeyConfiguration.action);
         _this.setStyle();
         return _this;
     }
-    LatexTouchKey.prototype.generateMathfieldJQEl = function (pLatexLabel) {
-        var tempJQEl = $('<div class="keyboard_key unselectable"><span></span></div>');
+    LatexTouchKey.prototype.generateMathfieldJQEl = function (pLatexLabel, pTitle) {
+        var tempJQEl = $('<div class="keyboard_key unselectable" title="' + pTitle + '"><span></span></div>');
         this._mathField = MathQuill.getInterface(2).StaticMath(tempJQEl.find('span').get(0));
         this.setLatexLabel(pLatexLabel);
         //remove all events of mathfield span element
@@ -497,6 +499,7 @@ var NumbersPanel = /** @class */ (function (_super) {
             new LineKeys([
                 new LatexTouchKey({
                     label: "[ab]",
+                    title: "Go to [Letters] panel",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -505,12 +508,14 @@ var NumbersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "\\text{(}",
+                    title: "(",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('('); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{)}",
+                    title: ")",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition(')'); }
@@ -535,35 +540,31 @@ var NumbersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "\\frac{a}{b}",
+                    title: "a/b",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('/'); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{\\}",
+                    title: "\\",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
                 new LatexTouchKey({
                     label: "\\dagger",
+                    title: "Select all",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A'); }
                 }),
-                new ImgTouchKey({
-                    label: "backspace",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.RED,
-                    action: function () {
-                        g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
-                        g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace();
-                    }
-                }),
+                new BackspaceKey()
             ]),
             new LineKeys([
                 new LatexTouchKey({
                     label: "[\\alpha \\beta]",
+                    title: "Go to [Greek letters] panel",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -572,12 +573,14 @@ var NumbersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "\\text{{}",
+                    title: "{",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('{'); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{{}",
+                    title: "}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('}'); }
@@ -602,24 +605,28 @@ var NumbersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "\\cdot",
+                    title: "* (multiply)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\cdot'); }
                 }),
                 new LatexTouchKey({
                     label: "a^b\\uparrow",
+                    title: "^ (exponent)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
                 }),
                 new LatexTouchKey({
                     label: "\\uparrow",
+                    title: "Up",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Up'); }
                 }),
                 new LatexTouchKey({
                     label: "a_b\\downarrow",
+                    title: "_ (Indice)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
@@ -628,6 +635,7 @@ var NumbersPanel = /** @class */ (function (_super) {
             new LineKeys([
                 new LatexTouchKey({
                     label: "[\\in \\partial]",
+                    title: "Go to [Operators] panel",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -636,12 +644,14 @@ var NumbersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "\\text{[}",
+                    title: "[",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('['); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{]}",
+                    title: "]",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition(']'); }
@@ -672,18 +682,21 @@ var NumbersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "\\leftarrow",
+                    title: "Left",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Left'); }
                 }),
                 new LatexTouchKey({
                     label: "\\downarrow",
+                    title: "Down",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Down'); }
                 }),
                 new LatexTouchKey({
                     label: "\\rightarrow",
+                    title: "Right",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Right'); }
@@ -692,12 +705,14 @@ var NumbersPanel = /** @class */ (function (_super) {
             new LineKeys([
                 new LatexTouchKey({
                     label: "[f()]",
+                    title: "Go to [Actions] panel",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { console.log("go to panel [f()]"); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{#}",
+                    title: "#",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('#'); }
@@ -732,12 +747,7 @@ var NumbersPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('+'); }
                 }),
-                new ImgTouchKey({
-                    label: "enter",
-                    width: 3,
-                    style: VirtualKeyboardKeyStyle.BLUE,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
-                }),
+                new EnterKey(),
             ])
         ]) || this;
         return _this;
@@ -803,15 +813,7 @@ var LettersPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('o'); }
                 }),
-                new ImgTouchKey({
-                    label: "backspace",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.RED,
-                    action: function () {
-                        g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
-                        g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace();
-                    }
-                }),
+                new BackspaceKey(),
             ]),
             new LineKeys([
                 new LatexTouchKey({
@@ -928,6 +930,7 @@ var LettersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "\\dagger",
+                    title: "Select all",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A'); }
@@ -936,6 +939,7 @@ var LettersPanel = /** @class */ (function (_super) {
             new LineKeys([
                 new LatexTouchKey({
                     label: "[123]",
+                    title: "Go to [Numbers] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -944,40 +948,40 @@ var LettersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "[\\longleftrightarrow]",
+                    title: "Tabulation",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
                 }),
                 new LatexTouchKey({
                     label: "a^b\\uparrow",
+                    title: "^ (exponent)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
                 }),
                 new LatexTouchKey({
                     label: "",
+                    title: "Space",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ '); }
                 }),
                 new LatexTouchKey({
                     label: "a_b\\downarrow",
+                    title: "_ (Indice)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{\\}",
+                    title: "\\",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
-                new ImgTouchKey({
-                    label: "enter",
-                    width: 3,
-                    style: VirtualKeyboardKeyStyle.BLUE,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
-                }),
+                new EnterKey(),
             ])
         ]) || this;
         return _this;
@@ -1043,15 +1047,7 @@ var MajLettersPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('O'); }
                 }),
-                new ImgTouchKey({
-                    label: "backspace",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.RED,
-                    action: function () {
-                        g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
-                        g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace();
-                    }
-                }),
+                new BackspaceKey(),
             ]),
             new LineKeys([
                 new LatexTouchKey({
@@ -1118,6 +1114,7 @@ var MajLettersPanel = /** @class */ (function (_super) {
             new LineKeys([
                 new LatexTouchKey({
                     label: "[\\downarrow]",
+                    title: "Down",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -1168,6 +1165,7 @@ var MajLettersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "\\dagger",
+                    title: "Select all",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A'); }
@@ -1176,6 +1174,7 @@ var MajLettersPanel = /** @class */ (function (_super) {
             new LineKeys([
                 new LatexTouchKey({
                     label: "[123]",
+                    title: "Go to [Numbers] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -1184,40 +1183,40 @@ var MajLettersPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "[\\longleftrightarrow]",
+                    title: "Tabulation",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
                 }),
                 new LatexTouchKey({
                     label: "a^b\\uparrow",
+                    title: "^ (exponent)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
                 }),
                 new LatexTouchKey({
                     label: "",
+                    title: "Space",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ '); }
                 }),
                 new LatexTouchKey({
                     label: "a_b\\downarrow",
+                    title: "_ (Indice)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{\\}",
+                    title: "\\",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
-                new ImgTouchKey({
-                    label: "enter",
-                    width: 3,
-                    style: VirtualKeyboardKeyStyle.BLUE,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
-                }),
+                new EnterKey(),
             ])
         ]) || this;
         return _this;
@@ -1283,15 +1282,7 @@ var SymbolsPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\iota'); }
                 }),
-                new ImgTouchKey({
-                    label: "backspace",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.RED,
-                    action: function () {
-                        g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
-                        g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace();
-                    }
-                }),
+                new BackspaceKey(),
             ]),
             new LineKeys([
                 new LatexTouchKey({
@@ -1358,6 +1349,7 @@ var SymbolsPanel = /** @class */ (function (_super) {
             new LineKeys([
                 new LatexTouchKey({
                     label: "[\\Pi \\R]",
+                    title: "Go to [Others symbols] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -1389,33 +1381,38 @@ var SymbolsPanel = /** @class */ (function (_super) {
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\omega'); }
                 }),
                 new LatexTouchKey({
-                    label: "?",
+                    label: "\\infty",
+                    title: "Infinity",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\phi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\infty'); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{[}",
+                    title: "[",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('['); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{]}",
+                    title: "]",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition(']'); }
                 }),
                 new LatexTouchKey({
-                    label: "\\star",
+                    label: "\\ast",
+                    title: "*",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\star'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\ast'); }
                 }),
             ]),
             new LineKeys([
                 new LatexTouchKey({
                     label: "[123]",
+                    title: "Go to [Numbers] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -1424,24 +1421,28 @@ var SymbolsPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "[\\longleftrightarrow]",
+                    title: "Tabulation",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
                 }),
                 new LatexTouchKey({
                     label: "a^b\\uparrow",
+                    title: "^ (exponent)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
                 }),
                 new LatexTouchKey({
                     label: "",
+                    title: "Space",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ '); }
                 }),
                 new LatexTouchKey({
                     label: "a_b\\downarrow",
+                    title: "_ (Indice)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
@@ -1452,21 +1453,16 @@ var SymbolsPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition("\\ \\mapsto\\ "); }
                 }),
-                new ImgTouchKey({
-                    label: "enter",
-                    width: 3,
-                    style: VirtualKeyboardKeyStyle.BLUE,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
-                }),
+                new EnterKey(),
             ])
         ]) || this;
         return _this;
     }
     return SymbolsPanel;
 }(KeyboardPanel));
-var MajSymbolsPanel = /** @class */ (function (_super) {
-    __extends(MajSymbolsPanel, _super);
-    function MajSymbolsPanel(pVirtualKeyboardContainer) {
+var OtherSymbolsPanel = /** @class */ (function (_super) {
+    __extends(OtherSymbolsPanel, _super);
+    function OtherSymbolsPanel(pVirtualKeyboardContainer) {
         var _this = _super.call(this, pVirtualKeyboardContainer, [
             new LineKeys([
                 new LatexTouchKey({
@@ -1523,15 +1519,7 @@ var MajSymbolsPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Omega'); }
                 }),
-                new ImgTouchKey({
-                    label: "backspace",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.RED,
-                    action: function () {
-                        g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
-                        g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace();
-                    }
-                }),
+                new BackspaceKey(),
             ]),
             new LineKeys([
                 new LatexTouchKey({
@@ -1584,12 +1572,14 @@ var MajSymbolsPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "\\text{°}",
+                    title: "Degree",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\text{°}'); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{rad}}",
+                    title: "Radian",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{rad}}"); }
@@ -1598,6 +1588,7 @@ var MajSymbolsPanel = /** @class */ (function (_super) {
             new LineKeys([
                 new LatexTouchKey({
                     label: "[\\alpha \\beta]",
+                    title: "Go to [Greek letters] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -1606,42 +1597,49 @@ var MajSymbolsPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{kg}}",
+                    title: "kg",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{kg}}"); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{m}}",
+                    title: "meter",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{m}}"); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{s}}",
+                    title: "second",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{s}}"); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{A}}",
+                    title: "Amperes",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{A}}"); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{K}}",
+                    title: "Kelvin",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{K}}"); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{mol}}",
+                    title: "mol",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{mol}}"); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{cd}}",
+                    title: "Candela",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{cd}}"); }
@@ -1656,6 +1654,7 @@ var MajSymbolsPanel = /** @class */ (function (_super) {
             new LineKeys([
                 new LatexTouchKey({
                     label: "[123]",
+                    title: "Go to [Numbers] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -1664,73 +1663,76 @@ var MajSymbolsPanel = /** @class */ (function (_super) {
                 }),
                 new LatexTouchKey({
                     label: "[\\longleftrightarrow]",
+                    title: "Tabulation",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
                 }),
                 new LatexTouchKey({
                     label: "a^b\\uparrow",
+                    title: "^ (exponent)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
                 }),
                 new LatexTouchKey({
                     label: "",
+                    title: "space",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ '); }
                 }),
                 new LatexTouchKey({
                     label: "a_b\\downarrow",
+                    title: "_ (Indice)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{\\}",
+                    title: "\\",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
                 }),
-                new ImgTouchKey({
-                    label: "enter",
-                    width: 3,
-                    style: VirtualKeyboardKeyStyle.BLUE,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
-                }),
+                new EnterKey(),
             ])
         ]) || this;
         return _this;
     }
-    return MajSymbolsPanel;
+    return OtherSymbolsPanel;
 }(KeyboardPanel));
-var SignsPanel = /** @class */ (function (_super) {
-    __extends(SignsPanel, _super);
-    function SignsPanel(pVirtualKeyboardContainer) {
+var OperatorsPanel = /** @class */ (function (_super) {
+    __extends(OperatorsPanel, _super);
+    function OperatorsPanel(pVirtualKeyboardContainer) {
         var _this = _super.call(this, pVirtualKeyboardContainer, [
             new LineKeys([
                 new LatexTouchKey({
-                    label: "\\in",
+                    label: "\\exists",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\in'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\exists'); }
                 }),
                 new LatexTouchKey({
                     label: "\\vec{v}",
+                    title: "Vector arrow",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\vec'); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{[}",
+                    title: "[",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('['); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{]}",
+                    title: "]",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition(']'); }
                 }),
                 new LatexTouchKey({
@@ -1740,162 +1742,160 @@ var SignsPanel = /** @class */ (function (_super) {
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neg'); }
                 }),
                 new LatexTouchKey({
-                    label: "\\exists",
+                    label: "\\sqrt{x}",
+                    title: "Square root",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\exists'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sqrt'); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{|}",
+                    title: "|",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('|'); }
                 }),
                 new LatexTouchKey({
+                    label: "\\circ",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\circ'); }
+                }),
+                new LatexTouchKey({
                     label: "\\rightarrow",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rightarrow'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rightarrows'); }
+                }),
+                new BackspaceKey(),
+            ]),
+            new LineKeys([
+                new LatexTouchKey({
+                    label: "\\nexist",
+                    title: "?",
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    width: 1,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\nexist'); }
                 }),
                 new LatexTouchKey({
-                    label: "\\Omega",
+                    label: "\\forall",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Omega'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\forall'); }
                 }),
-                new ImgTouchKey({
-                    label: "backspace",
+                new LatexTouchKey({
+                    label: "\\lceil",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.RED,
-                    action: function () {
-                        g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Backspace');
-                        g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyBackspace();
-                    }
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\lceil'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\rceil",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rceil'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\land",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\land'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\union",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\union'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\supset",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\supset'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\subset",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\subset'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\leftarrow",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\leftarrow'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\partial",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\partial"); }
                 }),
             ]),
             new LineKeys([
                 new LatexTouchKey({
-                    label: "\\R",
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    width: 1,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\R'); }
-                }),
-                new LatexTouchKey({
-                    label: "\\C",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\C'); }
-                }),
-                new LatexTouchKey({
-                    label: "\\Q",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Q'); }
-                }),
-                new LatexTouchKey({
-                    label: "\\Z",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Z'); }
-                }),
-                new LatexTouchKey({
-                    label: "\\N",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\N'); }
-                }),
-                new LatexTouchKey({
-                    label: "\\emptyset",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\emptyset'); }
-                }),
-                new LatexTouchKey({
-                    label: "\\rho",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rho'); }
-                }),
-                new LatexTouchKey({
-                    label: "\\sigma",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sigma'); }
-                }),
-                new LatexTouchKey({
-                    label: "\\text{°}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\text{°}'); }
-                }),
-                new LatexTouchKey({
-                    label: "_{\\text{rad}}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{rad}}"); }
-                }),
-            ]),
-            new LineKeys([
-                new LatexTouchKey({
-                    label: "[\\alpha \\beta]",
+                    label: "[\\ge \\oint]",
+                    title: "Go to [Other operators] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
-                        _this._virtualKeyboardContainer.displayPanel(_this._virtualKeyboardContainer.panels.symbolsPanel);
+                        _this._virtualKeyboardContainer.displayPanel(_this._virtualKeyboardContainer.panels.OtherSignsPanel);
                     }
                 }),
                 new LatexTouchKey({
-                    label: "_{\\text{kg}}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{kg}}"); }
-                }),
-                new LatexTouchKey({
-                    label: "_{\\text{m}}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{m}}"); }
-                }),
-                new LatexTouchKey({
-                    label: "_{\\text{s}}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{s}}"); }
-                }),
-                new LatexTouchKey({
-                    label: "_{\\text{A}}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{A}}"); }
-                }),
-                new LatexTouchKey({
-                    label: "_{\\text{K}}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{K}}"); }
-                }),
-                new LatexTouchKey({
-                    label: "_{\\text{mol}}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{mol}}"); }
-                }),
-                new LatexTouchKey({
-                    label: "_{\\text{cd}}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{cd}}"); }
-                }),
-                new LatexTouchKey({
-                    label: "?",
+                    label: "\\lfloor",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\phi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lfloor"); }
+                }),
+                new LatexTouchKey({
+                    label: "\\rfloor",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("{\\rfloor"); }
+                }),
+                new LatexTouchKey({
+                    label: "\\lor",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lor"); }
+                }),
+                new LatexTouchKey({
+                    label: "\\cap",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\cap"); }
+                }),
+                new LatexTouchKey({
+                    label: "\\supseteq",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\supseteq"); }
+                }),
+                new LatexTouchKey({
+                    label: "\\subseteq",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\subseteq"); }
+                }),
+                new LatexTouchKey({
+                    label: "\\mapsto",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\mapsto"); }
+                }),
+                new LatexTouchKey({
+                    label: "\\text{d}",
+                    title: "Differential",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\text{d}'); }
                 }),
             ]),
             new LineKeys([
                 new LatexTouchKey({
                     label: "[123]",
+                    title: "Go to [Numbers] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
@@ -1903,46 +1903,284 @@ var SignsPanel = /** @class */ (function (_super) {
                     }
                 }),
                 new LatexTouchKey({
-                    label: "[\\longleftrightarrow]",
+                    label: "\\neq",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neq'); }
                 }),
                 new LatexTouchKey({
-                    label: "a^b\\uparrow",
+                    label: "\\simeq",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\simeq'); }
                 }),
                 new LatexTouchKey({
-                    label: "",
+                    label: "\\equiv",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\equiv'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\in",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ '); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\in'); }
                 }),
                 new LatexTouchKey({
-                    label: "a_b\\downarrow",
+                    label: "\\notin",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\notin'); }
                 }),
-                new LatexTouchKey({
-                    label: "\\text{\\}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
-                }),
-                new ImgTouchKey({
-                    label: "enter",
-                    width: 3,
-                    style: VirtualKeyboardKeyStyle.BLUE,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
-                }),
+                new EnterKey(),
             ])
         ]) || this;
         return _this;
     }
-    return SignsPanel;
+    return OperatorsPanel;
+}(KeyboardPanel));
+var OtherOperatorsPanel = /** @class */ (function (_super) {
+    __extends(OtherOperatorsPanel, _super);
+    function OtherOperatorsPanel(pVirtualKeyboardContainer) {
+        var _this = _super.call(this, pVirtualKeyboardContainer, [
+            new LineKeys([
+                new LatexTouchKey({
+                    label: "\\int _{\\ }^{\\ }",
+                    title: "Integral",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\int'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\frac{\\text{d}}{\\text{d}_x}",
+                    title: "Closed curve integral",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () {
+                        g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\frac{\\text{d}}{\\text{d}_{ }}')
+                            .keyStroke('Left Left');
+                    }
+                }),
+                new LatexTouchKey({
+                    label: "f()",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () {
+                        g_s4mCoreMemory.currentMathLineInputFocused
+                            .writeLatexAtCursorPosition('\\text{Function}\\left(_{}^{}\\right)')
+                            .keyStroke('Left Left');
+                    }
+                }),
+                new LatexTouchKey({
+                    label: "\\lt",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\lt'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\gt",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\gt'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\exists'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('|'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\overline{42}",
+                    title: "Overline",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\overline'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\nabla",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\nabla'); }
+                }),
+                new BackspaceKey(),
+            ]),
+            new LineKeys([
+                new LatexTouchKey({
+                    label: "\\oint",
+                    title: "Closed curve integral",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\oint'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\frac{\\partial }{\\partial _x}",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\partial/\\partial_'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\vec{V}",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () {
+                        g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("\\text{Vect}\\left(\\right)")
+                            .keyStroke('Left');
+                    }
+                }),
+                new LatexTouchKey({
+                    label: "\\le",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\le'); }
+                }),
+                new LatexTouchKey({
+                    label: "\\ge",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\ge'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\union'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\supset'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\subset'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\leftarrow'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\partial"); }
+                }),
+            ]),
+            new LineKeys([
+                new LatexTouchKey({
+                    label: "[\\in \\partial]",
+                    title: "Go to [Operators] panel",
+                    width: 2,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () {
+                        _this._virtualKeyboardContainer.displayPanel(_this._virtualKeyboardContainer.panels.signsPanel);
+                    }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lfloor"); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("{\\rfloor"); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lor"); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\cap"); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\supseteq"); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\subseteq"); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\mapsto"); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\text{d}'); }
+                }),
+            ]),
+            new LineKeys([
+                new LatexTouchKey({
+                    label: "[123]",
+                    title: "Go to [Numbers] panel",
+                    width: 2,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () {
+                        _this._virtualKeyboardContainer.displayPanel(_this._virtualKeyboardContainer.panels.numbersPanel);
+                    }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neq'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\simeq'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\equiv'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\forall'); }
+                }),
+                new LatexTouchKey({
+                    label: "?",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\nexist'); }
+                }),
+                new EnterKey(),
+            ])
+        ]) || this;
+        return _this;
+    }
+    return OtherOperatorsPanel;
 }(KeyboardPanel));
 var FunctionsPanel = /** @class */ (function (_super) {
     __extends(FunctionsPanel, _super);
@@ -1951,3 +2189,33 @@ var FunctionsPanel = /** @class */ (function (_super) {
     }
     return FunctionsPanel;
 }(KeyboardPanel));
+var EnterKey = /** @class */ (function (_super) {
+    __extends(EnterKey, _super);
+    function EnterKey() {
+        return _super.call(this, {
+            label: "enter",
+            title: "Enter",
+            width: 3,
+            style: VirtualKeyboardKeyStyle.BLUE,
+            action: function () { g_s4mCoreMemory.currentMathLineInputFocused.doIfKeyEnter(); }
+        }) || this;
+    }
+    return EnterKey;
+}(ImgTouchKey));
+var BackspaceKey = /** @class */ (function (_super) {
+    __extends(BackspaceKey, _super);
+    function BackspaceKey() {
+        return _super.call(this, {
+            label: "backspace",
+            title: "Backspace",
+            width: 1,
+            style: VirtualKeyboardKeyStyle.RED,
+            action: function () {
+                g_s4mCoreMemory.currentMathLineInputFocused
+                    .keyStroke('Backspace')
+                    .doIfKeyBackspace();
+            }
+        }) || this;
+    }
+    return BackspaceKey;
+}(ImgTouchKey));

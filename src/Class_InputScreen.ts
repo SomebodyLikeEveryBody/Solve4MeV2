@@ -33,7 +33,8 @@ class InputScren {
             e.preventDefault();
         });
 
-        this._showHideOutputScreenButton.click(() => {
+        this._showHideOutputScreenButton.click((e: EventObject) => {
+            e.preventDefault();
             if (this._outputScreen.isVisible()) {
                 this._outputScreen.hide(() => {
                     this._jQEl.animate({
@@ -86,8 +87,6 @@ class InputScren {
 
         return this;
     }
-
-    //unprocessedLineToggle
 
     public clickOnShowHideOutputScreenButton(): InputScren {
         this._showHideOutputScreenButton.click();
