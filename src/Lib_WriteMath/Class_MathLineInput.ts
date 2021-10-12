@@ -653,6 +653,43 @@ class MathLineInput {
         return this;
     }
 
+    public givenLineToggle(): MathLineInput {
+        if (this.isAGivenLine()) {
+            this.stopBeingAGivenLine();
+        } else {
+            this.becomeAGivenLine();
+        }
+
+        return this;
+    }
+
+    public printLine(): MathLineInput {
+        if (this.isAPrintLine()) {
+            this.stopBeingAPrintLine();
+        } else {
+            this.becomeAPrintLine();
+            this.keyStroke('Left');
+        }
+
+        return this;
+    }
+
+    public displaySaveWidget(): MathLineInput {
+        this.saverNOpenerManager.action = "SAVE";
+        this.saverNOpenerManager.callingMathLineInput = this;
+        this.saverNOpenerManager.show();
+
+        return this;
+    }
+
+    public displayOpenWidget(): MathLineInput {
+        this.saverNOpenerManager.action = "OPEN";
+        this.saverNOpenerManager.callingMathLineInput = this;
+        this.saverNOpenerManager.show();
+
+        return this;
+    }
+
     public unprocessedLineToggle(): MathLineInput {
         if (this.isAnUnprocessedLine()) {
             this.stopBeingAnUnprocessedLine();

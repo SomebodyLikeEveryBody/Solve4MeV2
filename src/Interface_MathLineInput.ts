@@ -52,7 +52,11 @@ interface MathLineInput {
     getLastMathLineInput(): MathLineInput;
     processContent(): MathLineInput;
     letLineToggle(): MathLineInput;
+    givenLineToggle(): MathLineInput;
     unprocessedLineToggle(): MathLineInput;
     doIfKeyEnter(): MathLineInput;
     doIfKeyBackspace(): MathLineInput;
+    displaySaveWidget(): MathLineInput;
+    displayOpenWidget(): MathLineInput;
+    printLine(): MathLineInput;
 }

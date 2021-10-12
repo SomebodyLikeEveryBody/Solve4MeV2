@@ -102,12 +102,7 @@ class ShortcutsManager {
             //ctrl + P ==> print encapsulation
             case KeyCodes.P_KEY:
                 pEventObj.preventDefault();
-                if (this._mathLineInput.isAPrintLine()) {
-                    this._mathLineInput.stopBeingAPrintLine();
-                } else {
-                    this._mathLineInput.becomeAPrintLine();
-                    this._mathLineInput.keyStroke('Left');
-                }
+                this._mathLineInput.printLine();
                 break;
 
             //ctrl + right arrow
@@ -124,11 +119,7 @@ class ShortcutsManager {
             //ctrl + G ==> become given line
             case KeyCodes.G_KEY:
                 pEventObj.preventDefault();
-                if (this._mathLineInput.isAGivenLine()) {
-                    this._mathLineInput.stopBeingAGivenLine();
-                } else {
-                    this._mathLineInput.becomeAGivenLine();
-                }
+                this._mathLineInput.givenLineToggle();
                 break;
 
             //ctrl + 8
@@ -173,17 +164,13 @@ class ShortcutsManager {
             //ctrl + S ==> save
             case KeyCodes.S_KEY:
                 pEventObj.preventDefault();
-                this._mathLineInput.saverNOpenerManager.action = "SAVE";
-                this._mathLineInput.saverNOpenerManager.callingMathLineInput = this._mathLineInput;
-                this._mathLineInput.saverNOpenerManager.show();
+                this._mathLineInput.displaySaveWidget();
                 break;
 
             //ctrl + O ==> open
             case KeyCodes.O_KEY:
                 pEventObj.preventDefault();
-                this._mathLineInput.saverNOpenerManager.action = "OPEN";
-                this._mathLineInput.saverNOpenerManager.callingMathLineInput = this._mathLineInput;
-                this._mathLineInput.saverNOpenerManager.show();
+                this._mathLineInput.displayOpenWidget();
                 break;
         }
     }

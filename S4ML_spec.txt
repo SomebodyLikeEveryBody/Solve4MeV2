@@ -136,28 +136,23 @@ il faudrait des touches pour les symboles
 
 ========
 - duplicate line
-- insert line over
-+ select all
-- Function
-+ Let
-+ Given
-+ dash
-- Function
-+ #
-- save
-- open
-- print
 - add mathlineOver
 - delete line
-- undo
-- redo
+
++ Function
++ Given
++ dash
++ save
++ open
++ print
++ undo
++ redo
 =========
-- sum
-- prod
-- sqrt
-- differentiation totale
-- differentiation partielle
-- X
++ sum
++ prod
++ differentiation totale
++ differentiation partielle
++ X
 =========
 
 

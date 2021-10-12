@@ -874,6 +874,37 @@ var MathLineInput = /** @class */ (function () {
         }
         return this;
     };
+    MathLineInput.prototype.givenLineToggle = function () {
+        if (this.isAGivenLine()) {
+            this.stopBeingAGivenLine();
+        }
+        else {
+            this.becomeAGivenLine();
+        }
+        return this;
+    };
+    MathLineInput.prototype.printLine = function () {
+        if (this.isAPrintLine()) {
+            this.stopBeingAPrintLine();
+        }
+        else {
+            this.becomeAPrintLine();
+            this.keyStroke('Left');
+        }
+        return this;
+    };
+    MathLineInput.prototype.displaySaveWidget = function () {
+        this.saverNOpenerManager.action = "SAVE";
+        this.saverNOpenerManager.callingMathLineInput = this;
+        this.saverNOpenerManager.show();
+        return this;
+    };
+    MathLineInput.prototype.displayOpenWidget = function () {
+        this.saverNOpenerManager.action = "OPEN";
+        this.saverNOpenerManager.callingMathLineInput = this;
+        this.saverNOpenerManager.show();
+        return this;
+    };
     MathLineInput.prototype.unprocessedLineToggle = function () {
         if (this.isAnUnprocessedLine()) {
             this.stopBeingAnUnprocessedLine();
@@ -1284,13 +1315,7 @@ var ShortcutsManager = /** @class */ (function () {
             //ctrl + P ==> print encapsulation
             case KeyCodes.P_KEY:
                 pEventObj.preventDefault();
-                if (this._mathLineInput.isAPrintLine()) {
-                    this._mathLineInput.stopBeingAPrintLine();
-                }
-                else {
-                    this._mathLineInput.becomeAPrintLine();
-                    this._mathLineInput.keyStroke('Left');
-                }
+                this._mathLineInput.printLine();
                 break;
             //ctrl + right arrow
             case KeyCodes.RIGHTARROW_KEY:
@@ -1304,12 +1329,7 @@ var ShortcutsManager = /** @class */ (function () {
             //ctrl + G ==> become given line
             case KeyCodes.G_KEY:
                 pEventObj.preventDefault();
-                if (this._mathLineInput.isAGivenLine()) {
-                    this._mathLineInput.stopBeingAGivenLine();
-                }
-                else {
-                    this._mathLineInput.becomeAGivenLine();
-                }
+                this._mathLineInput.givenLineToggle();
                 break;
             //ctrl + 8
             case KeyCodes.N8_KEY:
@@ -1346,16 +1366,12 @@ var ShortcutsManager = /** @class */ (function () {
             //ctrl + S ==> save
             case KeyCodes.S_KEY:
                 pEventObj.preventDefault();
-                this._mathLineInput.saverNOpenerManager.action = "SAVE";
-                this._mathLineInput.saverNOpenerManager.callingMathLineInput = this._mathLineInput;
-                this._mathLineInput.saverNOpenerManager.show();
+                this._mathLineInput.displaySaveWidget();
                 break;
             //ctrl + O ==> open
             case KeyCodes.O_KEY:
                 pEventObj.preventDefault();
-                this._mathLineInput.saverNOpenerManager.action = "OPEN";
-                this._mathLineInput.saverNOpenerManager.callingMathLineInput = this._mathLineInput;
-                this._mathLineInput.saverNOpenerManager.show();
+                this._mathLineInput.displayOpenWidget();
                 break;
         }
     };
