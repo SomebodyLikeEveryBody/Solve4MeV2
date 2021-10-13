@@ -8,10 +8,6 @@ const unaffectingKeys: KeyCodes[] = [
     KeyCodes.PAGEUP_KEY,
     KeyCodes.PAGEDOWN_KEY,
     KeyCodes.ALTGR_KEY,
-    // KeyCodes.UPARROW_KEY,
-    // KeyCodes.DOWNARROW_KEY,
-    // KeyCodes.LEFTARROW_KEY,
-    // KeyCodes.RIGHTARROW_KEY,
     KeyCodes.END_KEY,
 ];
 
@@ -101,7 +97,7 @@ class UndoRedoManager {
         return this._typedHistory[pState.valueOf()].cursorConfiguration;
     }
 
-    protected undo(): void {
+    public undo(): void {
         if (!this.isCurrentStateIsFirstHistoryState()) {
             this._currentState = this._currentState.valueOf() - 1;
             this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));
@@ -112,7 +108,7 @@ class UndoRedoManager {
         }
     }
 
-    protected redo(): void {
+    public redo(): void {
         if (!this.isCurrentStateIsLastHistoryState()) {
             this._currentState = this._currentState.valueOf() + 1;
             this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));

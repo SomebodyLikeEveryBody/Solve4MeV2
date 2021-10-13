@@ -905,6 +905,24 @@ var MathLineInput = /** @class */ (function () {
         this.saverNOpenerManager.show();
         return this;
     };
+    MathLineInput.prototype.openWidgetToggle = function () {
+        if (this.saverNOpenerManager.isVisible()) {
+            this.saverNOpenerManager.hide();
+        }
+        else {
+            this.displayOpenWidget();
+        }
+        return this;
+    };
+    MathLineInput.prototype.saveWidgetToggle = function () {
+        if (this.saverNOpenerManager.isVisible()) {
+            this.saverNOpenerManager.hide();
+        }
+        else {
+            this.displaySaveWidget();
+        }
+        return this;
+    };
     MathLineInput.prototype.unprocessedLineToggle = function () {
         if (this.isAnUnprocessedLine()) {
             this.stopBeingAnUnprocessedLine();
@@ -1082,6 +1100,14 @@ var MathLineInput = /** @class */ (function () {
         }
         return this;
     };
+    MathLineInput.prototype.undo = function () {
+        this._undoRedoManager.undo();
+        return this;
+    };
+    MathLineInput.prototype.redo = function () {
+        this._undoRedoManager.redo();
+        return this;
+    };
     return MathLineInput;
 }());
 var unaffectingKeys = [
@@ -1094,10 +1120,6 @@ var unaffectingKeys = [
     KeyCodes.PAGEUP_KEY,
     KeyCodes.PAGEDOWN_KEY,
     KeyCodes.ALTGR_KEY,
-    // KeyCodes.UPARROW_KEY,
-    // KeyCodes.DOWNARROW_KEY,
-    // KeyCodes.LEFTARROW_KEY,
-    // KeyCodes.RIGHTARROW_KEY,
     KeyCodes.END_KEY,
 ];
 var UndoRedoManager = /** @class */ (function () {
@@ -2018,6 +2040,7 @@ var SaverNOpenerStateManager = /** @class */ (function () {
         this._textarea = this._jQEl.find('textarea');
         this._callingMathLineInput = [];
         this._action = "";
+        this._isVisible = false;
         this._jQEl.appendTo($('body')).hide(0);
         this.setEvents();
     }
@@ -2063,6 +2086,7 @@ var SaverNOpenerStateManager = /** @class */ (function () {
             }
             this._jQEl.fadeIn(100, function () {
                 _this._textarea.select();
+                _this._isVisible = true;
             });
         }
         return this;
@@ -2072,9 +2096,13 @@ var SaverNOpenerStateManager = /** @class */ (function () {
         this._jQEl.fadeOut(100, function () {
             _this._textarea.val('');
             _this._action = "";
+            _this._isVisible = false;
             _this.getCallingMathLineInput().focus();
         });
         return this;
+    };
+    SaverNOpenerStateManager.prototype.isVisible = function () {
+        return this._isVisible;
     };
     SaverNOpenerStateManager.prototype.getCallingMathLineInput = function () {
         return this._callingMathLineInput[0];

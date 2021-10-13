@@ -3,12 +3,14 @@ class SaverNOpenerStateManager {
     protected _textarea: JQueryElement;
     protected _action: String;
     protected _callingMathLineInput: Array<MathLineInput>;
+    protected _isVisible: Boolean;
 
     public constructor() {
         this._jQEl = $('<div id="SaverNOpenerStateManager"><textarea autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>');
         this._textarea = this._jQEl.find('textarea');
         this._callingMathLineInput = [];
         this._action = "";
+        this._isVisible = false;
 
         this._jQEl.appendTo($('body')).hide(0);
         this.setEvents();
@@ -48,6 +50,7 @@ class SaverNOpenerStateManager {
     
             this._jQEl.fadeIn(100, () => {
                 this._textarea.select();
+                this._isVisible = true;
             });
         }
 
@@ -58,12 +61,17 @@ class SaverNOpenerStateManager {
         this._jQEl.fadeOut(100, () => {
             this._textarea.val('');
             this._action = "";
+            this._isVisible = false;
             this.getCallingMathLineInput().focus();
         });
 
         return this;
     }
 
+    public isVisible(): Boolean {
+        return this._isVisible;
+    }
+    
     public getCallingMathLineInput(): MathLineInput {
         return this._callingMathLineInput[0];
     }

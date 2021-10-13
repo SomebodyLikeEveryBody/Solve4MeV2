@@ -1953,7 +1953,7 @@ class FunctionsPanel extends KeyboardPanel {
                     title: "Save",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.displaySaveWidget(); }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.saveWidgetToggle(); }
                 }),
                 new ImgTouchKey({
                     label: "print",
@@ -1974,14 +1974,14 @@ class FunctionsPanel extends KeyboardPanel {
                     title: "Undo",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\lt'); }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.undo(); }
                 }),
                 new ImgTouchKey({
                     label: "redo",
                     title: "Redo",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\gt'); }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.redo(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
@@ -2018,23 +2018,22 @@ class FunctionsPanel extends KeyboardPanel {
                     title: "Open",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.displayOpenWidget(); }
-                }),
-                new LatexTouchKey({
-                    label: "\\frac{\\partial }{\\partial _x}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\partial/\\partial_'); }
-                    
-                }),
-                new LatexTouchKey({
-                    label: "\\vec{V}",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => {
-                        g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("\\text{Vect}\\left(\\right)")
-                            .keyStroke('Left');
-                    }
+                        g_s4mCoreMemory.currentMathLineInputFocused.openWidgetToggle(); }
+                }),
+                new ImgTouchKey({
+                    label: "duplicate",
+                    title: "Duplicate",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.duplicateMathLine(); }
+                }),
+                new ImgTouchKey({
+                    label: "insertOver",
+                    title: "Insert line Over",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.addNewMathLineInputOverMe(); }
                 }),
                 new LatexTouchKey({
                     label: "\\le",

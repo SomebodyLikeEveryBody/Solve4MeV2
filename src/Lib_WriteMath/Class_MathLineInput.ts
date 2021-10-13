@@ -690,6 +690,26 @@ class MathLineInput {
         return this;
     }
 
+    public openWidgetToggle(): MathLineInput {
+        if (this.saverNOpenerManager.isVisible()) {
+            this.saverNOpenerManager.hide();
+        } else {
+            this.displayOpenWidget();
+        }
+
+        return this;
+    }
+
+    public saveWidgetToggle(): MathLineInput {
+        if (this.saverNOpenerManager.isVisible()) {
+            this.saverNOpenerManager.hide();
+        } else {
+            this.displaySaveWidget();
+        }
+
+        return this;
+    }
+
     public unprocessedLineToggle(): MathLineInput {
         if (this.isAnUnprocessedLine()) {
             this.stopBeingAnUnprocessedLine();
@@ -919,6 +939,16 @@ class MathLineInput {
             this.previousMathLineInput.focus();
         }
         
+        return this;
+    }
+
+    public undo(): MathLineInput {
+        this._undoRedoManager.undo();
+        return this;
+    }
+
+    public redo(): MathLineInput {
+        this._undoRedoManager.redo();
         return this;
     }
 }

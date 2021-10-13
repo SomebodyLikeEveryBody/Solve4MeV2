@@ -135,10 +135,11 @@ il faudrait des touches pour les symboles
 
 
 ========
-- duplicate line
+
 - add mathlineOver
 - delete line
 
++ duplicate line
 + Function
 + Given
 + dash

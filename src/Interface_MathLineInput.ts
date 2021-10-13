@@ -59,4 +59,8 @@ interface MathLineInput {
     displaySaveWidget(): MathLineInput;
     displayOpenWidget(): MathLineInput;
     printLine(): MathLineInput;
+    saveWidgetToggle(): MathLineInput;
+    openWidgetToggle(): MathLineInput;
+    undo(): MathLineInput;
+    redo(): MathLineInput;
 }
