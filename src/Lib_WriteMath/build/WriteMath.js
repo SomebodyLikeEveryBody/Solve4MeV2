@@ -1315,6 +1315,7 @@ var ShortcutsManager = /** @class */ (function () {
                 break;
             //ctrl + E ==> show / hide outputScreen
             case KeyCodes.E_KEY:
+                pEventObj.preventDefault();
                 if (g_inputScreen) {
                     g_inputScreen.clickOnShowHideOutputScreenButton();
                 }
