@@ -328,7 +328,6 @@ button.alone
 .keyboard_panel .line_key
 {
     width: 100%;
-    height: calc(25%);
     display: flex;
     flex-flow: row nowrap;
     flex-direction: row;

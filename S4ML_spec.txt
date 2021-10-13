@@ -136,9 +136,8 @@ il faudrait des touches pour les symboles
 
 ========
 
-- add mathlineOver
-- delete line
-
++ delete line
++ add mathlineOver
 + duplicate line
 + Function
 + Given
