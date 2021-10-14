@@ -623,6 +623,7 @@ class MathLineInput {
             this.prependToFieldKeyword('Given');
         }
 
+        this.saveUndoRedoState();
         return this;
     }
 
@@ -632,6 +633,7 @@ class MathLineInput {
             this.prependToFieldLatex('\\vdash\\ ');
         }
 
+        this.saveUndoRedoState();
         return this;
     }
 
@@ -644,6 +646,7 @@ class MathLineInput {
             this.prependToFieldKeyword('Let');
         }
 
+        this.saveUndoRedoState();
         return this;
     }
 
@@ -675,6 +678,7 @@ class MathLineInput {
             this.keyStroke('Left');
         }
 
+        this.saveUndoRedoState();
         return this;
     }
 

@@ -851,12 +851,14 @@ var MathLineInput = /** @class */ (function () {
             }
             this.prependToFieldKeyword('Given');
         }
+        this.saveUndoRedoState();
         return this;
     };
     MathLineInput.prototype.becomeAnUnprocessedLine = function () {
         if (!this.isAnUnprocessedLine()) {
             this.prependToFieldLatex('\\vdash\\ ');
         }
+        this.saveUndoRedoState();
         return this;
     };
     MathLineInput.prototype.becomeALetLine = function () {
@@ -866,6 +868,7 @@ var MathLineInput = /** @class */ (function () {
             }
             this.prependToFieldKeyword('Let');
         }
+        this.saveUndoRedoState();
         return this;
     };
     MathLineInput.prototype.letLineToggle = function () {
@@ -894,6 +897,7 @@ var MathLineInput = /** @class */ (function () {
             this.becomeAPrintLine();
             this.keyStroke('Left');
         }
+        this.saveUndoRedoState();
         return this;
     };
     MathLineInput.prototype.displaySaveWidget = function () {
