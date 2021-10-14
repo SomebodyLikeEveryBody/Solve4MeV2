@@ -418,20 +418,24 @@ class MathLineInput {
         return this;
     }
 
+    public delete(): void {
+        if (this.hasPreviousMathLineInput() || this.hasNextMathLineInput()) {
+            if (this.hasNextMathLineInput()) {
+                this.nextMathLineInput.focus();
+            } else {
+                this.previousMathLineInput.focus();
+            }
+
+            this.erase();
+        }
+    }
+
     protected setKeyDownEvents(): MathLineInput {
         this.keyDown((e: EventObject) => {
 
             //press delete ==> delete line if is empty
             if (e.which === KeyCodes.DELETE_KEY && this.isEmpty()) {
-                if (this.hasPreviousMathLineInput() || this.hasNextMathLineInput()) {
-                    if (this.hasNextMathLineInput()) {
-                        this.nextMathLineInput.focus();
-                    } else {
-                        this.previousMathLineInput.focus();
-                    }
-    
-                    this.erase();
-                }
+                this.delete();
 
             //press backspace ==> delete if is empty
             } else if (e.which === KeyCodes.BACKSPACE_KEY && this.isDeletable) {

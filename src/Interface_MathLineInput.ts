@@ -63,4 +63,5 @@ interface MathLineInput {
     openWidgetToggle(): MathLineInput;
     undo(): MathLineInput;
     redo(): MathLineInput;
+    delete(): void;
 }

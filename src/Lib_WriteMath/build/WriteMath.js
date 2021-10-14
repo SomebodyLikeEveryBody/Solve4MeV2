@@ -675,20 +675,23 @@ var MathLineInput = /** @class */ (function () {
         }
         return this;
     };
+    MathLineInput.prototype.delete = function () {
+        if (this.hasPreviousMathLineInput() || this.hasNextMathLineInput()) {
+            if (this.hasNextMathLineInput()) {
+                this.nextMathLineInput.focus();
+            }
+            else {
+                this.previousMathLineInput.focus();
+            }
+            this.erase();
+        }
+    };
     MathLineInput.prototype.setKeyDownEvents = function () {
         var _this = this;
         this.keyDown(function (e) {
             //press delete ==> delete line if is empty
             if (e.which === KeyCodes.DELETE_KEY && _this.isEmpty()) {
-                if (_this.hasPreviousMathLineInput() || _this.hasNextMathLineInput()) {
-                    if (_this.hasNextMathLineInput()) {
-                        _this.nextMathLineInput.focus();
-                    }
-                    else {
-                        _this.previousMathLineInput.focus();
-                    }
-                    _this.erase();
-                }
+                _this.delete();
                 //press backspace ==> delete if is empty
             }
             else if (e.which === KeyCodes.BACKSPACE_KEY && _this.isDeletable) {
