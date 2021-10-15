@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="296"
+   height="200"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg83"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="enter.svg">
+  <defs
+     id="defs77" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="215.5"
+     inkscape:cy="103.46076"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g4954"
+     showgrid="false"
+     showguides="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1031"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3788" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata80">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+  <g
+     id="g4954"
+     transform="matrix(3.4095568,0,0,2.5539744,-55.35371,5.1721806)">
+    <polygon
+       id="polygon4934"
+       points="2.5,56.79 29.64,77.14 29.64,63.57 97.5,63.57 97.5,50 29.64,50 29.64,36.43 "
+       transform="matrix(1,0,0,1.2895664,0,3.8005306)"
+       style="fill:#ffffff" />
+    <rect
+       id="rect4936"
+       height="34.998833"
+       width="13.57"
+       y="34.779678"
+       x="83.93"
+       style="stroke-width:1.13559079;fill:#ffffff" />
+    <text
+       id="text4938"
+       font-weight="bold"
+       font-size="5px"
+       y="173.55659"
+       x="0"
+       style="font-weight:bold;font-size:5.67795372px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#ffffff;stroke-width:1.13559079;"
+       transform="scale(0.8805989,1.1355908)">Created by Free Icons</text>
+    <text
+       id="text4940"
+       font-weight="bold"
+       font-size="5px"
+       y="179.23451"
+       x="0"
+       style="font-weight:bold;font-size:5.67795372px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#ffffff;stroke-width:1.13559079;"
+       transform="scale(0.8805989,1.1355908)">from the Noun Project</text>
+  </g>
+</svg>

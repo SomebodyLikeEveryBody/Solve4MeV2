@@ -470,9 +470,9 @@ var ImgTouchKey = /** @class */ (function (_super) {
         var _this = _super.call(this, pKeyConfiguration) || this;
         _this._jQEl = $('<div class="keyboard_key unselectable" title="' + _this._title + '"><span></span</div>');
         _this._jQEl.css({
-            'background-image': "url('./imgs/" + pKeyConfiguration.label + ".png')",
+            'background-image': "url('./imgs/" + pKeyConfiguration.label + ".svg')",
             'background-repeat': 'no-repeat',
-            'background-size': '30px',
+            'background-size': '35px',
             'background-position': 'center',
         });
         _this.setEvent(pKeyConfiguration.action);
@@ -784,49 +784,49 @@ var LettersPanel = /** @class */ (function (_super) {
                     label: "w",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('w'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('w').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "e",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('e'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('e').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "r",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('r'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('r').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "t",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('t'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('t').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "y",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('y'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('y').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "u",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('u'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('u').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "i",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('i'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('i').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "o",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('o'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('o').saveUndoRedoState(); }
                 }),
                 new BackspaceKey(),
             ]),
@@ -835,61 +835,61 @@ var LettersPanel = /** @class */ (function (_super) {
                     label: "a",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('a'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('a').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "s",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('s'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('s').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "d",
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     width: 1,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('d'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('d').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "f",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('f'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('f').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "g",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('g'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('g').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "h",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('h'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('h').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "j",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('j'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('j').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "k",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('k'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('k').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "l",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('l'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('l').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "p",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('p'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('p').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -905,50 +905,50 @@ var LettersPanel = /** @class */ (function (_super) {
                     label: "z",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('z'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('z').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "x",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('x'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('x').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "c",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('c'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('c').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "v",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('v'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('v').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "b",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('b'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('b').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "n",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('n'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('n').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "m",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('m'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('m').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\dagger",
                     title: "Select all",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -966,35 +966,35 @@ var LettersPanel = /** @class */ (function (_super) {
                     title: "Tabulation",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "a^b\\uparrow",
                     title: "^ (exponent)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "",
                     title: "Space",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ '); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ ').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "a_b\\downarrow",
                     title: "_ (Indice)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{\\}",
                     title: "\\",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\').saveUndoRedoState(); }
                 }),
                 new EnterKey(),
             ])
@@ -1012,55 +1012,55 @@ var MajLettersPanel = /** @class */ (function (_super) {
                     label: "Q",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('Q'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('Q').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "W",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('W'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('W').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "E",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('E'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('E').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "R",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('R'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('R').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "T",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('T'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('T').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "Y",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('Y'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('Y').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "U",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('U'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('U').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "I",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('I'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('I').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "O",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('O'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('O').saveUndoRedoState(); }
                 }),
                 new BackspaceKey(),
             ]),
@@ -1069,61 +1069,61 @@ var MajLettersPanel = /** @class */ (function (_super) {
                     label: "A",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('A'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('A').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "S",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('S'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('S').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "D",
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     width: 1,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('D'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('D').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "F",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('F'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('F').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "G",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('G'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('G').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "H",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('H'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('H').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "J",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('J'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('J').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "K",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('K'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('K').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "L",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('L'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('L').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "P",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('P'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('P').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -1140,50 +1140,50 @@ var MajLettersPanel = /** @class */ (function (_super) {
                     label: "Z",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('Z'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('Z').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "X",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('X'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('X').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "C",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('C'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('C').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "V",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('V'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('V').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "B",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('B'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('B').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "N",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('N'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('N').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "M",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('M'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('M').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\dagger",
                     title: "Select all",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -1201,35 +1201,35 @@ var MajLettersPanel = /** @class */ (function (_super) {
                     title: "Tabulation",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "a^b\\uparrow",
                     title: "^ (exponent)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "",
                     title: "Space",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ '); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ ').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "a_b\\downarrow",
                     title: "_ (Indice)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{\\}",
                     title: "\\",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\').saveUndoRedoState(); }
                 }),
                 new EnterKey(),
             ])
@@ -1247,55 +1247,55 @@ var SymbolsPanel = /** @class */ (function (_super) {
                     label: "\\alpha",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\alpha'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\alpha').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\beta",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\beta'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\beta').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\gamma",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\gamma'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\gamma').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\delta",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\delta'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\delta').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\varepsilon",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\varepsilon'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\varepsilon').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\zeta",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\zeta'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\zeta').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\eta",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\eta'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\eta').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\theta",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\theta'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\theta').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\iota",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\iota'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\iota').saveUndoRedoState(); }
                 }),
                 new BackspaceKey(),
             ]),
@@ -1304,61 +1304,61 @@ var SymbolsPanel = /** @class */ (function (_super) {
                     label: "\\kappa",
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     width: 1,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\kappa'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\kappa').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\lambda",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\lambda'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\lambda').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\mu",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\mu'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\mu').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\nu",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\nu'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\nu').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\xi",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\xi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\xi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\pi",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\pi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\pi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\rho",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rho'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rho').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\sigma",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sigma'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sigma').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\tau",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\tau'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\tau').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\upsilon",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\upsilon'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\upsilon').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -1375,53 +1375,53 @@ var SymbolsPanel = /** @class */ (function (_super) {
                     label: "\\phi",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\phi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\phi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\chi",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\chi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\chi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\psi",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\psi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\psi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\omega",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\omega'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\omega').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\infty",
                     title: "Infinity",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\infty'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\infty').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{[}",
                     title: "[",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('['); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('[').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{]}",
                     title: "]",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition(']'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition(']').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\ast",
                     title: "*",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\ast'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\ast').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -1439,34 +1439,34 @@ var SymbolsPanel = /** @class */ (function (_super) {
                     title: "Tabulation",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "a^b\\uparrow",
                     title: "^ (exponent)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "",
                     title: "Space",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ '); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ ').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "a_b\\downarrow",
                     title: "_ (Indice)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\mapsto",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition("\\ \\mapsto\\ "); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition("\\ \\mapsto\\ ").saveUndoRedoState(); }
                 }),
                 new EnterKey(),
             ])
@@ -1484,55 +1484,55 @@ var OtherSymbolsPanel = /** @class */ (function (_super) {
                     label: "\\Gamma",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Gamma'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Gamma').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Delta",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Delta'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Delta').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Theta",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Theta'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Theta').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Lambda",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Lambda'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Lambda').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Pi",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Pi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Pi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Sigma",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\Sigma'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Sigma').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Phi",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Phi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Phi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Psi",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Psi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Psi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Omega",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Omega'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Omega').saveUndoRedoState(); }
                 }),
                 new BackspaceKey(),
             ]),
@@ -1541,63 +1541,63 @@ var OtherSymbolsPanel = /** @class */ (function (_super) {
                     label: "\\R",
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     width: 1,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\R'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\R').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\C",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\C'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\C').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Q",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Q'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Q').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\Z",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Z'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\Z').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\N",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\N'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\N').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\emptyset",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\emptyset'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\emptyset').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rho'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rho').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sigma'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sigma').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{°}",
                     title: "Degree",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\text{°}'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\text{°}').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{rad}}",
                     title: "Radian",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{rad}}"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{rad}}").saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -1615,55 +1615,55 @@ var OtherSymbolsPanel = /** @class */ (function (_super) {
                     title: "kg",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{kg}}"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{kg}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{m}}",
                     title: "meter",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{m}}"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{m}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{s}}",
                     title: "second",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{s}}"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{s}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{A}}",
                     title: "Amperes",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{A}}"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{A}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{K}}",
                     title: "Kelvin",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{K}}"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{K}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{mol}}",
                     title: "mol",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{mol}}"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{mol}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{cd}}",
                     title: "Candela",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{cd}}"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("{\\text{cd}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\phi'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\phi').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -1681,35 +1681,35 @@ var OtherSymbolsPanel = /** @class */ (function (_super) {
                     title: "Tabulation",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Tab').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "a^b\\uparrow",
                     title: "^ (exponent)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('^').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "",
                     title: "space",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ '); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\ ').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "a_b\\downarrow",
                     title: "_ (Indice)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('_').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{\\}",
                     title: "\\",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\').saveUndoRedoState(); }
                 }),
                 new EnterKey(),
             ])
@@ -1727,60 +1727,60 @@ var OperatorsPanel = /** @class */ (function (_super) {
                     label: "\\exists",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\exists'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\exists').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\vec{v}",
                     title: "Vector arrow",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\vec'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\vec').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{[}",
                     title: "[",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('['); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('[').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{]}",
                     title: "]",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition(']'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition(']').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\neg",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neg'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neg').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\sqrt{x}",
                     title: "Square root",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sqrt'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sqrt').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{|}",
                     title: "|",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('|'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('|').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\circ",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\circ'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\circ').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\rightarrow",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rightarrows'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rightarrow').saveUndoRedoState(); }
                 }),
                 new BackspaceKey(),
             ]),
@@ -1790,61 +1790,61 @@ var OperatorsPanel = /** @class */ (function (_super) {
                     title: "?",
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     width: 1,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\nexist'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\nexist').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\forall",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\forall'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\forall').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\lceil",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\lceil'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\lceil').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\rceil",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rceil'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\rceil').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\land",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\land'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\land').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\union",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\union'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\union').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\supset",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\supset'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\supset').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\subset",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\subset'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\subset').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\leftarrow",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\leftarrow'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\leftarrow').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\partial",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\partial"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\partial").saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -1861,50 +1861,50 @@ var OperatorsPanel = /** @class */ (function (_super) {
                     label: "\\lfloor",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lfloor"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lfloor").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\rfloor",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("{\\rfloor"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\rfloor").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\lor",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lor"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lor").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\cap",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\cap"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\cap").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\supseteq",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\supseteq"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\supseteq").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\subseteq",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\subseteq"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\subseteq").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\mapsto",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\mapsto"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\mapsto").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\text{d}",
                     title: "Differential",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\text{d}'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\text{d}').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -1921,31 +1921,31 @@ var OperatorsPanel = /** @class */ (function (_super) {
                     label: "\\neq",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neq'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neq').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\simeq",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\simeq'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\simeq').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\equiv",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\equiv'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\equiv').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\in",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\in'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\in').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\notin",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\notin'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\notin').saveUndoRedoState(); }
                 }),
                 new EnterKey(),
             ])
@@ -1964,7 +1964,7 @@ var OtherOperatorsPanel = /** @class */ (function (_super) {
                     title: "Integral",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\int'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\int').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\frac{\\text{d}}{\\text{d}_x}",
@@ -1973,7 +1973,8 @@ var OtherOperatorsPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () {
                         g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('\\frac{\\text{d}}{\\text{d}_{ }}')
-                            .keyStroke('Left Left');
+                            .keyStroke('Left Left')
+                            .saveUndoRedoState();
                     }
                 }),
                 new LatexTouchKey({
@@ -1983,47 +1984,49 @@ var OtherOperatorsPanel = /** @class */ (function (_super) {
                     action: function () {
                         g_s4mCoreMemory.currentMathLineInputFocused
                             .writeLatexAtCursorPosition('\\text{Function}\\left(_{}^{}\\right)')
-                            .keyStroke('Left Left');
+                            .keyStroke('Left Left')
+                            .saveUndoRedoState();
                     }
                 }),
                 new LatexTouchKey({
                     label: "\\lt",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\lt'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\lt').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\gt",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\gt'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\gt').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\sum_{\\ }^{\\ }",
                     title: "Sum",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sum'); }
-                }),
-                new LatexTouchKey({
-                    label: "?",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition('|'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\sum').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\overline{42}",
                     title: "Overline",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\overline'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\overline').saveUndoRedoState(); }
+                }),
+                new LatexTouchKey({
+                    label: "\\nabla",
+                    title: "nabla",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\nabla').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\vec{\\nabla}",
                     title: "nabla",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("\\vec{\\nabla}"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("\\vec{\\nabla}").saveUndoRedoState(); }
                 }),
                 new BackspaceKey(),
             ]),
@@ -2033,13 +2036,13 @@ var OtherOperatorsPanel = /** @class */ (function (_super) {
                     title: "Closed curve integral",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\oint'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\oint').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\frac{\\partial }{\\partial _x}",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\partial/\\partial_'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\partial/\\partial_').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\vec{V}",
@@ -2047,53 +2050,54 @@ var OtherOperatorsPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () {
                         g_s4mCoreMemory.currentMathLineInputFocused.writeLatexAtCursorPosition("\\text{Vect}\\left(\\right)")
-                            .keyStroke('Left');
+                            .keyStroke('Left')
+                            .saveUndoRedoState();
                     }
                 }),
                 new LatexTouchKey({
                     label: "\\le",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\le'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\le').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\ge",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\ge'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\ge').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\prod_{\\ }^{\\ }",
                     title: "Product",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\prod'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\prod').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\supset'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\supset').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\subset'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\subset').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "\\nabla",
-                    title: "nabla",
+                    label: "\\uparrow",
+                    title: "Up",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\nabla'); }
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Up').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     title: "Given statement",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.givenLineToggle(); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.givenLineToggle().saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -2110,49 +2114,52 @@ var OtherOperatorsPanel = /** @class */ (function (_super) {
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lfloor"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lfloor").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("{\\rfloor"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("{\\rfloor").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lor"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\lor").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\cap"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\cap").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\supseteq"); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\supseteq").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "?",
+                    label: "\\leftarrow",
+                    title: "Left",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\subseteq"); }
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Left').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "?",
+                    label: "\\downarrow",
+                    title: "Down",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition("\\mapsto"); }
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Down').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "?",
+                    label: "\\rightarrow",
+                    title: "Right",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\text{d}'); }
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Right').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -2169,31 +2176,31 @@ var OtherOperatorsPanel = /** @class */ (function (_super) {
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neq'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neq').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\simeq'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\simeq').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\equiv'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\equiv').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\forall'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\forall').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "?",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\nexist'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\nexist').saveUndoRedoState(); }
                 }),
                 new EnterKey(),
             ])
@@ -2226,7 +2233,7 @@ var FunctionsPanel = /** @class */ (function (_super) {
                     title: "Up",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Up'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Up').saveUndoRedoState(); }
                 }),
                 new BackspaceKey(),
             ]),
@@ -2236,21 +2243,21 @@ var FunctionsPanel = /** @class */ (function (_super) {
                     title: "Print",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.printLine(); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.printLine().saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "[G]",
                     title: "Given statement",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.givenLineToggle(); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.givenLineToggle().saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\dagger",
                     title: "Select all",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Ctrl-A').saveUndoRedoState(); }
                 }),
                 new ImgTouchKey({
                     label: "delete",
@@ -2278,21 +2285,21 @@ var FunctionsPanel = /** @class */ (function (_super) {
                     title: "Left",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Left'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Left').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\downarrow",
                     title: "Down",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Down'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Down').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "\\rightarrow",
                     title: "Right",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
-                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Right'); }
+                    action: function () { g_s4mCoreMemory.currentMathLineInputFocused.keyStroke('Right').saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([
@@ -2352,6 +2359,7 @@ var BackspaceKey = /** @class */ (function (_super) {
             action: function () {
                 g_s4mCoreMemory.currentMathLineInputFocused
                     .keyStroke('Backspace')
+                    .saveUndoRedoState()
                     .doIfKeyBackspace();
             }
         }) || this;

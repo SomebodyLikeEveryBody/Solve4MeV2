@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="296"
+   height="200"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg83"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="duplicate.svg">
+  <defs
+     id="defs77" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="166.93647"
+     inkscape:cy="108.07511"
+     inkscape:document-units="mm"
+     inkscape:current-layer="svg83"
+     showgrid="false"
+     showguides="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1031"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3788" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata80">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+  <g
+     id="g4019"
+     transform="matrix(3.8471562,0,0,3.5187757,-67.265184,-27.511368)">
+    <path
+       id="path3963"
+       d="M 65,35 V 32 H 78 V 88 H 37 V 70 h 3 v -2 h -3 v -3 h -2 v 23 c 0,1.3 0.7,2 2,2 h 41 c 1.3,0 2,-0.7 2,-2 V 32 c 0,-1.3 -0.7,-2 -2,-2 H 60 v 2 h 3 v 3 z"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path3965"
+       d="m 63,12 v 16 h 2 V 12 c 0,-1.3 -0.7,-2 -2,-2 H 22 c -1.3,0 -2,0.7 -2,2 v 56 c 0,1.3 0.7,2 2,2 H 33 V 68 H 22 V 12 Z"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g3977">
+      <rect
+         id="rect3967"
+         height="6"
+         width="2"
+         y="53"
+         x="35" />
+      <rect
+         id="rect3969"
+         height="6"
+         width="2"
+         y="41"
+         x="35" />
+      <path
+         id="path3971"
+         d="m 37,35 v -3 h 3 v -2 h -3 c -1.3,0 -2,0.7 -2,2 v 3 z"
+         inkscape:connector-curvature="0" />
+      <rect
+         id="rect3973"
+         height="2"
+         width="4"
+         y="30"
+         x="44" />
+      <rect
+         id="rect3975"
+         height="2"
+         width="4"
+         y="30"
+         x="52" />
+    </g>
+    <g
+       id="g3989">
+      <rect
+         id="rect3979"
+         height="6"
+         width="2"
+         y="41"
+         x="63" />
+      <rect
+         id="rect3981"
+         height="6"
+         width="2"
+         y="53"
+         x="63" />
+      <path
+         id="path3983"
+         d="m 63,70 c 1.3,0 2,-0.7 2,-2 v -3 h -2 v 3 h -3 v 2 z"
+         inkscape:connector-curvature="0" />
+      <rect
+         id="rect3985"
+         height="2"
+         width="4"
+         y="68"
+         x="52" />
+      <rect
+         id="rect3987"
+         height="2"
+         width="4"
+         y="68"
+         x="44" />
+    </g>
+    <text
+       id="text3991"
+       font-weight="bold"
+       font-size="5px"
+       y="115"
+       x="0"
+       style="font-weight:bold;font-size:5px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000">Created by Simon Magnier</text>
+    <text
+       id="text3993"
+       font-weight="bold"
+       font-size="5px"
+       y="120"
+       x="0"
+       style="font-weight:bold;font-size:5px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000">from the Noun Project</text>
+  </g>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1.48500001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m 58.666352,214.12077 c 0.156251,-0.0312 0.309578,-0.0866 0.46877,-0.0937 0.530724,-0.0242 1.062562,0 1.593835,0 1.281318,0 2.562635,0 3.843938,0 0.531288,0 1.062562,0 1.593835,0 0.218756,0 0.437526,0 0.656281,0 0.06252,0 0.128156,-0.0198 0.187511,0 0.04188,0.0134 0.0542,0.0739 0.0937,0.0937 0.02465,0.0119 0.325987,0 0.375007,0"
+     id="path4086"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#00bdff;stroke:#000000;stroke-width:1.48500001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+     d="m 178.57872,70.20718 -0.14063,9.047335"
+     id="path4098"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#f2f2f2;fill-opacity:1;stroke-width:0.25253814"
+     d="m 127.84357,168.67122 v -21.08693 h 3.91434 3.91434 v -2.52538 -2.52538 h -3.91434 -3.91434 v -3.53554 -3.53553 h -2.65165 -2.65165 v 4.04061 4.04061 h -2.52539 c -2.35702,0 -2.52538,-0.0337 -2.52538,-0.50508 0,-0.49906 -0.16836,-0.50507 -14.14213,-0.50507 H 89.205232 V 76.242267 9.9510059 h 52.906738 52.90674 v 18.9403601 18.94036 h 1.03717 c 0.84201,0 1.00833,0.07517 0.88389,0.399463 -0.0843,0.219703 -0.15329,1.242482 -0.15329,2.272843 v 1.873381 h -4.67196 -4.67195 v 2.525381 2.525382 h 3.78807 3.78807 v 3.535534 3.535533 h 2.77792 2.77792 V 60.96371 57.428176 h 16.66752 16.66751 v 66.164994 66.16499 h -53.033 -53.03301 z m 28.48282,-23.67545 0.0723,-2.46224 h -5.31245 -5.31245 v 2.35702 c 0,1.29636 0.078,2.43507 0.17344,2.53046 0.0954,0.0954 2.45347,0.14274 5.24017,0.10522 l 5.06673,-0.0682 z m 20.70812,0 0.0723,-2.46224 h -5.31244 -5.31245 v 2.35702 c 0,1.29636 0.078,2.43507 0.17344,2.53046 0.0954,0.0954 2.45346,0.14274 5.24017,0.10522 l 5.06672,-0.0682 z m 20.76212,2.0268 c 1.19814,-0.52354 2.16925,-1.62946 2.50044,-2.84754 0.15107,-0.55559 0.2753,-2.7432 0.27607,-4.86136 l 0.001,-3.85121 h -2.77792 -2.77792 v 3.53553 3.53554 h -3.78807 -3.78807 v 2.55849 2.5585 l 4.73509,-0.12086 c 3.47736,-0.0888 4.96986,-0.22346 5.61897,-0.50709 z m -69.95306,-32.89958 v -7.19734 h -2.65165 -2.65165 v 7.19734 7.19733 h 2.65165 2.65165 z m 72.73098,0 v -7.19734 h -2.77792 -2.77792 v 7.19734 7.19733 h 2.77792 2.77792 z M 127.84357,85.703613 v -7.332442 l -2.58852,0.07197 -2.58851,0.07197 -0.067,7.260471 -0.067,7.260472 h 2.65552 2.65553 z m 72.67172,0.07197 -0.067,-7.260471 h -2.65165 -2.65165 l -0.067,7.260471 -0.067,7.260472 h 2.78566 2.78567 z M 127.84357,60.96371 v -3.535534 h 3.91434 3.91434 v -2.525382 -2.525381 h -4.15445 c -4.9794,0 -6.40265,0.254129 -7.56553,1.350872 -1.17967,1.112569 -1.40898,2.216911 -1.41059,6.793483 l -0.001,3.977475 h 2.65165 2.65165 z m 28.53681,-6.060916 v -2.525381 h -5.3033 -5.30331 v 2.525381 2.525382 h 5.30331 5.3033 z m 20.70812,-0.0051 v -2.530506 l -5.24016,0.06826 -5.24017,0.06826 -0.0723,2.462247 -0.0723,2.462247 h 5.31245 5.31244 z"
+     id="path4921"
+     inkscape:connector-curvature="0"
+     transform="matrix(1.485,0,0,1.485,-114.78,0)" />
+</svg>
