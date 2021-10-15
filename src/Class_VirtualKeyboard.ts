@@ -10,10 +10,10 @@ class VirtualKeyboard {
     public constructor(pJQueryElement: JQueryElement) {
         this._jQEl = pJQueryElement;
         this._panels = {};
-        // this._jQEl.hide(0);
-        // this._isVisible = false;
-        this._jQEl.show(0);
-        this._isVisible = true;
+        this._jQEl.hide(0);
+        this._isVisible = false;
+        // this._jQEl.show(0);
+        // this._isVisible = true;
         
         this._panels.numbersPanel = new NumbersPanel(this);
         this._panels.lettersPanel = new LettersPanel(this);
