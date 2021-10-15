@@ -1789,7 +1789,7 @@ class OperatorsPanel extends KeyboardPanel {
             ]),
             new LineKeys([
                 new LatexTouchKey({
-                    label: "[\\ge \\oint]",
+                    label: "\\overrightarrow{[\\ge \\oint]}",
                     title: "Go to [Other operators] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
@@ -1849,7 +1849,7 @@ class OperatorsPanel extends KeyboardPanel {
             ]),
             new LineKeys([
                 new LatexTouchKey({
-                    label: "[123]",
+                    label: "\\overleftarrow{[123]}",
                     title: "Go to [Numbers] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
@@ -2041,7 +2041,7 @@ class OtherOperatorsPanel extends KeyboardPanel {
             ]),
             new LineKeys([
                 new LatexTouchKey({
-                    label: "[\\in \\partial]",
+                    label: "\\overleftarrow{[\\in \\partial]}",
                     title: "Go to [Operators] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
@@ -2104,7 +2104,7 @@ class OtherOperatorsPanel extends KeyboardPanel {
             ]),
             new LineKeys([
                 new LatexTouchKey({
-                    label: "[123]",
+                    label: "\\overleftarrow{[123]}",
                     title: "Go to [Numbers] panel",
                     width: 2,
                     style: VirtualKeyboardKeyStyle.DARK,
@@ -2113,34 +2113,28 @@ class OtherOperatorsPanel extends KeyboardPanel {
                     }
                 }),
                 new LatexTouchKey({
-                    label: "?",
-                    width: 1,
+                    label: "\\oplus",
+                    width: 5/4,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\neq').saveUndoRedoState(); }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\oplus').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "?",
-                    width: 1,
+                    label: "\\ominus",
+                    width: 5/4,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\simeq').saveUndoRedoState(); }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\ominus').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "?",
-                    width: 1,
+                    label: "\\otimes",
+                    width: 5/4,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\equiv').saveUndoRedoState(); }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\otimes').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "",
-                    width: 1,
+                    label: "\\odot",
+                    width: 5/4,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\forall').saveUndoRedoState(); }
-                }),
-                new LatexTouchKey({
-                    label: "?",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('\\nexist').saveUndoRedoState(); }
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendCmdAtCursorPosition('\\odot').saveUndoRedoState(); }
                 }),
                 new EnterKey(),
             ])

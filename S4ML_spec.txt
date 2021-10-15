@@ -1,9 +1,4 @@
-rajouter 
-
-\oplus
-\ominus
-\otimes
-\odot
+rajouter de maniere plus accessible
 
 ---
 \ast
