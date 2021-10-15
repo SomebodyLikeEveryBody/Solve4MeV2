@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="296"
+   height="200"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg83"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="letButton.svg">
+  <defs
+     id="defs77" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="132.95819"
+     inkscape:cy="100.3682"
+     inkscape:document-units="mm"
+     inkscape:current-layer="svg83"
+     showgrid="false"
+     showguides="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1031"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3788" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata80">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+  <g
+     id="g629"
+     transform="matrix(1.1399903,0,0,1.0939495,102.76332,154.08216)" />
+  <g
+     id="g711"
+     transform="matrix(6.3068387,0,0,4.706616,-68.493643,12.960798)">
+    <path
+       id="path669"
+       d="M 60.157652,3.5744126 H 38.651509 v -5.498463 c 0,-0.473355 -0.325939,-0.857528 -0.727541,-0.857528 H 28.396076 V -13.229687 c 0,-6.304538 -4.352156,-11.434264 -9.701046,-11.434264 -5.34889,0 -9.701047,5.129726 -9.701047,11.434264 v 4.3768176 c 0,2.198699 -1.5176529,3.987501 -3.3830707,3.987501 -1.8654178,0 -3.3830706,-1.788802 -3.3830706,-3.987501 V -25.212769 c 0,-0.473355 -0.3259387,-0.857527 -0.727542,-0.857527 -0.4016033,0 -0.72754217,0.384172 -0.72754217,0.857527 v 16.3598996 c 0,3.143694 2.17098567,5.702555 4.83815477,5.702555 2.6671692,0 4.8381547,-2.558861 4.8381547,-5.702555 v -4.3768176 c 0,-5.359544 3.698824,-9.71921 8.245963,-9.71921 4.547138,0 8.245962,4.359666 8.245962,9.71921 v 10.4481086 h -9.527893 c -0.401602,0 -0.727541,0.384173 -0.727541,0.857528 v 5.498463 H -4.8205859 c -1.1815283,0 -2.1418838,1.133651 -2.1418838,2.52456 V 57.15613 c 0,1.39434 0.9603555,2.526276 2.1418838,2.526276 H 60.157652 c 1.181528,0 2.141884,-1.131936 2.141884,-2.526276 V 6.0989726 c 0,-1.390909 -0.960356,-2.52456 -2.141884,-2.52456 z m -42.01701,-4.640937 h 19.055782 v 4.640937 H 18.140642 Z M 60.844452,57.15613 c 0,0.44763 -0.308478,0.811222 -0.6868,0.811222 H -4.8205859 c -0.3783219,0 -0.6867996,-0.363592 -0.6867996,-0.811222 V 6.0989726 c 0,-0.445914 0.3070227,-0.809506 0.6867996,-0.809506 H 17.413099 37.923968 60.157652 c 0.378322,0 0.6868,0.363592 0.6868,0.809506 z"
+       inkscape:connector-curvature="0"
+       style="stroke-width:1.57973027" />
+    <text
+       id="text675"
+       font-weight="bold"
+       font-size="5px"
+       y="99.809395"
+       x="-9.4545679"
+       style="font-weight:bold;font-size:7.89865112px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000;stroke-width:1.57973039"
+       transform="scale(0.92109656,1.0856625)">Created by Med Marki</text>
+    <text
+       id="text677"
+       font-weight="bold"
+       font-size="5px"
+       y="109.72139"
+       x="-9.4545679"
+       style="font-weight:bold;font-size:7.89865112px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000;stroke-width:1.57973039"
+       transform="scale(0.92109656,1.0856625)">from the Noun Project</text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:201.32777405px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.03319454"
+     x="-23.158373"
+     y="228.72214"
+     id="text813"
+     transform="scale(1.0137772,0.98641003)"><tspan
+       sodipodi:role="line"
+       id="tspan811"
+       x="-23.158373"
+       y="228.72214"
+       style="stroke-width:5.03319454">[L]</tspan></text>
+</svg>

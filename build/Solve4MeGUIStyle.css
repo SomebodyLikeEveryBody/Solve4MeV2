@@ -252,7 +252,7 @@ button.alone
     margin-right: 10px;
 
     background-color: transparent;
-    background-image: url('./imgs/keyboard.png');
+    background-image: url('./imgs/keyboard.svg');
     background-repeat: no-repeat;
     background-size: 50px;
     background-position: center;
@@ -269,7 +269,7 @@ button.alone
     margin-right: 10px;
 
     background-color: transparent;
-    background-image: url('./imgs/let_button.png');
+    background-image: url('./imgs/let_button.svg');
     background-repeat: no-repeat;
     background-size: 50px;
     background-position: center;
@@ -286,7 +286,7 @@ button.alone
     margin-right: 10px;
 
     background-color: transparent;
-    background-image: url('./imgs/unprocess_button.png');
+    background-image: url('./imgs/unprocess_button.svg');
     background-repeat: no-repeat;
     background-size: 50px;
     background-position: center;

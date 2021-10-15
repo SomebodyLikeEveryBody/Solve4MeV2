@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="296"
+   height="200"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg83"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="keyboard.svg">
+  <defs
+     id="defs77" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="132.95819"
+     inkscape:cy="143.88427"
+     inkscape:document-units="mm"
+     inkscape:current-layer="svg83"
+     showgrid="false"
+     showguides="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1031"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3788" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata80">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+  <g
+     id="g945"
+     transform="matrix(3.4771625,0,0,2.7834036,-115.82921,-29.862173)">
+    <path
+       id="path925"
+       d="M 118.16131,46.25033 H 9.83869 a 7.5654,7.5654 0 0 0 -7.56539,7.5654 v 54.77434 a 7.56544,7.56544 0 0 0 7.56539,7.56539 h 108.32262 a 7.56548,7.56548 0 0 0 7.56539,-7.56539 V 53.81573 a 7.56544,7.56544 0 0 0 -7.56539,-7.5654 z m -46.3139,28.87616 h 8.02616 a 2.06332,2.06332 0 0 1 2.06326,2.06333 V 85.216 a 2.06331,2.06331 0 0 1 -2.06326,2.06332 H 71.84741 A 2.06334,2.06334 0 0 1 69.78408,85.216 v -8.02618 a 2.06334,2.06334 0 0 1 2.06333,-2.06333 z M 58.00276,56.35749 A 2.06328,2.06328 0 0 1 60.066,54.29414 h 8.02617 a 2.06333,2.06333 0 0 1 2.06332,2.06332 v 8.02623 A 2.06331,2.06331 0 0 1 68.09219,66.447 H 60.066 a 2.06326,2.06326 0 0 1 -2.06326,-2.06326 z m -9.71123,18.769 h 8.01927 a 2.06337,2.06337 0 0 1 2.06332,2.06333 V 85.216 A 2.06337,2.06337 0 0 1 56.3108,87.2793 H 48.29153 A 2.06331,2.06331 0 0 1 46.22827,85.216 v -8.02618 a 2.06332,2.06332 0 0 1 2.06326,-2.06333 z m -13.84465,-18.769 a 2.06328,2.06328 0 0 1 2.06326,-2.06332 h 8.02617 a 2.06333,2.06333 0 0 1 2.06332,2.06332 v 8.02623 A 2.06331,2.06331 0 0 1 44.53631,66.447 h -8.02617 a 2.06326,2.06326 0 0 1 -2.06326,-2.06326 z m -23.55588,0 a 2.06328,2.06328 0 0 1 2.06326,-2.06332 h 8.02616 a 2.06334,2.06334 0 0 1 2.06333,2.06332 v 8.02623 A 2.06332,2.06332 0 0 1 20.98042,66.447 H 12.95426 A 2.06326,2.06326 0 0 1 10.891,64.38369 Z m 11.98771,49.69087 a 2.06331,2.06331 0 0 1 -2.06332,2.06326 H 12.796 a 2.06326,2.06326 0 0 1 -2.06326,-2.06326 V 98.029 A 2.06326,2.06326 0 0 1 12.796,95.96574 h 8.01934 a 2.06331,2.06331 0 0 1 2.06337,2.06326 z m 9.8831,-18.769 H 24.73565 A 2.06331,2.06331 0 0 1 22.67239,85.216 v -8.02618 a 2.06332,2.06332 0 0 1 2.06326,-2.06333 h 8.02616 a 2.06337,2.06337 0 0 1 2.06332,2.06333 V 85.216 a 2.06337,2.06337 0 0 1 -2.06332,2.0633 z m 60.0348,18.769 a 2.0633,2.0633 0 0 1 -2.06326,2.06326 H 36.51014 a 2.06326,2.06326 0 0 1 -2.06326,-2.06326 V 98.029 a 2.06326,2.06326 0 0 1 2.06326,-2.06326 H 90.73335 A 2.0633,2.0633 0 0 1 92.79661,98.029 Z M 91.64807,66.447 H 83.6219 a 2.06327,2.06327 0 0 1 -2.06332,-2.06326 v -8.02628 a 2.06329,2.06329 0 0 1 2.06332,-2.06332 h 8.02617 a 2.06328,2.06328 0 0 1 2.06326,2.06332 v 8.02623 A 2.06326,2.06326 0 0 1 91.64807,66.447 Z m 25.61914,39.60138 a 2.06326,2.06326 0 0 1 -2.06326,2.06326 h -9.71124 a 2.06326,2.06326 0 0 1 -2.06326,-2.06326 V 89.34256 A 2.06332,2.06332 0 0 0 101.36613,87.2793 H 95.40329 A 2.06334,2.06334 0 0 1 93.34,85.216 v -8.02618 a 2.06334,2.06334 0 0 1 2.06333,-2.06333 H 115.204 a 2.06332,2.06332 0 0 1 2.06326,2.06333 z m 0,-41.66464 A 2.06326,2.06326 0 0 1 115.204,66.447 h -8.02617 a 2.06327,2.06327 0 0 1 -2.06332,-2.06326 v -8.02628 a 2.06329,2.06329 0 0 1 2.06332,-2.06332 h 8.02617 a 2.06328,2.06328 0 0 1 2.06326,2.06332 z"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path927"
+       d="m 5.71211,18.72216 h 45.29757 a 9.85861,9.85861 0 0 1 9.55145,9.90384 v 3.688 h -3.33555 a 3.9261,3.9261 0 0 0 -4.21258,3.86013 4.21254,4.21254 0 0 0 4.21258,4.21251 H 70.77442 A 4.21254,4.21254 0 0 0 74.987,36.17413 3.9261,3.9261 0 0 0 70.77442,32.314 H 67.43875 V 28.626 A 16.73359,16.73359 0 0 0 51.00968,11.84454 H 5.71211 a 3.43881,3.43881 0 0 0 0,6.87762 z"
+       inkscape:connector-curvature="0" />
+    <text
+       id="text929"
+       font-weight="bold"
+       font-size="5px"
+       y="143"
+       x="0"
+       style="font-weight:bold;font-size:5px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000">Created by Delwar Hossain</text>
+    <text
+       id="text931"
+       font-weight="bold"
+       font-size="5px"
+       y="148"
+       x="0"
+       style="font-weight:bold;font-size:5px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000">from the Noun Project</text>
+  </g>
+</svg>
