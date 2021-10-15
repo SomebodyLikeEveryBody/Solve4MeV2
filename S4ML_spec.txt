@@ -1,3 +1,17 @@
+rajouter 
+
+\oplus
+\ominus
+\otimes
+\odot
+
+---
+\ast
+[
+]
+\infty
+
+
 01/10/2021
 ----------
 
