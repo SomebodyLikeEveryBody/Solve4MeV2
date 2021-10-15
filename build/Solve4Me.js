@@ -642,7 +642,7 @@ var NumbersPanel = /** @class */ (function (_super) {
             ]),
             new LineKeys([
                 new LatexTouchKey({
-                    label: "\\overrightarrow{[\\oplus \\partial]}",
+                    label: "\\overrightarrow{[\\partial_z]}",
                     title: "Go to [Operators] panel",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
