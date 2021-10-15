@@ -478,8 +478,8 @@ class NumbersPanel extends KeyboardPanel {
                 }),
             ]),
             new LineKeys([
-                new LatexTouchKey({
-                    label: "\\overrightarrow{[f()]}",
+                new ImgTouchKey({
+                    label: "actions",
                     title: "Go to [Actions] panel",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
