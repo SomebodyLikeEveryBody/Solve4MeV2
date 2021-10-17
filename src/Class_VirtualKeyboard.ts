@@ -104,9 +104,6 @@ class KeyboardPanel {
         this._lineKeysArray.map((lineKeys: LineKeys) => {
             lineKeys.setHeight(100 / this._lineKeysArray.length);
         });
-        // for (let lineKeys of this._lineKeysArray) {
-        //     lineKeys.setHeight(100 / this._lineKeysArray.length);
-        // }
 
         this._jQEl.fadeOut(0);
         this.includeLineKeysInJQEl();
@@ -497,7 +494,7 @@ class NumbersPanel extends KeyboardPanel {
                 new LatexTouchKey({
                     label: ",",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    style: VirtualKeyboardKeyStyle.LIGHT    ,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition(',').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
