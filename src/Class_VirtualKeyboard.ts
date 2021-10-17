@@ -497,20 +497,20 @@ class NumbersPanel extends KeyboardPanel {
                 new LatexTouchKey({
                     label: ",",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.DARK,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition(',').saveUndoRedoState(); }
-                }),
-                new LatexTouchKey({
-                    label: "0",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.DARK,
-                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('0').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: ".",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('.').saveUndoRedoState(); }
+                }),
+                new LatexTouchKey({
+                    label: "0",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: () => { g_s4mCoreMemory.currentMathLineInputFocused.appendValueAtCursorPosition('0').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "=",
