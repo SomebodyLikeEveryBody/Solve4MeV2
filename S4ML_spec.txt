@@ -1,11 +1,9 @@
-rajouter de maniere plus accessible
+18/10/2021
+----------
+prochaine étape du parsing: 
 
----
-\ast
-[
-]
-\infty
-
+gerer les instructions
+- commencer par les instructions simples genre les les opérations mettant en jeu des nombres
 
 01/10/2021
 ----------
