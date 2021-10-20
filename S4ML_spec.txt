@@ -1,3 +1,6 @@
+quand on fait un open, faut que ca donne le focus sur le premier mathlineinput
+
+
 18/10/2021
 ----------
 prochaine étape du parsing: 

@@ -76,13 +76,13 @@ class InputScren {
         this._letLineToggleButtonEl.click((e: EventObject) => {
             e.preventDefault();
             e.stopPropagation();
-            g_s4mCoreMemory.currentMathLineInputFocused.letLineToggle();
+            g_s4mCoreMemory.getMathLineInputToEdit().letLineToggle();
         });
 
         this._unprocessLineToggleButtonEl.click((e: EventObject) => {
             e.preventDefault();
             e.stopPropagation();
-            g_s4mCoreMemory.currentMathLineInputFocused.unprocessedLineToggle();
+            g_s4mCoreMemory.getMathLineInputToEdit().unprocessedLineToggle();
         });
 
         return this;

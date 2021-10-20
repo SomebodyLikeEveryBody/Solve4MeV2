@@ -11,8 +11,8 @@ class S4MCoreMemory {
     protected _declaringMathLineInputs: MathLineInput[];        //[M1, M2, ..., Mn]
     protected _errorMathLineInputs: MathLineInput[];            //[M1, M2, ..., Mn]
     protected _declaredVars: S4MMemoryElement[];                //[V1, V2, ..., Vn]
+    protected _currentMathLineInputFocused: MathLineInput | null;
     protected _lastMathLineInputFocusedOut: MathLineInput;
-    protected _currentMathLineInputFocused: MathLineInput;
 
     public constructor(pFirstMathLineInput: MathLineInput) {
         this._declaringMathLineInputs = [];
@@ -22,20 +22,27 @@ class S4MCoreMemory {
         this._currentMathLineInputFocused = pFirstMathLineInput;
     }
 
-    public get lastMathLineInputFocusedOut(): MathLineInput {
-        return this._lastMathLineInputFocusedOut;
-    }
-
-    public set lastMathLineInputFocusedOut(pNewMathLineInput: MathLineInput) {
-        this._lastMathLineInputFocusedOut = pNewMathLineInput;
-    }
-
-    public get currentMathLineInputFocused (): MathLineInput {
-        return this._currentMathLineInputFocused;
-    }
-
-    public set currentMathLineInputFocused (pMathLineInput: MathLineInput) {
+    public currentMathLineInputFocusedIs(pMathLineInput: MathLineInput): S4MCoreMemory {
         this._currentMathLineInputFocused = pMathLineInput;
+        return this;
+    }
+
+    public lastMathLineInputFocusedOutIs(pMathLineInput: MathLineInput): S4MCoreMemory {
+        this._lastMathLineInputFocusedOut = pMathLineInput;
+        return this;
+    }
+
+    public setCurrentMathLineInputFocusedToNull(): S4MCoreMemory {
+        this._currentMathLineInputFocused = null;
+        return this;
+    }
+
+    public getMathLineInputToEdit(): MathLineInput {
+        if (this._currentMathLineInputFocused === null) {
+            return this._lastMathLineInputFocusedOut;
+        }
+
+        return this._currentMathLineInputFocused;
     }
 
     public getMemoryElementCreatedBy(pMathLineInput: MathLineInput): S4MMemoryElement {

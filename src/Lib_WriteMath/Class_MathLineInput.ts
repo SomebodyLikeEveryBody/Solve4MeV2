@@ -131,11 +131,6 @@ class MathLineInput {
      * * * * * */
     public focus(): MathLineInput {
         this._mathField.focus();
-
-        if (g_s4mCoreMemory !== undefined) {
-            g_s4mCoreMemory.currentMathLineInputFocused = this;
-        }
-
         return this;
     }
 
@@ -319,34 +314,46 @@ class MathLineInput {
         return this.getTopCoord().valueOf() + this._jQEl.outerHeight().valueOf();
     }
 
+    protected adjustContainerScrollToMe(): MathLineInput {
+        const scrollUpAdjust = 20;
+        const scrollDownAdjust = 45;
+        
+        if (this.getTopCoord() < this.getContainerTopCoord()) {
+            this._container.scrollTop(this._container.scrollTop().valueOf() - scrollUpAdjust);
+        } else if (this.getBottomCoord() > this.getContainerBottomCoord()) {
+            this._container.scrollTop(this._container.scrollTop().valueOf() + scrollDownAdjust);
+        }
+
+        if (!(this.hasPreviousMathLineInput())) {
+            this._container.scrollTop(0);
+        } else if (!(this.hasNextMathLineInput())) {
+            this._container.scrollTop(this._container.scrollTop().valueOf() + this._container.height().valueOf());
+        } else {
+            
+        }
+
+        return this;
+    }
+
     protected setEvents(): MathLineInput {
         this.setKeyDownEvents();
         this.setKeyUpEvents();
 
         this._jQEl.focusin(() => {
-            const scrollUpAdjust = 20;
-            const scrollDownAdjust = 45;
-            
-            if (this.getTopCoord() < this.getContainerTopCoord()) {
-                this._container.scrollTop(this._container.scrollTop().valueOf() - scrollUpAdjust);
-            } else if (this.getBottomCoord() > this.getContainerBottomCoord()) {
-                this._container.scrollTop(this._container.scrollTop().valueOf() + scrollDownAdjust);
+            if (g_s4mCoreMemory !== undefined) {
+                g_s4mCoreMemory.currentMathLineInputFocusedIs(this);
             }
 
-            if (!(this.hasPreviousMathLineInput())) {
-                this._container.scrollTop(0);
-            } else if (!(this.hasNextMathLineInput())) {
-                this._container.scrollTop(this._container.scrollTop().valueOf() + this._container.height().valueOf());
-            } else {
-                
-            }
+            this.adjustContainerScrollToMe();
         });
 
         this._jQEl.focusout(() => {
             this._autoCompleter.hide();
+            g_s4mCoreMemory.lastMathLineInputFocusedOutIs(this);
             
             // S4M interactions:
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
+                g_s4mCoreMemory.currentMathLineInputFocused = null;
                 g_s4mCoreMemory.lastMathLineInputFocusedOut = this;
 
                 if (this.hasBeenModifiedSinceLastFocusOut() || this._isErrored) {
@@ -935,7 +942,7 @@ class MathLineInput {
         if ((this._autoCompleter.isVisible() === false)) {  
             const newMathLineInput = this.createNewMathLineInputAndAppendAfter(this);
         
-            newMathLineInput.focus();
+            newMathLineInput.focus();   
         }
 
         return this;
