@@ -1,3 +1,70 @@
+21/10/2021
+----------
+il faut faire un systeme d'arbre pour les calculs.
+nerdamer fait comme ca
+
++
+-> operator 1
+-> operator 2
+
+mais je prefere le systeme ou chaque opérateur est une méthode de l'objet qui le précède, 
+ou genre quand on a A + B
+en fait ca veut dire A.plus(B)
+==> comme ca on peut surcharger les opérateurs pour chaque type d'objet
+genre
+vector.multiply(vector) {
+	return le produit scalaire
+}
+
+vector.multiply(number) {
+	return vector ou chaque coordonnée est multiplié par le nombre
+}
+
+etc
+
+du coup ca donnerait plutot un arbre foutu comme ca:
+
+obj1 -> + ->obj2-> 
+
+==> mauvaise idée, ca cree plus de galeres pour rien
+
+on va rester sur le meme arbre ou chaque noeud est un opérateur et chaque feuille est un MathObj
+et du coup, vu que c'est des opérateurs unaires (-) ou binaires (- + * / mod etc)
+quand on aura
+operator
+-> left
+-> right
+
+genre
++
+-> a
+-> 4
+
+en fait, ca le parsera en mode
+a.+(4)
+
+soit de maniere generale
+left.operator(right)
+
+le moyen simple pour y arriver, c'est que l'operateur soit une chaine genre 'multiply'
+et du coup, un mathObj ca a un tableau de fonctions operateurs genre
+a.operators['multiply'] = (number) => {return a * number)
+
+le truc c'est qu'il faudra que les fonctions aient un comportement different en fonction de ce qu'on lui passe en argument
+multiplier un nombre par un vecteur ca retourne un vecteur alors que multiplier un nombre par un nombre ca retourne un nombre,
+de meme que multiplier un nombre par une fonction ca retourne une fonction
+==> c'est ptetre le moment d'utiliser la genericité / templates
+
+genre
+
+a.operators['multiply'] = this.multiply
+et
+public multiply<T> (arg: T) {
+	faire des trucs en fonction de T
+}
+
+
+
 18/10/2021
 ----------
 prochaine étape du parsing: 

@@ -217,7 +217,7 @@
          },
         peg$c15 = function(head, tail) {
               return tail.reduce((result, element) => {
-                 return (result + element[1] + element[3]);
+                 return (result + element[1] + "(" + element[3]) + ")";
               }, head);
          },
         peg$c16 = function(sign, term) {
@@ -225,7 +225,7 @@
          },
         peg$c17 = function(head, tail) {
               return tail.reduce((result, element) => {
-                 return result + element[1] + element[3];
+                 return result + element[1] + "(" + element[3] + ")";
               }, head);
          },
         peg$c18 = function(operator, expression) {
@@ -233,7 +233,7 @@
          },
         peg$c19 = function(firstObject, list) {
               let varsArray = list.reduce((result, currentEl) => {
-                 result.push(currentEl[1]);
+                 result.push("(" + currentEl[1] + ")");
                  return result;
               }, [firstObject]);
 
@@ -1157,14 +1157,11 @@
     function peg$parseBinaryOperator() {
       var s0;
 
-      s0 = peg$parseOperator_minus();
+      s0 = peg$parseOperator_pow();
       if (s0 === peg$FAILED) {
         s0 = peg$parseOperator_multiply();
         if (s0 === peg$FAILED) {
           s0 = peg$parseOperator_cross();
-          if (s0 === peg$FAILED) {
-            s0 = peg$parseOperator_pow();
-          }
         }
       }
 

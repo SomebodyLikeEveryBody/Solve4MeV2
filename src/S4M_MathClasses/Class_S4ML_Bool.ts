@@ -24,11 +24,3 @@ class S4ML_Bool {
     }
 }
 
-// let b1 = new S4ML_Bool(BoolValue.TRUE);
-// let b2 = new S4ML_Bool(BoolValue.FALSE);
-// let b3 = new S4ML_Bool(BoolValue.UNDETERMINED);
-
-// console.log(b1.value);
-// console.log(b2.value);
-// console.log(b3.value);
-

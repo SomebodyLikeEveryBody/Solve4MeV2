@@ -191,7 +191,7 @@ Instanciation
 Expression
  = head:FirstTerm tail:(_ (Operator_plus / Operator_minus) _ Term)* {
       return tail.reduce((result, element) => {
-         return (result + element[1] + element[3]);
+         return (result + element[1] + "(" + element[3]) + ")";
       }, head);
  }
 
@@ -216,7 +216,7 @@ FirstTerm
 Term
  = head:Factor tail:(_ BinaryOperator _ Factor)* {
       return tail.reduce((result, element) => {
-         return result + element[1] + element[3];
+         return result + element[1] + "(" + element[3] + ")";
       }, head);
  }
 
@@ -226,10 +226,9 @@ Term
  *     (+, -, *, /, Union, Inter, etc)
  * */
 BinaryOperator
- = Operator_minus
+ = Operator_pow
  / Operator_multiply
  / Operator_cross
- / Operator_pow
 
 /***********************************
  * UnaryOperation: -3, -A, +Infinity, etc
@@ -288,7 +287,7 @@ S4MLObject
 ContiguousFactors
  = _ firstObject:FirstContiguousFactor _ list:(_ Factor _)+ {
       let varsArray = list.reduce((result, currentEl) => {
-         result.push(currentEl[1]);
+         result.push("(" + currentEl[1] + ")");
          return result;
       }, [firstObject]);
 
