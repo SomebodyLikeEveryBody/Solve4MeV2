@@ -33,6 +33,10 @@ class InputScren {
             e.preventDefault();
         });
 
+        this._jQEl.mousedown((e: EventObject) => {
+            e.preventDefault();
+        })
+
         this._showHideOutputScreenButton.click((e: EventObject) => {
             e.preventDefault();
             if (this._outputScreen.isVisible()) {

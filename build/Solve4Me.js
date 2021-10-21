@@ -80,6 +80,16 @@ var VirtualKeyboardKeyStyle;
     VirtualKeyboardKeyStyle["RED"] = "red";
     VirtualKeyboardKeyStyle["EMPTY"] = "empty";
 })(VirtualKeyboardKeyStyle || (VirtualKeyboardKeyStyle = {}));
+var CalculusNode = /** @class */ (function () {
+    function CalculusNode() {
+    }
+    return CalculusNode;
+}());
+var CalculusTree = /** @class */ (function () {
+    function CalculusTree() {
+    }
+    return CalculusTree;
+}());
 var MathObj = /** @class */ (function () {
     function MathObj() {
     }
@@ -198,6 +208,9 @@ var InputScren = /** @class */ (function () {
         this._showHideOutputScreenButton.mousedown(function (e) {
             e.preventDefault();
         });
+        this._jQEl.mousedown(function (e) {
+            e.preventDefault();
+        });
         this._showHideOutputScreenButton.click(function (e) {
             e.preventDefault();
             if (_this._outputScreen.isVisible()) {
@@ -253,7 +266,14 @@ var OutputScreen = /** @class */ (function () {
     function OutputScreen(pJQueryElement) {
         this._jQEl = pJQueryElement;
         this._isVisible = true;
+        this.setEvents();
     }
+    OutputScreen.prototype.setEvents = function () {
+        this._jQEl.mousedown(function (e) {
+            e.preventDefault();
+        });
+        return this;
+    };
     OutputScreen.prototype.isVisible = function () {
         return this._isVisible;
     };
@@ -1841,7 +1861,7 @@ var UnitsPanel = /** @class */ (function (_super) {
                     title: "coulomb",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{C   }}").saveUndoRedoState(); }
+                    action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{C}}").saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([

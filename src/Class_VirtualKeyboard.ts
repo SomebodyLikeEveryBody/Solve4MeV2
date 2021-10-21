@@ -1602,7 +1602,7 @@ class UnitsPanel extends KeyboardPanel {
                     title: "coulomb",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{C   }}").saveUndoRedoState(); }
+                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{C}}").saveUndoRedoState(); }
                 }),
             ]),
             new LineKeys([

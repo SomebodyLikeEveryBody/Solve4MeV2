@@ -5,6 +5,16 @@ class OutputScreen {
     public constructor(pJQueryElement: JQueryElement) {
         this._jQEl = pJQueryElement;
         this._isVisible = true;
+
+        this.setEvents();
+    }
+
+    protected setEvents(): OutputScreen {
+        this._jQEl.mousedown((e: EventObject) => {
+            e.preventDefault();
+        })
+
+        return this;
     }
 
     public isVisible(): Boolean {

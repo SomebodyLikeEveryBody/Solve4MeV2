@@ -36,6 +36,10 @@
 /* S4MLGrammar.pegjs *
  ********************/
 
+{
+   console.log('OKAY');
+}
+
 start
  = UnprocessedLine
  / CommentaryLine
@@ -748,7 +752,9 @@ Operator_multiply
  * [.] Binary operator
  * */
 Operator_pow
- = "^"
+ = "^" {
+    return "Operator[Pow]";
+ }
 
 /***********************************
  * Operator_cross: A X B

@@ -350,6 +350,7 @@ class MathLineInput {
         this._jQEl.focusout(() => {
             this._autoCompleter.hide();
             g_s4mCoreMemory.lastMathLineInputFocusedOutIs(this);
+            g_s4mCoreMemory.setCurrentMathLineInputFocusedToNull();
             
             // S4M interactions:
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {

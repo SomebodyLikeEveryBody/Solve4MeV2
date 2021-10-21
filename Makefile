@@ -23,6 +23,7 @@ main:
 	./src/Interface_JQueryElement.ts \
 	./src/Interface_MathLineInput.ts \
 	./src/Interface_EventObject.ts \
+	./src/Class_CalculusTree.ts \
 	./src/Class_MathObj.ts \
 	./src/Class_S4MCoreMemory.ts \
 	./src/Class_InputScreen.ts \
