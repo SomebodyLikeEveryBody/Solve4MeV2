@@ -225,7 +225,7 @@
          },
         peg$c17 = function(head, tail) {
               return tail.reduce((result, element) => {
-                 return result + element[1] + "(" + element[3] + ")";
+                 return result + "(" + element[1] + "(" + element[3] + "))";
               }, head);
          },
         peg$c18 = function(operator, expression) {

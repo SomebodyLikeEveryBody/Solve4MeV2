@@ -1,18 +1,27 @@
 interface CalculusNodeDefinition {
-    
+
 }
 
+// is an operator
 class CalculusNode {
-    protected mathObj: MathObj;
-    protected followings: MathObj[] | null;
+    protected _operatorName: String;
+    protected _operands: Array<CalculusNode | CalculusLeaf>;
 
-    public constructor() {
-
+    public constructor(pOperatorName: String, pFollowings: Array<CalculusNode | CalculusLeaf>) {
+        this._operatorName = pOperatorName;
+        this._operands = pFollowings;
     }
 
     public toString(): String {
         let retStr = "";
+
+        return retStr;
     }
+}
+
+//is a mathobj
+class CalculusLeaf {
+    protected _factor: MathObj;
 }
 
 class CalculusTree {
@@ -20,7 +29,11 @@ class CalculusTree {
 
     public constructor(pRoot: CalculusNode) {
         this.root = pRoot;
+    }
+
+    public visualize(): CalculusTree {
 
 
+        return this;
     }
 }
