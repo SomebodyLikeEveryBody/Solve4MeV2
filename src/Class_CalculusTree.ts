@@ -22,6 +22,10 @@ class CalculusNode {
 //is a mathobj
 class CalculusLeaf {
     protected _factor: MathObj;
+
+    public constructor() {
+        this._factor = new MathObj();
+    }
 }
 
 class CalculusTree {

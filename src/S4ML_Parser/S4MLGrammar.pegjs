@@ -189,11 +189,15 @@ Instanciation
  * [.] firstTerm ("+"/"-" term)*
  * */
 Expression
- = head:FirstTerm tail:(_ (Operator_plus / Operator_minus) _ Term)* {
+ = head:FirstPriority3Term tail:(_ Priority3Operator _ Priority3Term)* {
       return tail.reduce((result, element) => {
          return (result + element[1] + "(" + element[3]) + ")";
       }, head);
  }
+
+Priority3Operator
+ = Operator_plus
+ / Operator_minus
 
 /***********************************
  * FirstTerm:
@@ -204,8 +208,8 @@ Expression
  * [.] essential to have expressions
  *     like -a*b, -(a+b), b^(-a), etc
  * */
-FirstTerm
- = _ sign:UnaryOperator? _ term:Term {
+FirstPriority3Term
+ = _ sign:UnaryOperator? _ term:Priority3Term {
       return (sign !== null ? sign : '') + term;
  }
 
@@ -213,8 +217,15 @@ FirstTerm
  * Term:
  * [.] Factor (("*" / "/" / ...) Factor)*
  * */
-Term
- = head:Factor tail:(_ BinaryOperator _ Factor)* {
+Priority3Term
+ = head:Priority2Term tail:(_ Priority2Operator _ Priority2Term)* {
+      return tail.reduce((result, element) => {
+         return result + element[1] + "(" + element[3] + ")";
+      }, head);
+ }
+
+Priority2Term
+ = head:Factor tail:(_ Priority1Operator _ Factor)* {
       return tail.reduce((result, element) => {
          return result + element[1] + "(" + element[3] + ")";
       }, head);
@@ -225,10 +236,13 @@ Term
  * [.] Operator that takes 2 arguments
  *     (+, -, *, /, Union, Inter, etc)
  * */
-BinaryOperator
- = Operator_pow
- / Operator_multiply
+Priority2Operator
+ = Operator_multiply
  / Operator_cross
+ / Operator_divide
+
+Priority1Operator
+= Operator_pow
 
 /***********************************
  * UnaryOperation: -3, -A, +Infinity, etc
@@ -329,7 +343,7 @@ Factor_bracketed
  * */
 Fraction
 = "\\frac{" _ numerator:Expression _ "}{" _ denominator:Expression _ "}" {
-      return ("((" + numerator + ")/(" + denominator + "))");
+      return (numerator + "<Operator[Divide]>(" + denominator + ")");
 }
 
 /***********************************
@@ -746,6 +760,11 @@ Operator_multiply
       return "<Operator[Multiply]>";
  }
 
+ Operator_divide
+ = "/" {
+    return "<Operator[Divide]>";
+ }
+
 /***********************************
  * Operator_pow: a^b
  * [.] Binary operator
@@ -761,7 +780,7 @@ Operator_pow
  * */
 Operator_cross
  = ("\\times " / "\\times") {
-    return "[Cross]";
+    return "<Operator[Cross]>";
  }
 
 /***********************************

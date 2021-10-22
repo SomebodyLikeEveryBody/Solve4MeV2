@@ -80,19 +80,40 @@ var VirtualKeyboardKeyStyle;
     VirtualKeyboardKeyStyle["RED"] = "red";
     VirtualKeyboardKeyStyle["EMPTY"] = "empty";
 })(VirtualKeyboardKeyStyle || (VirtualKeyboardKeyStyle = {}));
+// is an operator
 var CalculusNode = /** @class */ (function () {
-    function CalculusNode() {
+    function CalculusNode(pOperatorName, pFollowings) {
+        this._operatorName = pOperatorName;
+        this._operands = pFollowings;
     }
+    CalculusNode.prototype.toString = function () {
+        var retStr = "";
+        return retStr;
+    };
     return CalculusNode;
 }());
-var CalculusTree = /** @class */ (function () {
-    function CalculusTree() {
+//is a mathobj
+var CalculusLeaf = /** @class */ (function () {
+    function CalculusLeaf() {
+        this._factor = new MathObj();
     }
+    return CalculusLeaf;
+}());
+var CalculusTree = /** @class */ (function () {
+    function CalculusTree(pRoot) {
+        this.root = pRoot;
+    }
+    CalculusTree.prototype.visualize = function () {
+        return this;
+    };
     return CalculusTree;
 }());
 var MathObj = /** @class */ (function () {
     function MathObj() {
     }
+    MathObj.prototype.toString = function () {
+        return "A Math Object";
+    };
     return MathObj;
 }());
 var S4MCoreMemory = /** @class */ (function () {
