@@ -190,7 +190,7 @@ Instanciation
  * [.] firstTerm ("+"/"-" term)*
  * */
 Expression
- = head:FirstPriority3Term tail:(_ Priority3Operator _ Priority3Term)* {
+ = _ head:FirstPriority3Term _ tail:(_ Priority3Operator _ Priority3Term _)* {
       return tail.reduce((result, element) => {
          return (result + element[1] + element[3]);
       }, head);
@@ -241,6 +241,7 @@ Priority2Operator
  = Operator_multiply
  / Operator_cross
  / Operator_divide
+ / Operator_modulo
 
 Priority1Operator
 = Operator_pow
@@ -776,6 +777,11 @@ Operator_multiply
  Operator_divide
  = "/" {
     return "/";
+ }
+
+ Operator_modulo
+ = "\\%" {
+    return "%";
  }
 
 /***********************************

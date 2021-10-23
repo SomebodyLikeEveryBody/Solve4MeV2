@@ -443,6 +443,19 @@ button.alone
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.answer_message
+{
+    padding: 10px;
+    border: white 3px solid;
+    width: calc(100% - 26px);
+    color: black;
+    background-color: lightblue;
+    font-size: 0.6em;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 @media only screen and (max-width: 1000px)
 {
     div#Solve4Me_app

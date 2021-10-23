@@ -541,6 +541,7 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.removeFromDOM = function () {
         this._jQEl.remove();
+        g_outputScreen.removeMessagesOf(this);
         return this;
     };
     MathLineInput.prototype.keyDown = function (pFunction) {
@@ -632,12 +633,17 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.processContent = function () {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
-        g_outputScreen.removeMessageOf(this);
+        g_outputScreen.removeMessagesOf(this);
         try {
-            console.log('-------------');
-            console.log(nerdamer(S4MLParser.parse(this.value(), { processedMathLineInput: this })).toString());
-            // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
-            console.log('-------------');
+            var parsedStr = S4MLParser.parse(this.value(), { processedMathLineInput: this });
+            if (parsedStr !== "[Unprocess]") {
+                var nerdamerAnswer = nerdamer(parsedStr).toString();
+                console.log(nerdamerAnswer);
+                if (nerdamerAnswer !== "undefined") {
+                    g_outputScreen.displayAnswerMessage(nerdamerAnswer, this);
+                }
+                // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
+            }
             this.signalNoError();
         }
         catch (e) {

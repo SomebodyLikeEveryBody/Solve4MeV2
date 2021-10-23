@@ -260,6 +260,7 @@ class MathLineInput {
 
     public removeFromDOM(): MathLineInput {
         this._jQEl.remove();
+        g_outputScreen.removeMessagesOf(this);
         return this;
     }
 
@@ -375,19 +376,20 @@ class MathLineInput {
 
     public processContent(): MathLineInput {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
-        g_outputScreen.removeMessageOf(this);
+        g_outputScreen.removeMessagesOf(this);
         
         try {
             let parsedStr = S4MLParser.parse(this.value(), {processedMathLineInput: this});
 
-            console.log('-------------');
-
             if (parsedStr !== "[Unprocess]") {
-                console.log(nerdamer(parsedStr).toString());
+                let nerdamerAnswer = nerdamer(parsedStr).toString();
+                if (nerdamerAnswer !== "undefined") {
+                    g_outputScreen.displayAnswerMessage(nerdamerAnswer, this);
+                }
+                
                 // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
             }
             
-            console.log('-------------');
             this.signalNoError();
         } catch (e) {
             this.signalError(e);

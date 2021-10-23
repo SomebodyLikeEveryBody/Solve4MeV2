@@ -45,9 +45,9 @@ class OutputScreenErrorMessage extends OutputScreenMessage {
 }
 
 class OutputScreenAnswerMessage extends OutputScreenMessage {
-    public constructor(pErrorMessage: String, pMathLineInputSource: MathLineInput) {
-        super(pErrorMessage, pMathLineInputSource);
-        this._JQEl.addClass("answer_message")
+    public constructor(pAnswerMessage: String, pMathLineInputSource: MathLineInput) {
+        super(pAnswerMessage, pMathLineInputSource);
+        this._JQEl.addClass("answer_message");
     }
 }
 
@@ -104,7 +104,15 @@ class OutputScreen {
         return this;
     }
 
-    public removeMessageOf(pMathLineInput: MathLineInput): OutputScreen {
+    public displayAnswerMessage(pAnswerMessage: String, pMathLineInput: MathLineInput): OutputScreen {
+        let newAnswerMessage = new OutputScreenAnswerMessage(pAnswerMessage, pMathLineInput);
+
+        this._messages.push(newAnswerMessage);
+        newAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
+        return this;
+    }
+
+    public removeMessagesOf(pMathLineInput: MathLineInput): OutputScreen {
         let messageToRemove = this._messages.filter((messageEl) => (messageEl.mathLineInputSource === pMathLineInput));
         if (messageToRemove[0] !== undefined) {
             this._messages = this._messages.filter((messageEl) => (messageEl !== messageToRemove[0]));

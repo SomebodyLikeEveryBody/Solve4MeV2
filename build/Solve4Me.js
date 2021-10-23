@@ -328,8 +328,8 @@ var OutputScreenErrorMessage = /** @class */ (function (_super) {
 }(OutputScreenMessage));
 var OutputScreenAnswerMessage = /** @class */ (function (_super) {
     __extends(OutputScreenAnswerMessage, _super);
-    function OutputScreenAnswerMessage(pErrorMessage, pMathLineInputSource) {
-        var _this = _super.call(this, pErrorMessage, pMathLineInputSource) || this;
+    function OutputScreenAnswerMessage(pAnswerMessage, pMathLineInputSource) {
+        var _this = _super.call(this, pAnswerMessage, pMathLineInputSource) || this;
         _this._JQEl.addClass("answer_message");
         return _this;
     }
@@ -371,7 +371,13 @@ var OutputScreen = /** @class */ (function () {
         newErrorMessage.insertBefore(this._jQElContent.find('hr')).toggle();
         return this;
     };
-    OutputScreen.prototype.removeMessageOf = function (pMathLineInput) {
+    OutputScreen.prototype.displayAnswerMessage = function (pAnswerMessage, pMathLineInput) {
+        var newAnswerMessage = new OutputScreenAnswerMessage(pAnswerMessage, pMathLineInput);
+        this._messages.push(newAnswerMessage);
+        newAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
+        return this;
+    };
+    OutputScreen.prototype.removeMessagesOf = function (pMathLineInput) {
         var messageToRemove = this._messages.filter(function (messageEl) { return (messageEl.mathLineInputSource === pMathLineInput); });
         if (messageToRemove[0] !== undefined) {
             this._messages = this._messages.filter(function (messageEl) { return (messageEl !== messageToRemove[0]); });
