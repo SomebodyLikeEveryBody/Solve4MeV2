@@ -366,7 +366,7 @@ var OutputScreen = /** @class */ (function () {
         return this;
     };
     OutputScreen.prototype.displayError = function (pErrorObject, pErroredMathLineInput) {
-        var newErrorMessage = new OutputScreenErrorMessage("[" + pErrorObject.name + " at Line [1]]: " + pErrorObject.message, pErroredMathLineInput);
+        var newErrorMessage = new OutputScreenErrorMessage("[Line [1]]:<br />[" + pErrorObject.name + "]: " + pErrorObject.message, pErroredMathLineInput);
         this._messages.push(newErrorMessage);
         newErrorMessage.insertBefore(this._jQElContent.find('hr')).toggle();
         return this;
@@ -446,10 +446,15 @@ var VirtualKeyboard = /** @class */ (function () {
         });
         return this;
     };
+    VirtualKeyboard.prototype.displayUnitsPanel = function () {
+        this.displayPanel(this._panels.unitsPanel);
+        return this;
+    };
     VirtualKeyboard.prototype.hide = function () {
         var _this = this;
         this._jQEl.animate({ width: 'toggle' }, 250, function () {
-            _this._isVisible = true;
+            _this._isVisible = false;
+            _this.displayPanel(_this._panels.numbersPanel);
         });
         return this;
     };

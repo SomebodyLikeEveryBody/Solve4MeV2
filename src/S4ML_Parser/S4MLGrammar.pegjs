@@ -479,6 +479,7 @@ SetOperator
  * */
 VarAtLargeIdentifier
  = varName:(VectorIdentifier 
+ / SpecialChar
  / Constant
  / VarIdentifier) {
     return "VAR_" + varName;
@@ -605,7 +606,7 @@ Text
  * [.] All special letters used in S4ML
  * */
 SpecialLetter
- = "\\alpha"
+ = str:("\\alpha"
  / "\\beta"
  / "\\Gamma"
  / "\\gamma"
@@ -640,7 +641,14 @@ SpecialLetter
  / "\\Psi"
  / "\\psi"
  / "\\Omega"
- / "\\omega"
+ / "\\omega") {
+   return ("SPECIAL_" + str.substr(1));
+ }
+
+ SpecialChar
+ = "\\text{°}" {
+    return "TEXT_SPECIAL_DEGREE";
+ }
 
 /***********************************
  * MathBBLetter: R, Z, Q, etc

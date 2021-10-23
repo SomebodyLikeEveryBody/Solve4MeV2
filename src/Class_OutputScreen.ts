@@ -97,7 +97,7 @@ class OutputScreen {
     }
 
     public displayError(pErrorObject: ErrorObject, pErroredMathLineInput: MathLineInput): OutputScreen {
-        let newErrorMessage = new OutputScreenErrorMessage("[" + pErrorObject.name + " at Line [1]]: " + pErrorObject.message, pErroredMathLineInput);
+        let newErrorMessage = new OutputScreenErrorMessage("[Line [1]]:<br />[" + pErrorObject.name + "]: " + pErrorObject.message, pErroredMathLineInput);
 
         this._messages.push(newErrorMessage);
         newErrorMessage.insertBefore(this._jQElContent.find('hr')).toggle();

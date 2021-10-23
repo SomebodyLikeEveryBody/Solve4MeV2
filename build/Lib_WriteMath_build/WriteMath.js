@@ -1389,6 +1389,16 @@ var ShortcutsManager = /** @class */ (function () {
             case KeyCodes.N_KEY:
                 pEventObj.preventDefault();
                 break;
+            //ctrl + U ==> display units keyboard
+            case KeyCodes.U_KEY:
+                pEventObj.preventDefault();
+                if (g_virtualKeyboard.isVisible()) {
+                    g_virtualKeyboard.displayUnitsPanel();
+                }
+                else {
+                    g_virtualKeyboard.displayUnitsPanel().show();
+                }
+                break;
             //ctrl + up arrow ==> delete if empty and focus down
             case KeyCodes.UPARROW_KEY:
                 pEventObj.preventDefault();

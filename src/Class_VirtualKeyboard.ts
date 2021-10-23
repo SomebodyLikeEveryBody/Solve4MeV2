@@ -64,9 +64,15 @@ class VirtualKeyboard {
         return this;
     }
 
+    public displayUnitsPanel(): VirtualKeyboard {
+        this.displayPanel(this._panels.unitsPanel);
+        return this;
+    }
+
     public hide(): VirtualKeyboard {
         this._jQEl.animate({width:'toggle'},250, () => {
-            this._isVisible = true;
+            this._isVisible = false;
+            this.displayPanel(this._panels.numbersPanel);
         });
 
         return this;
