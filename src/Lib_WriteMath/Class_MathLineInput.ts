@@ -378,9 +378,15 @@ class MathLineInput {
         g_outputScreen.removeMessageOf(this);
         
         try {
+            let parsedStr = S4MLParser.parse(this.value(), {processedMathLineInput: this});
+
             console.log('-------------');
-            console.log(nerdamer(S4MLParser.parse(this.value(), {processedMathLineInput: this})).toString());
-            // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
+
+            if (parsedStr !== "[Unprocess]") {
+                console.log(nerdamer(parsedStr).toString());
+                // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
+            }
+            
             console.log('-------------');
             this.signalNoError();
         } catch (e) {

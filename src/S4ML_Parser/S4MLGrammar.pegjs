@@ -647,7 +647,7 @@ SpecialLetter
 
  SpecialChar
  = "\\text{°}" {
-    return "TEXT_SPECIAL_DEGREE";
+    return "SPECIAL_DEGREE";
  }
 
 /***********************************
@@ -702,7 +702,7 @@ EmptyLine
  * */
 CommentaryLine
  = "#" .* {
-
+    return "[Unprocess]";
  }
 
 /***********************************
@@ -712,7 +712,9 @@ CommentaryLine
  *     (like an <hr />)
  * */
 SeparatorLine
-= "--"
+= "--" {
+   return "[Unprocess]";
+}
 
 /***********************************
  * UnprocessedLine: "\\vdash" followed by anything
@@ -722,7 +724,9 @@ SeparatorLine
  *     usefull to visualize certain things)
  * */
 UnprocessedLine
-= "\\vdash" .*
+= "\\vdash" .* {
+   return "[Unprocess]";
+}
 
 
 /***********************************
