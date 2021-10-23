@@ -1,4 +1,4 @@
-
+   
 /******************************************************************************
 *MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
 *MMMMMMMMMMMWKOxdxOXWMMMMMMMWNXKK0OOO00KKXXNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
@@ -72,6 +72,7 @@ Declaration "Declaration"
          processedVarValue: new MathObj()
       };
 
+      nerdamer.setVar(newMemoryElement.varName, newMemoryElement.varValue);
       g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
       processedMathLineInput.signalNoError();
       

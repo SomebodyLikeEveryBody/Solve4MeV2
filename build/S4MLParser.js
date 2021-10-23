@@ -162,6 +162,7 @@
                  processedVarValue: new MathObj()
               };
 
+              nerdamer.setVar(newMemoryElement.varName, newMemoryElement.varValue);
               g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
               processedMathLineInput.signalNoError();
               

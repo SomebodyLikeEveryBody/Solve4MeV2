@@ -32,6 +32,10 @@ main:
 	./src/Class_VirtualKeyboard.ts \
 	./src/main.ts
 
+Nerdamer:
+	@echo '[Copying Nerdamer lib into build]'
+	cp -r ./src/Lib_Nerdamer/ ./build/Lib_Nerdamer_build
+
 S4MLParser:
 	@echo ''
 	@echo '[Building S4ML Parser]'

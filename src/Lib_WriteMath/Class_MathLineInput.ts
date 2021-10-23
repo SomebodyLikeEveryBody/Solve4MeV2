@@ -3,6 +3,7 @@ declare const MathQuill: any;
 declare const g_s4mCoreMemory: any;
 declare const g_inputScreen: any;
 declare const g_virtualKeyboard: any;
+declare const nerdamer: any;
 declare function $(pStr: String | JQueryElement): JQueryElement;
 
 class MathLineInput {
@@ -375,8 +376,8 @@ class MathLineInput {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
         
         try {
-            console.log('parser Output:');
-            console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
+            console.log('-------------');
+            console.log(nerdamer(S4MLParser.parse(this.value(), {processedMathLineInput: this})).toString());
             console.log('-------------');
             this.signalNoError();
         } catch (e) {

@@ -633,8 +633,8 @@ var MathLineInput = /** @class */ (function () {
     MathLineInput.prototype.processContent = function () {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
         try {
-            console.log('parser Output:');
-            console.log(S4MLParser.parse(this.value(), { processedMathLineInput: this }));
+            console.log('-------------');
+            console.log(nerdamer(S4MLParser.parse(this.value(), { processedMathLineInput: this })).toString());
             console.log('-------------');
             this.signalNoError();
         }
