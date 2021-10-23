@@ -1,6 +1,22 @@
 23/10/2021
 ----------
 
+une variable simple, quand elle est nommée elle a le pattern
+VAR_identifier
+
+l'identifier, il est de la forme
+lettre suivi ou pas d'indices
+ou
+vector suivi d'une lettre suivi ou pas d'indices
+ou
+juste du texte, sans indice du coup
+
+
+
+
+23/10/2021
+----------
+
 penser à vider la memoire quand on fait un open
 
 la barre est trop haute d'un seul coup c'est trop dur à gérer.

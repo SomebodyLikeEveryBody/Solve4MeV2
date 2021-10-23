@@ -217,7 +217,7 @@
          },
         peg$c15 = function(head, tail) {
               return tail.reduce((result, element) => {
-                 return (result + element[1] + "(" + element[3]) + ")";
+                 return (result + element[1] + element[3]);
               }, head);
          },
         peg$c16 = function(sign, term) {
@@ -225,7 +225,7 @@
          },
         peg$c17 = function(head, tail) {
               return tail.reduce((result, element) => {
-                 return result + element[1] + "(" + element[3] + ")";
+                 return result + element[1] + element[3];
               }, head);
          },
         peg$c18 = function(operator, expression) {
@@ -233,11 +233,11 @@
          },
         peg$c19 = function(firstObject, list) {
               let varsArray = list.reduce((result, currentEl) => {
-                 result.push("(" + currentEl[1] + ")");
+                 result.push(currentEl[1]);
                  return result;
               }, [firstObject]);
 
-              return (varsArray.join('<Operator[Multiply]>'));
+              return (varsArray.join('*'));
          },
         peg$c20 = "{",
         peg$c21 = peg$literalExpectation("{", false),
@@ -258,7 +258,7 @@
         peg$c32 = "}{",
         peg$c33 = peg$literalExpectation("}{", false),
         peg$c34 = function(numerator, denominator) {
-              return (numerator + "<Operator[Divide]>(" + denominator + ")");
+              return ("((" + numerator + ")/(" + denominator + "))");
         },
         peg$c35 = /^[0-9]/,
         peg$c36 = peg$classExpectation([["0", "9"]], false, false),
@@ -331,7 +331,7 @@
               return ("<SET[boundary1[" + firstBoundary + "][" + (firstHook === "[" ? "included" : "excluded") + "]]boundary2[" + secondBoundary + "][" + (secondHook === "]" ? "included" : "excluded") + "]subSetOf[" + includedIn + "]>");
          },
         peg$c73 = function(varName) {
-            return "<VAR[" + varName + "]>";
+            return "VAR_" + varName;
          },
         peg$c74 = function(funcName, funcVar) {
               return ({functionName: funcName, functionVar: funcVar})
@@ -342,7 +342,7 @@
         peg$c76 = "\\vec{",
         peg$c77 = peg$literalExpectation("\\vec{", false),
         peg$c78 = function(varIdentifier) {
-              return ("Vector{" + varIdentifier + "}");
+              return ("VECTOR_" + varIdentifier);
          },
         peg$c79 = function(mainId, index) {
               let retArray = [mainId];
@@ -375,7 +375,7 @@
         peg$c90 = /^[A-Za-z0-9\xB0]/,
         peg$c91 = peg$classExpectation([["A", "Z"], ["a", "z"], ["0", "9"], "\xB0"], false, false),
         peg$c92 = function(str) {
-              return ("Text{" + str.join('') + "}");
+              return ("TEXT_" + str.join(''));
          },
         peg$c93 = "\\alpha",
         peg$c94 = peg$literalExpectation("\\alpha", false),
@@ -494,36 +494,36 @@
         peg$c188 = "+",
         peg$c189 = peg$literalExpectation("+", false),
         peg$c190 = function() {
-            return "<Operator[Plus]>";
+            return "+";
          },
         peg$c191 = "-",
         peg$c192 = peg$literalExpectation("-", false),
         peg$c193 = function() {
-            return "<Operator[Minus]>";
+            return "-";
          },
         peg$c194 = "\\cdot ",
         peg$c195 = peg$literalExpectation("\\cdot ", false),
         peg$c196 = "\\cdot",
         peg$c197 = peg$literalExpectation("\\cdot", false),
         peg$c198 = function() {
-              return "<Operator[Multiply]>";
+              return "*";
          },
         peg$c199 = "/",
         peg$c200 = peg$literalExpectation("/", false),
         peg$c201 = function() {
-            return "<Operator[Divide]>";
+            return "/";
          },
         peg$c202 = "^",
         peg$c203 = peg$literalExpectation("^", false),
         peg$c204 = function() {
-            return "Operator[Pow]";
+            return "^";
          },
         peg$c205 = "\\times ",
         peg$c206 = peg$literalExpectation("\\times ", false),
         peg$c207 = "\\times",
         peg$c208 = peg$literalExpectation("\\times", false),
         peg$c209 = function() {
-            return "<Operator[Cross]>";
+            return "*";
          },
         peg$c210 = "\\cup",
         peg$c211 = peg$literalExpectation("\\cup", false),
@@ -3579,7 +3579,7 @@
     }
 
 
-       console.log('OKAY');
+       // console.log('OKAY');
 
 
     peg$result = peg$startRuleFunction();

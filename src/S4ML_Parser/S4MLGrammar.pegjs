@@ -37,7 +37,7 @@
  ********************/
 
 {
-   console.log('OKAY');
+   // console.log('OKAY');
 }
 
 start
@@ -191,7 +191,7 @@ Instanciation
 Expression
  = head:FirstPriority3Term tail:(_ Priority3Operator _ Priority3Term)* {
       return tail.reduce((result, element) => {
-         return (result + element[1] + "(" + element[3]) + ")";
+         return (result + element[1] + element[3]);
       }, head);
  }
 
@@ -220,14 +220,14 @@ FirstPriority3Term
 Priority3Term
  = head:Priority2Term tail:(_ Priority2Operator _ Priority2Term)* {
       return tail.reduce((result, element) => {
-         return result + element[1] + "(" + element[3] + ")";
+         return result + element[1] + element[3];
       }, head);
  }
 
 Priority2Term
  = head:Factor tail:(_ Priority1Operator _ Factor)* {
       return tail.reduce((result, element) => {
-         return result + element[1] + "(" + element[3] + ")";
+         return result + element[1] + element[3];
       }, head);
  }
 
@@ -301,11 +301,11 @@ S4MLObject
 ContiguousFactors
  = _ firstObject:FirstContiguousFactor _ list:(_ Factor _)+ {
       let varsArray = list.reduce((result, currentEl) => {
-         result.push("(" + currentEl[1] + ")");
+         result.push(currentEl[1]);
          return result;
       }, [firstObject]);
 
-      return (varsArray.join('<Operator[Multiply]>'));
+      return (varsArray.join('*'));
  }
 
 /***********************************
@@ -343,7 +343,7 @@ Factor_bracketed
  * */
 Fraction
 = "\\frac{" _ numerator:Expression _ "}{" _ denominator:Expression _ "}" {
-      return (numerator + "<Operator[Divide]>(" + denominator + ")");
+      return ("((" + numerator + ")/(" + denominator + "))");
 }
 
 /***********************************
@@ -480,7 +480,7 @@ VarAtLargeIdentifier
  = varName:(VectorIdentifier 
  / Constant
  / VarIdentifier) {
-    return "<VAR[" + varName + "]>";
+    return "VAR_" + varName;
  }
 
 /***********************************
@@ -517,7 +517,7 @@ FunctionMarker
  * */
 VectorIdentifier
  = "\\vec{" varIdentifier:VarIdentifier "}" {
-      return ("Vector{" + varIdentifier + "}");
+      return ("VECTOR_" + varIdentifier);
  }
 
 /***********************************
@@ -596,7 +596,7 @@ Char
  * */
 Text
  = "\\text{" str:[A-Za-z0-9°]+ "}" {
-      return ("Text{" + str.join('') + "}");
+      return ("TEXT_" + str.join(''));
  }
 
 /***********************************
@@ -739,7 +739,7 @@ _ "OptionnalWhiteSpaces" = ("\\ " / " ")*
  * */
 Operator_plus
  = "+" {
-    return "<Operator[Plus]>";
+    return "+";
  }
 
 /***********************************
@@ -748,7 +748,7 @@ Operator_plus
  * */
 Operator_minus
  = "-" {
-    return "<Operator[Minus]>";
+    return "-";
  }
 
 /***********************************
@@ -757,12 +757,12 @@ Operator_minus
  * */
 Operator_multiply
  = ("\\cdot " / "\\cdot") {
-      return "<Operator[Multiply]>";
+      return "*";
  }
 
  Operator_divide
  = "/" {
-    return "<Operator[Divide]>";
+    return "/";
  }
 
 /***********************************
@@ -771,7 +771,7 @@ Operator_multiply
  * */
 Operator_pow
  = "^" {
-    return "Operator[Pow]";
+    return "^";
  }
 
 /***********************************
@@ -780,7 +780,7 @@ Operator_pow
  * */
 Operator_cross
  = ("\\times " / "\\times") {
-    return "<Operator[Cross]>";
+    return "*";
  }
 
 /***********************************
