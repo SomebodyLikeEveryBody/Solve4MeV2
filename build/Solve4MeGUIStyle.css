@@ -430,6 +430,19 @@ button.alone
     -o-user-select: none !important;
 }
 
+.error_message
+{
+    padding: 10px;
+    border: #9d0000 3px solid;
+    width: calc(100% - 26px);
+    color: red;
+    background-color: lightblue;
+    font-size: 0.6em;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 @media only screen and (max-width: 1000px)
 {
     div#Solve4Me_app

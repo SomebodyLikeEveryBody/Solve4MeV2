@@ -542,7 +542,7 @@
             return "<Operator[Backslash]>";
          },
         peg$c219 = function() {
-            return "<Operator[Opposite]>"
+            return "-"
          },
         peg$c220 = function() {
             return "<Operator[Identity]>"

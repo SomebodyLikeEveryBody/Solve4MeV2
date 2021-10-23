@@ -632,9 +632,11 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.processContent = function () {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
+        g_outputScreen.removeMessageOf(this);
         try {
             console.log('-------------');
             console.log(nerdamer(S4MLParser.parse(this.value(), { processedMathLineInput: this })).toString());
+            // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
             console.log('-------------');
             this.signalNoError();
         }
@@ -1091,6 +1093,7 @@ var MathLineInput = /** @class */ (function () {
         this._jQEl.attr('title', "[" + errorObject.name + "]: " + errorObject.message);
         this.setStyle();
         g_s4mCoreMemory.storeErroredMathLineInput(this);
+        g_outputScreen.displayError(errorObject, this);
         return this;
     };
     MathLineInput.prototype.signalNoError = function () {

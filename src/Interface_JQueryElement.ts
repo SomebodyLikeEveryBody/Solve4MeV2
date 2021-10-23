@@ -46,4 +46,5 @@ interface JQueryElement {
     get(pIndex: Number): JQueryElement;
     data(pstr: String, pvalue: any): void;
     eq(pIndex: Number): JQueryElement;
+    toggle(pTime: Number): JQueryElement;
 }

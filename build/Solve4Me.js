@@ -283,10 +283,64 @@ var InputScren = /** @class */ (function () {
     };
     return InputScren;
 }());
+var OutputScreenMessage = /** @class */ (function () {
+    function OutputScreenMessage(pMessage, pMathLineInputSource) {
+        this._JQEl = $('<div>' + pMessage + '</div>');
+        this._mathLineInputSource = pMathLineInputSource;
+        this._JQEl.fadeOut(0);
+    }
+    Object.defineProperty(OutputScreenMessage.prototype, "mathLineInputSource", {
+        get: function () {
+            return this._mathLineInputSource;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    OutputScreenMessage.prototype.appendTo = function (pElement) {
+        this._JQEl.appendTo(pElement);
+        return this;
+    };
+    OutputScreenMessage.prototype.insertBefore = function (pElement) {
+        this._JQEl.insertBefore(pElement);
+        return this;
+    };
+    OutputScreenMessage.prototype.toggle = function () {
+        this._JQEl.show(200);
+        return this;
+    };
+    OutputScreenMessage.prototype.removeFromDOM = function () {
+        var _this = this;
+        this._JQEl.hide(200, function () {
+            _this._JQEl.remove();
+        });
+        return this;
+    };
+    return OutputScreenMessage;
+}());
+var OutputScreenErrorMessage = /** @class */ (function (_super) {
+    __extends(OutputScreenErrorMessage, _super);
+    function OutputScreenErrorMessage(pErrorMessage, pMathLineInputSource) {
+        var _this = _super.call(this, pErrorMessage, pMathLineInputSource) || this;
+        _this._JQEl.addClass("error_message");
+        return _this;
+    }
+    return OutputScreenErrorMessage;
+}(OutputScreenMessage));
+var OutputScreenAnswerMessage = /** @class */ (function (_super) {
+    __extends(OutputScreenAnswerMessage, _super);
+    function OutputScreenAnswerMessage(pErrorMessage, pMathLineInputSource) {
+        var _this = _super.call(this, pErrorMessage, pMathLineInputSource) || this;
+        _this._JQEl.addClass("answer_message");
+        return _this;
+    }
+    return OutputScreenAnswerMessage;
+}(OutputScreenMessage));
 var OutputScreen = /** @class */ (function () {
     function OutputScreen(pJQueryElement) {
         this._jQEl = pJQueryElement;
         this._isVisible = true;
+        this._messages = [];
+        this._jQElContent = this._jQEl.find('#output_screen');
         this.setEvents();
     }
     OutputScreen.prototype.setEvents = function () {
@@ -309,6 +363,20 @@ var OutputScreen = /** @class */ (function () {
     OutputScreen.prototype.show = function (pFunction) {
         this._jQEl.fadeIn(100, pFunction);
         this.setVisibilityTo(true);
+        return this;
+    };
+    OutputScreen.prototype.displayError = function (pErrorObject, pErroredMathLineInput) {
+        var newErrorMessage = new OutputScreenErrorMessage("[" + pErrorObject.name + " at Line [1]]: " + pErrorObject.message, pErroredMathLineInput);
+        this._messages.push(newErrorMessage);
+        newErrorMessage.insertBefore(this._jQElContent.find('hr')).toggle();
+        return this;
+    };
+    OutputScreen.prototype.removeMessageOf = function (pMathLineInput) {
+        var messageToRemove = this._messages.filter(function (messageEl) { return (messageEl.mathLineInputSource === pMathLineInput); });
+        if (messageToRemove[0] !== undefined) {
+            this._messages = this._messages.filter(function (messageEl) { return (messageEl !== messageToRemove[0]); });
+            messageToRemove[0].removeFromDOM();
+        }
         return this;
     };
     return OutputScreen;

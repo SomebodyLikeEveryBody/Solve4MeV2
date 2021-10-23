@@ -2,6 +2,7 @@ declare const S4MLParser: any;
 declare const MathQuill: any;
 declare const g_s4mCoreMemory: any;
 declare const g_inputScreen: any;
+declare const g_outputScreen: any;
 declare const g_virtualKeyboard: any;
 declare const nerdamer: any;
 declare function $(pStr: String | JQueryElement): JQueryElement;
@@ -374,10 +375,12 @@ class MathLineInput {
 
     public processContent(): MathLineInput {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
+        g_outputScreen.removeMessageOf(this);
         
         try {
             console.log('-------------');
             console.log(nerdamer(S4MLParser.parse(this.value(), {processedMathLineInput: this})).toString());
+            // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
             console.log('-------------');
             this.signalNoError();
         } catch (e) {
@@ -926,6 +929,7 @@ class MathLineInput {
         this.setStyle();
 
         g_s4mCoreMemory.storeErroredMathLineInput(this);
+        g_outputScreen.displayError(errorObject, this);
 
         return this;
     }

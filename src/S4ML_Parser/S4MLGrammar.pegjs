@@ -1,4 +1,4 @@
-   
+
 /******************************************************************************
 *MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
 *MMMMMMMMMMMWKOxdxOXWMMMMMMMWNXKK0OOO00KKXXNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*
@@ -817,7 +817,7 @@ Operator_backslash
  * */
 Operator_opposite
  = "-" {
-    return "<Operator[Opposite]>"
+    return "-"
  }
 
 /***********************************
