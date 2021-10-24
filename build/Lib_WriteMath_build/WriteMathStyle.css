@@ -1,9 +1,20 @@
+.mathlineinput_container
+{
+    padding: 0px;
+    margin: 0px;
+    /* background-color: red; */
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
 .mathLineInput
 {
+    display: block;
     margin: 0px;
     margin-bottom: 10px;
     padding: 10px;
-    width: calc(100% - 24px);
+    width: calc(100% - 64px);
     border: none;
     background-color: #cfe2e8;
     border-radius: 10px;
@@ -17,6 +28,16 @@
     color: black;
     border: #5d8e9e 2px solid;
 
+}
+
+.number_line
+{
+    width: 40px;
+    /* background-color: green; */
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 .GivenLine

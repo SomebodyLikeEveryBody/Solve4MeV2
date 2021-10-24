@@ -1,9 +1,14 @@
+interface MessageObject {
+    title: String;
+    body: String;
+}
+
 class OutputScreenMessage {
     protected _JQEl: JQueryElement;
     protected _mathLineInputSource: MathLineInput;
 
-    public constructor(pMessage: String, pMathLineInputSource: MathLineInput) {
-        this._JQEl = $('<div>' + pMessage +'</div>');
+    public constructor(pMessage: MessageObject, pMathLineInputSource: MathLineInput) {
+        this._JQEl = $('<div><div>' + pMessage.title + '</div><div>' + pMessage.body + '</div></div>');
         this._mathLineInputSource = pMathLineInputSource;
 
         this._JQEl.fadeOut(0);
@@ -38,14 +43,14 @@ class OutputScreenMessage {
 }
 
 class OutputScreenErrorMessage extends OutputScreenMessage {
-    public constructor(pErrorMessage: String, pMathLineInputSource: MathLineInput) {
+    public constructor(pErrorMessage: MessageObject, pMathLineInputSource: MathLineInput) {
         super(pErrorMessage, pMathLineInputSource);
         this._JQEl.addClass("error_message")
     }
 }
 
 class OutputScreenAnswerMessage extends OutputScreenMessage {
-    public constructor(pAnswerMessage: String, pMathLineInputSource: MathLineInput) {
+    public constructor(pAnswerMessage: MessageObject, pMathLineInputSource: MathLineInput) {
         super(pAnswerMessage, pMathLineInputSource);
         this._JQEl.addClass("answer_message");
     }
@@ -97,7 +102,12 @@ class OutputScreen {
     }
 
     public displayError(pErrorObject: ErrorObject, pErroredMathLineInput: MathLineInput): OutputScreen {
-        let newErrorMessage = new OutputScreenErrorMessage("[Line [1]]:<br />[" + pErrorObject.name + "]: " + pErrorObject.message, pErroredMathLineInput);
+        let message = {
+            title: "[Line [1]]:",
+            body: "[" + pErrorObject.name + "]: " + pErrorObject.message,
+        }
+        
+        let newErrorMessage = new OutputScreenErrorMessage(message, pErroredMathLineInput);
 
         this._messages.push(newErrorMessage);
         newErrorMessage.insertBefore(this._jQElContent.find('hr')).toggle();
@@ -105,7 +115,12 @@ class OutputScreen {
     }
 
     public displayAnswerMessage(pAnswerMessage: String, pMathLineInput: MathLineInput): OutputScreen {
-        let newAnswerMessage = new OutputScreenAnswerMessage(pAnswerMessage, pMathLineInput);
+        let message = {
+            title: "[Line [1]]:",
+            body: pAnswerMessage,
+        }
+
+        let newAnswerMessage = new OutputScreenAnswerMessage(message, pMathLineInput);
 
         this._messages.push(newAnswerMessage);
         newAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();

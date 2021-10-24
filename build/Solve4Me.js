@@ -281,11 +281,14 @@ var InputScren = /** @class */ (function () {
         this._showHideOutputScreenButton.click();
         return this;
     };
+    InputScren.prototype.addNewMathLineInput = function () {
+        return this;
+    };
     return InputScren;
 }());
 var OutputScreenMessage = /** @class */ (function () {
     function OutputScreenMessage(pMessage, pMathLineInputSource) {
-        this._JQEl = $('<div>' + pMessage + '</div>');
+        this._JQEl = $('<div><div>' + pMessage.title + '</div><div>' + pMessage.body + '</div></div>');
         this._mathLineInputSource = pMathLineInputSource;
         this._JQEl.fadeOut(0);
     }
@@ -366,13 +369,21 @@ var OutputScreen = /** @class */ (function () {
         return this;
     };
     OutputScreen.prototype.displayError = function (pErrorObject, pErroredMathLineInput) {
-        var newErrorMessage = new OutputScreenErrorMessage("[Line [1]]:<br />[" + pErrorObject.name + "]: " + pErrorObject.message, pErroredMathLineInput);
+        var message = {
+            title: "[Line [1]]:",
+            body: "[" + pErrorObject.name + "]: " + pErrorObject.message,
+        };
+        var newErrorMessage = new OutputScreenErrorMessage(message, pErroredMathLineInput);
         this._messages.push(newErrorMessage);
         newErrorMessage.insertBefore(this._jQElContent.find('hr')).toggle();
         return this;
     };
     OutputScreen.prototype.displayAnswerMessage = function (pAnswerMessage, pMathLineInput) {
-        var newAnswerMessage = new OutputScreenAnswerMessage(pAnswerMessage, pMathLineInput);
+        var message = {
+            title: "[Line [1]]:",
+            body: pAnswerMessage,
+        };
+        var newAnswerMessage = new OutputScreenAnswerMessage(message, pMathLineInput);
         this._messages.push(newAnswerMessage);
         newAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
         return this;

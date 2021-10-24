@@ -96,4 +96,8 @@ class InputScren {
         this._showHideOutputScreenButton.click();
         return this;
     }
+
+    public addNewMathLineInput(): InputScren {
+        return this;
+    }
 }

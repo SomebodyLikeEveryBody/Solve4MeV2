@@ -324,7 +324,8 @@ var g_keywordsList = [
 var MathLineInput = /** @class */ (function () {
     function MathLineInput(pContainer, pSaverNOpenerStateManager) {
         var _this = this;
-        this._jQEl = $('<p class="mathLineInput"></p>');
+        this._jQWrapperEl = $('<div class="mathlineinput_container"><div class="number_line"><p>1:</p></div><div class="mathLineInput"></div></div>');
+        this._jQEl = this._jQWrapperEl.find('.mathLineInput');
         this._nextMathLineInput = null;
         this._previousMathLineInput = null;
         this._isDeletable = true;
@@ -468,7 +469,7 @@ var MathLineInput = /** @class */ (function () {
         return this.value() === '';
     };
     MathLineInput.prototype.appendTo = function (pElement) {
-        this._jQEl.appendTo(pElement);
+        this._jQWrapperEl.appendTo(pElement);
         return this;
     };
     MathLineInput.prototype.appendToContainer = function () {
@@ -476,11 +477,11 @@ var MathLineInput = /** @class */ (function () {
         return this;
     };
     MathLineInput.prototype.insertAfter = function (pElement) {
-        this._jQEl.insertAfter(pElement);
+        this._jQWrapperEl.insertAfter(pElement);
         return this;
     };
     MathLineInput.prototype.insertBefore = function (pElement) {
-        this._jQEl.insertBefore(pElement);
+        this._jQWrapperEl.insertBefore(pElement);
         return this;
     };
     MathLineInput.prototype.hasPreviousMathLineInput = function () {
@@ -506,7 +507,7 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.createNewMathLineInputAndAppendAfter = function (pMathLineInput) {
         var newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
-        newMathLineInput.insertAfter(pMathLineInput.jQEl);
+        newMathLineInput.insertAfter(pMathLineInput._jQWrapperEl);
         if (pMathLineInput.hasNextMathLineInput()) {
             pMathLineInput.nextMathLineInput.previousMathLineInput = newMathLineInput;
             newMathLineInput.nextMathLineInput = pMathLineInput.nextMathLineInput;
@@ -517,7 +518,7 @@ var MathLineInput = /** @class */ (function () {
         return newMathLineInput;
     };
     MathLineInput.prototype.getOffset = function () {
-        return this._jQEl.offset();
+        return this._jQWrapperEl.offset();
     };
     MathLineInput.prototype.getCursorCoordinates = function () {
         this.mathField.focus();
@@ -540,7 +541,7 @@ var MathLineInput = /** @class */ (function () {
         return this;
     };
     MathLineInput.prototype.removeFromDOM = function () {
-        this._jQEl.remove();
+        this._jQWrapperEl.remove();
         g_outputScreen.removeMessagesOf(this);
         return this;
     };
@@ -638,7 +639,6 @@ var MathLineInput = /** @class */ (function () {
             var parsedStr = S4MLParser.parse(this.value(), { processedMathLineInput: this });
             if (parsedStr !== "[Unprocess]") {
                 var nerdamerAnswer = nerdamer(parsedStr).toString();
-                console.log(nerdamerAnswer);
                 if (nerdamerAnswer !== "undefined") {
                     g_outputScreen.displayAnswerMessage(nerdamerAnswer, this);
                 }

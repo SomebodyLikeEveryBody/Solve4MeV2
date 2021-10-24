@@ -36,7 +36,7 @@ interface JQueryElement {
     outerHeight(): Number;
     text(pStr: String): JQueryElement;
     val(pStr?: String): String;
-    attr(pProp: String, pBool: Boolean): JQueryElement;
+    attr(pProp: String, pValue: Boolean | String): JQueryElement;
     click(pFunction?: Function): JQueryElement;
     mousedown(pFunction?: Function): JQueryElement;
     children(): JQueryElement;
