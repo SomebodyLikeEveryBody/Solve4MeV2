@@ -6,15 +6,17 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    margin-bottom: 10px;
+    justify-content: center;
 }
 
 .mathLineInput
 {
     display: block;
-    margin: 0px;
-    margin-bottom: 10px;
+    margin: 0px;    
     padding: 10px;
     width: calc(100% - 64px);
+    height: auto;
     border: none;
     background-color: #cfe2e8;
     border-radius: 10px;
@@ -22,6 +24,7 @@
 }
 
 .mathLineInput:focus-within {
+    width: calc(100% - 68px);
     background: none;
     height: auto;
     background-color: lightgrey;
@@ -33,11 +36,19 @@
 .number_line
 {
     width: 40px;
-    /* background-color: green; */
+    vertical-align: middle;
     text-align: center;
+    font-size: 0.7em;
+
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.number_line span
+{
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .GivenLine
@@ -64,7 +75,7 @@
 {
     color: transparent;
     background-color: #4a8ba0;
-    height: 2px;
+    /* height: 2px; */
 }
 
 .errorLine

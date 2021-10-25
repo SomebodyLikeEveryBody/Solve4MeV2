@@ -10,20 +10,22 @@ declare function $(pStr: String | JQueryElement): JQueryElement;
 class MathLineInput {
     protected _jQEl: JQueryElement;
     protected _jQWrapperEl: JQueryElement;
+    protected _container: JQueryElement;
+    protected _mathField: any;
+
     protected _nextMathLineInput: MathLineInput;
     protected _previousMathLineInput: MathLineInput;
     protected _isDeletable: Boolean;
-    protected _autoCompleter: AutoCompleter;
-    protected _undoRedoManager: UndoRedoManager;
-    protected _shortcutsManager: ShortcutsManager;
-    protected _container: JQueryElement;
-    protected _saverNOpenerStateManager: SaverNOpenerStateManager;
-    protected _mathField: any;
     protected _lastValueBeforeFocusOut: String;
     protected _isErrored: Boolean;
 
+    protected _autoCompleter: AutoCompleter;
+    protected _undoRedoManager: UndoRedoManager;
+    protected _shortcutsManager: ShortcutsManager;
+    protected _saverNOpenerStateManager: SaverNOpenerStateManager;
+
     public constructor(pContainer: JQueryElement, pSaverNOpenerStateManager: SaverNOpenerStateManager) {
-        this._jQWrapperEl = $('<div class="mathlineinput_container"><div class="number_line"><p>1:</p></div><div class="mathLineInput"></div></div>');
+        this._jQWrapperEl = $('<div class="mathlineinput_container"><div class="number_line"><span>[1]</span></div><div class="mathLineInput"></div></div>');
         this._jQEl = this._jQWrapperEl.find('.mathLineInput');
         this._nextMathLineInput = null;
         this._previousMathLineInput = null;
@@ -200,7 +202,7 @@ class MathLineInput {
 
     public createNewMathLineInputAndAppendBefore(pMathLineInput: MathLineInput): MathLineInput {
         const newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
-              newMathLineInput.insertBefore(pMathLineInput.jQEl);
+              newMathLineInput.insertBefore(pMathLineInput._jQWrapperEl);
               newMathLineInput.nextMathLineInput = pMathLineInput;
 
             if (pMathLineInput.hasPreviousMathLineInput()) {
@@ -340,6 +342,22 @@ class MathLineInput {
         return this;
     }
 
+    protected boldNumberLine(): MathLineInput {
+        this._jQWrapperEl.find('.number_line span').css({
+            'font-weight': 'bold',
+        });
+
+        return this;
+    }
+
+    protected unBoldNumberLine(): MathLineInput {
+        this._jQWrapperEl.find('.number_line span').css({
+            'font-weight': 'lighter',
+        });
+
+        return this;
+    }
+
     protected setEvents(): MathLineInput {
         this.setKeyDownEvents();
         this.setKeyUpEvents();
@@ -349,13 +367,16 @@ class MathLineInput {
                 g_s4mCoreMemory.currentMathLineInputFocusedIs(this);
             }
 
-            this.adjustContainerScrollToMe();
+            this.adjustContainerScrollToMe()
+                .boldNumberLine();
         });
 
         this._jQEl.focusout(() => {
             this._autoCompleter.hide();
             g_s4mCoreMemory.lastMathLineInputFocusedOutIs(this);
             g_s4mCoreMemory.setCurrentMathLineInputFocusedToNull();
+
+            this.unBoldNumberLine();
             
             // S4M interactions:
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {

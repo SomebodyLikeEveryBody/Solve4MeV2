@@ -324,7 +324,7 @@ var g_keywordsList = [
 var MathLineInput = /** @class */ (function () {
     function MathLineInput(pContainer, pSaverNOpenerStateManager) {
         var _this = this;
-        this._jQWrapperEl = $('<div class="mathlineinput_container"><div class="number_line"><p>1:</p></div><div class="mathLineInput"></div></div>');
+        this._jQWrapperEl = $('<div class="mathlineinput_container"><div class="number_line"><span>[1]</span></div><div class="mathLineInput"></div></div>');
         this._jQEl = this._jQWrapperEl.find('.mathLineInput');
         this._nextMathLineInput = null;
         this._previousMathLineInput = null;
@@ -495,7 +495,7 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.createNewMathLineInputAndAppendBefore = function (pMathLineInput) {
         var newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
-        newMathLineInput.insertBefore(pMathLineInput.jQEl);
+        newMathLineInput.insertBefore(pMathLineInput._jQWrapperEl);
         newMathLineInput.nextMathLineInput = pMathLineInput;
         if (pMathLineInput.hasPreviousMathLineInput()) {
             newMathLineInput.previousMathLineInput = pMathLineInput.previousMathLineInput;
@@ -602,6 +602,18 @@ var MathLineInput = /** @class */ (function () {
         }
         return this;
     };
+    MathLineInput.prototype.boldNumberLine = function () {
+        this._jQWrapperEl.find('.number_line span').css({
+            'font-weight': 'bold',
+        });
+        return this;
+    };
+    MathLineInput.prototype.unBoldNumberLine = function () {
+        this._jQWrapperEl.find('.number_line span').css({
+            'font-weight': 'lighter',
+        });
+        return this;
+    };
     MathLineInput.prototype.setEvents = function () {
         var _this = this;
         this.setKeyDownEvents();
@@ -610,12 +622,14 @@ var MathLineInput = /** @class */ (function () {
             if (g_s4mCoreMemory !== undefined) {
                 g_s4mCoreMemory.currentMathLineInputFocusedIs(_this);
             }
-            _this.adjustContainerScrollToMe();
+            _this.adjustContainerScrollToMe()
+                .boldNumberLine();
         });
         this._jQEl.focusout(function () {
             _this._autoCompleter.hide();
             g_s4mCoreMemory.lastMathLineInputFocusedOutIs(_this);
             g_s4mCoreMemory.setCurrentMathLineInputFocusedToNull();
+            _this.unBoldNumberLine();
             // S4M interactions:
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
                 g_s4mCoreMemory.currentMathLineInputFocused = null;
