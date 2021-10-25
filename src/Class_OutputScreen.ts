@@ -103,7 +103,7 @@ class OutputScreen {
 
     public displayError(pErrorObject: ErrorObject, pErroredMathLineInput: MathLineInput): OutputScreen {
         let message = {
-            title: "[Line [1]]:",
+            title: "Line [" + pErroredMathLineInput.numberLine + "]:",
             body: "[" + pErrorObject.name + "]: " + pErrorObject.message,
         }
         
@@ -114,10 +114,10 @@ class OutputScreen {
         return this;
     }
 
-    public displayAnswerMessage(pAnswerMessage: String, pMathLineInput: MathLineInput): OutputScreen {
+    public displayAnswerMessage(pAnswerStr: String, pMathLineInput: MathLineInput): OutputScreen {
         let message = {
-            title: "[Line [1]]:",
-            body: pAnswerMessage,
+            title: "Line [" + pMathLineInput.numberLine + "]:",
+            body: pAnswerStr,
         }
 
         let newAnswerMessage = new OutputScreenAnswerMessage(message, pMathLineInput);

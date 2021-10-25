@@ -1,6 +1,7 @@
 declare function $(pStr: String): JQueryElement;
 
 interface MathLineInput {
+    numberLine: number;
     focus(): MathLineInput;
     value(): String;
     setValue(pValue: String): MathLineInput;

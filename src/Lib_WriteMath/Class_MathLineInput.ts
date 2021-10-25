@@ -18,6 +18,7 @@ class MathLineInput {
     protected _isDeletable: Boolean;
     protected _lastValueBeforeFocusOut: String;
     protected _isErrored: Boolean;
+    protected _numberLine: number;
 
     protected _autoCompleter: AutoCompleter;
     protected _undoRedoManager: UndoRedoManager;
@@ -34,6 +35,7 @@ class MathLineInput {
         this._saverNOpenerStateManager = pSaverNOpenerStateManager;
         this._lastValueBeforeFocusOut = "";
         this._isErrored = false;
+        this._numberLine = 1;
 
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
@@ -132,6 +134,10 @@ class MathLineInput {
         return this._saverNOpenerStateManager;
     }
 
+    public get numberLine (): number {
+        return this._numberLine;
+    }
+
     /* * * * * * 
      * Methods * 
      * * * * * */
@@ -202,34 +208,41 @@ class MathLineInput {
 
     public createNewMathLineInputAndAppendBefore(pMathLineInput: MathLineInput): MathLineInput {
         const newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
-              newMathLineInput.insertBefore(pMathLineInput._jQWrapperEl);
               newMathLineInput.nextMathLineInput = pMathLineInput;
 
-            if (pMathLineInput.hasPreviousMathLineInput()) {
-                newMathLineInput.previousMathLineInput = pMathLineInput.previousMathLineInput;
-                pMathLineInput.previousMathLineInput.nextMathLineInput = newMathLineInput;
-            }
+              newMathLineInput.insertBefore(pMathLineInput._jQWrapperEl)
+                              .updateNumberLineNDisplay(this._numberLine)
+                              .incrementFollowingsMathLineInputsNumberLine();
 
-            pMathLineInput.previousMathLineInput = newMathLineInput;
-            newMathLineInput.isDeletable = true;
+        if (pMathLineInput.hasPreviousMathLineInput()) {
+            newMathLineInput.previousMathLineInput = pMathLineInput.previousMathLineInput;
+            pMathLineInput.previousMathLineInput.nextMathLineInput = newMathLineInput;
+        }
 
-            return newMathLineInput;
+        pMathLineInput.previousMathLineInput = newMathLineInput;
+        newMathLineInput.isDeletable = true;
+
+        return newMathLineInput;
     }
 
     public createNewMathLineInputAndAppendAfter(pMathLineInput: MathLineInput): MathLineInput {
         const newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
-              newMathLineInput.insertAfter(pMathLineInput._jQWrapperEl);
 
-            if (pMathLineInput.hasNextMathLineInput()) {
-                pMathLineInput.nextMathLineInput.previousMathLineInput = newMathLineInput;
-                newMathLineInput.nextMathLineInput = pMathLineInput.nextMathLineInput;
-            }
+              newMathLineInput.insertAfter(pMathLineInput._jQWrapperEl)
+                              .updateNumberLineNDisplay(this._numberLine + 1);
 
-            pMathLineInput.nextMathLineInput = newMathLineInput;
-            newMathLineInput.previousMathLineInput = pMathLineInput;
-            newMathLineInput.isDeletable = true; 
+        if (pMathLineInput.hasNextMathLineInput()) {
+            pMathLineInput.nextMathLineInput.previousMathLineInput = newMathLineInput;
+            newMathLineInput.nextMathLineInput = pMathLineInput.nextMathLineInput;
 
-            return newMathLineInput;
+            newMathLineInput.incrementFollowingsMathLineInputsNumberLine();
+        }
+
+        pMathLineInput.nextMathLineInput = newMathLineInput;
+        newMathLineInput.previousMathLineInput = pMathLineInput;
+        newMathLineInput.isDeletable = true; 
+
+        return newMathLineInput;
     }
 
     public getOffset(): Offset {
@@ -258,6 +271,7 @@ class MathLineInput {
 
         this._autoCompleter.hide();
         this.removeFromDOM();
+        this.decrementFollowingsMathLineInputsNumberLine();
 
         return this;
     }
@@ -1001,6 +1015,42 @@ class MathLineInput {
 
     public redo(): MathLineInput {
         this._undoRedoManager.redo();
+        return this;
+    }
+
+    protected updateNumberLineNDisplay(pNumberLine: number): MathLineInput {
+        this._numberLine = pNumberLine;
+        let spanEl = this._jQWrapperEl.find('.number_line span');
+
+        spanEl.text('['+ (pNumberLine) + ']')
+        return this;
+    }
+
+    public incrementNumberLine(): MathLineInput {
+        this._numberLine++;
+        this.updateNumberLineNDisplay(this._numberLine);
+        return this;
+    }
+
+    public decrementNumberLine(): MathLineInput {
+        this._numberLine--;
+        this.updateNumberLineNDisplay(this._numberLine);
+        return this;
+    }
+
+    public incrementFollowingsMathLineInputsNumberLine(): MathLineInput {
+        for (let mathLineInput: MathLineInput = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
+            mathLineInput.incrementNumberLine();
+        }
+
+        return this;
+    }
+
+    public decrementFollowingsMathLineInputsNumberLine(): MathLineInput {
+        for (let mathLineInput: MathLineInput = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
+            mathLineInput.decrementNumberLine();
+        }
+
         return this;
     }
 }

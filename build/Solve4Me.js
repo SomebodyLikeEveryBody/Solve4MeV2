@@ -370,7 +370,7 @@ var OutputScreen = /** @class */ (function () {
     };
     OutputScreen.prototype.displayError = function (pErrorObject, pErroredMathLineInput) {
         var message = {
-            title: "[Line [1]]:",
+            title: "Line [" + pErroredMathLineInput.numberLine + "]:",
             body: "[" + pErrorObject.name + "]: " + pErrorObject.message,
         };
         var newErrorMessage = new OutputScreenErrorMessage(message, pErroredMathLineInput);
@@ -378,10 +378,10 @@ var OutputScreen = /** @class */ (function () {
         newErrorMessage.insertBefore(this._jQElContent.find('hr')).toggle();
         return this;
     };
-    OutputScreen.prototype.displayAnswerMessage = function (pAnswerMessage, pMathLineInput) {
+    OutputScreen.prototype.displayAnswerMessage = function (pAnswerStr, pMathLineInput) {
         var message = {
-            title: "[Line [1]]:",
-            body: pAnswerMessage,
+            title: "Line [" + pMathLineInput.numberLine + "]:",
+            body: pAnswerStr,
         };
         var newAnswerMessage = new OutputScreenAnswerMessage(message, pMathLineInput);
         this._messages.push(newAnswerMessage);

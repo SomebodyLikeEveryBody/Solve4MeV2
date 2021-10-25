@@ -333,6 +333,7 @@ var MathLineInput = /** @class */ (function () {
         this._saverNOpenerStateManager = pSaverNOpenerStateManager;
         this._lastValueBeforeFocusOut = "";
         this._isErrored = false;
+        this._numberLine = 1;
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
             autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln',
@@ -439,6 +440,13 @@ var MathLineInput = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(MathLineInput.prototype, "numberLine", {
+        get: function () {
+            return this._numberLine;
+        },
+        enumerable: false,
+        configurable: true
+    });
     /* * * * * *
      * Methods *
      * * * * * */
@@ -495,8 +503,10 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.createNewMathLineInputAndAppendBefore = function (pMathLineInput) {
         var newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
-        newMathLineInput.insertBefore(pMathLineInput._jQWrapperEl);
         newMathLineInput.nextMathLineInput = pMathLineInput;
+        newMathLineInput.insertBefore(pMathLineInput._jQWrapperEl)
+            .updateNumberLineNDisplay(this._numberLine)
+            .incrementFollowingsMathLineInputsNumberLine();
         if (pMathLineInput.hasPreviousMathLineInput()) {
             newMathLineInput.previousMathLineInput = pMathLineInput.previousMathLineInput;
             pMathLineInput.previousMathLineInput.nextMathLineInput = newMathLineInput;
@@ -507,10 +517,12 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.createNewMathLineInputAndAppendAfter = function (pMathLineInput) {
         var newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
-        newMathLineInput.insertAfter(pMathLineInput._jQWrapperEl);
+        newMathLineInput.insertAfter(pMathLineInput._jQWrapperEl)
+            .updateNumberLineNDisplay(this._numberLine + 1);
         if (pMathLineInput.hasNextMathLineInput()) {
             pMathLineInput.nextMathLineInput.previousMathLineInput = newMathLineInput;
             newMathLineInput.nextMathLineInput = pMathLineInput.nextMathLineInput;
+            newMathLineInput.incrementFollowingsMathLineInputsNumberLine();
         }
         pMathLineInput.nextMathLineInput = newMathLineInput;
         newMathLineInput.previousMathLineInput = pMathLineInput;
@@ -538,6 +550,7 @@ var MathLineInput = /** @class */ (function () {
         }
         this._autoCompleter.hide();
         this.removeFromDOM();
+        this.decrementFollowingsMathLineInputsNumberLine();
         return this;
     };
     MathLineInput.prototype.removeFromDOM = function () {
@@ -1143,6 +1156,34 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.redo = function () {
         this._undoRedoManager.redo();
+        return this;
+    };
+    MathLineInput.prototype.updateNumberLineNDisplay = function (pNumberLine) {
+        this._numberLine = pNumberLine;
+        var spanEl = this._jQWrapperEl.find('.number_line span');
+        spanEl.text('[' + (pNumberLine) + ']');
+        return this;
+    };
+    MathLineInput.prototype.incrementNumberLine = function () {
+        this._numberLine++;
+        this.updateNumberLineNDisplay(this._numberLine);
+        return this;
+    };
+    MathLineInput.prototype.decrementNumberLine = function () {
+        this._numberLine--;
+        this.updateNumberLineNDisplay(this._numberLine);
+        return this;
+    };
+    MathLineInput.prototype.incrementFollowingsMathLineInputsNumberLine = function () {
+        for (var mathLineInput = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
+            mathLineInput.incrementNumberLine();
+        }
+        return this;
+    };
+    MathLineInput.prototype.decrementFollowingsMathLineInputsNumberLine = function () {
+        for (var mathLineInput = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
+            mathLineInput.decrementNumberLine();
+        }
         return this;
     };
     return MathLineInput;

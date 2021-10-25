@@ -38,4 +38,5 @@ interface JQueryElement {
     attr(pProp: String, pValue: Boolean | String): JQueryElement;
     data(pStr: String, pValue: String): JQueryElement;
     get(pIndex: Number): JQueryElement;
+    text(): String;
 }
