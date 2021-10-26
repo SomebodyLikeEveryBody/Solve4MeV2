@@ -37,18 +37,22 @@
 {
     width: 40px;
     vertical-align: middle;
-    text-align: center;
+    text-align: left;
     font-size: 0.7em;
 
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+
+    opacity: 1;
 }
 
 .number_line span
 {
     display: inline-block;
     vertical-align: middle;
+
+    /* background-color: red; */
 }
 
 .GivenLine

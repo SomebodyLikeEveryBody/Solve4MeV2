@@ -324,7 +324,7 @@ var g_keywordsList = [
 var MathLineInput = /** @class */ (function () {
     function MathLineInput(pContainer, pSaverNOpenerStateManager) {
         var _this = this;
-        this._jQWrapperEl = $('<div class="mathlineinput_container"><div class="number_line"><span>[1]</span></div><div class="mathLineInput"></div></div>');
+        this._jQWrapperEl = $('<div class="mathlineinput_container"><div class="number_line"><span> [1]</span></div><div class="mathLineInput"></div></div>');
         this._jQEl = this._jQWrapperEl.find('.mathLineInput');
         this._nextMathLineInput = null;
         this._previousMathLineInput = null;
@@ -618,12 +618,14 @@ var MathLineInput = /** @class */ (function () {
     MathLineInput.prototype.boldNumberLine = function () {
         this._jQWrapperEl.find('.number_line span').css({
             'font-weight': 'bold',
+            'opacity': '1',
         });
         return this;
     };
     MathLineInput.prototype.unBoldNumberLine = function () {
         this._jQWrapperEl.find('.number_line span').css({
             'font-weight': 'lighter',
+            'opacity': '0.5',
         });
         return this;
     };
@@ -1161,7 +1163,7 @@ var MathLineInput = /** @class */ (function () {
     MathLineInput.prototype.updateNumberLineNDisplay = function (pNumberLine) {
         this._numberLine = pNumberLine;
         var spanEl = this._jQWrapperEl.find('.number_line span');
-        spanEl.text('[' + (pNumberLine) + ']');
+        spanEl.text(((this._numberLine < 10) ? ' ' : '') + '[' + (pNumberLine) + ']');
         return this;
     };
     MathLineInput.prototype.incrementNumberLine = function () {

@@ -26,7 +26,7 @@ class MathLineInput {
     protected _saverNOpenerStateManager: SaverNOpenerStateManager;
 
     public constructor(pContainer: JQueryElement, pSaverNOpenerStateManager: SaverNOpenerStateManager) {
-        this._jQWrapperEl = $('<div class="mathlineinput_container"><div class="number_line"><span>[1]</span></div><div class="mathLineInput"></div></div>');
+        this._jQWrapperEl = $('<div class="mathlineinput_container"><div class="number_line"><span> [1]</span></div><div class="mathLineInput"></div></div>');
         this._jQEl = this._jQWrapperEl.find('.mathLineInput');
         this._nextMathLineInput = null;
         this._previousMathLineInput = null;
@@ -359,6 +359,7 @@ class MathLineInput {
     protected boldNumberLine(): MathLineInput {
         this._jQWrapperEl.find('.number_line span').css({
             'font-weight': 'bold',
+            'opacity': '1',
         });
 
         return this;
@@ -367,6 +368,7 @@ class MathLineInput {
     protected unBoldNumberLine(): MathLineInput {
         this._jQWrapperEl.find('.number_line span').css({
             'font-weight': 'lighter',
+            'opacity': '0.5',
         });
 
         return this;
@@ -1022,7 +1024,7 @@ class MathLineInput {
         this._numberLine = pNumberLine;
         let spanEl = this._jQWrapperEl.find('.number_line span');
 
-        spanEl.text('['+ (pNumberLine) + ']')
+        spanEl.text(((this._numberLine < 10) ? ' ' : '') + '[' + (pNumberLine) + ']')
         return this;
     }
 
