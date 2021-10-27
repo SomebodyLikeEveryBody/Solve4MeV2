@@ -4,38 +4,42 @@ interface MessageObject {
 }
 
 class OutputScreenMessage {
-    protected _JQEl: JQueryElement;
+    protected _jQEl: JQueryElement;
     protected _mathLineInputSource: MathLineInput;
 
     public constructor(pMessage: MessageObject, pMathLineInputSource: MathLineInput) {
-        this._JQEl = $('<div><div>' + pMessage.title + '</div><div>' + pMessage.body + '</div></div>');
+        this._jQEl = $('<div><div>' + pMessage.title + '</div><div>' + pMessage.body + '</div></div>');
         this._mathLineInputSource = pMathLineInputSource;
 
-        this._JQEl.fadeOut(0);
+        this._jQEl.fadeOut(0);
     }
 
     public get mathLineInputSource(): MathLineInput {
         return this._mathLineInputSource;
     }
 
+    public get jQEl (): JQueryElement {
+        return this._jQEl;
+    }
+
     public appendTo(pElement: JQueryElement): OutputScreenMessage {
-        this._JQEl.appendTo(pElement);
+        this._jQEl.appendTo(pElement);
         return this;
     }
 
     public insertBefore(pElement: JQueryElement): OutputScreenMessage {
-        this._JQEl.insertBefore(pElement);
+        this._jQEl.insertBefore(pElement);
         return this;
     }
 
     public toggle(): OutputScreenMessage {
-        this._JQEl.show(200);
+        this._jQEl.show(200);
         return this;
     }
 
     public removeFromDOM(): OutputScreenMessage {
-        this._JQEl.hide(200, () => {
-            this._JQEl.remove();
+        this._jQEl.hide(200, () => {
+            this._jQEl.remove();
         });
         return this;
     }
@@ -45,14 +49,14 @@ class OutputScreenMessage {
 class OutputScreenErrorMessage extends OutputScreenMessage {
     public constructor(pErrorMessage: MessageObject, pMathLineInputSource: MathLineInput) {
         super(pErrorMessage, pMathLineInputSource);
-        this._JQEl.addClass("error_message")
+        this._jQEl.addClass("error_message")
     }
 }
 
 class OutputScreenAnswerMessage extends OutputScreenMessage {
     public constructor(pAnswerMessage: MessageObject, pMathLineInputSource: MathLineInput) {
         super(pAnswerMessage, pMathLineInputSource);
-        this._JQEl.addClass("answer_message");
+        this._jQEl.addClass("answer_message");
     }
 }
 
@@ -121,9 +125,29 @@ class OutputScreen {
         }
 
         let newAnswerMessage = new OutputScreenAnswerMessage(message, pMathLineInput);
-
+    
         this._messages.push(newAnswerMessage);
-        newAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
+
+        let messageJustAfter: OutputScreenMessage | null = null;
+        for (let outputScreenMessage of this._messages) {
+            if (outputScreenMessage.mathLineInputSource.numberLine > pMathLineInput.numberLine) {
+                if (messageJustAfter === null) {
+                    messageJustAfter = outputScreenMessage;
+                } else {
+                    if (outputScreenMessage.mathLineInputSource.numberLine < messageJustAfter.mathLineInputSource.numberLine ) {
+                        messageJustAfter = outputScreenMessage;
+                    }
+                }
+            }
+        }
+
+        if (messageJustAfter === null) {
+            newAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
+        } else {
+            newAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle();
+        }
+
+        
         return this;
     }
 
