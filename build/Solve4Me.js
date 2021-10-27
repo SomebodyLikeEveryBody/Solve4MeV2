@@ -288,7 +288,7 @@ var InputScren = /** @class */ (function () {
 }());
 var OutputScreenMessage = /** @class */ (function () {
     function OutputScreenMessage(pMessage, pMathLineInputSource) {
-        this._jQEl = $('<div><div>' + pMessage.title + '</div><div>' + pMessage.body + '</div></div>');
+        this._jQEl = $('<div><div class="message_title">' + pMessage.title + '</div><div class="message_body">' + pMessage.body + '</div></div>');
         this._mathLineInputSource = pMathLineInputSource;
         this._jQEl.fadeOut(0);
     }
@@ -323,6 +323,10 @@ var OutputScreenMessage = /** @class */ (function () {
         this._jQEl.hide(200, function () {
             _this._jQEl.remove();
         });
+        return this;
+    };
+    OutputScreenMessage.prototype.setTitleTo = function (pStr) {
+        this.jQEl.find('.message_title').text(pStr);
         return this;
     };
     return OutputScreenMessage;
@@ -375,56 +379,67 @@ var OutputScreen = /** @class */ (function () {
         this.setVisibilityTo(true);
         return this;
     };
-    OutputScreen.prototype.displayError = function (pErrorObject, pErroredMathLineInput) {
-        var message = {
+    OutputScreen.prototype.displayErrorMessage = function (pErrorObject, pErroredMathLineInput) {
+        var newErrorMessage = new OutputScreenErrorMessage({
             title: "Line [" + pErroredMathLineInput.numberLine + "]:",
             body: "[" + pErrorObject.name + "]: " + pErrorObject.message,
-        };
-        var newErrorMessage = new OutputScreenErrorMessage(message, pErroredMathLineInput);
+        }, pErroredMathLineInput);
         this._messages.push(newErrorMessage);
-        newErrorMessage.insertBefore(this._jQElContent.find('hr')).toggle();
+        this.appendMessageAtCorrectLocation(newErrorMessage);
         return this;
     };
-    OutputScreen.prototype.getMessageAfter = function (pMathLineInputSource) {
-        var messageJustAfter = null;
+    OutputScreen.prototype.displayAnswerMessage = function (pAnswerStr, pMathLineInputSource) {
+        var newAnswerMessage = new OutputScreenAnswerMessage({
+            title: "Line [" + pMathLineInputSource.numberLine + "]:",
+            body: pAnswerStr,
+        }, pMathLineInputSource);
+        this._messages.push(newAnswerMessage);
+        this.appendMessageAtCorrectLocation(newAnswerMessage);
+        return this;
+    };
+    OutputScreen.prototype.getMessageWhichIsAfterMessageOf = function (pMathLineInputSource) {
+        var retMessage = null;
         for (var _i = 0, _a = this._messages; _i < _a.length; _i++) {
             var outputScreenMessage = _a[_i];
             if (outputScreenMessage.mathLineInputSource.numberLine > pMathLineInputSource.numberLine) {
-                if (messageJustAfter === null) {
-                    messageJustAfter = outputScreenMessage;
+                if (retMessage === null) {
+                    retMessage = outputScreenMessage;
                 }
                 else {
-                    if (outputScreenMessage.mathLineInputSource.numberLine < messageJustAfter.mathLineInputSource.numberLine) {
-                        messageJustAfter = outputScreenMessage;
+                    if (outputScreenMessage.mathLineInputSource.numberLine < retMessage.mathLineInputSource.numberLine) {
+                        retMessage = outputScreenMessage;
                     }
                 }
             }
         }
-        return messageJustAfter;
+        return retMessage;
     };
-    OutputScreen.prototype.displayAnswerMessage = function (pAnswerStr, pMathLineInputSource) {
-        var message = {
-            title: "Line [" + pMathLineInputSource.numberLine + "]:",
-            body: pAnswerStr,
-        };
-        var newAnswerMessage = new OutputScreenAnswerMessage(message, pMathLineInputSource);
-        this._messages.push(newAnswerMessage);
-        var messageJustAfter = this.getMessageAfter(pMathLineInputSource);
+    OutputScreen.prototype.appendMessageAtCorrectLocation = function (pNewAnswerMessage) {
+        var messageJustAfter = this.getMessageWhichIsAfterMessageOf(pNewAnswerMessage.mathLineInputSource);
         if (messageJustAfter === null) {
-            newAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
+            pNewAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
         }
         else {
-            newAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle();
+            pNewAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle();
         }
         return this;
     };
-    OutputScreen.prototype.removeMessagesOf = function (pMathLineInput) {
-        var messageToRemove = this._messages.filter(function (messageEl) { return (messageEl.mathLineInputSource === pMathLineInput); });
+    OutputScreen.prototype.removeMessagesOf = function (pMathLineInputSource) {
+        var messageToRemove = this._messages.filter(function (messageEl) { return (messageEl.mathLineInputSource === pMathLineInputSource); });
         if (messageToRemove[0] !== undefined) {
             this._messages = this._messages.filter(function (messageEl) { return (messageEl !== messageToRemove[0]); });
             messageToRemove[0].removeFromDOM();
         }
         return this;
+    };
+    OutputScreen.prototype.getMessageGeneratedBy = function (pMathLineInput) {
+        for (var _i = 0, _a = this._messages; _i < _a.length; _i++) {
+            var message = _a[_i];
+            if (message.mathLineInputSource === pMathLineInput) {
+                return message;
+            }
+        }
+        return null;
     };
     return OutputScreen;
 }());

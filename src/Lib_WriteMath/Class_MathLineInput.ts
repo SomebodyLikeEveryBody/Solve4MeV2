@@ -1,4 +1,4 @@
-declare const S4MLParser: any;
+declare const S4MLParser: S4MLParser;
 declare const MathQuill: any;
 declare const g_s4mCoreMemory: any;
 declare const g_inputScreen: any;
@@ -8,8 +8,8 @@ declare const nerdamer: any;
 declare function $(pStr: String | JQueryElement): JQueryElement;
 
 class MathLineInput {
-    protected _jQEl: JQueryElement;
     protected _jQWrapperEl: JQueryElement;
+    protected _jQEl: JQueryElement;
     protected _container: JQueryElement;
     protected _mathField: any;
 
@@ -976,7 +976,7 @@ class MathLineInput {
         this.setStyle();
 
         g_s4mCoreMemory.storeErroredMathLineInput(this);
-        g_outputScreen.displayError(errorObject, this);
+        g_outputScreen.displayErrorMessage(errorObject, this);
 
         return this;
     }
@@ -1028,15 +1028,27 @@ class MathLineInput {
         return this;
     }
 
+    protected updateOutputScreenTitle(): MathLineInput {
+        let messageGeneratedByMe = g_outputScreen.getMessageGeneratedBy(this);
+        if (messageGeneratedByMe !== null) {
+            messageGeneratedByMe.setTitleTo('Line [' + this.numberLine + ']');
+        }
+
+        return this;
+    }
+
     public incrementNumberLine(): MathLineInput {
         this._numberLine++;
         this.updateNumberLineNDisplay(this._numberLine);
+        this.updateOutputScreenTitle();
+
         return this;
     }
 
     public decrementNumberLine(): MathLineInput {
         this._numberLine--;
         this.updateNumberLineNDisplay(this._numberLine);
+        this.updateOutputScreenTitle();
         return this;
     }
 

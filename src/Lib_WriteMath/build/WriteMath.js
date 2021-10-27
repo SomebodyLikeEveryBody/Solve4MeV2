@@ -1128,7 +1128,7 @@ var MathLineInput = /** @class */ (function () {
         this._jQEl.attr('title', "[" + errorObject.name + "]: " + errorObject.message);
         this.setStyle();
         g_s4mCoreMemory.storeErroredMathLineInput(this);
-        g_outputScreen.displayError(errorObject, this);
+        g_outputScreen.displayErrorMessage(errorObject, this);
         return this;
     };
     MathLineInput.prototype.signalNoError = function () {
@@ -1166,14 +1166,23 @@ var MathLineInput = /** @class */ (function () {
         spanEl.text(((this._numberLine < 10) ? ' ' : '') + '[' + (pNumberLine) + ']');
         return this;
     };
+    MathLineInput.prototype.updateOutputScreenTitle = function () {
+        var messageGeneratedByMe = g_outputScreen.getMessageGeneratedBy(this);
+        if (messageGeneratedByMe !== null) {
+            messageGeneratedByMe.setTitleTo('Line [' + this.numberLine + ']');
+        }
+        return this;
+    };
     MathLineInput.prototype.incrementNumberLine = function () {
         this._numberLine++;
         this.updateNumberLineNDisplay(this._numberLine);
+        this.updateOutputScreenTitle();
         return this;
     };
     MathLineInput.prototype.decrementNumberLine = function () {
         this._numberLine--;
         this.updateNumberLineNDisplay(this._numberLine);
+        this.updateOutputScreenTitle();
         return this;
     };
     MathLineInput.prototype.incrementFollowingsMathLineInputsNumberLine = function () {

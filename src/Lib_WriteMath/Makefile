@@ -2,6 +2,7 @@ all:
 	/usr/local/bin/tsc -t ES5 --outFile ./build/WriteMath.js \
     ./Enum_KeyCodes.ts \
     ./Interfaces/Interface_Coordinates2D.ts \
+    ./Interfaces/Interface_S4MLParser.ts \
     ./Interfaces/Interface_Offset.ts \
     ./Interfaces/Interface_KeywordObject.ts \
     ./Interfaces/Interface_JQueryElement.ts \
