@@ -118,19 +118,11 @@ class OutputScreen {
         return this;
     }
 
-    public displayAnswerMessage(pAnswerStr: String, pMathLineInput: MathLineInput): OutputScreen {
-        let message = {
-            title: "Line [" + pMathLineInput.numberLine + "]:",
-            body: pAnswerStr,
-        }
-
-        let newAnswerMessage = new OutputScreenAnswerMessage(message, pMathLineInput);
-    
-        this._messages.push(newAnswerMessage);
-
+    protected getMessageAfter(pMathLineInputSource: MathLineInput): OutputScreenMessage | null {
         let messageJustAfter: OutputScreenMessage | null = null;
+
         for (let outputScreenMessage of this._messages) {
-            if (outputScreenMessage.mathLineInputSource.numberLine > pMathLineInput.numberLine) {
+            if (outputScreenMessage.mathLineInputSource.numberLine > pMathLineInputSource.numberLine) {
                 if (messageJustAfter === null) {
                     messageJustAfter = outputScreenMessage;
                 } else {
@@ -141,13 +133,27 @@ class OutputScreen {
             }
         }
 
+        return messageJustAfter;
+    }
+
+    public displayAnswerMessage(pAnswerStr: String, pMathLineInputSource: MathLineInput): OutputScreen {
+        let message = {
+            title: "Line [" + pMathLineInputSource.numberLine + "]:",
+            body: pAnswerStr,
+        }
+
+        let newAnswerMessage = new OutputScreenAnswerMessage(message, pMathLineInputSource);
+    
+        this._messages.push(newAnswerMessage);
+
+        let messageJustAfter: OutputScreenMessage | null = this.getMessageAfter(pMathLineInputSource);
+
         if (messageJustAfter === null) {
             newAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
         } else {
             newAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle();
         }
 
-        
         return this;
     }
 
