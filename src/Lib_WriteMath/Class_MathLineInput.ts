@@ -423,7 +423,7 @@ class MathLineInput {
             if (parsedStr !== "[Unprocess]") {
                 let nerdamerAnswer = nerdamer(parsedStr).toString();
                 if (nerdamerAnswer !== "undefined") {
-                    g_outputScreen.displayAnswerMessage(nerdamerAnswer, this);
+                    g_outputScreen.displayAnswerMessage(nerdamer.convertToLaTeX(nerdamerAnswer), this);
                 }
                 
                 // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
