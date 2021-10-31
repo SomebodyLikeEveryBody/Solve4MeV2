@@ -360,9 +360,7 @@ Number
  * */
 Integer
 = _ digits:[0-9]+ {
-   return digits.reduce((total, currentEl) => {
-      return (total + currentEl);
-   }, '');
+   return digits.join('');
 }
 
 /***********************************
@@ -483,7 +481,7 @@ VarAtLargeIdentifier
  / SpecialChar
  / Constant
  / VarIdentifier) {
-    return "VAR_" + varName;
+    return (varName);
  }
 
 /***********************************
@@ -520,7 +518,7 @@ FunctionMarker
  * */
 VectorIdentifier
  = "\\vec{" varIdentifier:VarIdentifier "}" {
-      return ("VECTOR_" + varIdentifier);
+      return ('\\vec{' + varIdentifier + '}');
  }
 
 /***********************************
@@ -532,14 +530,32 @@ VectorIdentifier
  *     so x_{initial} is okay, but {initial}_x is not
  * */
 VarIdentifier
- = mainId:(Letter / MathBBLetter / SpecialLetter) index:IdentifierIndex? {
-      let retArray = [mainId];
+ = mainId:(Letter / MathBBLetter / SpecialLetter) indexes:IdentifierIndex? {
+      // let retArray = [mainId];
 
-      if (index !== null) {
-         retArray = retArray.concat(index);
+      // if (index !== null) {
+      //    retArray = retArray.concat(index);
+      // }
+
+      // return retArray.join('UNDERSCORE');
+
+      let indexesStr = '';
+      if (indexes !== null) {
+         indexes.reverse();
+
+         for (let index of indexes) {
+            if (indexesStr === '') {
+               indexesStr = index;
+            } else {
+               indexesStr = index + "_{" + indexesStr + "}";   
+            }
+            
+         }
+
+         indexesStr = "_{" + indexesStr + "}";
       }
 
-      return retArray.join('_');
+      return mainId + indexesStr;
  }
 
 /***********************************
@@ -563,6 +579,7 @@ IdentifierIndex
 SimpleIdentifierIndex
  = "_" char:Char { 
       return ([char]);
+      // return ("_{" + char + "}");
  }
 
 /***********************************
@@ -571,7 +588,7 @@ SimpleIdentifierIndex
  *     with multiple chars
  * */
 ComplexIdentifierIndex
- = "_" "{" indexIdentifier:(Number / Char / Text / SpecialLetter) nextIndex:IdentifierIndex? "}" {
+ = "_" "{" indexIdentifier:(Integer / Char / Text / SpecialLetter) nextIndex:IdentifierIndex? "}" {
       let retArray = [indexIdentifier];
       if (nextIndex !== null) {
          retArray = retArray.concat(nextIndex);
@@ -599,7 +616,7 @@ Char
  * */
 Text
  = "\\text{" str:[A-Za-z0-9°]+ "}" {
-      return ("TEXT_" + str.join(''));
+      return ("\\text{" + str.join('') +"}");
  }
 
 /***********************************
@@ -643,13 +660,12 @@ SpecialLetter
  / "\\psi"
  / "\\Omega"
  / "\\omega") {
-   return ("SPECIAL_" + str.substr(1));
+   return (str);
  }
 
- SpecialChar
- = "\\text{°}" {
-    return "SPECIAL_DEGREE";
- }
+SpecialChar
+ = "\\text{°}"
+ / "\\text{°C}"
 
 /***********************************
  * MathBBLetter: R, Z, Q, etc
@@ -658,8 +674,8 @@ SpecialLetter
  *     to define Sets in maths
  * */
 MathBBLetter
- = value:("\\mathbb{" Letter "}") {
-      return value.join('');
+ = "\\mathbb{" letter:Letter "}" {
+    return ("\\mathbb{" + letter + "}");
  }
 
 /***********************************

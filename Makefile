@@ -43,6 +43,10 @@ S4MLParser:
 	cd ./src/S4ML_Parser/ && /bin/make && cd ..
 	cp ./src/S4ML_Parser/S4MLParser.js ./build/
 
+NerdamerToLatexVarsTranslaterGrammar:
+	cd ./src/nerdamerToLatexVarsTranslater/ && make
+	cp ./src/nerdamerToLatexVarsTranslater/nerdamerToLatexVarsTranslater.js ./build/
+
 S4MMemory:
 	@echo ''
 	@echo '[Building Solve4Me Memory]'

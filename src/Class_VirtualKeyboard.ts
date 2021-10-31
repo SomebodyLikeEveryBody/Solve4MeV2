@@ -1523,6 +1523,13 @@ class UnitsPanel extends KeyboardPanel {
                     action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{V}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
+                    label: "\\text{°C}",
+                    title: "Celcius degree",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("\\text{°C}").saveUndoRedoState(); }
+                }),
+                new LatexTouchKey({
                     label: "_{\\text{S}}",
                     title: "siemens",
                     width: 1,
@@ -1543,13 +1550,6 @@ class UnitsPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition('\\text{T}').saveUndoRedoState(); }
                 }),
-                new LatexTouchKey({
-                    label: "_{\\text{Wb}}",
-                    title: "weber",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{rad}}").saveUndoRedoState(); }
-                }),
             ]),
             new LineKeys([
                 new LatexTouchKey({
@@ -1560,6 +1560,13 @@ class UnitsPanel extends KeyboardPanel {
                     action: () => {
                         this._virtualKeyboardContainer.displayPanel(this._virtualKeyboardContainer.panels.majSymbolsPanel);
                     }
+                }),
+                new LatexTouchKey({
+                    label: "_{\\text{Wb}}",
+                    title: "weber",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{rad}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{lm}}",
@@ -1615,7 +1622,7 @@ class UnitsPanel extends KeyboardPanel {
                 new LatexTouchKey({
                     label: "\\overleftarrow{[123]}",
                     title: "Go to [Numbers] panel",
-                    width: 2,
+                    width: 3,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: () => { 
                         this._virtualKeyboardContainer.displayPanel(this._virtualKeyboardContainer.panels.numbersPanel);
@@ -1624,7 +1631,7 @@ class UnitsPanel extends KeyboardPanel {
                 new LatexTouchKey({
                     label: "_{\\text{bar}}",
                     title: "bar",
-                    width: 1,
+                    width: 4,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{bar}}").saveUndoRedoState(); }
                 }),

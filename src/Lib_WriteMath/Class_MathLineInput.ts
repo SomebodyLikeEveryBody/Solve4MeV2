@@ -1,4 +1,5 @@
 declare const S4MLParser: S4MLParser;
+declare const nerdamerToLatexVarsTranslater: any;
 declare const MathQuill: any;
 declare const g_s4mCoreMemory: any;
 declare const g_inputScreen: any;
@@ -420,10 +421,14 @@ class MathLineInput {
         try {
             let parsedStr = S4MLParser.parse(this.value(), {processedMathLineInput: this});
 
+            console.log("rawStr:[" + parsedStr + "]");
+
             if (parsedStr !== "[Unprocess]") {
                 let nerdamerAnswer = nerdamer(parsedStr).toString();
                 if (nerdamerAnswer !== "undefined") {
-                    g_outputScreen.displayAnswerMessage(nerdamer.convertToLaTeX(nerdamerAnswer), this);
+                    nerdamerAnswer = nerdamer.convertToLaTeX(nerdamerAnswer);
+                    console.log("finalAnswer[" + nerdamerAnswer + "]");
+                    g_outputScreen.displayAnswerMessage(nerdamerAnswer, this);
                 }
                 
                 // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));

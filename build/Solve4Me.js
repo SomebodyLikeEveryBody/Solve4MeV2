@@ -1932,6 +1932,13 @@ var UnitsPanel = /** @class */ (function (_super) {
                     action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{V}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
+                    label: "\\text{°C}",
+                    title: "Celcius degree",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("\\text{°C}").saveUndoRedoState(); }
+                }),
+                new LatexTouchKey({
                     label: "_{\\text{S}}",
                     title: "siemens",
                     width: 1,
@@ -1952,13 +1959,6 @@ var UnitsPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition('\\text{T}').saveUndoRedoState(); }
                 }),
-                new LatexTouchKey({
-                    label: "_{\\text{Wb}}",
-                    title: "weber",
-                    width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{rad}}").saveUndoRedoState(); }
-                }),
             ]),
             new LineKeys([
                 new LatexTouchKey({
@@ -1969,6 +1969,13 @@ var UnitsPanel = /** @class */ (function (_super) {
                     action: function () {
                         _this._virtualKeyboardContainer.displayPanel(_this._virtualKeyboardContainer.panels.majSymbolsPanel);
                     }
+                }),
+                new LatexTouchKey({
+                    label: "_{\\text{Wb}}",
+                    title: "weber",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{rad}}").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: "_{\\text{lm}}",
@@ -2024,7 +2031,7 @@ var UnitsPanel = /** @class */ (function (_super) {
                 new LatexTouchKey({
                     label: "\\overleftarrow{[123]}",
                     title: "Go to [Numbers] panel",
-                    width: 2,
+                    width: 3,
                     style: VirtualKeyboardKeyStyle.DARK,
                     action: function () {
                         _this._virtualKeyboardContainer.displayPanel(_this._virtualKeyboardContainer.panels.numbersPanel);
@@ -2033,7 +2040,7 @@ var UnitsPanel = /** @class */ (function (_super) {
                 new LatexTouchKey({
                     label: "_{\\text{bar}}",
                     title: "bar",
-                    width: 1,
+                    width: 4,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("{\\text{bar}}").saveUndoRedoState(); }
                 }),
