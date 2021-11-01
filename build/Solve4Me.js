@@ -173,9 +173,15 @@ var S4MCoreMemory = /** @class */ (function () {
         this._declaredVars.push(pMemoryElement);
         return this;
     };
+    S4MCoreMemory.prototype.getMemoryElementsDeclaredBy = function (pMathLineInput) {
+        var retArray = this._declaredVars.filter(function (s4mMemoryElement) { return (s4mMemoryElement.declaringMathLineInput === pMathLineInput); });
+        return retArray;
+    };
     S4MCoreMemory.prototype.removeVarDeclaredBy = function (pMathLineInput) {
+        var memoryElementsToRemove = this.getMemoryElementsDeclaredBy(pMathLineInput);
         this._declaredVars = this._declaredVars.filter(function (s4mMemoryElement) { return (s4mMemoryElement.declaringMathLineInput !== pMathLineInput); });
         this._declaringMathLineInputs = this._declaringMathLineInputs.filter(function (mathLineInput) { return (mathLineInput !== pMathLineInput); });
+        memoryElementsToRemove.map(function (s4mMemoryElement) { return nerdamer.setVar(s4mMemoryElement.varName, 'delete'); });
         return this;
     };
     S4MCoreMemory.prototype.removeAllProducedBy = function (pMathLineInput) {
@@ -191,6 +197,7 @@ var S4MCoreMemory = /** @class */ (function () {
     S4MCoreMemory.prototype.setVar = function (pMemoryElement, pMathLineInput) {
         this.removeVarDeclaredBy(pMathLineInput);
         this.addVar(pMemoryElement, pMathLineInput);
+        nerdamer.setVar(pMemoryElement.varName, pMemoryElement.varValue);
         return this;
     };
     S4MCoreMemory.prototype.storeErroredMathLineInput = function (pMathLineInput) {

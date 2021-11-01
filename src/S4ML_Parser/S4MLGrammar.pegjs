@@ -54,7 +54,7 @@ start
  *              Let x \in R
  * */
 Declaration "Declaration"
- = _ "\\text{Let}" __ _ newVarName:(FunctionIdentifier / VarAtLargeIdentifier) _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
+ = _ "\\text{Let}" __ _ newVarName:(UndefinedFunctionIdentifier / UndefinedVarAtLargeIdentifier) _ affectationOperator:AffectationOperator _ mathObjAffected:Instruction _ {
 
    const processedMathLineInput = options.processedMathLineInput;
 
@@ -63,25 +63,15 @@ Declaration "Declaration"
       let funcVar = newVarName.functionVar;
       newVarName = newVarName.functionName
    }
+   const newMemoryElement = {
+      declaringMathLineInput: g_s4mCoreMemory.lastMathLineInputFocusedOut,
+      varName: newVarName,
+      varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
+      processedVarValue: new MathObj()
+   };
 
-   if (!g_s4mCoreMemory.hasAVarNamed(newVarName) || g_s4mCoreMemory.getMathLineInputWhichDeclared(newVarName) === processedMathLineInput) {
-      const newMemoryElement = {
-         declaringMathLineInput: g_s4mCoreMemory.lastMathLineInputFocusedOut,
-         varName: newVarName,
-         varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
-         processedVarValue: new MathObj()
-      };
-
-      nerdamer.setVar(newMemoryElement.varName, newMemoryElement.varValue);
-      g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
-      processedMathLineInput.signalNoError();
-      
-   } else {
-      throw {
-         name: "DeclarationError",
-         message: "Declaring a var already declared somewhere."
-      };
-   }
+   g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
+   processedMathLineInput.signalNoError();
 }
 
 /***********************************
@@ -89,7 +79,7 @@ Declaration "Declaration"
  * --> a VarIdentifier that is not
  *     already declared in memory
  * */
-UndefinedVarIdentifier
+UndefinedVarAtLargeIdentifier
  = varName:VarAtLargeIdentifier { 
       const processedMathLineInput = options.processedMathLineInput;
 
@@ -98,7 +88,7 @@ UndefinedVarIdentifier
          && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput) {
 
          throw {
-            name: "VarError",
+            name: "DeclarationError",
             message: "Variable [" + varName + "] is already defined."
          };
       }
@@ -111,7 +101,7 @@ UndefinedVarIdentifier
  * --> a VarIdentifier that is
  *     already declared in memery
  * */
-DefinedVarIdentifier
+DefinedVarAtLargeIdentifier
  = varName:VarAtLargeIdentifier {
       const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
 
@@ -285,7 +275,7 @@ Factor
  * */
 S4MLObject
  = Instanciation
- / VarAtLargeIdentifier
+ / DefinedVarAtLargeIdentifier
 
 /***********************************
  * ContiguousFactors: ab, cdef, a(b+c), etc
@@ -495,6 +485,23 @@ FunctionIdentifier
       return ({functionName: funcName, functionVar: funcVar})
  }
 
+ UndefinedFunctionIdentifier
+ = functionIdentifier:FunctionIdentifier {
+      let varName = functionIdentifier.functionName
+
+      // check if var is not already defined
+      if (g_s4mCoreMemory.hasAVarNamed(varName)
+         && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput) {
+
+         throw {
+            name: "DeclarationError",
+            message: "Variable [" + varName + "] is already defined."
+         };
+      }
+
+      return (varName); 
+ }
+
 /***********************************
  * FunctionMarker: (x) or (t_x) etc
  * [.] "(" varName ")" 
@@ -683,7 +690,20 @@ MathBBLetter
  * [.] 
  * */
 Constant
- = Text
+ = str:Text {
+    let forbiddensStr = [
+       "Let",
+       "Given",
+    ];
+
+    if (forbiddensStr.includes(str)) {
+       throw {
+         name: "DeclarationError",
+         message: "Using a forbidden keyword for naming a constant."
+      };
+    }
+    return str;
+ }
 
 /***********************************
  * MathBBSet: R+*, Z- etc

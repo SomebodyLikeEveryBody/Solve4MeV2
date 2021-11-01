@@ -1,4 +1,5 @@
 declare const s4mMemoryElement: S4MCoreMemory;
+declare const nerdamer: any;
 
 interface S4MMemoryElement {
     declaringMathLineInput: MathLineInput;
@@ -82,10 +83,19 @@ class S4MCoreMemory {
         return this;
     }
 
+    public getMemoryElementsDeclaredBy(pMathLineInput: MathLineInput): S4MMemoryElement[] {
+        let retArray = this._declaredVars.filter((s4mMemoryElement) => (s4mMemoryElement.declaringMathLineInput === pMathLineInput));
+
+        return retArray;
+    }
+
     public removeVarDeclaredBy(pMathLineInput: MathLineInput): S4MCoreMemory {
+        let memoryElementsToRemove = this.getMemoryElementsDeclaredBy(pMathLineInput);
         this._declaredVars = this._declaredVars.filter((s4mMemoryElement) => (s4mMemoryElement.declaringMathLineInput !== pMathLineInput));
         this._declaringMathLineInputs = this._declaringMathLineInputs.filter((mathLineInput) => (mathLineInput !== pMathLineInput));
 
+        memoryElementsToRemove.map((s4mMemoryElement) => nerdamer.setVar(s4mMemoryElement.varName, 'delete'));
+        
         return this;
     }
 
@@ -105,6 +115,7 @@ class S4MCoreMemory {
     public setVar(pMemoryElement: S4MMemoryElement, pMathLineInput: MathLineInput): S4MCoreMemory {
         this.removeVarDeclaredBy(pMathLineInput);
         this.addVar(pMemoryElement, pMathLineInput);
+        nerdamer.setVar(pMemoryElement.varName, pMemoryElement.varValue);
 
         return this;
     }
