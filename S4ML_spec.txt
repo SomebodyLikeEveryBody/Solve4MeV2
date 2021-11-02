@@ -1,3 +1,10 @@
+02/11/2021
+----------
+
+Objectifs:
+- declarer les constantes de bases et faire bugger si on veut les redéfinir (m, Pa, i, e, etc)
+- creer une hashtable qui fait correspondre les vrais noms de variable en latex avec des noms de variables génériques traités par nerdamer (a_{1_{\text{Pouet}}} -->VAR_1
+
 23/10/2021
 ----------
 

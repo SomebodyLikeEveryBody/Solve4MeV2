@@ -18,6 +18,7 @@ class S4MCoreMemory {
     public constructor(pFirstMathLineInput: MathLineInput) {
         this._declaringMathLineInputs = [];
         this._errorMathLineInputs = [];
+        //need to declare basic constants here
         this._declaredVars = [];
         this._lastMathLineInputFocusedOut = pFirstMathLineInput;
         this._currentMathLineInputFocused = pFirstMathLineInput;

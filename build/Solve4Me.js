@@ -295,8 +295,10 @@ var InputScren = /** @class */ (function () {
 }());
 var OutputScreenMessage = /** @class */ (function () {
     function OutputScreenMessage(pMessage, pMathLineInputSource) {
-        this._jQEl = $('<div><div class="message_title">' + pMessage.title + '</div><div class="message_body">' + pMessage.body + '</div></div>');
+        this._jQEl = $('<div><div class="message_title">' + pMessage.title + '</div><div class="message_body"><span></span></div></div>');
         this._mathLineInputSource = pMathLineInputSource;
+        this._mathField = MathQuill.getInterface(2).StaticMath(this._jQEl.find('.message_body span').get(0));
+        this._mathField.latex(pMessage.body);
         this._jQEl.fadeOut(0);
     }
     Object.defineProperty(OutputScreenMessage.prototype, "mathLineInputSource", {
