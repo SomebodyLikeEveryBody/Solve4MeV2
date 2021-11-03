@@ -666,13 +666,22 @@ var MathLineInput = /** @class */ (function () {
         g_outputScreen.removeMessagesOf(this);
         try {
             var parsedStr = S4MLParser.parse(this.value(), { processedMathLineInput: this });
-            console.log("rawStr:[" + parsedStr + "]");
+            var answerMessagesArray = [];
             if (parsedStr !== "[Unprocess]") {
-                var nerdamerAnswer = nerdamer(parsedStr).toString();
-                if (nerdamerAnswer !== "undefined") {
-                    nerdamerAnswer = nerdamer.convertToLaTeX(nerdamerAnswer);
-                    console.log("finalAnswer[" + nerdamerAnswer + "]");
-                    g_outputScreen.displayAnswerMessage(nerdamerAnswer, this);
+                var nerdamerAnswer = nerdamer(parsedStr);
+                if (nerdamerAnswer.toString() !== "undefined") {
+                    var nerdamerLatexAnswer = nerdamerAnswer.latex();
+                    var evaluatedAnswer = nerdamerAnswer.evaluate();
+                    var evaluatedLatexAnswer = evaluatedAnswer.latex();
+                    var numericalAnswer = evaluatedAnswer.text('decimals');
+                    answerMessagesArray.push(nerdamerLatexAnswer);
+                    if (evaluatedLatexAnswer !== nerdamerLatexAnswer) {
+                        answerMessagesArray.push(evaluatedLatexAnswer);
+                    }
+                    if (numericalAnswer !== nerdamerLatexAnswer && numericalAnswer !== evaluatedLatexAnswer) {
+                        answerMessagesArray.push(numericalAnswer);
+                    }
+                    g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
                 }
                 // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
             }

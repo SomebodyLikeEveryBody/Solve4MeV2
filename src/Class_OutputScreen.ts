@@ -1,18 +1,15 @@
 interface MessageObject {
     title: String;
-    body: String;
+    body: String[];
 }
 
 class OutputScreenMessage {
     protected _jQEl: JQueryElement;
     protected _mathLineInputSource: MathLineInput;
-    protected _mathField: any;
 
     public constructor(pMessage: MessageObject, pMathLineInputSource: MathLineInput) {
-        this._jQEl = $('<div><div class="message_title">' + pMessage.title + '</div><div class="message_body"><span></span></div></div>');
+        this._jQEl = $('<div><div class="message_title">' + pMessage.title + '</div><div class="message_body"></div></div>');
         this._mathLineInputSource = pMathLineInputSource;
-        this._mathField = MathQuill.getInterface(2).StaticMath(this._jQEl.find('.message_body span').get(0));
-        this._mathField.latex(pMessage.body);
 
         this._jQEl.fadeOut(0);
     }
@@ -57,13 +54,38 @@ class OutputScreenMessage {
 class OutputScreenErrorMessage extends OutputScreenMessage {
     public constructor(pErrorMessage: MessageObject, pMathLineInputSource: MathLineInput) {
         super(pErrorMessage, pMathLineInputSource);
+
+        for (let str of pErrorMessage.body) {
+            this._jQEl.find('.message_body').append($('<div></div').css({'border': 'none'}).text(str));
+            this._jQEl.find('.message_body').append($('<hr class="error_message_separator" />'));
+        }
+
+        this._jQEl.find('hr.error_message_separator:last').remove();
         this._jQEl.addClass("error_message");
     }
 }
 
 class OutputScreenAnswerMessage extends OutputScreenMessage {
+    protected _mathField: any;
+
     public constructor(pAnswerMessage: MessageObject, pMathLineInputSource: MathLineInput) {
         super(pAnswerMessage, pMathLineInputSource);
+
+        let newMathField: any;
+        let newDiv: JQueryElement;
+        for (let str of pAnswerMessage.body) {
+            newDiv = $('<div class="answer_mathfield"></div>');
+            newMathField = MathQuill.getInterface(2).StaticMath(newDiv.get(0));
+
+            
+            // newMathField.latex('\\frac{-b\\pm \\sqrt{b^2-4ac}}{2a}');
+            newMathField.latex(str);
+
+            this._jQEl.find('.message_body').append(newDiv);
+            this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
+        }
+
+        this._jQEl.find('hr.answer_message_separator:last').remove();
         this._jQEl.addClass("answer_message");
     }
 }
@@ -116,7 +138,7 @@ class OutputScreen {
     public displayErrorMessage(pErrorObject: ErrorObject, pErroredMathLineInput: MathLineInput): OutputScreen {
         let newErrorMessage = new OutputScreenErrorMessage({
             title: "Line [" + pErroredMathLineInput.numberLine + "]:",
-            body: "[" + pErrorObject.name + "]: " + pErrorObject.message,
+            body: ["[" + pErrorObject.name + "]: " + pErrorObject.message],
         }, pErroredMathLineInput);
 
         this._messages.push(newErrorMessage);
@@ -125,7 +147,7 @@ class OutputScreen {
         return this;
     }
 
-    public displayAnswerMessage(pAnswerStr: String, pMathLineInputSource: MathLineInput): OutputScreen {
+    public displayAnswerMessage(pAnswerStr: String[], pMathLineInputSource: MathLineInput): OutputScreen {
         let newAnswerMessage = new OutputScreenAnswerMessage({
             title: "Line [" + pMathLineInputSource.numberLine + "]:",
             body: pAnswerStr,
@@ -159,7 +181,7 @@ class OutputScreen {
         let messageJustAfter: OutputScreenMessage | null = this.getMessageWhichIsAfterMessageOf(pNewAnswerMessage.mathLineInputSource);
 
         if (messageJustAfter === null) {
-            pNewAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
+            pNewAnswerMessage.insertBefore(this._jQElContent.find('hr#outputscreen_end_line')).toggle();
         } else {
             pNewAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle();
         }

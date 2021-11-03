@@ -192,7 +192,7 @@ div.step
     background-color: transparent;
 }
 
-#output_screen hr
+hr#outputscreen_end_line
 {
     width: calc(100% - 20px);
     border-top: white 2px solid;
@@ -443,7 +443,7 @@ button.alone
     border-radius: 0px;
 }
 
-.error_message div:first-child, .answer_message div:first-child
+.error_message div.message_title, .answer_message div.message_title
 {
     margin: 0px;
     padding: 10px;
@@ -453,7 +453,7 @@ button.alone
     border-radius: 10px 10px 0px 0px;
 }
 
-.error_message div:last-child, .answer_message div:last-child
+.error_message div.message_body, .answer_message div.message_body
 {
     padding: 10px;
     width: calc(100% - 26px);
@@ -472,28 +472,48 @@ button.alone
     color: black;
 }
 
-.error_message div:first-child
+.error_message div.message_title
 {
     border: #9d0000 2px solid;
 }
 
-.answer_message div:first-child
+.answer_message div.mesasge_title
 {
     border: white 2px solid;
 }
 
+div.answer_mathfield
+{
+    width: 100%;
+}
 
-
-.error_message div:last-child
+.error_message div.message_body
 {
     border: #9d0000 2px solid;
 }
 
-.answer_message div:last-child
+.answer_message div.message_body
 {
     border: white 2px solid;
 }
 
+hr.answer_message_separator
+{
+    width: calc(100% - 20px);
+    border-top: white 1px solid;
+    border-bottom: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+hr.error_message_separator
+{
+    width: calc(100% - 20px);
+    border-top: #9d0000 1px solid;
+    border-bottom: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
 @media only screen and (max-width: 1000px)
 {

@@ -120,10 +120,21 @@ var S4MCoreMemory = /** @class */ (function () {
     function S4MCoreMemory(pFirstMathLineInput) {
         this._declaringMathLineInputs = [];
         this._errorMathLineInputs = [];
+        //need to declare basic constants here
         this._declaredVars = [];
         this._lastMathLineInputFocusedOut = pFirstMathLineInput;
         this._currentMathLineInputFocused = pFirstMathLineInput;
     }
+    S4MCoreMemory.prototype.defineConstants = function () {
+        // this.addVar({
+        //     declaringMathLineInput: null,
+        //     varName: "\\pi",
+        //     nerdamerVarName: 'pi',
+        //     varValue: '',
+        //     processedVarValue: new MathObj(),
+        // }, null);
+        return this;
+    };
     S4MCoreMemory.prototype.currentMathLineInputFocusedIs = function (pMathLineInput) {
         this._currentMathLineInputFocused = pMathLineInput;
         return this;
@@ -295,10 +306,8 @@ var InputScren = /** @class */ (function () {
 }());
 var OutputScreenMessage = /** @class */ (function () {
     function OutputScreenMessage(pMessage, pMathLineInputSource) {
-        this._jQEl = $('<div><div class="message_title">' + pMessage.title + '</div><div class="message_body"><span></span></div></div>');
+        this._jQEl = $('<div><div class="message_title">' + pMessage.title + '</div><div class="message_body"></div></div>');
         this._mathLineInputSource = pMathLineInputSource;
-        this._mathField = MathQuill.getInterface(2).StaticMath(this._jQEl.find('.message_body span').get(0));
-        this._mathField.latex(pMessage.body);
         this._jQEl.fadeOut(0);
     }
     Object.defineProperty(OutputScreenMessage.prototype, "mathLineInputSource", {
@@ -344,6 +353,12 @@ var OutputScreenErrorMessage = /** @class */ (function (_super) {
     __extends(OutputScreenErrorMessage, _super);
     function OutputScreenErrorMessage(pErrorMessage, pMathLineInputSource) {
         var _this = _super.call(this, pErrorMessage, pMathLineInputSource) || this;
+        for (var _i = 0, _a = pErrorMessage.body; _i < _a.length; _i++) {
+            var str = _a[_i];
+            _this._jQEl.find('.message_body').append($('<div></div').css({ 'border': 'none' }).text(str));
+            _this._jQEl.find('.message_body').append($('<hr class="error_message_separator" />'));
+        }
+        _this._jQEl.find('hr.error_message_separator:last').remove();
         _this._jQEl.addClass("error_message");
         return _this;
     }
@@ -353,6 +368,20 @@ var OutputScreenAnswerMessage = /** @class */ (function (_super) {
     __extends(OutputScreenAnswerMessage, _super);
     function OutputScreenAnswerMessage(pAnswerMessage, pMathLineInputSource) {
         var _this = _super.call(this, pAnswerMessage, pMathLineInputSource) || this;
+        var newMathField;
+        var newDiv;
+        for (var _i = 0, _a = pAnswerMessage.body; _i < _a.length; _i++) {
+            var str = _a[_i];
+            newDiv = $('<div class="answer_mathfield"></div>');
+            newMathField = MathQuill.getInterface(2).StaticMath(newDiv.get(0));
+            // newMathField.latex('\\frac{-b\\pm \\sqrt{b^2-4ac}}{2a}');
+            newMathField.latex(str);
+            _this._jQEl.find('.message_body').append(newDiv);
+            _this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
+        }
+        _this._jQEl.find('hr.answer_message_separator:last').remove();
+        // this._mathField = MathQuill.getInterface(2).StaticMath(this._jQEl.find('.message_body span').get(0));
+        // this._mathField.latex(pAnswerMessage.body);
         _this._jQEl.addClass("answer_message");
         return _this;
     }
@@ -391,7 +420,7 @@ var OutputScreen = /** @class */ (function () {
     OutputScreen.prototype.displayErrorMessage = function (pErrorObject, pErroredMathLineInput) {
         var newErrorMessage = new OutputScreenErrorMessage({
             title: "Line [" + pErroredMathLineInput.numberLine + "]:",
-            body: "[" + pErrorObject.name + "]: " + pErrorObject.message,
+            body: ["[" + pErrorObject.name + "]: " + pErrorObject.message],
         }, pErroredMathLineInput);
         this._messages.push(newErrorMessage);
         this.appendMessageAtCorrectLocation(newErrorMessage);
@@ -426,7 +455,7 @@ var OutputScreen = /** @class */ (function () {
     OutputScreen.prototype.appendMessageAtCorrectLocation = function (pNewAnswerMessage) {
         var messageJustAfter = this.getMessageWhichIsAfterMessageOf(pNewAnswerMessage.mathLineInputSource);
         if (messageJustAfter === null) {
-            pNewAnswerMessage.insertBefore(this._jQElContent.find('hr')).toggle();
+            pNewAnswerMessage.insertBefore(this._jQElContent.find('hr#outputscreen_end_line')).toggle();
         }
         else {
             pNewAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle();

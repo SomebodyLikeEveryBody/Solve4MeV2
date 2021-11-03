@@ -420,15 +420,27 @@ class MathLineInput {
         
         try {
             let parsedStr = S4MLParser.parse(this.value(), {processedMathLineInput: this});
-
-            console.log("rawStr:[" + parsedStr + "]");
+            let answerMessagesArray: string[] = [];
 
             if (parsedStr !== "[Unprocess]") {
-                let nerdamerAnswer = nerdamer(parsedStr).toString();
-                if (nerdamerAnswer !== "undefined") {
-                    nerdamerAnswer = nerdamer.convertToLaTeX(nerdamerAnswer);
-                    console.log("finalAnswer[" + nerdamerAnswer + "]");
-                    g_outputScreen.displayAnswerMessage(nerdamerAnswer, this);
+                let nerdamerAnswer = nerdamer(parsedStr);
+                if (nerdamerAnswer.toString() !== "undefined") {
+                    let nerdamerLatexAnswer = nerdamerAnswer.latex();
+                    let evaluatedAnswer = nerdamerAnswer.evaluate();
+                    let evaluatedLatexAnswer = evaluatedAnswer.latex();
+                    let numericalAnswer = evaluatedAnswer.text('decimals');
+
+                    answerMessagesArray.push(nerdamerLatexAnswer);
+
+                    if (evaluatedLatexAnswer !== nerdamerLatexAnswer) {
+                        answerMessagesArray.push(evaluatedLatexAnswer);
+                    }
+
+                    if (numericalAnswer !== nerdamerLatexAnswer && numericalAnswer !== evaluatedLatexAnswer) {
+                        answerMessagesArray.push(numericalAnswer);
+                    }
+
+                    g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
                 }
                 
                 // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));

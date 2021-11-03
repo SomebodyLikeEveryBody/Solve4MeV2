@@ -4,6 +4,7 @@ declare const nerdamer: any;
 interface S4MMemoryElement {
     declaringMathLineInput: MathLineInput;
     varName: String;
+    nerdamerVarName: String;
     varValue: String;
     processedVarValue: MathObj;
 }
@@ -18,10 +19,22 @@ class S4MCoreMemory {
     public constructor(pFirstMathLineInput: MathLineInput) {
         this._declaringMathLineInputs = [];
         this._errorMathLineInputs = [];
+
         //need to declare basic constants here
         this._declaredVars = [];
         this._lastMathLineInputFocusedOut = pFirstMathLineInput;
         this._currentMathLineInputFocused = pFirstMathLineInput;
+    }
+
+    protected defineConstants(): S4MCoreMemory {
+        // this.addVar({
+        //     declaringMathLineInput: null,
+        //     varName: "\\pi",
+        //     nerdamerVarName: 'pi',
+        //     varValue: '',
+        //     processedVarValue: new MathObj(),
+        // }, null);
+        return this;
     }
 
     public currentMathLineInputFocusedIs(pMathLineInput: MathLineInput): S4MCoreMemory {
