@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 100 100"
+   xml:space="preserve"
+   id="svg339"
+   sodipodi:docname="answer_equal.svg"
+   width="100"
+   height="100"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"><metadata
+   id="metadata345"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
+   id="defs343" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1031"
+   id="namedview341"
+   showgrid="false"
+   inkscape:zoom="5.3400704"
+   inkscape:cx="16.479843"
+   inkscape:cy="62.5"
+   inkscape:window-x="0"
+   inkscape:window-y="25"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg339" /><path
+   d="m 91.896055,27.198678 c 0,0 -2.832789,-13.781152 -15.07775,-18.6231776 -5.75696,-2.327898 -16.265695,-3.445288 -26.591669,-3.445288 -10.325975,0 -20.83471,1.11739 -26.591669,3.352172 C 11.298626,13.32441 8.4658367,27.198678 8.4658367,27.198678 c -1.827606,7.821734 -2.467268,15.736585 -2.375888,22.720277 0,6.983691 0.548282,14.991658 2.375888,22.720277 0,0 2.8327893,13.781151 15.0777503,18.623177 5.756959,2.234782 16.265694,3.352172 26.591668,3.445288 10.325975,-0.09312 20.83471,-1.11739 26.591669,-3.445288 12.244961,-4.842026 15.077751,-18.623177 15.077751,-18.623177 1.827606,-7.821735 2.467268,-15.736586 2.375888,-22.720277 0.18276,-7.076808 -0.456902,-14.991659 -2.284508,-22.720277 z M 64.116442,62.396484 H 36.245449 c -2.193127,0 -3.929353,-1.769202 -3.929353,-4.003984 0,-2.234781 1.736226,-4.003983 3.929353,-4.003983 h 27.962373 c 2.193128,0 3.929354,1.769202 3.929354,4.003983 -0.09138,2.234782 -1.827607,4.003984 -4.020734,4.003984 z m 0,-17.692019 H 36.245449 c -2.193127,0 -3.929353,-1.769202 -3.929353,-4.003984 0,-2.234781 1.736226,-4.003983 3.929353,-4.003983 h 27.962373 c 2.193128,0 3.929354,1.769202 3.929354,4.003983 -0.09138,2.234782 -1.827607,4.003984 -4.020734,4.003984 z"
+   id="path333"
+   inkscape:connector-curvature="0"
+   style="stroke-width:0.92244017" /><text
+   x="5.6122279"
+   y="109.87138"
+   font-size="5px"
+   font-weight="bold"
+   id="text335"
+   style="font-weight:bold;font-size:4.61220074px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000;stroke-width:0.92244017"
+   transform="scale(0.9906367,1.0094518)">Created by Aneeque Ahmed</text>
+
+<text
+   x="5.6122279"
+   y="114.48357"
+   font-size="5px"
+   font-weight="bold"
+   id="text337"
+   style="font-weight:bold;font-size:4.61220074px;font-family:'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif;fill:#000000;stroke-width:0.92244017"
+   transform="scale(0.9906367,1.0094518)">from the Noun Project</text>
+
+</svg>
