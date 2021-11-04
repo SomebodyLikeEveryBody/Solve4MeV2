@@ -420,7 +420,7 @@ class MathLineInput {
         
         try {
             let parsedStr = S4MLParser.parse(this.value(), {processedMathLineInput: this});
-            let answerMessagesArray: string[] = [];
+            let answerMessagesArray: string[] = [this.value().valueOf()];
 
             if (parsedStr !== "[Unprocess]") {
                 let nerdamerAnswer = nerdamer(parsedStr);

@@ -73,13 +73,26 @@ class OutputScreenAnswerMessage extends OutputScreenMessage {
 
         let newMathField: any;
         let newDiv: JQueryElement;
+        let first = true;
         for (let str of pAnswerMessage.body) {
-            newDiv = $('<div class="answer_mathfield"></div>');
-            newMathField = MathQuill.getInterface(2).StaticMath(newDiv.get(0));
+            // newDiv = $('<div class="answer_mathfield"></div>');
+            newDiv = $('<div class="answer_body_container"></div>');
+
+            if (first === true) {
+                newDiv.append($('<div class="answer_interrogation"></div>'));
+                first = false;
+            } else {
+                newDiv.append($('<div class="answer_equal"></div>'));
+            }
+            
+            newDiv.append($('<div class="answer_mathfield"></div>'));
+
+            newMathField = MathQuill.getInterface(2).StaticMath(newDiv.find('.answer_mathfield').get(0));
+            newMathField.latex(str);
 
             
+            
             // newMathField.latex('\\frac{-b\\pm \\sqrt{b^2-4ac}}{2a}');
-            newMathField.latex(str);
 
             this._jQEl.find('.message_body').append(newDiv);
             this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));

@@ -666,7 +666,7 @@ var MathLineInput = /** @class */ (function () {
         g_outputScreen.removeMessagesOf(this);
         try {
             var parsedStr = S4MLParser.parse(this.value(), { processedMathLineInput: this });
-            var answerMessagesArray = [];
+            var answerMessagesArray = [this.value().valueOf()];
             if (parsedStr !== "[Unprocess]") {
                 var nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {

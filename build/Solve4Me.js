@@ -370,18 +370,26 @@ var OutputScreenAnswerMessage = /** @class */ (function (_super) {
         var _this = _super.call(this, pAnswerMessage, pMathLineInputSource) || this;
         var newMathField;
         var newDiv;
+        var first = true;
         for (var _i = 0, _a = pAnswerMessage.body; _i < _a.length; _i++) {
             var str = _a[_i];
-            newDiv = $('<div class="answer_mathfield"></div>');
-            newMathField = MathQuill.getInterface(2).StaticMath(newDiv.get(0));
-            // newMathField.latex('\\frac{-b\\pm \\sqrt{b^2-4ac}}{2a}');
+            // newDiv = $('<div class="answer_mathfield"></div>');
+            newDiv = $('<div class="answer_body_container"></div>');
+            if (first === true) {
+                newDiv.append($('<div class="answer_interrogation"></div>'));
+                first = false;
+            }
+            else {
+                newDiv.append($('<div class="answer_equal"></div>'));
+            }
+            newDiv.append($('<div class="answer_mathfield"></div>'));
+            newMathField = MathQuill.getInterface(2).StaticMath(newDiv.find('.answer_mathfield').get(0));
             newMathField.latex(str);
+            // newMathField.latex('\\frac{-b\\pm \\sqrt{b^2-4ac}}{2a}');
             _this._jQEl.find('.message_body').append(newDiv);
             _this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
         }
         _this._jQEl.find('hr.answer_message_separator:last').remove();
-        // this._mathField = MathQuill.getInterface(2).StaticMath(this._jQEl.find('.message_body span').get(0));
-        // this._mathField.latex(pAnswerMessage.body);
         _this._jQEl.addClass("answer_message");
         return _this;
     }

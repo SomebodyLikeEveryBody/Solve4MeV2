@@ -482,9 +482,45 @@ button.alone
     border: white 2px solid;
 }
 
+.answer_interrogation, .answer_equal
+{
+    width: 46px;
+    height: 46px;
+    color: white;
+    border-radius: 10px;
+    opacity: 1;
+
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 35px;
+    background-position: center;
+    display: inline-block;
+}
+
+.answer_interrogation
+{
+    background-image: url('./imgs/answer_questiontilt.svg');
+}
+
+.answer_equal
+{
+    background-image: url('./imgs/answer_equal.svg');
+}
+
+div.answer_body_container
+{
+    display: flex;
+    flex-direction: row;
+}
+
 div.answer_mathfield
 {
-    width: 100%;
+    width: calc(100% - 50px);
+    display: inline;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
 }
 
 .error_message div.message_body
