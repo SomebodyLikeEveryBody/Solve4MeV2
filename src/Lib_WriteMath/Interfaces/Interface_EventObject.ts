@@ -1,6 +1,6 @@
 interface EventObject {
-    which: Number;
+    which: number;
+    ctrlKey: boolean;
+    altKey: boolean;
     preventDefault(): JQueryElement;
-    ctrlKey: Boolean;
-    altKey: Boolean;
 }

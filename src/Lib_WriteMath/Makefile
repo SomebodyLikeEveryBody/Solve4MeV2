@@ -13,10 +13,10 @@ all:
     ./Interfaces/Interface_CursorConfiguration.ts \
     ./Interfaces/Interface_EventObject.ts \
     ./Interfaces/Interface_ErrorObject.ts \
-    ./Module_AutoCompleter/Class_AutoCompleterKeywordsList.ts \
     ./Class_MathLineInput.ts \
+    ./Class_ShortcutsManager.ts \
+    ./Module_AutoCompleter/Class_AutoCompleterKeywordsList.ts \
     ./Module_UndoRedoManager/Class_UndoRedoManager.ts \
-    ./Module_ShortcutsManager/Class_ShortcutsManager.ts \
     ./Module_AutoCompleter/Class_AutoCompleter.ts \
     ./Module_SaverNOpenerStateManager/Class_SaverNOpenerStateManager.ts \
     ./main.ts
