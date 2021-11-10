@@ -414,7 +414,7 @@ var MathLineInput = /** @class */ (function () {
             var answerMessagesArray = [this.value().valueOf()];
             if (parsedStr !== "[Unprocess]") {
                 var nerdamerAnswer = nerdamer(parsedStr);
-                if (nerdamerAnswer.tostring() !== "undefined") {
+                if (nerdamerAnswer.toString() !== "undefined") {
                     var nerdamerLatexAnswer = nerdamerAnswer.latex();
                     var evaluatedAnswer = nerdamerAnswer.evaluate();
                     var evaluatedLatexAnswer = evaluatedAnswer.latex();

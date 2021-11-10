@@ -5,7 +5,6 @@ declare const g_s4mCoreMemory: any;
 declare const g_inputScreen: any;
 declare const g_outputScreen: any;
 declare const g_virtualKeyboard: any;
-declare const g_keywordsList: any;
 declare const nerdamer: any;
 declare function $(pStr: string | JQueryElement): JQueryElement;
 
@@ -427,7 +426,7 @@ class MathLineInput {
 
             if (parsedStr !== "[Unprocess]") {
                 let nerdamerAnswer = nerdamer(parsedStr);
-                if (nerdamerAnswer.tostring() !== "undefined") {
+                if (nerdamerAnswer.toString() !== "undefined") {
                     let nerdamerLatexAnswer = nerdamerAnswer.latex();
                     let evaluatedAnswer = nerdamerAnswer.evaluate();
                     let evaluatedLatexAnswer = evaluatedAnswer.latex();
