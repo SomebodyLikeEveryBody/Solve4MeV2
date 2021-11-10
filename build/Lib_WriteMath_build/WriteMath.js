@@ -1,3 +1,4 @@
+"use strict";
 var __spreadArray = (this && this.__spreadArray) || function (to, from) {
     for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
         to[j] = from[i];
@@ -90,17 +91,13 @@ var MathLineInput = /** @class */ (function () {
                     _this.doIfKeyEnter();
                 },
                 upOutOf: function () {
-                    if (_this.hasPreviousMathLineInput()) {
-                        if (!_this.autoCompleterIsVisible()) {
-                            _this.previousMathLineInput.focus();
-                        }
+                    if (_this.hasPreviousMathLineInput() && (!_this.autoCompleterIsVisible())) {
+                        _this._previousMathLineInput.focus();
                     }
                 },
                 downOutOf: function () {
-                    if (_this.hasNextMathLineInput()) {
-                        if (!_this.autoCompleterIsVisible()) {
-                            _this.nextMathLineInput.focus();
-                        }
+                    if (_this.hasNextMathLineInput() && (!_this.autoCompleterIsVisible())) {
+                        _this.nextMathLineInput.focus();
                     }
                 },
             }
@@ -133,7 +130,9 @@ var MathLineInput = /** @class */ (function () {
             return this._nextMathLineInput;
         },
         set: function (pMathLineInput) {
-            this._nextMathLineInput = pMathLineInput;
+            if (pMathLineInput !== null) {
+                this._nextMathLineInput = pMathLineInput;
+            }
         },
         enumerable: false,
         configurable: true
@@ -235,7 +234,11 @@ var MathLineInput = /** @class */ (function () {
         return this;
     };
     MathLineInput.prototype.hasPreviousMathLineInput = function () {
-        return (this._previousMathLineInput !== null);
+        if (this._previousMathLineInput !== null) {
+            this._previousMathLineInput instanceof MathLineInput;
+            return true;
+        }
+        return (false);
     };
     MathLineInput.prototype.hasNextMathLineInput = function () {
         return (this._nextMathLineInput !== null);
@@ -247,8 +250,8 @@ var MathLineInput = /** @class */ (function () {
         var newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
         newMathLineInput.nextMathLineInput = pMathLineInput;
         newMathLineInput.insertBefore(pMathLineInput._jQWrapperEl)
-            .updateNumberLineNDisplay(this._numberLine)
-            .incrementFollowingsMathLineInputsNumberLine();
+            .updatenumberLineNDisplay(this._numberLine)
+            .incrementFollowingsMathLineInputsnumberLine();
         if (pMathLineInput.hasPreviousMathLineInput()) {
             newMathLineInput.previousMathLineInput = pMathLineInput.previousMathLineInput;
             pMathLineInput.previousMathLineInput.nextMathLineInput = newMathLineInput;
@@ -260,11 +263,11 @@ var MathLineInput = /** @class */ (function () {
     MathLineInput.prototype.createNewMathLineInputAndAppendAfter = function (pMathLineInput) {
         var newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
         newMathLineInput.insertAfter(pMathLineInput._jQWrapperEl)
-            .updateNumberLineNDisplay(this._numberLine + 1);
+            .updatenumberLineNDisplay(this._numberLine + 1);
         if (pMathLineInput.hasNextMathLineInput()) {
             pMathLineInput.nextMathLineInput.previousMathLineInput = newMathLineInput;
             newMathLineInput.nextMathLineInput = pMathLineInput.nextMathLineInput;
-            newMathLineInput.incrementFollowingsMathLineInputsNumberLine();
+            newMathLineInput.incrementFollowingsMathLineInputsnumberLine();
         }
         pMathLineInput.nextMathLineInput = newMathLineInput;
         newMathLineInput.previousMathLineInput = pMathLineInput;
@@ -285,14 +288,14 @@ var MathLineInput = /** @class */ (function () {
     ;
     MathLineInput.prototype.erase = function () {
         if (this.hasPreviousMathLineInput()) {
-            this.previousMathLineInput.nextMathLineInput = this.nextMathLineInput;
+            this._previousMathLineInput.nextMathLineInput = this.nextMathLineInput;
         }
         if (this.hasNextMathLineInput()) {
-            this.nextMathLineInput.previousMathLineInput = this.previousMathLineInput;
+            this._nextMathLineInput.previousMathLineInput = this.previousMathLineInput;
         }
         this._autoCompleter.hide();
         this.removeFromDOM();
-        this.decrementFollowingsMathLineInputsNumberLine();
+        this.decrementFollowingsMathLineInputsnumberLine();
         return this;
     };
     MathLineInput.prototype.removeFromDOM = function () {
@@ -357,14 +360,14 @@ var MathLineInput = /** @class */ (function () {
         }
         return this;
     };
-    MathLineInput.prototype.boldNumberLine = function () {
+    MathLineInput.prototype.boldnumberLine = function () {
         this._jQWrapperEl.find('.number_line span').css({
             'font-weight': 'bold',
             'opacity': '1',
         });
         return this;
     };
-    MathLineInput.prototype.unBoldNumberLine = function () {
+    MathLineInput.prototype.unBoldnumberLine = function () {
         this._jQWrapperEl.find('.number_line span').css({
             'font-weight': 'lighter',
             'opacity': '0.5',
@@ -380,13 +383,13 @@ var MathLineInput = /** @class */ (function () {
                 g_s4mCoreMemory.currentMathLineInputFocusedIs(_this);
             }
             _this.adjustContainerScrollToMe()
-                .boldNumberLine();
+                .boldnumberLine();
         });
         this._jQEl.focusout(function () {
             _this._autoCompleter.hide();
             g_s4mCoreMemory.lastMathLineInputFocusedOutIs(_this);
             g_s4mCoreMemory.setCurrentMathLineInputFocusedToNull();
-            _this.unBoldNumberLine();
+            _this.unBoldnumberLine();
             // S4M interactions:
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
                 g_s4mCoreMemory.currentMathLineInputFocused = null;
@@ -411,7 +414,7 @@ var MathLineInput = /** @class */ (function () {
             var answerMessagesArray = [this.value().valueOf()];
             if (parsedStr !== "[Unprocess]") {
                 var nerdamerAnswer = nerdamer(parsedStr);
-                if (nerdamerAnswer.toString() !== "undefined") {
+                if (nerdamerAnswer.tostring() !== "undefined") {
                     var nerdamerLatexAnswer = nerdamerAnswer.latex();
                     var evaluatedAnswer = nerdamerAnswer.evaluate();
                     var evaluatedLatexAnswer = evaluatedAnswer.latex();
@@ -525,6 +528,7 @@ var MathLineInput = /** @class */ (function () {
         });
         return this;
     };
+    //protected getLocationOf(pCursor: MathFieldTreeElement): string[] {
     MathLineInput.prototype.getLocationOf = function (pCursor) {
         var L = -1;
         var R = 1;
@@ -699,13 +703,13 @@ var MathLineInput = /** @class */ (function () {
         return this;
     };
     MathLineInput.prototype.displaySaveWidget = function () {
-        this.saverNOpenerManager.action = "SAVE";
+        this.saverNOpenerManager.setActionToSave();
         this.saverNOpenerManager.callingMathLineInput = this;
         this.saverNOpenerManager.show();
         return this;
     };
     MathLineInput.prototype.displayOpenWidget = function () {
-        this.saverNOpenerManager.action = "OPEN";
+        this.saverNOpenerManager.setActionToOpen();
         this.saverNOpenerManager.callingMathLineInput = this;
         this.saverNOpenerManager.show();
         return this;
@@ -914,10 +918,10 @@ var MathLineInput = /** @class */ (function () {
         this._undoRedoManager.redo();
         return this;
     };
-    MathLineInput.prototype.updateNumberLineNDisplay = function (pNumberLine) {
-        this._numberLine = pNumberLine;
+    MathLineInput.prototype.updatenumberLineNDisplay = function (pnumberLine) {
+        this._numberLine = pnumberLine;
         var spanEl = this._jQWrapperEl.find('.number_line span');
-        spanEl.text(((this._numberLine < 10) ? ' ' : '') + '[' + (pNumberLine) + ']');
+        spanEl.text(((this._numberLine < 10) ? ' ' : '') + '[' + (pnumberLine) + ']');
         return this;
     };
     MathLineInput.prototype.updateOutputScreenTitle = function () {
@@ -927,27 +931,27 @@ var MathLineInput = /** @class */ (function () {
         }
         return this;
     };
-    MathLineInput.prototype.incrementNumberLine = function () {
+    MathLineInput.prototype.incrementnumberLine = function () {
         this._numberLine++;
-        this.updateNumberLineNDisplay(this._numberLine);
+        this.updatenumberLineNDisplay(this._numberLine);
         this.updateOutputScreenTitle();
         return this;
     };
-    MathLineInput.prototype.decrementNumberLine = function () {
+    MathLineInput.prototype.decrementnumberLine = function () {
         this._numberLine--;
-        this.updateNumberLineNDisplay(this._numberLine);
+        this.updatenumberLineNDisplay(this._numberLine);
         this.updateOutputScreenTitle();
         return this;
     };
-    MathLineInput.prototype.incrementFollowingsMathLineInputsNumberLine = function () {
+    MathLineInput.prototype.incrementFollowingsMathLineInputsnumberLine = function () {
         for (var mathLineInput = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
-            mathLineInput.incrementNumberLine();
+            mathLineInput.incrementnumberLine();
         }
         return this;
     };
-    MathLineInput.prototype.decrementFollowingsMathLineInputsNumberLine = function () {
+    MathLineInput.prototype.decrementFollowingsMathLineInputsnumberLine = function () {
         for (var mathLineInput = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
-            mathLineInput.decrementNumberLine();
+            mathLineInput.decrementnumberLine();
         }
         return this;
     };
@@ -1279,6 +1283,351 @@ var ShortcutsManager = /** @class */ (function () {
     };
     return ShortcutsManager;
 }());
+var unaffectingKeys = [
+    KeyCodes.ENTER_KEY,
+    KeyCodes.SHIFT_KEY,
+    KeyCodes.CTRL_KEY,
+    KeyCodes.ALT_KEY,
+    KeyCodes.CAPSLOCK_KEY,
+    KeyCodes.ESCAPE_KEY,
+    KeyCodes.PAGEUP_KEY,
+    KeyCodes.PAGEDOWN_KEY,
+    KeyCodes.ALTGR_KEY,
+    KeyCodes.END_KEY,
+];
+var UndoRedoManager = /** @class */ (function () {
+    function UndoRedoManager(pMathLineInput) {
+        this._mathLineInput = pMathLineInput;
+        this._YIsDown = false;
+        this._ZIsDown = false;
+        this._currentState = 0;
+        this._buffSize = 100;
+        this._typedHistory = [
+            {
+                value: this._mathLineInput.value(),
+                cursorConfiguration: this._mathLineInput.getCursorConfiguration()
+            }
+        ];
+        this.setEvents();
+    }
+    UndoRedoManager.prototype.getTypedHistory = function () {
+        return this._typedHistory;
+    };
+    UndoRedoManager.prototype.setTypedHistoryWith = function (pTypedHistory) {
+        this._typedHistory = pTypedHistory;
+    };
+    UndoRedoManager.prototype.setCurrentStateAt = function (pState) {
+        this._currentState = pState;
+    };
+    UndoRedoManager.prototype.rearrangeTypedHistoryArray = function () {
+        if (this._typedHistory.length > this._buffSize) {
+            var sizeOverflow = ((this._typedHistory.length) - this._buffSize.valueOf());
+            this._currentState = this._currentState.valueOf() - sizeOverflow.valueOf();
+            this._typedHistory = this._typedHistory.slice(this._buffSize.valueOf() * (-1));
+        }
+    };
+    UndoRedoManager.prototype.isKeyIsUnaffecting = function (pKey) {
+        for (var _i = 0, unaffectingKeys_1 = unaffectingKeys; _i < unaffectingKeys_1.length; _i++) {
+            var keyCode = unaffectingKeys_1[_i];
+            if (keyCode === pKey) {
+                return true;
+            }
+        }
+        return false;
+    };
+    UndoRedoManager.prototype.isCurrentStateIsLastHistoryState = function () {
+        return (this._currentState === (this._typedHistory.length - 1));
+    };
+    UndoRedoManager.prototype.isCurrentStateIsFirstHistoryState = function () {
+        return (this._currentState === 0);
+    };
+    UndoRedoManager.prototype.saveState = function () {
+        if (!(this.isCurrentStateIsLastHistoryState())) {
+            this._typedHistory = this._typedHistory.slice(0, (this._currentState.valueOf() + 1));
+        }
+        this._typedHistory.push({
+            value: this._mathLineInput.value(),
+            cursorConfiguration: this._mathLineInput.getCursorConfiguration()
+        });
+        this.rearrangeTypedHistoryArray();
+        this._currentState = this._currentState.valueOf() + 1;
+    };
+    UndoRedoManager.prototype.getValueHistoryAtState = function (pState) {
+        return this._typedHistory[pState].value;
+    };
+    UndoRedoManager.prototype.getCursorConfigurationHistoryAtState = function (pState) {
+        return this._typedHistory[pState.valueOf()].cursorConfiguration;
+    };
+    UndoRedoManager.prototype.undo = function () {
+        if (!this.isCurrentStateIsFirstHistoryState()) {
+            this._currentState = this._currentState.valueOf() - 1;
+            this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));
+            this._mathLineInput.setCursorConfiguration(this.getCursorConfigurationHistoryAtState(this._currentState));
+            this._mathLineInput.showCursor();
+        }
+        else {
+            //console.log('do nothing');
+        }
+    };
+    UndoRedoManager.prototype.redo = function () {
+        if (!this.isCurrentStateIsLastHistoryState()) {
+            this._currentState = this._currentState.valueOf() + 1;
+            this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));
+            this._mathLineInput.setCursorConfiguration(this.getCursorConfigurationHistoryAtState(this._currentState));
+            this._mathLineInput.showCursor();
+        }
+        else {
+            //console.log('do nothing');
+        }
+    };
+    UndoRedoManager.prototype.setEvents = function () {
+        this.setKeyUpEvents();
+        this.setKeyDownEvents();
+    };
+    UndoRedoManager.prototype.setKeyUpEvents = function () {
+        var _this = this;
+        this._mathLineInput.keyUp(function (e) {
+            if (e.which === KeyCodes.ALT_KEY) {
+                e.preventDefault();
+            }
+            if ((_this.isKeyIsUnaffecting(e.which) === false)
+                && (e.ctrlKey === false || (e.ctrlKey === true && e.which === KeyCodes.V_KEY))) {
+                _this.saveState();
+            }
+        });
+    };
+    UndoRedoManager.prototype.setKeyDownEvents = function () {
+        var _this = this;
+        this._mathLineInput.keyDown(function (e) {
+            // ctrl + Z ==> undo
+            if (e.ctrlKey && e.which === KeyCodes.Z_KEY) {
+                e.preventDefault();
+                _this.undo();
+            }
+            // ctrl + Y ==> redo
+            if (e.ctrlKey && e.which === KeyCodes.Y_KEY) {
+                e.preventDefault();
+                _this.redo();
+            }
+        });
+    };
+    UndoRedoManager.prototype.getCopy = function (pMathLineInput) {
+        var retUndoRedoManager = new UndoRedoManager(pMathLineInput);
+        var retTypedHistory = [];
+        for (var state in this._typedHistory) {
+            retTypedHistory.push({
+                value: this._typedHistory[state].value,
+                cursorConfiguration: this._typedHistory[state].cursorConfiguration
+            });
+        }
+        retUndoRedoManager.setTypedHistoryWith(retTypedHistory);
+        retUndoRedoManager.setCurrentStateAt(this._currentState.valueOf());
+        return retUndoRedoManager;
+    };
+    return UndoRedoManager;
+}());
+/*
+ * Class SaverNOpenerStateManager
+ * ------------------------------
+ * Class that manage the save/open states feature.
+ *
+ * Because the purpose of S4M is to be full in
+ * front-end, there will be no way to save files on the
+ * computer or use files stored on the computer.
+ *
+ * So this features will just display or hide a textarea
+ * element containing all the content of MathLineInputs
+ * in JSON format.
+ *
+ * Press CTRL + S ==> Save
+ * = display the textarea, containing all the contents
+ *   of the MathLineinputs in JSON-Format, so we can
+ *   copy it, paste it into a text-editor and save it
+ *   manually on the computer.
+ *   * Press Enter hide the textarea
+ *
+ * Press CTRL + O ==> Open
+ * = display the textarea with an empty JSON-object string
+ *   as content, where we can paste the json-format
+ *   string previously stored on a file for example.
+ *   * Press Enter hide the textarea and load all
+ *     MathLineInputs of the JSON-object
+ *
+ * * */
+var SaverNOpenerStateManagerAction;
+(function (SaverNOpenerStateManagerAction) {
+    SaverNOpenerStateManagerAction["NOTHING"] = "";
+    SaverNOpenerStateManagerAction["OPEN"] = "OPEN";
+    SaverNOpenerStateManagerAction["SAVE"] = "SAVE";
+})(SaverNOpenerStateManagerAction || (SaverNOpenerStateManagerAction = {}));
+var SaverNOpenerStateManager = /** @class */ (function () {
+    function SaverNOpenerStateManager() {
+        this._jQEl = $('<div id="SaverNOpenerStateManager"><textarea autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>');
+        this._textarea = this._jQEl.find('textarea');
+        this._callingMathLineInput = null;
+        this._action = SaverNOpenerStateManagerAction.NOTHING;
+        this._isVisible = false;
+        this._jQEl.appendTo($('body')).hide(0);
+        this.setEvents();
+    }
+    Object.defineProperty(SaverNOpenerStateManager.prototype, "callingMathLineInput", {
+        set: function (pValue) {
+            this._callingMathLineInput = pValue;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    SaverNOpenerStateManager.prototype.setActionToSave = function () {
+        this._action = SaverNOpenerStateManagerAction.SAVE;
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.setActionToOpen = function () {
+        this._action = SaverNOpenerStateManagerAction.OPEN;
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.setActionToNothing = function () {
+        this._action = SaverNOpenerStateManagerAction.NOTHING;
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.isActionIsSave = function () {
+        return (this._action === SaverNOpenerStateManagerAction.SAVE);
+    };
+    SaverNOpenerStateManager.prototype.isActionIsOpen = function () {
+        return (this._action === SaverNOpenerStateManagerAction.OPEN);
+    };
+    SaverNOpenerStateManager.prototype.isActionIsNothing = function () {
+        return (this._action === SaverNOpenerStateManagerAction.NOTHING);
+    };
+    /*
+     * Replace all non printable chars with nothing
+     * * */
+    SaverNOpenerStateManager.prototype.secureStr = function (pStr) {
+        return pStr.replace(/[^ -~]+/g, "");
+    };
+    SaverNOpenerStateManager.prototype.show = function () {
+        var _this = this;
+        if (this.isActionIsSave() || this.isActionIsOpen()) {
+            if (this.isActionIsSave()) {
+                this._textarea.val(this.secureStr(this.getJSONState()));
+                this.disableEditing();
+            }
+            else if (this.isActionIsOpen()) {
+                this._textarea.val('{"MathLineInputsValues":[""]}');
+                this.enableEditing();
+            }
+            this._jQEl.fadeIn(100, function () {
+                _this._textarea.select();
+                _this._isVisible = true;
+            });
+        }
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.hide = function () {
+        var _this = this;
+        this._jQEl.fadeOut(100, function () {
+            var callingMathLineInput = _this.getCallingMathLineInput();
+            _this._textarea.val('');
+            _this.setActionToNothing();
+            _this._isVisible = false;
+            if (callingMathLineInput !== null) {
+                callingMathLineInput.focus();
+            }
+        });
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.isVisible = function () {
+        return this._isVisible;
+    };
+    SaverNOpenerStateManager.prototype.getCallingMathLineInput = function () {
+        return this._callingMathLineInput;
+    };
+    SaverNOpenerStateManager.prototype.getLastMathLineInput = function () {
+        var retMathLineInput = this._callingMathLineInput;
+        if (retMathLineInput !== null) {
+            retMathLineInput = retMathLineInput.getLastMathLineInput();
+        }
+        return retMathLineInput;
+    };
+    SaverNOpenerStateManager.prototype.getFirstMathLineInput = function () {
+        var retMathLineInput = this._callingMathLineInput;
+        if (retMathLineInput !== null) {
+            retMathLineInput = retMathLineInput.getFirstMathLineInput();
+        }
+        return retMathLineInput;
+    };
+    SaverNOpenerStateManager.prototype.enableEditing = function () {
+        this._textarea.attr('readonly', false);
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.disableEditing = function () {
+        this._textarea.attr('readonly', true);
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.setEvents = function () {
+        var _this = this;
+        this._jQEl.keydown(function (pEventObj) {
+            switch (pEventObj.which) {
+                case KeyCodes.ESCAPE_KEY:
+                    _this.hide();
+                    break;
+                case KeyCodes.ENTER_KEY:
+                    pEventObj.preventDefault();
+                    if (_this.isActionIsOpen()) {
+                        var textareaValue = _this.secureStr(_this._textarea.val());
+                        var state = JSON.parse(textareaValue.valueOf());
+                        _this.replaceMathLineInputs(state['MathLineInputsValues']);
+                    }
+                    _this.hide();
+                    break;
+            }
+        });
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.eraseMathLineInputs = function () {
+        var currentMathLineInput = this.getLastMathLineInput();
+        while (currentMathLineInput !== null) {
+            currentMathLineInput.nextMathLineInput = null;
+            currentMathLineInput.removeFromDOM();
+            currentMathLineInput = currentMathLineInput.previousMathLineInput;
+        }
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.checkState = function () {
+        return true;
+    };
+    SaverNOpenerStateManager.prototype.replaceMathLineInputs = function (pState) {
+        var callingMathLineInput = this.getCallingMathLineInput();
+        if ((callingMathLineInput !== null) && this.checkState()) {
+            if (pState.length !== 0) {
+                this.eraseMathLineInputs();
+                var mathLineInput = new MathLineInput(callingMathLineInput.container, this);
+                mathLineInput.appendToContainer()
+                    .setValue(pState[0])
+                    .setStyle();
+                pState = pState.slice(1);
+                for (var index in pState) {
+                    mathLineInput = mathLineInput.createNewMathLineInputAndAppendAfter(mathLineInput);
+                    mathLineInput.setValue(pState[index])
+                        .setStyle();
+                }
+                mathLineInput.getLastMathLineInput().focus();
+            }
+        }
+        return this;
+    };
+    SaverNOpenerStateManager.prototype.getJSONState = function () {
+        var retObj = {
+            MathLineInputsValues: Array()
+        };
+        var mathLineInput = this.getFirstMathLineInput();
+        while (mathLineInput !== null) {
+            retObj.MathLineInputsValues.push(this.secureStr(mathLineInput.value()));
+            mathLineInput = mathLineInput.nextMathLineInput;
+        }
+        return JSON.stringify(retObj);
+    };
+    return SaverNOpenerStateManager;
+}());
 var g_keywordsList = [
     {
         keyword: "\\exists",
@@ -1537,149 +1886,6 @@ var g_keywordsList = [
         tags: "bool",
     },
 ];
-var unaffectingKeys = [
-    KeyCodes.ENTER_KEY,
-    KeyCodes.SHIFT_KEY,
-    KeyCodes.CTRL_KEY,
-    KeyCodes.ALT_KEY,
-    KeyCodes.CAPSLOCK_KEY,
-    KeyCodes.ESCAPE_KEY,
-    KeyCodes.PAGEUP_KEY,
-    KeyCodes.PAGEDOWN_KEY,
-    KeyCodes.ALTGR_KEY,
-    KeyCodes.END_KEY,
-];
-var UndoRedoManager = /** @class */ (function () {
-    function UndoRedoManager(pMathLineInput) {
-        this._mathLineInput = pMathLineInput;
-        this._YIsDown = false;
-        this._ZIsDown = false;
-        this._currentState = 0;
-        this._buffSize = 100;
-        this._typedHistory = [
-            {
-                value: this._mathLineInput.value(),
-                cursorConfiguration: this._mathLineInput.getCursorConfiguration()
-            }
-        ];
-        this.setEvents();
-    }
-    UndoRedoManager.prototype.getTypedHistory = function () {
-        return this._typedHistory;
-    };
-    UndoRedoManager.prototype.setTypedHistoryWith = function (pTypedHistory) {
-        this._typedHistory = pTypedHistory;
-    };
-    UndoRedoManager.prototype.setCurrentStateAt = function (pState) {
-        this._currentState = pState;
-    };
-    UndoRedoManager.prototype.rearrangeTypedHistoryArray = function () {
-        if (this._typedHistory.length > this._buffSize) {
-            var sizeOverflow = ((this._typedHistory.length) - this._buffSize.valueOf());
-            this._currentState = this._currentState.valueOf() - sizeOverflow.valueOf();
-            this._typedHistory = this._typedHistory.slice(this._buffSize.valueOf() * (-1));
-        }
-    };
-    UndoRedoManager.prototype.isKeyIsUnaffecting = function (pKey) {
-        for (var _i = 0, unaffectingKeys_1 = unaffectingKeys; _i < unaffectingKeys_1.length; _i++) {
-            var keyCode = unaffectingKeys_1[_i];
-            if (keyCode === pKey) {
-                return true;
-            }
-        }
-        return false;
-    };
-    UndoRedoManager.prototype.isCurrentStateIsLastHistoryState = function () {
-        return (this._currentState === (this._typedHistory.length - 1));
-    };
-    UndoRedoManager.prototype.isCurrentStateIsFirstHistoryState = function () {
-        return (this._currentState === 0);
-    };
-    UndoRedoManager.prototype.saveState = function () {
-        if (!(this.isCurrentStateIsLastHistoryState())) {
-            this._typedHistory = this._typedHistory.slice(0, (this._currentState.valueOf() + 1));
-        }
-        this._typedHistory.push({
-            value: this._mathLineInput.value(),
-            cursorConfiguration: this._mathLineInput.getCursorConfiguration()
-        });
-        this.rearrangeTypedHistoryArray();
-        this._currentState = this._currentState.valueOf() + 1;
-    };
-    UndoRedoManager.prototype.getValueHistoryAtState = function (pState) {
-        return this._typedHistory[pState.valueOf()].value;
-    };
-    UndoRedoManager.prototype.getCursorConfigurationHistoryAtState = function (pState) {
-        return this._typedHistory[pState.valueOf()].cursorConfiguration;
-    };
-    UndoRedoManager.prototype.undo = function () {
-        if (!this.isCurrentStateIsFirstHistoryState()) {
-            this._currentState = this._currentState.valueOf() - 1;
-            this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));
-            this._mathLineInput.setCursorConfiguration(this.getCursorConfigurationHistoryAtState(this._currentState));
-            this._mathLineInput.showCursor();
-        }
-        else {
-            //console.log('do nothing');
-        }
-    };
-    UndoRedoManager.prototype.redo = function () {
-        if (!this.isCurrentStateIsLastHistoryState()) {
-            this._currentState = this._currentState.valueOf() + 1;
-            this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));
-            this._mathLineInput.setCursorConfiguration(this.getCursorConfigurationHistoryAtState(this._currentState));
-            this._mathLineInput.showCursor();
-        }
-        else {
-            //console.log('do nothing');
-        }
-    };
-    UndoRedoManager.prototype.setEvents = function () {
-        this.setKeyUpEvents();
-        this.setKeyDownEvents();
-    };
-    UndoRedoManager.prototype.setKeyUpEvents = function () {
-        var _this = this;
-        this._mathLineInput.keyUp(function (e) {
-            if (e.which === KeyCodes.ALT_KEY) {
-                e.preventDefault();
-            }
-            if ((_this.isKeyIsUnaffecting(e.which) === false)
-                && (e.ctrlKey === false || (e.ctrlKey === true && e.which === KeyCodes.V_KEY))) {
-                _this.saveState();
-            }
-        });
-    };
-    UndoRedoManager.prototype.setKeyDownEvents = function () {
-        var _this = this;
-        this._mathLineInput.keyDown(function (e) {
-            // ctrl + Z ==> undo
-            if (e.ctrlKey && e.which === KeyCodes.Z_KEY) {
-                e.preventDefault();
-                _this.undo();
-            }
-            // ctrl + Y ==> redo
-            if (e.ctrlKey && e.which === KeyCodes.Y_KEY) {
-                e.preventDefault();
-                _this.redo();
-            }
-        });
-    };
-    UndoRedoManager.prototype.getCopy = function (pMathLineInput) {
-        var retUndoRedoManager = new UndoRedoManager(pMathLineInput);
-        var retTypedHistory = [];
-        for (var state in this._typedHistory) {
-            retTypedHistory.push({
-                value: this._typedHistory[state].value,
-                cursorConfiguration: this._typedHistory[state].cursorConfiguration
-            });
-        }
-        retUndoRedoManager.setTypedHistoryWith(retTypedHistory);
-        retUndoRedoManager.setCurrentStateAt(this._currentState.valueOf());
-        return retUndoRedoManager;
-    };
-    return UndoRedoManager;
-}());
 /******************************************************************************************
 * AutoCompleterManager:
 * Wrapper object that wrap the textarea where the auto-completion takes place.
@@ -2157,148 +2363,4 @@ var AutoCompleter = /** @class */ (function () {
         return (retKeywords.slice(0, 11));
     };
     return AutoCompleter;
-}());
-var SaverNOpenerStateManager = /** @class */ (function () {
-    function SaverNOpenerStateManager() {
-        this._jQEl = $('<div id="SaverNOpenerStateManager"><textarea autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>');
-        this._textarea = this._jQEl.find('textarea');
-        this._callingMathLineInput = [];
-        this._action = "";
-        this._isVisible = false;
-        this._jQEl.appendTo($('body')).hide(0);
-        this.setEvents();
-    }
-    Object.defineProperty(SaverNOpenerStateManager.prototype, "jQEl", {
-        get: function () {
-            return this._jQEl;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(SaverNOpenerStateManager.prototype, "action", {
-        get: function () {
-            return this._action;
-        },
-        set: function (pValue) {
-            if (pValue === "SAVE" || pValue === "OPEN") {
-                this._action = pValue;
-            }
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(SaverNOpenerStateManager.prototype, "callingMathLineInput", {
-        set: function (pValue) {
-            this._callingMathLineInput = [pValue];
-        },
-        enumerable: false,
-        configurable: true
-    });
-    SaverNOpenerStateManager.prototype.secureStr = function (pStr) {
-        return pStr.replace(/[^ -~]+/g, "");
-    };
-    SaverNOpenerStateManager.prototype.show = function () {
-        var _this = this;
-        if (this.action === "SAVE" || this._action === "OPEN") {
-            if (this._action === "SAVE") {
-                this._textarea.val(this.secureStr(this.getJSONState()));
-                this.disableEditing();
-            }
-            else if (this._action === "OPEN") {
-                this._textarea.val('{"MathLineInputsValues":[""]}');
-                this.enableEditing();
-            }
-            this._jQEl.fadeIn(100, function () {
-                _this._textarea.select();
-                _this._isVisible = true;
-            });
-        }
-        return this;
-    };
-    SaverNOpenerStateManager.prototype.hide = function () {
-        var _this = this;
-        this._jQEl.fadeOut(100, function () {
-            _this._textarea.val('');
-            _this._action = "";
-            _this._isVisible = false;
-            _this.getCallingMathLineInput().focus();
-        });
-        return this;
-    };
-    SaverNOpenerStateManager.prototype.isVisible = function () {
-        return this._isVisible;
-    };
-    SaverNOpenerStateManager.prototype.getCallingMathLineInput = function () {
-        return this._callingMathLineInput[0];
-    };
-    SaverNOpenerStateManager.prototype.enableEditing = function () {
-        this._textarea.attr('readonly', false);
-        return this;
-    };
-    SaverNOpenerStateManager.prototype.disableEditing = function () {
-        this._textarea.attr('readonly', true);
-        return this;
-    };
-    SaverNOpenerStateManager.prototype.setEvents = function () {
-        var _this = this;
-        this._jQEl.keydown(function (pEventObj) {
-            switch (pEventObj.which) {
-                case KeyCodes.ESCAPE_KEY:
-                    _this.hide();
-                    break;
-                case KeyCodes.ENTER_KEY:
-                    pEventObj.preventDefault();
-                    if (_this._action === "OPEN") {
-                        var textareaValue = _this.secureStr(_this._textarea.val());
-                        var state = JSON.parse(textareaValue.valueOf());
-                        _this.replaceMathLineInputs(state['MathLineInputsValues']);
-                    }
-                    _this.hide();
-                    break;
-            }
-        });
-    };
-    SaverNOpenerStateManager.prototype.eraseMathLineInputs = function () {
-        var currentMathLineInput = this.getCallingMathLineInput().getLastMathLineInput();
-        while (currentMathLineInput !== null) {
-            currentMathLineInput.nextMathLineInput = null;
-            currentMathLineInput.removeFromDOM();
-            currentMathLineInput = currentMathLineInput.previousMathLineInput;
-        }
-        return this;
-    };
-    SaverNOpenerStateManager.prototype.checkState = function () {
-        return true;
-    };
-    SaverNOpenerStateManager.prototype.replaceMathLineInputs = function (pState) {
-        if (this.checkState()) {
-            if (pState.length !== 0) {
-                this.eraseMathLineInputs();
-                var mathLineInput = new MathLineInput(this.getCallingMathLineInput().container, this);
-                mathLineInput.appendToContainer()
-                    .setValue(pState[0])
-                    .setStyle();
-                pState = pState.slice(1);
-                for (var index in pState) {
-                    mathLineInput = mathLineInput.createNewMathLineInputAndAppendAfter(mathLineInput);
-                    mathLineInput.setValue(pState[index])
-                        .setStyle();
-                }
-                mathLineInput.getLastMathLineInput().focus();
-            }
-        }
-        return this;
-    };
-    SaverNOpenerStateManager.prototype.getJSONState = function () {
-        var retObj = {
-            MathLineInputsValues: Array()
-        };
-        var mathLineInput = this.getCallingMathLineInput().getFirstMathLineInput();
-        while (mathLineInput !== null) {
-            retObj.MathLineInputsValues.push(this.secureStr(mathLineInput.value()));
-            mathLineInput = mathLineInput.nextMathLineInput;
-        }
-        return JSON.stringify(retObj);
-    };
-    return SaverNOpenerStateManager;
 }());

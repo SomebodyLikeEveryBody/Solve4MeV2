@@ -1,5 +1,5 @@
 interface JQueryElement {
-    length: Number;
+    length: number;
 
     appendTo(pElement: JQueryElement): JQueryElement;
     insertAfter(pElement: JQueryElement): JQueryElement;
@@ -7,17 +7,17 @@ interface JQueryElement {
     remove(): JQueryElement;
     show(pTime: number, pFunction?: Function): JQueryElement;
     hide(pTime: number, pFunction?: Function): JQueryElement;
-    fadeIn(pNumber: Number, pFunction?: Function): JQueryElement;
-    fadeOut(pTime: Number, pFunction?: Function): JQueryElement;
+    fadeIn(pnumber: number, pFunction?: Function): JQueryElement;
+    fadeOut(pTime: number, pFunction?: Function): JQueryElement;
     select(): JQueryElement;
-    html(pStr: String): void;
-    find(pSelector: String): JQueryElement;
+    html(pStr: string): void;
+    find(pSelector: string): JQueryElement;
     css(pStyles: Object): JQueryElement;
     first(): JQueryElement;
-    addClass(pClassName: String): JQueryElement;
-    removeClass(pClassName: String): JQueryElement;
+    addClass(pClassName: string): JQueryElement;
+    removeClass(pClassName: string): JQueryElement;
     append(JQueryElement: JQueryElement): JQueryElement;
-    text(): String;
+    text(): string;
     next(): JQueryElement;
     prev(): JQueryElement;
     keydown(pFunction: Function): JQueryElement;
@@ -26,17 +26,17 @@ interface JQueryElement {
     focusout(pFunction: Function): JQueryElement;
     focusin(pFunction: Function): JQueryElement;    
     blur(pFuction: Function): JQueryElement;
-    addClass(pClassName: String): JQueryElement;
-    removeClass(pClassName: String): JQueryElement;
-    animate(pCssObject: Object, pTime: Number): JQueryElement;
+    addClass(pClassName: string): JQueryElement;
+    removeClass(pClassName: string): JQueryElement;
+    animate(pCssObject: Object, pTime: number): JQueryElement;
     offset(): Offset;
-    scrollTop(pValue?: Number): Number;
-    height(): Number;
-    outerHeight(): Number;
-    text(pStr: String): JQueryElement;
-    val(pStr?: String): String;
-    attr(pProp: String, pValue: Boolean | String): JQueryElement;
-    data(pStr: String, pValue: String): JQueryElement;
-    get(pIndex: Number): JQueryElement;
-    text(): String;
+    scrollTop(pValue?: number): number;
+    height(): number;
+    outerHeight(): number;
+    text(pStr: string): JQueryElement;
+    val(pStr?: string): string;
+    attr(pProp: string, pValue: Boolean | string): JQueryElement;
+    data(pStr: string, pValue: string): JQueryElement;
+    get(pIndex: number): JQueryElement;
+    text(): string;
 }

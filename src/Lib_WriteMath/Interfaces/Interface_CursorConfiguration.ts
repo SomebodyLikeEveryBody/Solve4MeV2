@@ -1,4 +1,4 @@
 interface CursorConfiguration {
-    cursor: String[],
-    anticursor?: String[]
+    cursor: string[],
+    anticursor?: string[]
 }

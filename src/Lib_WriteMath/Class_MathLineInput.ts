@@ -5,8 +5,9 @@ declare const g_s4mCoreMemory: any;
 declare const g_inputScreen: any;
 declare const g_outputScreen: any;
 declare const g_virtualKeyboard: any;
+declare const g_keywordsList: any;
 declare const nerdamer: any;
-declare function $(pStr: String | JQueryElement): JQueryElement;
+declare function $(pStr: string | JQueryElement): JQueryElement;
 
 class MathLineInput {
     protected _jQWrapperEl: JQueryElement;
@@ -14,11 +15,11 @@ class MathLineInput {
     protected _container: JQueryElement;
     protected _mathField: any;
 
-    protected _nextMathLineInput: MathLineInput;
-    protected _previousMathLineInput: MathLineInput;
-    protected _isDeletable: Boolean;
-    protected _lastValueBeforeFocusOut: String;
-    protected _isErrored: Boolean;
+    protected _nextMathLineInput: MathLineInput | null;
+    protected _previousMathLineInput: MathLineInput | null;
+    protected _isDeletable: boolean;
+    protected _lastValueBeforeFocusOut: string;
+    protected _isErrored: boolean;
     protected _numberLine: number;
 
     protected _autoCompleter: AutoCompleter;
@@ -56,19 +57,14 @@ class MathLineInput {
                 },
 
                 upOutOf: () => {
-                    if (this.hasPreviousMathLineInput()) {
-                        if (!this.autoCompleterIsVisible()) {
-                            this.previousMathLineInput.focus();
-                        }
-                        
+                    if (this.hasPreviousMathLineInput() && (!this.autoCompleterIsVisible())) {
+                        this._previousMathLineInput!.focus();
                     }
                 },
 
                 downOutOf: () => {
-                    if (this.hasNextMathLineInput()) {
-                        if (!this.autoCompleterIsVisible()) {
-                            this.nextMathLineInput.focus();
-                        }
+                    if (this.hasNextMathLineInput() && (!this.autoCompleterIsVisible())) {
+                        this.nextMathLineInput!.focus();
                     }
                 },
             }
@@ -94,28 +90,30 @@ class MathLineInput {
         return this._container;
 	}
 
-    public get nextMathLineInput (): MathLineInput {
+    public get nextMathLineInput (): MathLineInput | null {
         return this._nextMathLineInput;
 	}
 
-    public set nextMathLineInput (pMathLineInput: MathLineInput) {
-        this._nextMathLineInput = pMathLineInput;
+    public set nextMathLineInput (pMathLineInput: MathLineInput | null) {
+        if (pMathLineInput !== null) {
+            this._nextMathLineInput = pMathLineInput;
+        }
 	}
 
-    public set isErrored (pValue: Boolean) {
+    public set isErrored (pValue: boolean) {
         this._isErrored = pValue;
 	}
 
-    public get isErrored (): Boolean {
+    public get isErrored (): boolean {
         return this._isErrored;
     }
 
 
-    public get previousMathLineInput (): MathLineInput {
+    public get previousMathLineInput (): MathLineInput | null {
         return this._previousMathLineInput;
 	}
 
-    public set previousMathLineInput (pMathLineInput: MathLineInput) {
+    public set previousMathLineInput (pMathLineInput: MathLineInput | null) {
         this._previousMathLineInput = pMathLineInput;
 	}
 
@@ -123,11 +121,11 @@ class MathLineInput {
         return this._mathField;
 	}
 
-    public get isDeletable (): Boolean {
+    public get isDeletable (): boolean {
         return this._isDeletable;
     }
 
-    public set isDeletable (pBool: Boolean) {
+    public set isDeletable (pBool: boolean) {
         this._isDeletable = pBool;
     }
 
@@ -147,31 +145,31 @@ class MathLineInput {
         return this;
     }
 
-    public value(): String {
+    public value(): string {
         return this._mathField.latex();
     }
 
-    public setValue(pValue: String): MathLineInput {
+    public setValue(pValue: string): MathLineInput {
         this._mathField.latex(pValue);
         return this;
     }
 
-    public appendValueAtCursorPosition(pValue: String): MathLineInput {
+    public appendValueAtCursorPosition(pValue: string): MathLineInput {
         this._mathField.typedText(pValue);
         return this;
     }
 
-    public appendCmdAtCursorPosition(pValue: String): MathLineInput {
+    public appendCmdAtCursorPosition(pValue: string): MathLineInput {
         this._mathField.cmd(pValue);
         return this;
     }
 
-    public writeLatexAtCursorPosition(pLatex: String): MathLineInput {
+    public writeLatexAtCursorPosition(pLatex: string): MathLineInput {
         this._mathField.write(pLatex);
         return this;
     }
 
-    public isEmpty(): Boolean {
+    public isEmpty(): boolean {
         return this.value() === '';
     }
     
@@ -195,15 +193,20 @@ class MathLineInput {
         return this;
     }
 
-    public hasPreviousMathLineInput(): Boolean {
-        return (this._previousMathLineInput !== null);
+    public hasPreviousMathLineInput(): boolean {
+        if (this._previousMathLineInput !== null) {
+            this._previousMathLineInput instanceof MathLineInput;
+            return true;
+        }
+
+        return (false);
     }
 
-    public hasNextMathLineInput(): Boolean {
+    public hasNextMathLineInput(): boolean {
         return (this._nextMathLineInput !== null);
     }
 
-    public hasBeenModifiedSinceLastFocusOut(): Boolean {
+    public hasBeenModifiedSinceLastFocusOut(): boolean {
         return (this.value() !== this._lastValueBeforeFocusOut);
     }
 
@@ -212,12 +215,12 @@ class MathLineInput {
               newMathLineInput.nextMathLineInput = pMathLineInput;
 
               newMathLineInput.insertBefore(pMathLineInput._jQWrapperEl)
-                              .updateNumberLineNDisplay(this._numberLine)
-                              .incrementFollowingsMathLineInputsNumberLine();
+                              .updatenumberLineNDisplay(this._numberLine)
+                              .incrementFollowingsMathLineInputsnumberLine();
 
         if (pMathLineInput.hasPreviousMathLineInput()) {
             newMathLineInput.previousMathLineInput = pMathLineInput.previousMathLineInput;
-            pMathLineInput.previousMathLineInput.nextMathLineInput = newMathLineInput;
+            pMathLineInput.previousMathLineInput!.nextMathLineInput = newMathLineInput;
         }
 
         pMathLineInput.previousMathLineInput = newMathLineInput;
@@ -230,13 +233,13 @@ class MathLineInput {
         const newMathLineInput = new MathLineInput(this._container, this.saverNOpenerManager);
 
               newMathLineInput.insertAfter(pMathLineInput._jQWrapperEl)
-                              .updateNumberLineNDisplay(this._numberLine + 1);
+                              .updatenumberLineNDisplay(this._numberLine + 1);
 
         if (pMathLineInput.hasNextMathLineInput()) {
-            pMathLineInput.nextMathLineInput.previousMathLineInput = newMathLineInput;
+            pMathLineInput.nextMathLineInput!.previousMathLineInput = newMathLineInput;
             newMathLineInput.nextMathLineInput = pMathLineInput.nextMathLineInput;
 
-            newMathLineInput.incrementFollowingsMathLineInputsNumberLine();
+            newMathLineInput.incrementFollowingsMathLineInputsnumberLine();
         }
 
         pMathLineInput.nextMathLineInput = newMathLineInput;
@@ -263,16 +266,16 @@ class MathLineInput {
 
     public erase(): MathLineInput {
         if (this.hasPreviousMathLineInput()) {
-            this.previousMathLineInput.nextMathLineInput = this.nextMathLineInput;
+            this._previousMathLineInput!.nextMathLineInput = this.nextMathLineInput;
         }
         
         if (this.hasNextMathLineInput()) {
-            this.nextMathLineInput.previousMathLineInput = this.previousMathLineInput;
+            this._nextMathLineInput!.previousMathLineInput = this.previousMathLineInput;
         }
 
         this._autoCompleter.hide();
         this.removeFromDOM();
-        this.decrementFollowingsMathLineInputsNumberLine();
+        this.decrementFollowingsMathLineInputsnumberLine();
 
         return this;
     }
@@ -294,7 +297,7 @@ class MathLineInput {
         return this;
     }
 
-    public autoCompleterIsVisible(): Boolean {
+    public autoCompleterIsVisible(): boolean {
         return this._autoCompleter.isVisible();
     }
 
@@ -304,7 +307,7 @@ class MathLineInput {
         return this;
     }
 
-    public keyStroke(pKey: String): MathLineInput {
+    public keyStroke(pKey: string): MathLineInput {
         this._mathField.keystroke(pKey);
 
         return this;
@@ -320,19 +323,19 @@ class MathLineInput {
         return this;
     }
 
-    protected getContainerTopCoord(): Number {
+    protected getContainerTopCoord(): number {
         return this._container.offset().top;
     }
 
-    protected getContainerBottomCoord(): Number {
+    protected getContainerBottomCoord(): number {
         return this.getContainerTopCoord().valueOf() + this.container.outerHeight().valueOf();
     }
 
-    protected getTopCoord(): Number {
+    protected getTopCoord(): number {
         return this._jQEl.offset().top;
     }
 
-    protected getBottomCoord(): Number {
+    protected getBottomCoord(): number {
         return this.getTopCoord().valueOf() + this._jQEl.outerHeight().valueOf();
     }
 
@@ -357,7 +360,7 @@ class MathLineInput {
         return this;
     }
 
-    protected boldNumberLine(): MathLineInput {
+    protected boldnumberLine(): MathLineInput {
         this._jQWrapperEl.find('.number_line span').css({
             'font-weight': 'bold',
             'opacity': '1',
@@ -366,7 +369,7 @@ class MathLineInput {
         return this;
     }
 
-    protected unBoldNumberLine(): MathLineInput {
+    protected unBoldnumberLine(): MathLineInput {
         this._jQWrapperEl.find('.number_line span').css({
             'font-weight': 'lighter',
             'opacity': '0.5',
@@ -385,7 +388,7 @@ class MathLineInput {
             }
 
             this.adjustContainerScrollToMe()
-                .boldNumberLine();
+                .boldnumberLine();
         });
 
         this._jQEl.focusout(() => {
@@ -393,7 +396,7 @@ class MathLineInput {
             g_s4mCoreMemory.lastMathLineInputFocusedOutIs(this);
             g_s4mCoreMemory.setCurrentMathLineInputFocusedToNull();
 
-            this.unBoldNumberLine();
+            this.unBoldnumberLine();
             
             // S4M interactions:
             if (S4MLParser !== undefined && g_s4mCoreMemory !== undefined) {
@@ -424,7 +427,7 @@ class MathLineInput {
 
             if (parsedStr !== "[Unprocess]") {
                 let nerdamerAnswer = nerdamer(parsedStr);
-                if (nerdamerAnswer.toString() !== "undefined") {
+                if (nerdamerAnswer.tostring() !== "undefined") {
                     let nerdamerLatexAnswer = nerdamerAnswer.latex();
                     let evaluatedAnswer = nerdamerAnswer.evaluate();
                     let evaluatedLatexAnswer = evaluatedAnswer.latex();
@@ -497,9 +500,9 @@ class MathLineInput {
     public delete(): void {
         if (this.hasPreviousMathLineInput() || this.hasNextMathLineInput()) {
             if (this.hasNextMathLineInput()) {
-                this.nextMathLineInput.focus();
+                this.nextMathLineInput!.focus();
             } else {
-                this.previousMathLineInput.focus();
+                this.previousMathLineInput!.focus();
             }
 
             this.erase();
@@ -547,11 +550,12 @@ class MathLineInput {
         return this;
     }
 
-    protected getLocationOf(pCursor: MathFieldTreeElement): String[] {
+    //protected getLocationOf(pCursor: MathFieldTreeElement): string[] {
+    protected getLocationOf(pCursor: any): string[] {
         const L = -1;
         const R = 1;
-        const retCursorLocation: String[] = [];
-        let mathfieldTreeElement: MathFieldTreeElement;
+        const retCursorLocation: string[] = [];
+        let mathfieldTreeElement: any;
 
         if (pCursor[L]) {
             retCursorLocation.push('insRightOf');
@@ -599,11 +603,11 @@ class MathLineInput {
         return retCursorConfiguration;
     }
 
-    protected setLocationOf(pCursor: (String|Number)[]) {
+    protected setLocationOf(pCursor: (string|number)[]) {
         const L = -1;
         const R = 1;
         
-        let mathfieldTreeElement: MathFieldTreeElement = this._mathField.__controller.root;
+        let mathfieldTreeElement: any = this._mathField.__controller.root;
 
         for (let i = 0; i < pCursor.length; i++) {
             switch (pCursor[i]) {
@@ -621,7 +625,7 @@ class MathLineInput {
         }
     }
 
-    public isAGivenLine(): Boolean {
+    public isAGivenLine(): boolean {
         if (this.value().substr(0, 14) === '\\text{Given}\\ ') {
             return true;
         }
@@ -629,7 +633,7 @@ class MathLineInput {
         return false;
     }
 
-    public isAnUnprocessedLine(): Boolean {
+    public isAnUnprocessedLine(): boolean {
         if (this.value().substr(0, 8) === '\\vdash\\ ') {
             return true;
         }
@@ -637,11 +641,11 @@ class MathLineInput {
         return false;
     }
 
-    public isASeparatorLine(): Boolean {
+    public isASeparatorLine(): boolean {
         return this.value() == '--';
     }
 
-    public isALetLine(): Boolean {
+    public isALetLine(): boolean {
         if (this.value().substr(0, 12) === "\\text{Let}\\ ") {
             return true;
         }
@@ -649,15 +653,15 @@ class MathLineInput {
         return false;
     }
 
-    public isACommentLine(): Boolean {
+    public isACommentLine(): boolean {
         return this.value()[0] === "#";
     }
 
-    public isAPrintLine(): Boolean {
+    public isAPrintLine(): boolean {
         return (this.value().substr(0, 18) === "\\text{Print}\\left(");
     }
 
-    public isAGraphLine(): Boolean {
+    public isAGraphLine(): boolean {
         return (this.value().substr(0, 18) === "\\text{Graph}\\left(");
     }
 
@@ -759,7 +763,7 @@ class MathLineInput {
     }
 
     public displaySaveWidget(): MathLineInput {
-        this.saverNOpenerManager.action = "SAVE";
+        this.saverNOpenerManager.setActionToSave();
         this.saverNOpenerManager.callingMathLineInput = this;
         this.saverNOpenerManager.show();
 
@@ -767,7 +771,7 @@ class MathLineInput {
     }
 
     public displayOpenWidget(): MathLineInput {
-        this.saverNOpenerManager.action = "OPEN";
+        this.saverNOpenerManager.setActionToOpen();
         this.saverNOpenerManager.callingMathLineInput = this;
         this.saverNOpenerManager.show();
 
@@ -822,7 +826,7 @@ class MathLineInput {
         return this;
     }
 
-    public prependToFieldKeyword(pKeyword: String, pFollowingStr: String='\\ '): MathLineInput {
+    public prependToFieldKeyword(pKeyword: string, pFollowingStr: string='\\ '): MathLineInput {
         const cursorConfiguration: CursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
         const keyWordInLatex = '\\text{' + pKeyword.valueOf() + '}' + pFollowingStr;
 
@@ -838,7 +842,7 @@ class MathLineInput {
         return this;
     }
 
-    public prependToFieldLatex(pLatexKeyword: String): MathLineInput {
+    public prependToFieldLatex(pLatexKeyword: string): MathLineInput {
         const cursorConfiguration: CursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
 
         cursorConfiguration.cursor = ["endsL", "L", "L", ...cursorConfiguration.cursor.slice(1)];
@@ -854,7 +858,7 @@ class MathLineInput {
     }
 
     
-    public shiftLatexInField(pLatexKeyword: String): MathLineInput {
+    public shiftLatexInField(pLatexKeyword: string): MathLineInput {
         const cursorConfiguration: CursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
 
         cursorConfiguration.cursor = ["endsL", ...cursorConfiguration.cursor.slice(3)];
@@ -869,7 +873,7 @@ class MathLineInput {
         return this;
     }
 
-    public shiftKeywordInField(pKeyword: String): MathLineInput {
+    public shiftKeywordInField(pKeyword: string): MathLineInput {
         const cursorConfiguration: CursorConfiguration = this.getCursorConfigurationWithCursorAndAnticursorFusion();
         const keyWordInLatex = '\\text{' + pKeyword.valueOf() + '}\\ ';
 
@@ -890,7 +894,7 @@ class MathLineInput {
         return this;
     }
 
-    public AreCursorAndAnticursorAtSameLocation(pCursorConfiguration: CursorConfiguration): Boolean {
+    public AreCursorAndAnticursorAtSameLocation(pCursorConfiguration: CursorConfiguration): boolean {
         if ((!(pCursorConfiguration.anticursor))
             || (pCursorConfiguration.cursor.length !== pCursorConfiguration.anticursor.length)) {
 
@@ -1021,7 +1025,7 @@ class MathLineInput {
     public doIfKeyBackspace(): MathLineInput {
         if (this.hasPreviousMathLineInput() && this.isEmpty()) {
             this.erase();
-            this.previousMathLineInput.focus();
+            this.previousMathLineInput!.focus();
         }
         
         return this;
@@ -1037,11 +1041,11 @@ class MathLineInput {
         return this;
     }
 
-    protected updateNumberLineNDisplay(pNumberLine: number): MathLineInput {
-        this._numberLine = pNumberLine;
+    protected updatenumberLineNDisplay(pnumberLine: number): MathLineInput {
+        this._numberLine = pnumberLine;
         let spanEl = this._jQWrapperEl.find('.number_line span');
 
-        spanEl.text(((this._numberLine < 10) ? ' ' : '') + '[' + (pNumberLine) + ']')
+        spanEl.text(((this._numberLine < 10) ? ' ' : '') + '[' + (pnumberLine) + ']')
         return this;
     }
 
@@ -1054,32 +1058,32 @@ class MathLineInput {
         return this;
     }
 
-    public incrementNumberLine(): MathLineInput {
+    public incrementnumberLine(): MathLineInput {
         this._numberLine++;
-        this.updateNumberLineNDisplay(this._numberLine);
+        this.updatenumberLineNDisplay(this._numberLine);
         this.updateOutputScreenTitle();
 
         return this;
     }
 
-    public decrementNumberLine(): MathLineInput {
+    public decrementnumberLine(): MathLineInput {
         this._numberLine--;
-        this.updateNumberLineNDisplay(this._numberLine);
+        this.updatenumberLineNDisplay(this._numberLine);
         this.updateOutputScreenTitle();
         return this;
     }
 
-    public incrementFollowingsMathLineInputsNumberLine(): MathLineInput {
-        for (let mathLineInput: MathLineInput = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
-            mathLineInput.incrementNumberLine();
+    public incrementFollowingsMathLineInputsnumberLine(): MathLineInput {
+        for (let mathLineInput: MathLineInput | null = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
+            mathLineInput.incrementnumberLine();
         }
 
         return this;
     }
 
-    public decrementFollowingsMathLineInputsNumberLine(): MathLineInput {
-        for (let mathLineInput: MathLineInput = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
-            mathLineInput.decrementNumberLine();
+    public decrementFollowingsMathLineInputsnumberLine(): MathLineInput {
+        for (let mathLineInput: MathLineInput | null = this.nextMathLineInput; mathLineInput !== null; mathLineInput = mathLineInput.nextMathLineInput) {
+            mathLineInput.decrementnumberLine();
         }
 
         return this;

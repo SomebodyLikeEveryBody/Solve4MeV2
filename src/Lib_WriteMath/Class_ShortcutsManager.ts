@@ -176,11 +176,11 @@ class ShortcutsManager {
                 pEventObj.preventDefault();
                 if (this._managedMathLineInput.isEmpty()) {
                     if (this._managedMathLineInput.hasNextMathLineInput()) {
-                        this._managedMathLineInput.nextMathLineInput.focus()
+                        this._managedMathLineInput.nextMathLineInput!.focus()
                         this._managedMathLineInput.erase();
 
                     } else if (this._managedMathLineInput.hasPreviousMathLineInput()) {
-                        this._managedMathLineInput.previousMathLineInput.focus()
+                        this._managedMathLineInput.previousMathLineInput!.focus()
                         this._managedMathLineInput.erase();
                     }
                 }

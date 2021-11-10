@@ -48,7 +48,7 @@ class AutoCompleterManager {
         this._inputTextElement.setValue(pValue);
     }
 
-    public isVisible(): Boolean {
+    public isVisible(): boolean {
         return this._autoCompletionWidget.isVisible();
     }
 
@@ -64,7 +64,7 @@ class AutoCompleterManager {
         this._autoCompletionWidget.show();
     }
 
-    public setVisibility(pBool: Boolean) {
+    public setVisibility(pBool: boolean) {
         this._autoCompletionWidget.setVisibility(pBool);
     }
 
@@ -179,7 +179,7 @@ class AutoCompletionWidget {
     protected _jQEl: JQueryElement;
     protected _currentKeywordSelectedIndex: number;
     protected _nbKeywords: Number;
-    protected _isVisible: Boolean;
+    protected _isVisible: boolean;
     protected _autoCompleterManager: AutoCompleterManager;
 
     public constructor(pAutoCompleterManager: AutoCompleterManager) {
@@ -201,7 +201,7 @@ class AutoCompletionWidget {
         this._jQEl.fadeIn(100);
     };
 
-    public isVisible(): Boolean {
+    public isVisible(): boolean {
         return this._isVisible;
     }
 
@@ -219,7 +219,7 @@ class AutoCompletionWidget {
         this._jQEl.appendTo(pElement);
     }
 
-    public setVisibility(pBool: Boolean): void {
+    public setVisibility(pBool: boolean): void {
         this._isVisible = pBool;
     }
 
@@ -365,7 +365,7 @@ class AutoCompletionWidget {
 * */
 class ClickAndKeyListener {
 
-    protected _IsCtrlKeyIsDown: Boolean;
+    protected _IsCtrlKeyIsDown: boolean;
     protected _autoCompleterManager: AutoCompleterManager;
     
     public constructor(pAutoCompleterManager: AutoCompleterManager) {
@@ -497,7 +497,7 @@ class AutoCompleter {
         this._clickAndKeyListener.setkeyAndMouseEvents(this)
     }
     
-    public isVisible(): Boolean {
+    public isVisible(): boolean {
         return this._autoCompleterManager.isVisible();
     }
 

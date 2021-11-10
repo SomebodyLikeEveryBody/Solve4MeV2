@@ -16,8 +16,8 @@ class UndoRedoManager {
     protected _typedHistory: HistoryStatement[];
     protected _YIsDown: Boolean;
     protected _ZIsDown: Boolean;
-    protected _currentState: Number;
-    protected _buffSize: Number;
+    protected _currentState: number;
+    protected _buffSize: number;
 
     public constructor(pMathLineInput: MathLineInput) {
         this._mathLineInput = pMathLineInput;
@@ -43,20 +43,20 @@ class UndoRedoManager {
         this._typedHistory = pTypedHistory;
     }
 
-    public setCurrentStateAt(pState: Number): void {
+    public setCurrentStateAt(pState: number): void {
         this._currentState = pState;
     }
 
     protected rearrangeTypedHistoryArray(): void {
         if (this._typedHistory.length > this._buffSize) {
-            const sizeOverflow: Number = ((this._typedHistory.length) - this._buffSize.valueOf());
+            const sizeOverflow: number = ((this._typedHistory.length) - this._buffSize.valueOf());
             
             this._currentState = this._currentState.valueOf() - sizeOverflow.valueOf();
             this._typedHistory = this._typedHistory.slice(this._buffSize.valueOf() * (-1));
         }
     }
 
-    protected isKeyIsUnaffecting(pKey: Number): Boolean {
+    protected isKeyIsUnaffecting(pKey: number): Boolean {
 
         for (let keyCode of unaffectingKeys) {
             if (keyCode === pKey) {
@@ -89,11 +89,11 @@ class UndoRedoManager {
         this._currentState = this._currentState.valueOf() + 1;
     }
 
-    protected getValueHistoryAtState(pState: Number): String {
-        return this._typedHistory[pState.valueOf()].value;
+    protected getValueHistoryAtState(pState: number): string {
+        return this._typedHistory[pState].value;
     }
 
-    protected getCursorConfigurationHistoryAtState(pState: Number): CursorConfiguration {
+    protected getCursorConfigurationHistoryAtState(pState: number): CursorConfiguration {
         return this._typedHistory[pState.valueOf()].cursorConfiguration;
     }
 

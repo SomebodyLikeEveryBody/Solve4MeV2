@@ -153,11 +153,12 @@
               let funcVar = newVarName.functionVar;
               newVarName = newVarName.functionName
            }
+
            const newMemoryElement = {
               declaringMathLineInput: g_s4mCoreMemory.lastMathLineInputFocusedOut,
               varName: newVarName,
               varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
-              processedVarValue: new MathObj()
+              processedVarValue: new MathObj(),
            };
 
            g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
@@ -320,6 +321,7 @@
               return ("<SET[boundary1[" + firstBoundary + "][" + (firstHook === "[" ? "included" : "excluded") + "]]boundary2[" + secondBoundary + "][" + (secondHook === "]" ? "included" : "excluded") + "]subSetOf[" + includedIn + "]>");
          },
         peg$c73 = function(varName) {
+            console.log(varName);
             return (varName);
          },
         peg$c74 = function(funcName, funcVar) {

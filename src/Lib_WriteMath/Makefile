@@ -1,5 +1,5 @@
 all:
-	/usr/local/bin/tsc -t ES5 --outFile ./build/WriteMath.js \
+	/usr/local/bin/tsc -t ES5 --strict --outFile ./build/WriteMath.js \
     ./Enum_KeyCodes.ts \
     ./Interfaces/Interface_Coordinates2D.ts \
     ./Interfaces/Interface_S4MLParser.ts \
@@ -15,10 +15,10 @@ all:
     ./Interfaces/Interface_ErrorObject.ts \
     ./Class_MathLineInput.ts \
     ./Class_ShortcutsManager.ts \
+    ./Class_UndoRedoManager.ts \
+    ./Class_SaverNOpenerStateManager.ts \
     ./Module_AutoCompleter/Class_AutoCompleterKeywordsList.ts \
-    ./Module_UndoRedoManager/Class_UndoRedoManager.ts \
     ./Module_AutoCompleter/Class_AutoCompleter.ts \
-    ./Module_SaverNOpenerStateManager/Class_SaverNOpenerStateManager.ts \
     ./main.ts
 	cp ./htmlResources/WriteMathStyle.css ./build/
 	cp ./Module_AutoCompleter/AutoCompleterStyle.css ./build/

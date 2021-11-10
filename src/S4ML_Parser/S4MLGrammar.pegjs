@@ -63,11 +63,12 @@ Declaration "Declaration"
       let funcVar = newVarName.functionVar;
       newVarName = newVarName.functionName
    }
+
    const newMemoryElement = {
       declaringMathLineInput: g_s4mCoreMemory.lastMathLineInputFocusedOut,
       varName: newVarName,
       varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
-      processedVarValue: new MathObj()
+      processedVarValue: new MathObj(),
    };
 
    g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
@@ -471,6 +472,7 @@ VarAtLargeIdentifier
  / SpecialChar
  / Constant
  / VarIdentifier) {
+    console.log(varName);
     return (varName);
  }
 

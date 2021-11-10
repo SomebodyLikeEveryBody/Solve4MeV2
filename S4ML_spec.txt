@@ -1,3 +1,47 @@
+10/11/2021
+----------
+il faut faire une correspondance entre le nom latex des variables et les noms de variable
+générique a utiliser dans nerdamer, genre variables[k]
+
+du coup, quand on a une variable genre
+a_{1_{\text{pouet}}}
+
+on a dans le coreMemory, une hashtable du type
+table['a_{1_{\text{pouet}}}'] = 'var1';
+
+ou alors plus simple, on fait juste un array de correspondance, genre
+array = []
+et on fait
+si array.indexOf('a_{1_{\text{pouet}_{\alpha}}}') === -1
+alors array.push('a_{1_{\text{pouet}_{\alpha}}}');
+
+et ensuite pour faire la correspondance, si on a une variable latex du nom de
+a_{1_{\text{pouet}_{\alpha}}}
+et qu'on veut sa correspondance nerdamer, bah sa correspondance nerdamer sera tout simplement
+'var' + array.indexOf('a_{1_{\text{pouet}_{\alpha}}}');
+==> 'var0'
+
+si on a la variable nerdamer "var0" et qu'on veut sa correspondance latex, on fait tout simplement
+index = parseInt('var0'.slice(3));
+array[index];
+==> a_{1_{\text{pouet}_{\alpha}}}
+
+ca serait pas mal d'avoir un objet dédié à ca
+==> son nom: VarnameCorrespondenceTable
+_correspondanceTable: string[];
+public getNerdamerCorrespondenceOf(pStr);
+public getS4MLCorrespondenceOf(pStr);
+public hasNerdamerCorrespondanceOf(pStr);
+public hasS4MLCorrespondanceOf(pStr);
+public addCorrespondence(pStr);
+
+
+maintient des objectifs
+- declarer les constantes de bases et faire bugger si on veut les redéfinir (m, Pa, i, e, etc)
+- creer une hashtable qui fait correspondre les vrais noms de variable en latex avec des noms de variables génériques traités par nerdamer (a_{1_{\text{Pouet}}} -->VAR_1
+- faire que quand on modifie une variable dans une definition, ca reprocess tous les mathlineinput qui utilisent la variable
+
+
 02/11/2021
 ----------
 
