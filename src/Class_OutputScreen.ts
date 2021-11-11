@@ -1,6 +1,6 @@
 interface MessageObject {
-    title: String;
-    body: String[];
+    title: string;
+    body: string[];
 }
 
 class OutputScreenMessage {
@@ -44,7 +44,7 @@ class OutputScreenMessage {
         return this;
     }
 
-    public setTitleTo(pStr: String): OutputScreenMessage {
+    public setTitleTo(pStr: string): OutputScreenMessage {
         this.jQEl.find('.message_title').text(pStr);
         return this;
     }
@@ -106,7 +106,7 @@ class OutputScreenAnswerMessage extends OutputScreenMessage {
 class OutputScreen {
     protected _jQEl: JQueryElement;
     protected _jQElContent: JQueryElement;
-    protected _isVisible: Boolean;
+    protected _isVisible: boolean;
     protected _messages: Array<OutputScreenMessage>;
 
     public constructor(pJQueryElement: JQueryElement) {
@@ -126,11 +126,11 @@ class OutputScreen {
         return this;
     }
 
-    public isVisible(): Boolean {
+    public isVisible(): boolean {
         return this._isVisible;
     }
 
-    public setVisibilityTo(pBool: Boolean) {
+    public setVisibilityTo(pBool: boolean) {
         this._isVisible = pBool;
     }
 
@@ -160,7 +160,7 @@ class OutputScreen {
         return this;
     }
 
-    public displayAnswerMessage(pAnswerStr: String[], pMathLineInputSource: MathLineInput): OutputScreen {
+    public displayAnswerMessage(pAnswerStr: string[], pMathLineInputSource: MathLineInput): OutputScreen {
         let newAnswerMessage = new OutputScreenAnswerMessage({
             title: "Line [" + pMathLineInputSource.numberLine + "]:",
             body: pAnswerStr,

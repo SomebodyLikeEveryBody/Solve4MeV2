@@ -64,6 +64,12 @@ var KeyCodes;
     KeyCodes[KeyCodes["CLOSEHOOK_KEY"] = 221] = "CLOSEHOOK_KEY";
     KeyCodes[KeyCodes["ALTGR_KEY"] = 225] = "ALTGR_KEY";
 })(KeyCodes || (KeyCodes = {}));
+/*
+ * Class MathLineInput
+ * ------------------------------
+ * Main Class which generates an input text element where we
+ * can type math visually formatted directly
+ * * */
 var MathLineInput = /** @class */ (function () {
     function MathLineInput(pContainer, pSaverNOpenerStateManager) {
         var _this = this;
@@ -418,7 +424,7 @@ var MathLineInput = /** @class */ (function () {
                     var nerdamerLatexAnswer = nerdamerAnswer.latex();
                     var evaluatedAnswer = nerdamerAnswer.evaluate();
                     var evaluatedLatexAnswer = evaluatedAnswer.latex();
-                    var numericalAnswer = evaluatedAnswer.text('decimals');
+                    var numericalAnswer = evaluatedAnswer.text('recurring').replace(/'([0-9]+)'/, '\\overline{$1}');
                     answerMessagesArray.push(nerdamerLatexAnswer);
                     if (evaluatedLatexAnswer !== nerdamerLatexAnswer) {
                         answerMessagesArray.push(evaluatedLatexAnswer);
@@ -960,7 +966,7 @@ var MathLineInput = /** @class */ (function () {
 /*
  * Class ShortcutsManager
  * ----------------------
- * Define and manage the shortcuts the user can use to simplify his entries
+ * Define and manage the shortcuts the user can use to simplify its entries
  * to a given MathLineInput
  * * */
 var ShortcutsManager = /** @class */ (function () {
@@ -1288,6 +1294,9 @@ var ShortcutsManager = /** @class */ (function () {
     };
     return ShortcutsManager;
 }());
+/*
+ * Keys that pressing is supposed to not generate a saveState
+ * * */
 var unaffectingKeys = [
     KeyCodes.ENTER_KEY,
     KeyCodes.SHIFT_KEY,
@@ -1300,6 +1309,11 @@ var unaffectingKeys = [
     KeyCodes.ALTGR_KEY,
     KeyCodes.END_KEY,
 ];
+/*
+ * Class UndoRedoManager
+ * ----------------------
+ * Manages the undo and redo feature in MathLineInputs
+ * * */
 var UndoRedoManager = /** @class */ (function () {
     function UndoRedoManager(pMathLineInput) {
         this._mathLineInput = pMathLineInput;

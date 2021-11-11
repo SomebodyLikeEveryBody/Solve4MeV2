@@ -1,4 +1,4 @@
 interface ErrorObject {
-    name: String,
-    message: String;
+    name: string,
+    message: string,
 }

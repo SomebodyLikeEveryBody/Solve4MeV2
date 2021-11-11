@@ -1,7 +1,7 @@
 /*
  * Class ShortcutsManager
  * ----------------------
- * Define and manage the shortcuts the user can use to simplify his entries
+ * Define and manage the shortcuts the user can use to simplify its entries
  * to a given MathLineInput
  * * */
 class ShortcutsManager {

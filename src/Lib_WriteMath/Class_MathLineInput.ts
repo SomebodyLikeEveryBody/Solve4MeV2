@@ -13,8 +13,12 @@ interface Coordinates2D {
     left: Number;
 }
 
-
-
+/*
+ * Class MathLineInput
+ * ------------------------------
+ * Main Class which generates an input text element where we
+ * can type math visually formatted directly
+ * * */
 class MathLineInput {
     protected _jQWrapperEl: JQueryElement;
     protected _jQEl: JQueryElement;
@@ -437,7 +441,7 @@ class MathLineInput {
                     let nerdamerLatexAnswer = nerdamerAnswer.latex();
                     let evaluatedAnswer = nerdamerAnswer.evaluate();
                     let evaluatedLatexAnswer = evaluatedAnswer.latex();
-                    let numericalAnswer = evaluatedAnswer.text('decimals');
+                    let numericalAnswer = evaluatedAnswer.text('recurring').replace(/'([0-9]+)'/, '\\overline{$1}');
 
                     answerMessagesArray.push(nerdamerLatexAnswer);
 

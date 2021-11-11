@@ -1,3 +1,6 @@
+/*
+ * Keys that pressing is supposed to not generate a saveState
+ * * */
 const unaffectingKeys: KeyCodes[] = [
     KeyCodes.ENTER_KEY,
     KeyCodes.SHIFT_KEY,
@@ -11,6 +14,11 @@ const unaffectingKeys: KeyCodes[] = [
     KeyCodes.END_KEY,
 ];
 
+/*
+ * Class UndoRedoManager
+ * ----------------------
+ * Manages the undo and redo feature in MathLineInputs
+ * * */
 class UndoRedoManager {
     protected _mathLineInput: MathLineInput;
     protected _typedHistory: UndoRedoStatement[];
