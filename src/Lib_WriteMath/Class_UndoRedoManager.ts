@@ -13,7 +13,7 @@ const unaffectingKeys: KeyCodes[] = [
 
 class UndoRedoManager {
     protected _mathLineInput: MathLineInput;
-    protected _typedHistory: HistoryStatement[];
+    protected _typedHistory: UndoRedoStatement[];
     protected _YIsDown: boolean;
     protected _ZIsDown: boolean;
     protected _currentState: number;
@@ -35,11 +35,11 @@ class UndoRedoManager {
         this.setEvents();
     }
 
-    public getTypedHistory(): HistoryStatement[] {
+    public getTypedHistory(): UndoRedoStatement[] {
         return this._typedHistory;
     }
 
-    public setTypedHistoryWith(pTypedHistory: HistoryStatement[]): this {
+    public setTypedHistoryWith(pTypedHistory: UndoRedoStatement[]): this {
         this._typedHistory = pTypedHistory;
 
         return this;
@@ -175,7 +175,7 @@ class UndoRedoManager {
 
     public getCopy(pMathLineInput: MathLineInput): UndoRedoManager {
         const retUndoRedoManager: UndoRedoManager = new UndoRedoManager(pMathLineInput);
-        const retTypedHistory: HistoryStatement[] = [];
+        const retTypedHistory: UndoRedoStatement[] = [];
 
         for (let state in this._typedHistory) {
             retTypedHistory.push({

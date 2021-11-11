@@ -1,4 +1,4 @@
-interface HistoryStatement {
+interface UndoRedoStatement {
     value: string,
     cursorConfiguration: CursorConfiguration
 }

@@ -953,11 +953,11 @@ class MathLineInput {
         return this;
     }
 
-    public getTypedHistory(): HistoryStatement[] {
+    public getTypedHistory(): UndoRedoStatement[] {
         return this._undoRedoManager.getTypedHistory();
     }
 
-    public setTypedHistoryWith(pTypedHistory: HistoryStatement[]): MathLineInput {
+    public setTypedHistoryWith(pTypedHistory: UndoRedoStatement[]): MathLineInput {
         this._undoRedoManager.setTypedHistoryWith(pTypedHistory);
         return this;
     }
