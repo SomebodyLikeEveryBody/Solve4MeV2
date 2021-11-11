@@ -424,13 +424,20 @@ var MathLineInput = /** @class */ (function () {
                     var nerdamerLatexAnswer = nerdamerAnswer.latex();
                     var evaluatedAnswer = nerdamerAnswer.evaluate();
                     var evaluatedLatexAnswer = evaluatedAnswer.latex();
-                    var numericalAnswer = evaluatedAnswer.text('recurring').replace(/'([0-9]+)'/, '\\overline{$1}');
+                    var recurringNumericalAnswer = evaluatedAnswer.text('recurring');
+                    var approxAnswer = evaluatedAnswer.text('decimals', 50);
                     answerMessagesArray.push(nerdamerLatexAnswer);
-                    if (evaluatedLatexAnswer !== nerdamerLatexAnswer) {
+                    // if evaluatedLatexAnswer is different from all messages already shown
+                    if (answerMessagesArray.indexOf(evaluatedLatexAnswer) === -1) {
                         answerMessagesArray.push(evaluatedLatexAnswer);
                     }
-                    if (numericalAnswer !== nerdamerLatexAnswer && numericalAnswer !== evaluatedLatexAnswer) {
-                        answerMessagesArray.push(numericalAnswer);
+                    // if recurringNumericalAnswer is not too long and different from all messages already shown
+                    if (recurringNumericalAnswer.length < 200 && answerMessagesArray.indexOf(recurringNumericalAnswer) === -1) {
+                        answerMessagesArray.push(recurringNumericalAnswer.replace(/'([0-9]+)'/, '\\overline{$1}'));
+                    }
+                    // if approxAnswer is different from all messages already shown
+                    if (answerMessagesArray.indexOf(approxAnswer) === -1) {
+                        answerMessagesArray.push(approxAnswer);
                     }
                     g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
                 }

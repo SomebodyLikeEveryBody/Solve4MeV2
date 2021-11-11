@@ -440,17 +440,25 @@ class MathLineInput {
                 if (nerdamerAnswer.toString() !== "undefined") {
                     let nerdamerLatexAnswer = nerdamerAnswer.latex();
                     let evaluatedAnswer = nerdamerAnswer.evaluate();
-                    let evaluatedLatexAnswer = evaluatedAnswer.latex();
-                    let numericalAnswer = evaluatedAnswer.text('recurring').replace(/'([0-9]+)'/, '\\overline{$1}');
+                    let evaluatedLatexAnswer: string = evaluatedAnswer.latex();
+                    let recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
+                    let approxAnswer: string = evaluatedAnswer.text('decimals', 50);
 
                     answerMessagesArray.push(nerdamerLatexAnswer);
 
-                    if (evaluatedLatexAnswer !== nerdamerLatexAnswer) {
+                    // if evaluatedLatexAnswer is different from all messages already shown
+                    if (answerMessagesArray.indexOf(evaluatedLatexAnswer) === -1) {
                         answerMessagesArray.push(evaluatedLatexAnswer);
                     }
 
-                    if (numericalAnswer !== nerdamerLatexAnswer && numericalAnswer !== evaluatedLatexAnswer) {
-                        answerMessagesArray.push(numericalAnswer);
+                    // if recurringNumericalAnswer is not too long and different from all messages already shown
+                    if (recurringNumericalAnswer.length < 200 && answerMessagesArray.indexOf(recurringNumericalAnswer) === -1) {
+                        answerMessagesArray.push(recurringNumericalAnswer.replace(/'([0-9]+)'/, '\\overline{$1}'));
+                    }
+
+                    // if approxAnswer is different from all messages already shown
+                    if (answerMessagesArray.indexOf(approxAnswer) === -1) {
+                        answerMessagesArray.push(approxAnswer);
                     }
 
                     g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
