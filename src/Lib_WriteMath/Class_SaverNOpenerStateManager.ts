@@ -32,6 +32,10 @@ enum SaverNOpenerStateManagerAction {
     SAVE = "SAVE",
 }
 
+type SaveState = {
+    MathLineInputsValues: string[]
+}
+
 class SaverNOpenerStateManager {
     protected _jQEl: JQueryElement;                         // JQueryElement containing the textarea to type JSON string
     protected _textarea: JQueryElement;                     // The textarea to type JSON string
@@ -109,7 +113,7 @@ class SaverNOpenerStateManager {
 
     public hide(): this {
         this._jQEl.fadeOut(100, () => {
-            const callingMathLineInput = this.getCallingMathLineInput();
+            const callingMathLineInput: (MathLineInput | null) = this.getCallingMathLineInput();
             this._textarea.val('');
             this.setActionToNothing();
             this._isVisible = false;
@@ -169,8 +173,8 @@ class SaverNOpenerStateManager {
                 case KeyCodes.ENTER_KEY:
                     pEventObj.preventDefault();
                     if (this.isActionIsOpen()) {
-                        const textareaValue = this.secureStr(this._textarea.val());
-                        const state = JSON.parse(textareaValue.valueOf());
+                        const textareaValue: string = this.secureStr(this._textarea.val());
+                        const state: SaveState = JSON.parse(textareaValue.valueOf());
                         this.replaceMathLineInputs(state['MathLineInputsValues']);
                     }
 
@@ -199,11 +203,11 @@ class SaverNOpenerStateManager {
     }
 
     protected replaceMathLineInputs(pState: Array<string>): this {
-        const callingMathLineInput = this.getCallingMathLineInput();
+        const callingMathLineInput: (MathLineInput | null) = this.getCallingMathLineInput();
         if ((callingMathLineInput !== null) && this.checkState()) {
             if (pState.length !== 0) {
                 this.eraseMathLineInputs();
-                let mathLineInput = new MathLineInput(callingMathLineInput.container, this);
+                let mathLineInput: MathLineInput = new MathLineInput(callingMathLineInput.container, this);
                     mathLineInput.appendToContainer()
                                  .setValue(pState[0])
                                  .setStyle();
@@ -227,7 +231,7 @@ class SaverNOpenerStateManager {
             MathLineInputsValues: Array<string>()
         };
 
-        let mathLineInput = this.getFirstMathLineInput();
+        let mathLineInput: (MathLineInput | null) = this.getFirstMathLineInput();
         while (mathLineInput !== null) {
             retObj.MathLineInputsValues.push(this.secureStr(mathLineInput.value()));
             mathLineInput = mathLineInput.nextMathLineInput;

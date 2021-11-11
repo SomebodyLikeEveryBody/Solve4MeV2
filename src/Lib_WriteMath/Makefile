@@ -1,14 +1,12 @@
 all:
 	/usr/local/bin/tsc -t ES5 --strict --outFile ./build/WriteMath.js \
     ./Enum_KeyCodes.ts \
-    ./Interfaces/Interface_Coordinates2D.ts \
     ./Interfaces/Interface_S4MLParser.ts \
     ./Interfaces/Interface_Offset.ts \
     ./Interfaces/Interface_KeywordObject.ts \
     ./Interfaces/Interface_JQueryElement.ts \
     ./Interfaces/Interface_InputTextElement.ts \
     ./Interfaces/Interface_KeywordObject.ts \
-    ./Interfaces/Interface_MathFieldTreeElement.ts \
     ./Interfaces/Interface_HistoryStatement.ts \
     ./Interfaces/Interface_CursorConfiguration.ts \
     ./Interfaces/Interface_EventObject.ts \

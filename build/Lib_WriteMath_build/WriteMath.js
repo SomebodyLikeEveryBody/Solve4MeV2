@@ -971,6 +971,7 @@ var ShortcutsManager = /** @class */ (function () {
     ShortcutsManager.prototype.setEvents = function () {
         this.setKeyUpEvents();
         this.setKeyDownEvents();
+        return this;
     };
     ShortcutsManager.prototype.setKeyUpEvents = function () {
         this._managedMathLineInput.keyUp(function (e) {
@@ -982,6 +983,7 @@ var ShortcutsManager = /** @class */ (function () {
                 e.preventDefault();
             }
         });
+        return this;
     };
     ShortcutsManager.prototype.setKeyDownEvents = function () {
         var _this = this;
@@ -997,6 +999,7 @@ var ShortcutsManager = /** @class */ (function () {
                 _this.bindAltShortcuts(e);
             }
         });
+        return this;
     };
     ShortcutsManager.prototype.bindCtrlShortcuts = function (pEventObj) {
         switch (pEventObj.which) {
@@ -1123,6 +1126,7 @@ var ShortcutsManager = /** @class */ (function () {
                 this._managedMathLineInput.displayOpenWidget();
                 break;
         }
+        return this;
     };
     ShortcutsManager.prototype.bindAltShortcuts = function (pEventObj) {
         switch (pEventObj.which) {
@@ -1280,6 +1284,7 @@ var ShortcutsManager = /** @class */ (function () {
                 this._managedMathLineInput.appendCmdAtCursorPosition('\\times');
                 break;
         }
+        return this;
     };
     return ShortcutsManager;
 }());
@@ -1315,16 +1320,19 @@ var UndoRedoManager = /** @class */ (function () {
     };
     UndoRedoManager.prototype.setTypedHistoryWith = function (pTypedHistory) {
         this._typedHistory = pTypedHistory;
+        return this;
     };
     UndoRedoManager.prototype.setCurrentStateAt = function (pState) {
         this._currentState = pState;
+        return this;
     };
     UndoRedoManager.prototype.rearrangeTypedHistoryArray = function () {
         if (this._typedHistory.length > this._buffSize) {
-            var sizeOverflow = ((this._typedHistory.length) - this._buffSize.valueOf());
-            this._currentState = this._currentState.valueOf() - sizeOverflow.valueOf();
-            this._typedHistory = this._typedHistory.slice(this._buffSize.valueOf() * (-1));
+            var sizeOverflow = ((this._typedHistory.length) - this._buffSize);
+            this._currentState = this._currentState - sizeOverflow;
+            this._typedHistory = this._typedHistory.slice(this._buffSize * (-1));
         }
+        return this;
     };
     UndoRedoManager.prototype.isKeyIsUnaffecting = function (pKey) {
         for (var _i = 0, unaffectingKeys_1 = unaffectingKeys; _i < unaffectingKeys_1.length; _i++) {
@@ -1343,24 +1351,25 @@ var UndoRedoManager = /** @class */ (function () {
     };
     UndoRedoManager.prototype.saveState = function () {
         if (!(this.isCurrentStateIsLastHistoryState())) {
-            this._typedHistory = this._typedHistory.slice(0, (this._currentState.valueOf() + 1));
+            this._typedHistory = this._typedHistory.slice(0, (this._currentState + 1));
         }
         this._typedHistory.push({
             value: this._mathLineInput.value(),
             cursorConfiguration: this._mathLineInput.getCursorConfiguration()
         });
         this.rearrangeTypedHistoryArray();
-        this._currentState = this._currentState.valueOf() + 1;
+        this._currentState = this._currentState + 1;
+        return this;
     };
     UndoRedoManager.prototype.getValueHistoryAtState = function (pState) {
         return this._typedHistory[pState].value;
     };
     UndoRedoManager.prototype.getCursorConfigurationHistoryAtState = function (pState) {
-        return this._typedHistory[pState.valueOf()].cursorConfiguration;
+        return this._typedHistory[pState].cursorConfiguration;
     };
     UndoRedoManager.prototype.undo = function () {
         if (!this.isCurrentStateIsFirstHistoryState()) {
-            this._currentState = this._currentState.valueOf() - 1;
+            this._currentState = this._currentState - 1;
             this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));
             this._mathLineInput.setCursorConfiguration(this.getCursorConfigurationHistoryAtState(this._currentState));
             this._mathLineInput.showCursor();
@@ -1368,10 +1377,11 @@ var UndoRedoManager = /** @class */ (function () {
         else {
             //console.log('do nothing');
         }
+        return this;
     };
     UndoRedoManager.prototype.redo = function () {
         if (!this.isCurrentStateIsLastHistoryState()) {
-            this._currentState = this._currentState.valueOf() + 1;
+            this._currentState = this._currentState + 1;
             this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));
             this._mathLineInput.setCursorConfiguration(this.getCursorConfigurationHistoryAtState(this._currentState));
             this._mathLineInput.showCursor();
@@ -1379,10 +1389,12 @@ var UndoRedoManager = /** @class */ (function () {
         else {
             //console.log('do nothing');
         }
+        return this;
     };
     UndoRedoManager.prototype.setEvents = function () {
         this.setKeyUpEvents();
         this.setKeyDownEvents();
+        return this;
     };
     UndoRedoManager.prototype.setKeyUpEvents = function () {
         var _this = this;
@@ -1395,6 +1407,7 @@ var UndoRedoManager = /** @class */ (function () {
                 _this.saveState();
             }
         });
+        return this;
     };
     UndoRedoManager.prototype.setKeyDownEvents = function () {
         var _this = this;
@@ -1410,6 +1423,7 @@ var UndoRedoManager = /** @class */ (function () {
                 _this.redo();
             }
         });
+        return this;
     };
     UndoRedoManager.prototype.getCopy = function (pMathLineInput) {
         var retUndoRedoManager = new UndoRedoManager(pMathLineInput);
@@ -1420,8 +1434,8 @@ var UndoRedoManager = /** @class */ (function () {
                 cursorConfiguration: this._typedHistory[state].cursorConfiguration
             });
         }
-        retUndoRedoManager.setTypedHistoryWith(retTypedHistory);
-        retUndoRedoManager.setCurrentStateAt(this._currentState.valueOf());
+        retUndoRedoManager.setTypedHistoryWith(retTypedHistory)
+            .setCurrentStateAt(this._currentState);
         return retUndoRedoManager;
     };
     return UndoRedoManager;

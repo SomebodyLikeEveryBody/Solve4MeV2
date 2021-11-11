@@ -14,8 +14,8 @@ const unaffectingKeys: KeyCodes[] = [
 class UndoRedoManager {
     protected _mathLineInput: MathLineInput;
     protected _typedHistory: HistoryStatement[];
-    protected _YIsDown: Boolean;
-    protected _ZIsDown: Boolean;
+    protected _YIsDown: boolean;
+    protected _ZIsDown: boolean;
     protected _currentState: number;
     protected _buffSize: number;
 
@@ -39,24 +39,30 @@ class UndoRedoManager {
         return this._typedHistory;
     }
 
-    public setTypedHistoryWith(pTypedHistory: HistoryStatement[]): void {
+    public setTypedHistoryWith(pTypedHistory: HistoryStatement[]): this {
         this._typedHistory = pTypedHistory;
+
+        return this;
     }
 
-    public setCurrentStateAt(pState: number): void {
+    public setCurrentStateAt(pState: number): this {
         this._currentState = pState;
+
+        return this;
     }
 
-    protected rearrangeTypedHistoryArray(): void {
+    protected rearrangeTypedHistoryArray(): this {
         if (this._typedHistory.length > this._buffSize) {
-            const sizeOverflow: number = ((this._typedHistory.length) - this._buffSize.valueOf());
+            const sizeOverflow: number = ((this._typedHistory.length) - this._buffSize);
             
-            this._currentState = this._currentState.valueOf() - sizeOverflow.valueOf();
-            this._typedHistory = this._typedHistory.slice(this._buffSize.valueOf() * (-1));
+            this._currentState = this._currentState - sizeOverflow;
+            this._typedHistory = this._typedHistory.slice(this._buffSize * (-1));
         }
+
+        return this;
     }
 
-    protected isKeyIsUnaffecting(pKey: number): Boolean {
+    protected isKeyIsUnaffecting(pKey: number): boolean {
 
         for (let keyCode of unaffectingKeys) {
             if (keyCode === pKey) {
@@ -67,17 +73,17 @@ class UndoRedoManager {
         return false;
     }
 
-    protected isCurrentStateIsLastHistoryState(): Boolean {
+    protected isCurrentStateIsLastHistoryState(): boolean {
         return (this._currentState === (this._typedHistory.length - 1));
     }
 
-    protected isCurrentStateIsFirstHistoryState(): Boolean {
+    protected isCurrentStateIsFirstHistoryState(): boolean {
         return (this._currentState === 0);
     }
 
-    public saveState(): void {
+    public saveState(): this {
         if (!(this.isCurrentStateIsLastHistoryState())) {
-            this._typedHistory = this._typedHistory.slice(0, (this._currentState.valueOf() + 1));
+            this._typedHistory = this._typedHistory.slice(0, (this._currentState + 1));
         }   
         
         this._typedHistory.push({
@@ -86,7 +92,9 @@ class UndoRedoManager {
         });
 
         this.rearrangeTypedHistoryArray();
-        this._currentState = this._currentState.valueOf() + 1;
+        this._currentState = this._currentState + 1;
+
+        return this;
     }
 
     protected getValueHistoryAtState(pState: number): string {
@@ -94,37 +102,43 @@ class UndoRedoManager {
     }
 
     protected getCursorConfigurationHistoryAtState(pState: number): CursorConfiguration {
-        return this._typedHistory[pState.valueOf()].cursorConfiguration;
+        return this._typedHistory[pState].cursorConfiguration;
     }
 
-    public undo(): void {
+    public undo(): this {
         if (!this.isCurrentStateIsFirstHistoryState()) {
-            this._currentState = this._currentState.valueOf() - 1;
+            this._currentState = this._currentState - 1;
             this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));
             this._mathLineInput.setCursorConfiguration(this.getCursorConfigurationHistoryAtState(this._currentState));
             this._mathLineInput.showCursor();
         }  else {
             //console.log('do nothing');
         }
+
+        return this;
     }
 
-    public redo(): void {
+    public redo(): this {
         if (!this.isCurrentStateIsLastHistoryState()) {
-            this._currentState = this._currentState.valueOf() + 1;
+            this._currentState = this._currentState + 1;
             this._mathLineInput.setValue(this.getValueHistoryAtState(this._currentState));
             this._mathLineInput.setCursorConfiguration(this.getCursorConfigurationHistoryAtState(this._currentState));
             this._mathLineInput.showCursor();
         } else {
             //console.log('do nothing');
         }
+
+        return this;
     }
 
-    protected setEvents(): void {
+    protected setEvents(): this {
         this.setKeyUpEvents();
         this.setKeyDownEvents();
+
+        return this;
     }
 
-    protected setKeyUpEvents(): void {
+    protected setKeyUpEvents(): this {
         this._mathLineInput.keyUp((e: EventObject) => {
 
             if (e.which === KeyCodes.ALT_KEY) {
@@ -135,10 +149,12 @@ class UndoRedoManager {
                 && (e.ctrlKey === false || (e.ctrlKey === true && e.which === KeyCodes.V_KEY))) {
                 this.saveState();
             }
-        });    
+        });
+
+        return this;
     }
 
-    protected setKeyDownEvents(): void {
+    protected setKeyDownEvents(): this {
         this._mathLineInput.keyDown((e: EventObject) => {
 
             // ctrl + Z ==> undo
@@ -153,11 +169,13 @@ class UndoRedoManager {
                 this.redo();
             }
         });
+
+        return this;
     }
 
     public getCopy(pMathLineInput: MathLineInput): UndoRedoManager {
-        const retUndoRedoManager = new UndoRedoManager(pMathLineInput);
-        const retTypedHistory = [];
+        const retUndoRedoManager: UndoRedoManager = new UndoRedoManager(pMathLineInput);
+        const retTypedHistory: HistoryStatement[] = [];
 
         for (let state in this._typedHistory) {
             retTypedHistory.push({
@@ -166,8 +184,8 @@ class UndoRedoManager {
             });
         }
 
-        retUndoRedoManager.setTypedHistoryWith(retTypedHistory);
-        retUndoRedoManager.setCurrentStateAt(this._currentState.valueOf());
+        retUndoRedoManager.setTypedHistoryWith(retTypedHistory)
+                          .setCurrentStateAt(this._currentState);
 
         return retUndoRedoManager;
     }

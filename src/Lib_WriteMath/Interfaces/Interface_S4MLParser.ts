@@ -1,3 +1,3 @@
 interface S4MLParser {
-    parse(pStr: String, pOptions: Object): String;
+    parse(pStr: string, pOptions: Object): string;
 }

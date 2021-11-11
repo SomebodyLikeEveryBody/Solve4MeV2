@@ -14,12 +14,14 @@ class ShortcutsManager {
         this.setEvents();
     }
 
-    protected setEvents(): void {
+    protected setEvents(): this {
         this.setKeyUpEvents();
         this.setKeyDownEvents();
+
+        return this;
     }
 
-    protected setKeyUpEvents(): void {
+    protected setKeyUpEvents(): this {
         this._managedMathLineInput.keyUp((e: EventObject) => {
 
             /* 
@@ -29,10 +31,12 @@ class ShortcutsManager {
             if (e.which === KeyCodes.ALT_KEY) {
                 e.preventDefault();
             }
-        });    
+        });  
+        
+        return this;
     }
 
-    protected setKeyDownEvents(): void {
+    protected setKeyDownEvents(): this {
         this._managedMathLineInput.keyDown((e: EventObject) => {
 
             /* 
@@ -47,9 +51,11 @@ class ShortcutsManager {
                 this.bindAltShortcuts(e);
             }
         });
+
+        return this;
     }
 
-    protected bindCtrlShortcuts(pEventObj: EventObject): void {
+    protected bindCtrlShortcuts(pEventObj: EventObject): this {
         switch (pEventObj.which) {
 
             //ctrl + [ ==> lfloor
@@ -199,9 +205,11 @@ class ShortcutsManager {
                 this._managedMathLineInput.displayOpenWidget();
                 break;
         }
+
+        return this;
     }
 
-    protected bindAltShortcuts(pEventObj: EventObject): void {
+    protected bindAltShortcuts(pEventObj: EventObject): this {
         switch (pEventObj.which) {
 
             //alt + D
@@ -392,5 +400,7 @@ class ShortcutsManager {
                 this._managedMathLineInput.appendCmdAtCursorPosition('\\times');
                 break;
         }
+
+        return this;
     }
 }

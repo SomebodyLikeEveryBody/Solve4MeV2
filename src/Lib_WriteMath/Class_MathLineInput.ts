@@ -8,6 +8,13 @@ declare const g_virtualKeyboard: any;
 declare const nerdamer: any;
 declare function $(pStr: string | JQueryElement): JQueryElement;
 
+interface Coordinates2D {
+    top: Number;
+    left: Number;
+}
+
+
+
 class MathLineInput {
     protected _jQWrapperEl: JQueryElement;
     protected _jQEl: JQueryElement;
