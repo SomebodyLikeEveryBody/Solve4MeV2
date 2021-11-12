@@ -7,7 +7,7 @@ class VarNameCorrespondanceTable {
 
     /*
      * '\alpha' ==> 'var42'
-     * if variable doesn't exist, return -1
+     * if variable doesn't exist, return null
      * * */
     public getNerdamerCorrespondanceOf(pVarName: string): (string | null) {
         const index: number = this._correspondanceTable.indexOf(pVarName);
@@ -50,7 +50,7 @@ class VarNameCorrespondanceTable {
         if (!(this.hasNerdamerCorrespondanceOf(pVarName))) {
             this.addS4MLCorrespondanceOf(pVarName);
         }
-        
+
         return this;
     }
 }
