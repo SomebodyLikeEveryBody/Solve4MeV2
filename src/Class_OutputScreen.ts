@@ -66,16 +66,19 @@ class OutputScreenErrorMessage extends OutputScreenMessage {
 }
 
 class OutputScreenAnswerMessage extends OutputScreenMessage {
-    protected _mathField: any;
+    protected _messages: string[];
+    protected _mathFields: any[];
 
     public constructor(pAnswerMessage: MessageObject, pMathLineInputSource: MathLineInput) {
         super(pAnswerMessage, pMathLineInputSource);
+        this._messages = pAnswerMessage.body;
+        this._mathFields = [];
 
         let newMathField: any;
         let newDiv: JQueryElement;
         let first = true;
+        
         for (let str of pAnswerMessage.body) {
-            // newDiv = $('<div class="answer_mathfield"></div>');
             newDiv = $('<div class="answer_body_container"></div>');
 
             if (first === true) {
@@ -88,11 +91,9 @@ class OutputScreenAnswerMessage extends OutputScreenMessage {
             newDiv.append($('<div class="answer_mathfield"></div>'));
 
             newMathField = MathQuill.getInterface(2).StaticMath(newDiv.find('.answer_mathfield').get(0));
-            newMathField.latex(str);
+            this._mathFields.push(newMathField);
 
-            
-            
-            // newMathField.latex('\\frac{-b\\pm \\sqrt{b^2-4ac}}{2a}');
+            // newMathField.latex('\\left(\\frac{2}{3}\\right)^2');
 
             this._jQEl.find('.message_body').append(newDiv);
             this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
@@ -100,6 +101,14 @@ class OutputScreenAnswerMessage extends OutputScreenMessage {
 
         this._jQEl.find('hr.answer_message_separator:last').remove();
         this._jQEl.addClass("answer_message");
+    }
+
+    public renderMathAnswers(): this {
+        for (const index in this._messages) {
+            this._mathFields[index].latex(this._messages[index]);
+        }
+
+        return this;
     }
 }
 
@@ -168,6 +177,7 @@ class OutputScreen {
     
         this._messages.push(newAnswerMessage);
         this.appendMessageAtCorrectLocation(newAnswerMessage);
+        newAnswerMessage.renderMathAnswers();
 
         return this;
     }

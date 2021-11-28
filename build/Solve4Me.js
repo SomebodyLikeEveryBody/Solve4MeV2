@@ -446,12 +446,13 @@ var OutputScreenAnswerMessage = /** @class */ (function (_super) {
     __extends(OutputScreenAnswerMessage, _super);
     function OutputScreenAnswerMessage(pAnswerMessage, pMathLineInputSource) {
         var _this = _super.call(this, pAnswerMessage, pMathLineInputSource) || this;
+        _this._messages = pAnswerMessage.body;
+        _this._mathFields = [];
         var newMathField;
         var newDiv;
         var first = true;
         for (var _i = 0, _a = pAnswerMessage.body; _i < _a.length; _i++) {
             var str = _a[_i];
-            // newDiv = $('<div class="answer_mathfield"></div>');
             newDiv = $('<div class="answer_body_container"></div>');
             if (first === true) {
                 newDiv.append($('<div class="answer_interrogation"></div>'));
@@ -462,8 +463,8 @@ var OutputScreenAnswerMessage = /** @class */ (function (_super) {
             }
             newDiv.append($('<div class="answer_mathfield"></div>'));
             newMathField = MathQuill.getInterface(2).StaticMath(newDiv.find('.answer_mathfield').get(0));
-            newMathField.latex(str);
-            // newMathField.latex('\\frac{-b\\pm \\sqrt{b^2-4ac}}{2a}');
+            _this._mathFields.push(newMathField);
+            // newMathField.latex('\\left(\\frac{2}{3}\\right)^2');
             _this._jQEl.find('.message_body').append(newDiv);
             _this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
         }
@@ -471,6 +472,12 @@ var OutputScreenAnswerMessage = /** @class */ (function (_super) {
         _this._jQEl.addClass("answer_message");
         return _this;
     }
+    OutputScreenAnswerMessage.prototype.renderMathAnswers = function () {
+        for (var index in this._messages) {
+            this._mathFields[index].latex(this._messages[index]);
+        }
+        return this;
+    };
     return OutputScreenAnswerMessage;
 }(OutputScreenMessage));
 var OutputScreen = /** @class */ (function () {
@@ -519,6 +526,7 @@ var OutputScreen = /** @class */ (function () {
         }, pMathLineInputSource);
         this._messages.push(newAnswerMessage);
         this.appendMessageAtCorrectLocation(newAnswerMessage);
+        newAnswerMessage.renderMathAnswers();
         return this;
     };
     OutputScreen.prototype.getMessageWhichIsAfterMessageOf = function (pMathLineInputSource) {
