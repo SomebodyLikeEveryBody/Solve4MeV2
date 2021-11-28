@@ -1,3 +1,7 @@
+27/11/2021
+----------
+
+
 10/11/2021
 ----------
 il faut faire une correspondance entre le nom latex des variables et les noms de variable

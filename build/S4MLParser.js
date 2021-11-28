@@ -155,16 +155,18 @@
            }
 
            const newMemoryElement = {
-              declaringMathLineInput: g_s4mCoreMemory.lastMathLineInputFocusedOut,
-              varName: newVarName,
+              declaringMathLineInput: processedMathLineInput,
+              S4MLVarName: newVarName,
               varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
               processedVarValue: new MathObj(),
            };
 
-           g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
+           console.log(newMemoryElement);
+
+           g_s4mCoreMemory.setVar(newMemoryElement);
            processedMathLineInput.signalNoError();
         },
-        peg$c4 = function(varName) { 
+        peg$c4 = function(varName) {
               const processedMathLineInput = options.processedMathLineInput;
 
               // check if var is not already defined
@@ -180,7 +182,7 @@
               return (varName); 
          },
         peg$c5 = function(varName) {
-              const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+              const processedMathLineInput = options.processedMathLineInput;
 
               // check if var is already defined
               if (!(
@@ -272,7 +274,7 @@
             let funcObj = {
                startSet: startSet,
                endSet: endSet,
-               varName: functionVarDef.varName,
+               S4MLVarName: functionVarDef.varName,
                instruction: functionVarDef.instruction
             };
 
@@ -321,7 +323,6 @@
               return ("<SET[boundary1[" + firstBoundary + "][" + (firstHook === "[" ? "included" : "excluded") + "]]boundary2[" + secondBoundary + "][" + (secondHook === "]" ? "included" : "excluded") + "]subSetOf[" + includedIn + "]>");
          },
         peg$c73 = function(varName) {
-            console.log(varName);
             return (varName);
          },
         peg$c74 = function(funcName, funcVar) {

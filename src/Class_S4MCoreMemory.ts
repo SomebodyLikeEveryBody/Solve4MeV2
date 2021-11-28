@@ -2,10 +2,9 @@ declare const s4mMemoryElement: S4MCoreMemory;
 declare const nerdamer: any;
 
 interface S4MMemoryElement {
-    declaringMathLineInput: MathLineInput;
-    varName: String;
-    nerdamerVarName: String;
-    varValue: String;
+    declaringMathLineInput: (MathLineInput | null);
+    S4MLVarName: string;
+    varValue: string;
     processedVarValue: MathObj;
 }
 
@@ -15,6 +14,7 @@ class S4MCoreMemory {
     protected _declaredVars: S4MMemoryElement[];                //[V1, V2, ..., Vn]
     protected _currentMathLineInputFocused: MathLineInput | null;
     protected _lastMathLineInputFocusedOut: MathLineInput;
+    protected _varNameCorrespondanceTable: VarNameCorrespondanceTable;
 
     public constructor(pFirstMathLineInput: MathLineInput) {
         this._declaringMathLineInputs = [];
@@ -24,16 +24,22 @@ class S4MCoreMemory {
         this._declaredVars = [];
         this._lastMathLineInputFocusedOut = pFirstMathLineInput;
         this._currentMathLineInputFocused = pFirstMathLineInput;
+        this._varNameCorrespondanceTable = new VarNameCorrespondanceTable();
+
+        this.defineConstants();
     }
 
     protected defineConstants(): S4MCoreMemory {
-        // this.addVar({
-        //     declaringMathLineInput: null,
-        //     varName: "\\pi",
-        //     nerdamerVarName: 'pi',
-        //     varValue: '',
-        //     processedVarValue: new MathObj(),
-        // }, null);
+
+        this.addVar({
+            declaringMathLineInput: null,
+            S4MLVarName: "\\pi",
+            varValue: '',
+            processedVarValue: new MathObj(),
+        });
+
+        this._varNameCorrespondanceTable.addNerdamerCorrespondanceIfNotAlreadyIn('');
+
         return this;
     }
 
@@ -75,14 +81,14 @@ class S4MCoreMemory {
         return (filteredArray.length !== 0);
     }
 
-    public hasAVarNamed(pVarName: String): Boolean {
-        const filtered = this._declaredVars.filter((s4mMemoryElement) => (s4mMemoryElement.varName === pVarName));
+    public hasAVarNamed(pVarName: string): Boolean {
+        const filtered = this._declaredVars.filter((s4mMemoryElement) => (s4mMemoryElement.S4MLVarName === pVarName));
         return (filtered.length !== 0);
     }
 
-    public getMathLineInputWhichDeclared(pVarName: String): MathLineInput {
+    public getMathLineInputWhichDeclared(pVarName: string): MathLineInput | null {
         for (let memoryElement of this._declaredVars) {
-            if (memoryElement.varName === pVarName) {
+            if (memoryElement.S4MLVarName === pVarName) {
                 return memoryElement.declaringMathLineInput;
             }
         }
@@ -91,9 +97,13 @@ class S4MCoreMemory {
     }
     
 
-    public addVar(pMemoryElement: S4MMemoryElement, pMathLineInput: MathLineInput): S4MCoreMemory {
-        this._declaringMathLineInputs.push(pMathLineInput);
+    public addVar(pMemoryElement: S4MMemoryElement): S4MCoreMemory {
+        if (pMemoryElement.declaringMathLineInput !== null) {
+            this._declaringMathLineInputs.push(pMemoryElement.declaringMathLineInput);
+        }
+        
         this._declaredVars.push(pMemoryElement);
+        this._varNameCorrespondanceTable.addNerdamerCorrespondanceIfNotAlreadyIn(pMemoryElement.S4MLVarName);
         return this;
     }
 
@@ -108,7 +118,8 @@ class S4MCoreMemory {
         this._declaredVars = this._declaredVars.filter((s4mMemoryElement) => (s4mMemoryElement.declaringMathLineInput !== pMathLineInput));
         this._declaringMathLineInputs = this._declaringMathLineInputs.filter((mathLineInput) => (mathLineInput !== pMathLineInput));
 
-        memoryElementsToRemove.map((s4mMemoryElement) => nerdamer.setVar(s4mMemoryElement.varName, 'delete'));
+        memoryElementsToRemove.map((s4mMemoryElement) => nerdamer.setVar(s4mMemoryElement.S4MLVarName, 'delete'));
+        memoryElementsToRemove.map((s4mMemoryElement) => this._varNameCorrespondanceTable.removeS4MLVar(s4mMemoryElement.S4MLVarName));
         
         return this;
     }
@@ -118,18 +129,24 @@ class S4MCoreMemory {
         return this;
     }
 
-    public removeVarNamed(pVarName: String): S4MCoreMemory {
+    public removeVarNamed(pVarName: string): S4MCoreMemory {
         if (this.hasAVarNamed(pVarName)) {
-            this.removeVarDeclaredBy(this.getMathLineInputWhichDeclared(pVarName));
+            const declaringMathLineInput = this.getMathLineInputWhichDeclared(pVarName);
+            if (declaringMathLineInput !== null) {
+                this.removeVarDeclaredBy(declaringMathLineInput);
+            }
         }
 
         return this;
     }
 
-    public setVar(pMemoryElement: S4MMemoryElement, pMathLineInput: MathLineInput): S4MCoreMemory {
-        this.removeVarDeclaredBy(pMathLineInput);
-        this.addVar(pMemoryElement, pMathLineInput);
-        nerdamer.setVar(pMemoryElement.varName, pMemoryElement.varValue);
+    public setVar(pMemoryElement: S4MMemoryElement): S4MCoreMemory {
+        if (pMemoryElement.declaringMathLineInput !== null) {
+            this.removeVarDeclaredBy(pMemoryElement.declaringMathLineInput);
+        }
+        
+        this.addVar(pMemoryElement);
+        nerdamer.setVar(pMemoryElement.S4MLVarName, pMemoryElement.varValue);
 
         return this;
     }

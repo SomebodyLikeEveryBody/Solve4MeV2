@@ -65,13 +65,15 @@ Declaration "Declaration"
    }
 
    const newMemoryElement = {
-      declaringMathLineInput: g_s4mCoreMemory.lastMathLineInputFocusedOut,
-      varName: newVarName,
+      declaringMathLineInput: processedMathLineInput,
+      S4MLVarName: newVarName,
       varValue: (affectationOperator === "=" ? mathObjAffected : "elof(" + mathObjAffected + ")"),
       processedVarValue: new MathObj(),
    };
 
-   g_s4mCoreMemory.setVar(newMemoryElement, processedMathLineInput);
+   console.log(newMemoryElement);
+
+   g_s4mCoreMemory.setVar(newMemoryElement);
    processedMathLineInput.signalNoError();
 }
 
@@ -81,7 +83,7 @@ Declaration "Declaration"
  *     already declared in memory
  * */
 UndefinedVarAtLargeIdentifier
- = varName:VarAtLargeIdentifier { 
+ = varName:VarAtLargeIdentifier {
       const processedMathLineInput = options.processedMathLineInput;
 
       // check if var is not already defined
@@ -104,7 +106,7 @@ UndefinedVarAtLargeIdentifier
  * */
 DefinedVarAtLargeIdentifier
  = varName:VarAtLargeIdentifier {
-      const processedMathLineInput = g_s4mCoreMemory.lastMathLineInputFocusedOut;
+      const processedMathLineInput = options.processedMathLineInput;
 
       // check if var is already defined
       if (!(
@@ -372,7 +374,7 @@ FunctionInstanciation
     let funcObj = {
        startSet: startSet,
        endSet: endSet,
-       varName: functionVarDef.varName,
+       S4MLVarName: functionVarDef.varName,
        instruction: functionVarDef.instruction
     };
 
@@ -472,7 +474,6 @@ VarAtLargeIdentifier
  / SpecialChar
  / Constant
  / VarIdentifier) {
-    console.log(varName);
     return (varName);
  }
 

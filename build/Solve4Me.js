@@ -116,6 +116,72 @@ var MathObj = /** @class */ (function () {
     };
     return MathObj;
 }());
+// {'\\pi': 'pi', '\alpha': 'var0' }
+var VarNameCorrespondanceTable = /** @class */ (function () {
+    function VarNameCorrespondanceTable() {
+        this._correspondanceTable = {};
+        this._varNamecounter = 0;
+    }
+    /*
+     * '\alpha' ==> 'var42'
+     * if variable doesn't exist, return null
+     * * */
+    VarNameCorrespondanceTable.prototype.getNerdamerCorrespondanceOf = function (pS4MLVarName) {
+        var retCorrespondance = this._correspondanceTable[pS4MLVarName];
+        if (retCorrespondance === undefined) {
+            return null;
+        }
+        return retCorrespondance;
+    };
+    VarNameCorrespondanceTable.prototype.getS4MLCorrespondanceOf = function (pNerdamerVarName) {
+        var _this = this;
+        var retCorrespondance = Object.keys(this._correspondanceTable).filter(function (key) { return _this._correspondanceTable[key] === pNerdamerVarName; })[0];
+        if (retCorrespondance === undefined) {
+            return null;
+        }
+        return retCorrespondance;
+    };
+    VarNameCorrespondanceTable.prototype.addExplicitNerdamerCorrespondanceOf = function (pS4MLVarName, pNerdamerVarName) {
+        this._correspondanceTable[pS4MLVarName] = pNerdamerVarName;
+        return this;
+    };
+    VarNameCorrespondanceTable.prototype.hasNerdamerCorrespondanceOf = function (pS4MLVarName) {
+        return (this.getNerdamerCorrespondanceOf(pS4MLVarName) !== null);
+    };
+    VarNameCorrespondanceTable.prototype.hasS4MLCorrespondanceOf = function (pVarName) {
+        return (this.getS4MLCorrespondanceOf(pVarName) !== null);
+    };
+    VarNameCorrespondanceTable.prototype.generateNewVarName = function () {
+        var retVarName = 'var' + this._varNamecounter;
+        this._varNamecounter++;
+        return retVarName;
+    };
+    VarNameCorrespondanceTable.prototype.addNerdamerCorrespondanceOf = function (pS4MLVarName) {
+        this._correspondanceTable[pS4MLVarName] = 'var' + this._varNamecounter;
+        this._varNamecounter++;
+        return this;
+    };
+    VarNameCorrespondanceTable.prototype.addNerdamerCorrespondanceIfNotAlreadyIn = function (pS4MLVarName) {
+        if (!(this.hasNerdamerCorrespondanceOf(pS4MLVarName))) {
+            this.addNerdamerCorrespondanceOf(pS4MLVarName);
+        }
+        return this;
+    };
+    VarNameCorrespondanceTable.prototype.removeS4MLVar = function (pS4MLVarName) {
+        if (this.hasNerdamerCorrespondanceOf(pS4MLVarName)) {
+            delete (this._correspondanceTable[pS4MLVarName]);
+        }
+        return this;
+    };
+    VarNameCorrespondanceTable.prototype.removeNerdamerVar = function (pNerdamerVarName) {
+        if (this.hasS4MLCorrespondanceOf(pNerdamerVarName)) {
+            var key = this.getS4MLCorrespondanceOf(pNerdamerVarName);
+            delete (this._correspondanceTable[key]);
+        }
+        return this;
+    };
+    return VarNameCorrespondanceTable;
+}());
 var S4MCoreMemory = /** @class */ (function () {
     function S4MCoreMemory(pFirstMathLineInput) {
         this._declaringMathLineInputs = [];
@@ -124,15 +190,17 @@ var S4MCoreMemory = /** @class */ (function () {
         this._declaredVars = [];
         this._lastMathLineInputFocusedOut = pFirstMathLineInput;
         this._currentMathLineInputFocused = pFirstMathLineInput;
+        this._varNameCorrespondanceTable = new VarNameCorrespondanceTable();
+        this.defineConstants();
     }
     S4MCoreMemory.prototype.defineConstants = function () {
-        // this.addVar({
-        //     declaringMathLineInput: null,
-        //     varName: "\\pi",
-        //     nerdamerVarName: 'pi',
-        //     varValue: '',
-        //     processedVarValue: new MathObj(),
-        // }, null);
+        this.addVar({
+            declaringMathLineInput: null,
+            S4MLVarName: "\\pi",
+            varValue: '',
+            processedVarValue: new MathObj(),
+        });
+        this._varNameCorrespondanceTable.addNerdamerCorrespondanceIfNotAlreadyIn('');
         return this;
     };
     S4MCoreMemory.prototype.currentMathLineInputFocusedIs = function (pMathLineInput) {
@@ -167,21 +235,24 @@ var S4MCoreMemory = /** @class */ (function () {
         return (filteredArray.length !== 0);
     };
     S4MCoreMemory.prototype.hasAVarNamed = function (pVarName) {
-        var filtered = this._declaredVars.filter(function (s4mMemoryElement) { return (s4mMemoryElement.varName === pVarName); });
+        var filtered = this._declaredVars.filter(function (s4mMemoryElement) { return (s4mMemoryElement.S4MLVarName === pVarName); });
         return (filtered.length !== 0);
     };
     S4MCoreMemory.prototype.getMathLineInputWhichDeclared = function (pVarName) {
         for (var _i = 0, _a = this._declaredVars; _i < _a.length; _i++) {
             var memoryElement = _a[_i];
-            if (memoryElement.varName === pVarName) {
+            if (memoryElement.S4MLVarName === pVarName) {
                 return memoryElement.declaringMathLineInput;
             }
         }
         throw "No MathLineInput declared var [" + pVarName + "]";
     };
-    S4MCoreMemory.prototype.addVar = function (pMemoryElement, pMathLineInput) {
-        this._declaringMathLineInputs.push(pMathLineInput);
+    S4MCoreMemory.prototype.addVar = function (pMemoryElement) {
+        if (pMemoryElement.declaringMathLineInput !== null) {
+            this._declaringMathLineInputs.push(pMemoryElement.declaringMathLineInput);
+        }
         this._declaredVars.push(pMemoryElement);
+        this._varNameCorrespondanceTable.addNerdamerCorrespondanceIfNotAlreadyIn(pMemoryElement.S4MLVarName);
         return this;
     };
     S4MCoreMemory.prototype.getMemoryElementsDeclaredBy = function (pMathLineInput) {
@@ -189,10 +260,12 @@ var S4MCoreMemory = /** @class */ (function () {
         return retArray;
     };
     S4MCoreMemory.prototype.removeVarDeclaredBy = function (pMathLineInput) {
+        var _this = this;
         var memoryElementsToRemove = this.getMemoryElementsDeclaredBy(pMathLineInput);
         this._declaredVars = this._declaredVars.filter(function (s4mMemoryElement) { return (s4mMemoryElement.declaringMathLineInput !== pMathLineInput); });
         this._declaringMathLineInputs = this._declaringMathLineInputs.filter(function (mathLineInput) { return (mathLineInput !== pMathLineInput); });
-        memoryElementsToRemove.map(function (s4mMemoryElement) { return nerdamer.setVar(s4mMemoryElement.varName, 'delete'); });
+        memoryElementsToRemove.map(function (s4mMemoryElement) { return nerdamer.setVar(s4mMemoryElement.S4MLVarName, 'delete'); });
+        memoryElementsToRemove.map(function (s4mMemoryElement) { return _this._varNameCorrespondanceTable.removeS4MLVar(s4mMemoryElement.S4MLVarName); });
         return this;
     };
     S4MCoreMemory.prototype.removeAllProducedBy = function (pMathLineInput) {
@@ -201,14 +274,19 @@ var S4MCoreMemory = /** @class */ (function () {
     };
     S4MCoreMemory.prototype.removeVarNamed = function (pVarName) {
         if (this.hasAVarNamed(pVarName)) {
-            this.removeVarDeclaredBy(this.getMathLineInputWhichDeclared(pVarName));
+            var declaringMathLineInput = this.getMathLineInputWhichDeclared(pVarName);
+            if (declaringMathLineInput !== null) {
+                this.removeVarDeclaredBy(declaringMathLineInput);
+            }
         }
         return this;
     };
-    S4MCoreMemory.prototype.setVar = function (pMemoryElement, pMathLineInput) {
-        this.removeVarDeclaredBy(pMathLineInput);
-        this.addVar(pMemoryElement, pMathLineInput);
-        nerdamer.setVar(pMemoryElement.varName, pMemoryElement.varValue);
+    S4MCoreMemory.prototype.setVar = function (pMemoryElement) {
+        if (pMemoryElement.declaringMathLineInput !== null) {
+            this.removeVarDeclaredBy(pMemoryElement.declaringMathLineInput);
+        }
+        this.addVar(pMemoryElement);
+        nerdamer.setVar(pMemoryElement.S4MLVarName, pMemoryElement.varValue);
         return this;
     };
     S4MCoreMemory.prototype.storeErroredMathLineInput = function (pMathLineInput) {

@@ -416,9 +416,13 @@ var MathLineInput = /** @class */ (function () {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
         g_outputScreen.removeMessagesOf(this);
         try {
-            var parsedStr = S4MLParser.parse(this.value(), { processedMathLineInput: this });
-            var answerMessagesArray = [this.value().valueOf()];
-            if (parsedStr !== "[Unprocess]") {
+            var S4MLQuestion = this.value();
+            var parsedStr = S4MLParser.parse(S4MLQuestion, { processedMathLineInput: this });
+            var answerMessagesArray = [S4MLQuestion];
+            console.log('S4ML:-- ' + this.value());
+            console.log('nerdamer:-- ' + parsedStr);
+            // Display answer if nerdamer has a string output
+            if (parsedStr !== "[Unprocess]" && parsedStr !== undefined) {
                 var nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
                     var nerdamerLatexAnswer = nerdamerAnswer.latex();
@@ -441,7 +445,6 @@ var MathLineInput = /** @class */ (function () {
                     }
                     g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
                 }
-                // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
             }
             this.signalNoError();
         }

@@ -1,54 +1,84 @@
+
+// {'\\pi': 'pi', '\alpha': 'var0' }
 class VarNameCorrespondanceTable {
-    protected _correspondanceTable: string[];
+    protected _correspondanceTable: { [key: string]: string};
+    protected _varNamecounter: number;
 
     public constructor() {
-        this._correspondanceTable = [];
+        this._correspondanceTable = {};
+        this._varNamecounter = 0;
     }
 
     /*
      * '\alpha' ==> 'var42'
      * if variable doesn't exist, return null
      * * */
-    public getNerdamerCorrespondanceOf(pVarName: string): (string | null) {
-        const index: number = this._correspondanceTable.indexOf(pVarName);
-        if (index !== -1) {
-            return 'var' + index;
+    public getNerdamerCorrespondanceOf(pS4MLVarName: string): (string | null) {
+        const retCorrespondance = this._correspondanceTable[pS4MLVarName];
+        if (retCorrespondance === undefined) {
+            return null;
         }
 
-        return null;
+        return retCorrespondance;
     }
 
-    public getS4MLCorrespondanceOf(pVarName: string): (string | null) {
-        const index = parseInt(pVarName.slice(3));
-        if (typeof index !== typeof parseInt('notnumber') && this.hasIndex(index)) {
-            return this._correspondanceTable[index];
+    public getS4MLCorrespondanceOf(pNerdamerVarName: string): (string | null) {
+        const retCorrespondance = Object.keys(this._correspondanceTable).filter((key) => this._correspondanceTable[key] === pNerdamerVarName)[0];
+
+        if (retCorrespondance === undefined) {
+            return null;
         }
-
-        return null;
+        
+        return retCorrespondance;
     }
 
-    protected hasIndex(pIndex: number): boolean {
-        return (this._correspondanceTable[pIndex] !== undefined);
+    public addExplicitNerdamerCorrespondanceOf(pS4MLVarName: string, pNerdamerVarName: string): this {
+        this._correspondanceTable[pS4MLVarName] = pNerdamerVarName;
+        return this;
     }
 
-    public hasNerdamerCorrespondanceOf(pVarName: string): boolean {
-        return (this.getNerdamerCorrespondanceOf(pVarName) !== null);
+    public hasNerdamerCorrespondanceOf(pS4MLVarName: string): boolean {
+        return (this.getNerdamerCorrespondanceOf(pS4MLVarName) !== null);
     }
 
     public hasS4MLCorrespondanceOf(pVarName: string): boolean {
         return (this.getS4MLCorrespondanceOf(pVarName) !== null);
     }
 
-    public addS4MLCorrespondanceOf(pVarName: string): this {
-        const index: number = this._correspondanceTable.length;
-        this._correspondanceTable[index] = pVarName;
+    protected generateNewVarName(): string {
+        const retVarName = 'var' + this._varNamecounter;
+        this._varNamecounter++;
+
+        return retVarName;
+    }
+
+    public addNerdamerCorrespondanceOf(pS4MLVarName: string): this {
+        this._correspondanceTable[pS4MLVarName] = 'var' + this._varNamecounter;
+        this._varNamecounter++;
 
         return this;
     }
 
-    public addS4MLCorrespondanceIfNotAlreadyIn(pVarName: string): this {
-        if (!(this.hasNerdamerCorrespondanceOf(pVarName))) {
-            this.addS4MLCorrespondanceOf(pVarName);
+    public addNerdamerCorrespondanceIfNotAlreadyIn(pS4MLVarName: string): this {
+        if (!(this.hasNerdamerCorrespondanceOf(pS4MLVarName))) {
+            this.addNerdamerCorrespondanceOf(pS4MLVarName);
+        }
+
+        return this;
+    }
+
+    public removeS4MLVar(pS4MLVarName: string): this {
+        if (this.hasNerdamerCorrespondanceOf(pS4MLVarName)) {
+            delete(this._correspondanceTable[pS4MLVarName]);
+        }
+        
+        return this;
+    }
+
+    public removeNerdamerVar(pNerdamerVarName: string): this {
+        if (this.hasS4MLCorrespondanceOf(pNerdamerVarName)) {
+            const key = this.getS4MLCorrespondanceOf(pNerdamerVarName)!;
+            delete(this._correspondanceTable[key]);
         }
 
         return this;

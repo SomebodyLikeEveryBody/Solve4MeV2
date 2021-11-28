@@ -432,17 +432,22 @@ class MathLineInput {
         g_outputScreen.removeMessagesOf(this);
         
         try {
-            let parsedStr = S4MLParser.parse(this.value(), {processedMathLineInput: this});
-            let answerMessagesArray: string[] = [this.value().valueOf()];
+            const S4MLQuestion = this.value();
+            const parsedStr = S4MLParser.parse(S4MLQuestion, {processedMathLineInput: this});
+            const answerMessagesArray: string[] = [S4MLQuestion];
 
-            if (parsedStr !== "[Unprocess]") {
+            console.log('S4ML:-- ' + this.value());
+            console.log('nerdamer:-- ' + parsedStr);
+
+            // Display answer if nerdamer has a string output
+            if (parsedStr !== "[Unprocess]" && parsedStr !== undefined) {
                 let nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
-                    let nerdamerLatexAnswer = nerdamerAnswer.latex();
-                    let evaluatedAnswer = nerdamerAnswer.evaluate();
-                    let evaluatedLatexAnswer: string = evaluatedAnswer.latex();
-                    let recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
-                    let approxAnswer: string = evaluatedAnswer.text('decimals', 50);
+                    const nerdamerLatexAnswer = nerdamerAnswer.latex();
+                    const evaluatedAnswer = nerdamerAnswer.evaluate();
+                    const evaluatedLatexAnswer: string = evaluatedAnswer.latex();
+                    const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
+                    const approxAnswer: string = evaluatedAnswer.text('decimals', 50);
 
                     answerMessagesArray.push(nerdamerLatexAnswer);
 
@@ -463,8 +468,6 @@ class MathLineInput {
 
                     g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
                 }
-                
-                // console.log(S4MLParser.parse(this.value(), {processedMathLineInput: this}));
             }
             
             this.signalNoError();

@@ -26,6 +26,7 @@ main:
 	./src/Interface_ErrorObject.ts \
 	./src/Class_CalculusTree.ts \
 	./src/Class_MathObj.ts \
+	./src/Class_VarNameCorrespondanceTable.ts \
 	./src/Class_S4MCoreMemory.ts \
 	./src/Class_InputScreen.ts \
 	./src/Class_OutputScreen.ts \
