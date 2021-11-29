@@ -38,7 +38,7 @@ class S4MCoreMemory {
             processedVarValue: new MathObj(),
         });
 
-        this._varNameCorrespondanceTable.addNerdamerCorrespondanceIfNotAlreadyIn('');
+        this._varNameCorrespondanceTable.addExplicitNerdamerCorrespondanceOf('\\pi', 'pi');
 
         return this;
     }

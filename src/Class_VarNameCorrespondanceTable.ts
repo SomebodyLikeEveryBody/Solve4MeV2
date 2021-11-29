@@ -83,4 +83,13 @@ class VarNameCorrespondanceTable {
 
         return this;
     }
+
+    public S4MLVarsToNerdamerVarsTranslate(pStr: string): string {
+        let retStr = pStr;
+        for (const S4MLVar of Object.keys(this._correspondanceTable)) {
+            retStr = retStr.replace(new RegExp(S4MLVar, 'g'), this._correspondanceTable[S4MLVar]);
+        }
+
+        return retStr;
+    }
 }

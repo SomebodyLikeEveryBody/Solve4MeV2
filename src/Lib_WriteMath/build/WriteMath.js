@@ -351,22 +351,22 @@ var MathLineInput = /** @class */ (function () {
         var scrollUpAdjust = 20;
         var scrollDownAdjust = 45;
         if (this.getTopCoord() < this.getContainerTopCoord()) {
-            this._container.scrollTop(this._container.scrollTop().valueOf() - scrollUpAdjust);
+            this._container.scrollTop(this._container.scrollTop() - scrollUpAdjust);
         }
         else if (this.getBottomCoord() > this.getContainerBottomCoord()) {
-            this._container.scrollTop(this._container.scrollTop().valueOf() + scrollDownAdjust);
+            this._container.scrollTop(this._container.scrollTop() + scrollDownAdjust);
         }
         if (!(this.hasPreviousMathLineInput())) {
             this._container.scrollTop(0);
         }
         else if (!(this.hasNextMathLineInput())) {
-            this._container.scrollTop(this._container.scrollTop().valueOf() + this._container.height().valueOf());
+            this._container.scrollTop(this._container.scrollTop() + this._container.height());
         }
         else {
         }
         return this;
     };
-    MathLineInput.prototype.boldnumberLine = function () {
+    MathLineInput.prototype.boldNumberLine = function () {
         this._jQWrapperEl.find('.number_line span').css({
             'font-weight': 'bold',
             'opacity': '1',
@@ -389,7 +389,7 @@ var MathLineInput = /** @class */ (function () {
                 g_s4mCoreMemory.currentMathLineInputFocusedIs(_this);
             }
             _this.adjustContainerScrollToMe()
-                .boldnumberLine();
+                .boldNumberLine();
         });
         this._jQEl.focusout(function () {
             _this._autoCompleter.hide();

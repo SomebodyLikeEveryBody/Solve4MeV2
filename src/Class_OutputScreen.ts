@@ -22,33 +22,50 @@ class OutputScreenMessage {
         return this._jQEl;
     }
 
-    public appendTo(pElement: JQueryElement): OutputScreenMessage {
+    public appendTo(pElement: JQueryElement): this {
         this._jQEl.appendTo(pElement);
         return this;
     }
 
-    public insertBefore(pElement: JQueryElement): OutputScreenMessage {
+    public insertBefore(pElement: JQueryElement): this {
         this._jQEl.insertBefore(pElement);
         return this;
     }
 
-    public toggle(): OutputScreenMessage {
+    public toggle(): this {
         this._jQEl.show(200);
         return this;
     }
 
-    public removeFromDOM(): OutputScreenMessage {
+    public removeFromDOM(): this {
         this._jQEl.hide(200, () => {
             this._jQEl.remove();
         });
         return this;
     }
 
-    public setTitleTo(pStr: string): OutputScreenMessage {
-        this.jQEl.find('.message_title').text(pStr);
+    public setTitleTo(pStr: string): this {
+        this._jQEl.find('.message_title').text(pStr);
         return this;
     }
-    
+
+    public getTitle(): string {
+        return this._jQEl.find('.message_title').text();
+    }
+
+    public getTopCoord(): number {
+        return this._jQEl.offset().top;
+    }
+
+    public getBottomCoord(): number {
+        return this.getTopCoord() + this._jQEl.outerHeight().valueOf();
+    }
+
+    public blinkAnimate(): this {
+
+        // console.log('blink');
+        return this;
+    }
 }
 
 class OutputScreenErrorMessage extends OutputScreenMessage {
@@ -165,6 +182,8 @@ class OutputScreen {
 
         this._messages.push(newErrorMessage);
         this.appendMessageAtCorrectLocation(newErrorMessage);
+        this.adjustScrollToMessage(newErrorMessage);
+        newErrorMessage.blinkAnimate();
         
         return this;
     }
@@ -178,6 +197,8 @@ class OutputScreen {
         this._messages.push(newAnswerMessage);
         this.appendMessageAtCorrectLocation(newAnswerMessage);
         newAnswerMessage.renderMathAnswers();
+        this.adjustScrollToMessage(newAnswerMessage);
+        newAnswerMessage.blinkAnimate();
 
         return this;
     }
@@ -230,5 +251,49 @@ class OutputScreen {
         }
 
         return null;
+    }
+
+    protected getTopCoord(): number {
+        const scrollableContent = this._jQEl.find('#output');
+        return scrollableContent.offset().top;
+    }
+
+    protected getBottomCoord(): number {
+        const scrollableContent = this._jQEl.find('#output');
+        return this.getTopCoord() + scrollableContent.outerHeight();
+    }
+
+    protected scrollTop(): this {
+        const scrollableContent = this._jQEl.find('#output');
+        scrollableContent.scrollTop(0);
+        return this;
+    }
+
+    protected scrollBottom(): this {
+        const scrollableContent = this._jQEl.find('#output');
+        scrollableContent.scrollTop(scrollableContent.scrollTop() + scrollableContent.height());
+        return this;
+    }
+
+    protected adjustScrollToMessage(pMessage: OutputScreenMessage): this {
+        const scrollableContent = this._jQEl.find('#output');
+        const scrollAdjust = 35;
+
+        if ((pMessage.getTopCoord() < this.getTopCoord())
+            || (pMessage.getBottomCoord() > this.getBottomCoord())) {
+                scrollableContent.animate({
+                    scrollTop: pMessage.jQEl.offset().top
+                }, 500);
+        }
+
+        console.log('adjusting');
+
+        // if (pMessage.getTopCoord() < this.getTopCoord()) {
+        //     this._jQEl.scrollTop(this._jQEl.scrollTop() - scrollUpAdjust);
+        // } else if (pMessage.getBottomCoord() > this.getBottomCoord()) {
+        //     this._jQEl.scrollTop(this._jQEl.scrollTop() + scrollDownAdjust);
+        // }
+
+        return this;
     }
 }

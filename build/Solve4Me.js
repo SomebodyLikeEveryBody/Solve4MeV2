@@ -180,6 +180,14 @@ var VarNameCorrespondanceTable = /** @class */ (function () {
         }
         return this;
     };
+    VarNameCorrespondanceTable.prototype.S4MLVarsToNerdamerVarsTranslate = function (pStr) {
+        var retStr = pStr;
+        for (var _i = 0, _a = Object.keys(this._correspondanceTable); _i < _a.length; _i++) {
+            var S4MLVar = _a[_i];
+            retStr = retStr.replace(new RegExp(S4MLVar, 'g'), this._correspondanceTable[S4MLVar]);
+        }
+        return retStr;
+    };
     return VarNameCorrespondanceTable;
 }());
 var S4MCoreMemory = /** @class */ (function () {
@@ -200,7 +208,7 @@ var S4MCoreMemory = /** @class */ (function () {
             varValue: '',
             processedVarValue: new MathObj(),
         });
-        this._varNameCorrespondanceTable.addNerdamerCorrespondanceIfNotAlreadyIn('');
+        this._varNameCorrespondanceTable.addExplicitNerdamerCorrespondanceOf('\\pi', 'pi');
         return this;
     };
     S4MCoreMemory.prototype.currentMathLineInputFocusedIs = function (pMathLineInput) {
@@ -422,7 +430,20 @@ var OutputScreenMessage = /** @class */ (function () {
         return this;
     };
     OutputScreenMessage.prototype.setTitleTo = function (pStr) {
-        this.jQEl.find('.message_title').text(pStr);
+        this._jQEl.find('.message_title').text(pStr);
+        return this;
+    };
+    OutputScreenMessage.prototype.getTitle = function () {
+        return this._jQEl.find('.message_title').text();
+    };
+    OutputScreenMessage.prototype.getTopCoord = function () {
+        return this._jQEl.offset().top;
+    };
+    OutputScreenMessage.prototype.getBottomCoord = function () {
+        return this.getTopCoord() + this._jQEl.outerHeight().valueOf();
+    };
+    OutputScreenMessage.prototype.blinkAnimate = function () {
+        // console.log('blink');
         return this;
     };
     return OutputScreenMessage;
@@ -517,6 +538,8 @@ var OutputScreen = /** @class */ (function () {
         }, pErroredMathLineInput);
         this._messages.push(newErrorMessage);
         this.appendMessageAtCorrectLocation(newErrorMessage);
+        this.adjustScrollToMessage(newErrorMessage);
+        newErrorMessage.blinkAnimate();
         return this;
     };
     OutputScreen.prototype.displayAnswerMessage = function (pAnswerStr, pMathLineInputSource) {
@@ -527,6 +550,8 @@ var OutputScreen = /** @class */ (function () {
         this._messages.push(newAnswerMessage);
         this.appendMessageAtCorrectLocation(newAnswerMessage);
         newAnswerMessage.renderMathAnswers();
+        this.adjustScrollToMessage(newAnswerMessage);
+        newAnswerMessage.blinkAnimate();
         return this;
     };
     OutputScreen.prototype.getMessageWhichIsAfterMessageOf = function (pMathLineInputSource) {
@@ -572,6 +597,41 @@ var OutputScreen = /** @class */ (function () {
             }
         }
         return null;
+    };
+    OutputScreen.prototype.getTopCoord = function () {
+        var scrollableContent = this._jQEl.find('#output');
+        return scrollableContent.offset().top;
+    };
+    OutputScreen.prototype.getBottomCoord = function () {
+        var scrollableContent = this._jQEl.find('#output');
+        return this.getTopCoord() + scrollableContent.outerHeight();
+    };
+    OutputScreen.prototype.scrollTop = function () {
+        var scrollableContent = this._jQEl.find('#output');
+        scrollableContent.scrollTop(0);
+        return this;
+    };
+    OutputScreen.prototype.scrollBottom = function () {
+        var scrollableContent = this._jQEl.find('#output');
+        scrollableContent.scrollTop(scrollableContent.scrollTop() + scrollableContent.height());
+        return this;
+    };
+    OutputScreen.prototype.adjustScrollToMessage = function (pMessage) {
+        var scrollableContent = this._jQEl.find('#output');
+        var scrollAdjust = 35;
+        if ((pMessage.getTopCoord() < this.getTopCoord())
+            || (pMessage.getBottomCoord() > this.getBottomCoord())) {
+            scrollableContent.animate({
+                scrollTop: pMessage.jQEl.offset().top
+            }, 500);
+        }
+        console.log('adjusting');
+        // if (pMessage.getTopCoord() < this.getTopCoord()) {
+        //     this._jQEl.scrollTop(this._jQEl.scrollTop() - scrollUpAdjust);
+        // } else if (pMessage.getBottomCoord() > this.getBottomCoord()) {
+        //     this._jQEl.scrollTop(this._jQEl.scrollTop() + scrollDownAdjust);
+        // }
+        return this;
     };
     return OutputScreen;
 }());
