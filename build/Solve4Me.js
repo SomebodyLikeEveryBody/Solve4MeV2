@@ -624,18 +624,13 @@ var OutputScreen = /** @class */ (function () {
     OutputScreen.prototype.adjustScrollToMessage = function (pMessage) {
         var scrollableContent = this._jQEl.find('#output');
         var scrollAdjust = 35;
-        // if ((pMessage.getTopCoord() < this.getTopCoord())
-        //     || (pMessage.getBottomCoord() > this.getBottomCoord())) {
-        scrollableContent.stop().animate({
-            scrollTop: pMessage.jQEl.offset().top
-        }, 500);
-        // }
+        if ((pMessage.getTopCoord() < this.getTopCoord())
+            || (pMessage.getBottomCoord() > this.getBottomCoord())) {
+            scrollableContent.stop().animate({
+                scrollTop: pMessage.jQEl.offset().top
+            }, 500);
+        }
         console.log('adjusting');
-        // if (pMessage.getTopCoord() < this.getTopCoord()) {
-        //     this._jQEl.scrollTop(this._jQEl.scrollTop() - scrollUpAdjust);
-        // } else if (pMessage.getBottomCoord() > this.getBottomCoord()) {
-        //     this._jQEl.scrollTop(this._jQEl.scrollTop() + scrollDownAdjust);
-        // }
         return this;
     };
     return OutputScreen;

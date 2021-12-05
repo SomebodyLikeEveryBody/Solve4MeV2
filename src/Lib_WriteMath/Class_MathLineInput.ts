@@ -286,6 +286,7 @@ class MathLineInput {
         this._autoCompleter.hide();
         this.removeFromDOM();
         this.decrementFollowingsMathLineInputsnumberLine();
+        g_s4mCoreMemory.removeAllProducedBy(this);
 
         return this;
     }
