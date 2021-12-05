@@ -418,8 +418,8 @@ var OutputScreenMessage = /** @class */ (function () {
         this._jQEl.insertBefore(pElement);
         return this;
     };
-    OutputScreenMessage.prototype.toggle = function () {
-        this._jQEl.show(200);
+    OutputScreenMessage.prototype.toggle = function (pCallBack) {
+        this._jQEl.toggle(200, pCallBack);
         return this;
     };
     OutputScreenMessage.prototype.removeFromDOM = function () {
@@ -531,15 +531,23 @@ var OutputScreen = /** @class */ (function () {
         this.setVisibilityTo(true);
         return this;
     };
+    OutputScreen.prototype.appendMessageAndScrollToItAndBlinkIt = function (pMessage) {
+        var _this = this;
+        this.appendMessageAtCorrectLocation(pMessage, function () {
+            _this.adjustScrollToMessage(pMessage);
+        });
+        if (pMessage instanceof OutputScreenAnswerMessage) {
+            pMessage.renderMathAnswers();
+        }
+        pMessage.blinkAnimate();
+    };
     OutputScreen.prototype.displayErrorMessage = function (pErrorObject, pErroredMathLineInput) {
         var newErrorMessage = new OutputScreenErrorMessage({
             title: "Line [" + pErroredMathLineInput.numberLine + "]:",
             body: ["[" + pErrorObject.name + "]: " + pErrorObject.message],
         }, pErroredMathLineInput);
         this._messages.push(newErrorMessage);
-        this.appendMessageAtCorrectLocation(newErrorMessage);
-        this.adjustScrollToMessage(newErrorMessage);
-        newErrorMessage.blinkAnimate();
+        this.appendMessageAndScrollToItAndBlinkIt(newErrorMessage);
         return this;
     };
     OutputScreen.prototype.displayAnswerMessage = function (pAnswerStr, pMathLineInputSource) {
@@ -548,10 +556,7 @@ var OutputScreen = /** @class */ (function () {
             body: pAnswerStr,
         }, pMathLineInputSource);
         this._messages.push(newAnswerMessage);
-        this.appendMessageAtCorrectLocation(newAnswerMessage);
-        newAnswerMessage.renderMathAnswers();
-        this.adjustScrollToMessage(newAnswerMessage);
-        newAnswerMessage.blinkAnimate();
+        this.appendMessageAndScrollToItAndBlinkIt(newAnswerMessage);
         return this;
     };
     OutputScreen.prototype.getMessageWhichIsAfterMessageOf = function (pMathLineInputSource) {
@@ -571,13 +576,13 @@ var OutputScreen = /** @class */ (function () {
         }
         return retMessage;
     };
-    OutputScreen.prototype.appendMessageAtCorrectLocation = function (pNewAnswerMessage) {
+    OutputScreen.prototype.appendMessageAtCorrectLocation = function (pNewAnswerMessage, pCallBack) {
         var messageJustAfter = this.getMessageWhichIsAfterMessageOf(pNewAnswerMessage.mathLineInputSource);
         if (messageJustAfter === null) {
-            pNewAnswerMessage.insertBefore(this._jQElContent.find('hr#outputscreen_end_line')).toggle();
+            pNewAnswerMessage.insertBefore(this._jQElContent.find('hr#outputscreen_end_line')).toggle(pCallBack);
         }
         else {
-            pNewAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle();
+            pNewAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle(pCallBack);
         }
         return this;
     };
@@ -619,12 +624,12 @@ var OutputScreen = /** @class */ (function () {
     OutputScreen.prototype.adjustScrollToMessage = function (pMessage) {
         var scrollableContent = this._jQEl.find('#output');
         var scrollAdjust = 35;
-        if ((pMessage.getTopCoord() < this.getTopCoord())
-            || (pMessage.getBottomCoord() > this.getBottomCoord())) {
-            scrollableContent.animate({
-                scrollTop: pMessage.jQEl.offset().top
-            }, 500);
-        }
+        // if ((pMessage.getTopCoord() < this.getTopCoord())
+        //     || (pMessage.getBottomCoord() > this.getBottomCoord())) {
+        scrollableContent.stop().animate({
+            scrollTop: pMessage.jQEl.offset().top
+        }, 500);
+        // }
         console.log('adjusting');
         // if (pMessage.getTopCoord() < this.getTopCoord()) {
         //     this._jQEl.scrollTop(this._jQEl.scrollTop() - scrollUpAdjust);

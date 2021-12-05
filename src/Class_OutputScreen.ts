@@ -32,8 +32,8 @@ class OutputScreenMessage {
         return this;
     }
 
-    public toggle(): this {
-        this._jQEl.show(200);
+    public toggle(pCallBack?: Function): this {
+        this._jQEl.toggle(200, pCallBack);
         return this;
     }
 
@@ -174,6 +174,18 @@ class OutputScreen {
         return this;
     }
 
+    public appendMessageAndScrollToItAndBlinkIt(pMessage: OutputScreenErrorMessage | OutputScreenAnswerMessage) {
+        this.appendMessageAtCorrectLocation(pMessage, () => {
+            this.adjustScrollToMessage(pMessage);
+        });
+
+        if (pMessage instanceof OutputScreenAnswerMessage) {
+            pMessage.renderMathAnswers();
+        }
+
+        pMessage.blinkAnimate();
+    }
+
     public displayErrorMessage(pErrorObject: ErrorObject, pErroredMathLineInput: MathLineInput): OutputScreen {
         let newErrorMessage = new OutputScreenErrorMessage({
             title: "Line [" + pErroredMathLineInput.numberLine + "]:",
@@ -181,9 +193,7 @@ class OutputScreen {
         }, pErroredMathLineInput);
 
         this._messages.push(newErrorMessage);
-        this.appendMessageAtCorrectLocation(newErrorMessage);
-        this.adjustScrollToMessage(newErrorMessage);
-        newErrorMessage.blinkAnimate();
+        this.appendMessageAndScrollToItAndBlinkIt(newErrorMessage);
         
         return this;
     }
@@ -195,10 +205,7 @@ class OutputScreen {
         }, pMathLineInputSource);
     
         this._messages.push(newAnswerMessage);
-        this.appendMessageAtCorrectLocation(newAnswerMessage);
-        newAnswerMessage.renderMathAnswers();
-        this.adjustScrollToMessage(newAnswerMessage);
-        newAnswerMessage.blinkAnimate();
+        this.appendMessageAndScrollToItAndBlinkIt(newAnswerMessage);
 
         return this;
     }
@@ -221,13 +228,13 @@ class OutputScreen {
         return retMessage;
     }
 
-    public appendMessageAtCorrectLocation(pNewAnswerMessage: OutputScreenMessage): OutputScreen {
+    public appendMessageAtCorrectLocation(pNewAnswerMessage: OutputScreenMessage, pCallBack?: Function): OutputScreen {
         let messageJustAfter: OutputScreenMessage | null = this.getMessageWhichIsAfterMessageOf(pNewAnswerMessage.mathLineInputSource);
 
         if (messageJustAfter === null) {
-            pNewAnswerMessage.insertBefore(this._jQElContent.find('hr#outputscreen_end_line')).toggle();
+            pNewAnswerMessage.insertBefore(this._jQElContent.find('hr#outputscreen_end_line')).toggle(pCallBack);
         } else {
-            pNewAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle();
+            pNewAnswerMessage.insertBefore(messageJustAfter.jQEl).toggle(pCallBack);
         }
 
         return this;
@@ -279,12 +286,12 @@ class OutputScreen {
         const scrollableContent = this._jQEl.find('#output');
         const scrollAdjust = 35;
 
-        if ((pMessage.getTopCoord() < this.getTopCoord())
-            || (pMessage.getBottomCoord() > this.getBottomCoord())) {
-                scrollableContent.animate({
+        // if ((pMessage.getTopCoord() < this.getTopCoord())
+        //     || (pMessage.getBottomCoord() > this.getBottomCoord())) {
+                scrollableContent.stop().animate({
                     scrollTop: pMessage.jQEl.offset().top
                 }, 500);
-        }
+        // }
 
         console.log('adjusting');
 

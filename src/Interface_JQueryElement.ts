@@ -46,8 +46,9 @@ interface JQueryElement {
     get(pIndex: number): JQueryElement;
     data(pstr: string, pvalue: any): void;
     eq(pIndex: number): JQueryElement;
-    toggle(pTime: number): JQueryElement;
+    toggle(pTime: number, pCallBack?: Function): JQueryElement;
     outerHeight(): number;
     offset(): { top: number, left: number };
     animate(pObject: any, pTime: number, pFunction?: Function): JQueryElement;
+    stop(): JQueryElement;
 }
