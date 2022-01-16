@@ -1,3 +1,8 @@
+16/01/2022
+----------
+le recurring c'est cool mais ca peut prendre masse de temps lors de calcul de puissances non entières ou de logarithme
+==> pour la determination du recurring, le lancer dans un thread (ou equivalent en front) avec un timeout et si le timeout est dépassé on laisse tomber on kill le truc et on passe à la suite
+
 27/11/2021
 ----------
 

@@ -109,15 +109,15 @@ DefinedVarAtLargeIdentifier
       const processedMathLineInput = options.processedMathLineInput;
 
       // check if var is already defined
-      if (!(
-            g_s4mCoreMemory.hasAVarNamed(varName)
-            && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput)) {
+      // if (!(
+      //       g_s4mCoreMemory.hasAVarNamed(varName)
+      //       && g_s4mCoreMemory.getMathLineInputWhichDeclared(varName) !== processedMathLineInput)) {
 
-            throw {
-               name: "VarError",
-               message: "Variable [" + varName + "] is undefined."
-            };
-      }
+      //       throw {
+      //          name: "VarError",
+      //          message: "Variable [" + varName + "] is undefined."
+      //       };
+      // }
 
       return (varName); 
  }
@@ -138,6 +138,11 @@ EqualOperator
 
 InOperator
  = "\\in"
+
+Equation
+ = expr1:Expression operator:EqualOperator expr2:Expression {
+    return expr1 + operator + expr2;
+ }
 
 /***********************************
  * Constraint: Given a > 0
@@ -279,7 +284,48 @@ Factor
 S4MLObject
  = Instanciation
  / DefinedVarAtLargeIdentifier
+ / DeposedKeyword
 
+ DeposedKeyword
+  = "\\sqrt{" expression:Expression "}" {
+     return "sqrt(" + expression + ")";   
+  }
+  / "\\log_" base:Number "\\left(" expression:Expression "\\right)" {
+     return "log(" + expression+ ")/log(" + base + ")";
+  }
+  / "\\log_{" base:Number "}\\left(" expression:Expression "\\right)" {
+     return "log(" + expression+ ")/log(" + base + ")";
+  }
+  / "\\operatorname{atan}_2\\left(" _ xValue:Expression _ "," _ yValue:Expression _ "\\right)" {
+     return "atan2(" + xValue + "," + yValue +")" 
+  }
+  / "\\operatorname{solve}\\left(" _ varName: VarAtLargeIdentifier _ "," _ equation:Equation _ "\\right)" {
+      return "solve(" + equation + "," + varName + ")";
+  }
+  / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
+     return deposedFuncName + "(" + expression + ")";
+  }
+
+DeposedFuncName
+ = "\\operatorname{acotan}" { return "acot" }
+ / "\\operatorname{cotan}" { return "cot" }
+ / "\\operatorname{atan}" { return "atan" }
+ / "\\operatorname{factor}" { return "factor" }
+ / "\\operatorname{asec}" { return "asec" }
+ / "\\tan" { return "tan" }
+ / "\\operatorname{asin}" { return "asin" }
+ / "\\sin" { return "sin" }
+ / "\\operatorname{acosec}" { return "acsc" }
+ / "\\operatorname{cosec}" { return "csc" }
+ / "\\sec" { return "sec" }
+ / "\\operatorname{acos}" { return "acos" }
+ / "\\cos" { return "cos" }
+ / "\\cos" { return "cos" }
+ / "\\ln" { return "log" }
+ / "\\log_{10}" { return "log10" }
+ / "\\log" { return "log" }
+
+ 
 /***********************************
  * ContiguousFactors: ab, cdef, a(b+c), etc
  * [.] The purpose of this rule is to permit

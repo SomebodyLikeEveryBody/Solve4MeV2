@@ -85,7 +85,7 @@ var MathLineInput = /** @class */ (function () {
         this._numberLine = 1;
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
-            autoOperatorNames: 'acotan cotan atan tan asin sin cosec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln',
+            autoOperatorNames: 'acotan cotan atan tan asin sin acosec cosec asec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln solve factor',
             substituteTextarea: (function () {
                 var JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
                 return JQTextarea.get(0);
@@ -429,17 +429,17 @@ var MathLineInput = /** @class */ (function () {
                     var nerdamerLatexAnswer = nerdamerAnswer.latex();
                     var evaluatedAnswer = nerdamerAnswer.evaluate();
                     var evaluatedLatexAnswer = evaluatedAnswer.latex();
-                    var recurringNumericalAnswer = evaluatedAnswer.text('recurring');
+                    // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
                     var approxAnswer = evaluatedAnswer.text('decimals', 50);
                     answerMessagesArray.push(nerdamerLatexAnswer);
                     // if evaluatedLatexAnswer is different from all messages already shown
                     if (answerMessagesArray.indexOf(evaluatedLatexAnswer) === -1) {
                         answerMessagesArray.push(evaluatedLatexAnswer);
                     }
-                    // if recurringNumericalAnswer is not too long and different from all messages already shown
-                    if (recurringNumericalAnswer.length < 200 && answerMessagesArray.indexOf(recurringNumericalAnswer) === -1) {
-                        answerMessagesArray.push(recurringNumericalAnswer.replace(/'([0-9]+)'/, '\\overline{$1}'));
-                    }
+                    // // if recurringNumericalAnswer is not too long and different from all messages already shown
+                    // if (recurringNumericalAnswer.length < 200 && answerMessagesArray.indexOf(recurringNumericalAnswer) === -1) {
+                    //     answerMessagesArray.push(recurringNumericalAnswer.replace(/'([0-9]+)'/, '\\overline{$1}'));
+                    // }
                     // if approxAnswer is different from all messages already shown
                     if (answerMessagesArray.indexOf(approxAnswer) === -1) {
                         answerMessagesArray.push(approxAnswer);
