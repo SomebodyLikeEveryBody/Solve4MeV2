@@ -211,6 +211,9 @@ var S4MCoreMemory = /** @class */ (function () {
         this._varNameCorrespondanceTable.addExplicitNerdamerCorrespondanceOf('\\pi', 'pi');
         return this;
     };
+    S4MCoreMemory.prototype.getLastMathLineInputFocusedOut = function () {
+        return this._lastMathLineInputFocusedOut;
+    };
     S4MCoreMemory.prototype.currentMathLineInputFocusedIs = function (pMathLineInput) {
         this._currentMathLineInputFocused = pMathLineInput;
         return this;
@@ -501,6 +504,52 @@ var OutputScreenAnswerMessage = /** @class */ (function (_super) {
     };
     return OutputScreenAnswerMessage;
 }(OutputScreenMessage));
+var OutputScreenPrintLatexMessage = /** @class */ (function (_super) {
+    __extends(OutputScreenPrintLatexMessage, _super);
+    function OutputScreenPrintLatexMessage(pLatexMessage, pMathLineInputSource) {
+        var _this = _super.call(this, pLatexMessage, pMathLineInputSource) || this;
+        _this._messages = pLatexMessage.body;
+        // First div with question mark
+        var firstDiv = $('<div class="answer_body_container"></div>');
+        firstDiv.append($('<div class="answer_interrogation"></div>'));
+        firstDiv.append($('<div class="answer_mathfield"></div>'));
+        _this._questionMathField = MathQuill.getInterface(2).StaticMath(firstDiv.find('.answer_mathfield').get(0));
+        _this._jQEl.find('.message_body').append(firstDiv);
+        _this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
+        // Second div with Latex image
+        var secondDiv = $('<div class="answer_body_container"></div>');
+        secondDiv.append($('<div class="print_image"></div>'));
+        secondDiv.append($('<div class="latex_printed"><img src="https://latex.codecogs.com/gif.latex?' + _this.encodeLatexUrl(_this._messages[1]) + '" /></div>'));
+        _this._jQEl.find('.message_body').append(secondDiv);
+        _this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
+        // Third div with html <img /> code
+        var thirdDiv = $('<div class="answer_body_container"></div>');
+        thirdDiv.append($('<div class="print_code"></div>'));
+        thirdDiv.append($('<div class="latex_img_code"></div>'));
+        var inputTextWithImgCode = $('<input type="text" />');
+        inputTextWithImgCode.val('<img src="https://latex.codecogs.com/gif.latex?' + _this.encodeLatexUrl(_this._messages[1]) + '" />');
+        inputTextWithImgCode.click(function () { return inputTextWithImgCode.select(); });
+        inputTextWithImgCode.keydown(function (e) {
+            if (e.which === KeyCodes.ESCAPE_KEY) {
+                g_s4mCoreMemory.getLastMathLineInputFocusedOut().focus();
+                console.log('stop');
+            }
+        });
+        thirdDiv.find('.latex_img_code').append(inputTextWithImgCode);
+        _this._jQEl.find('.message_body').append(thirdDiv);
+        _this._jQEl.addClass("answer_message");
+        return _this;
+    }
+    OutputScreenPrintLatexMessage.prototype.encodeLatexUrl = function (pUrl) {
+        var retUrl = pUrl.replace(/ /g, "%20");
+        return retUrl;
+    };
+    OutputScreenPrintLatexMessage.prototype.renderMathAnswers = function () {
+        this._questionMathField.latex(this._messages[0]);
+        return this;
+    };
+    return OutputScreenPrintLatexMessage;
+}(OutputScreenMessage));
 var OutputScreen = /** @class */ (function () {
     function OutputScreen(pJQueryElement) {
         this._jQEl = pJQueryElement;
@@ -536,7 +585,7 @@ var OutputScreen = /** @class */ (function () {
         this.appendMessageAtCorrectLocation(pMessage, function () {
             _this.adjustScrollToMessage(pMessage);
         });
-        if (pMessage instanceof OutputScreenAnswerMessage) {
+        if ((pMessage instanceof OutputScreenAnswerMessage) || (pMessage instanceof OutputScreenPrintLatexMessage)) {
             pMessage.renderMathAnswers();
         }
         pMessage.blinkAnimate();
@@ -557,6 +606,15 @@ var OutputScreen = /** @class */ (function () {
         }, pMathLineInputSource);
         this._messages.push(newAnswerMessage);
         this.appendMessageAndScrollToItAndBlinkIt(newAnswerMessage);
+        return this;
+    };
+    OutputScreen.prototype.displayPrintLatexMessage = function (pLatexStr, pMathLineInputSource) {
+        var newLatexMessage = new OutputScreenPrintLatexMessage({
+            title: "Line [" + pMathLineInputSource.numberLine + "]:",
+            body: pLatexStr,
+        }, pMathLineInputSource);
+        this._messages.push(newLatexMessage);
+        this.appendMessageAndScrollToItAndBlinkIt(newLatexMessage);
         return this;
     };
     OutputScreen.prototype.getMessageWhichIsAfterMessageOf = function (pMathLineInputSource) {

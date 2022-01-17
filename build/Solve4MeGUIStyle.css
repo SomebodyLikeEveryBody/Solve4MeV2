@@ -482,7 +482,7 @@ button.alone
     border: white 2px solid;
 }
 
-.answer_interrogation, .answer_equal
+.answer_interrogation, .answer_equal, .print_code, .print_image
 {
     width: 46px;
     height: 46px;
@@ -507,6 +507,16 @@ button.alone
     background-image: url('./imgs/answer_equal.svg');
 }
 
+.print_code
+{
+    background-image: url('./imgs/print_code.svg');
+}
+
+.print_image
+{
+    background-image: url('./imgs/print_image.svg');
+}
+
 div.answer_body_container
 {
     display: flex;
@@ -520,7 +530,41 @@ div.answer_mathfield
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    
+}
+
+div.latex_printed
+{
+    width: calc(100% - 50px);
+    display: inline;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+}
+
+div.latex_printed img
+{
+}
+
+div.latex_img_code input[type=text]
+{
+    width: auto;
+    height: 100%;
+    padding: 5px;
+    border: white 2px solid;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.25);
+}
+
+div.latex_img_code
+{
+    width: calc(100% - 50px);
+    display: inline;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .error_message div.message_body

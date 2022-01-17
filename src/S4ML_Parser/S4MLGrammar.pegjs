@@ -42,6 +42,7 @@
 
 start
  = UnprocessedLine
+ / PrintLine
  / CommentaryLine
  / SeparatorLine
  / Declaration
@@ -780,6 +781,7 @@ EmptyLine
       const processedMathLineInput = options.processedMathLineInput;
 
       processedMathLineInput.signalNoError();
+      return "[Unprocess]";
  }
 
 /***********************************
@@ -814,6 +816,10 @@ UnprocessedLine
    return "[Unprocess]";
 }
 
+PrintLine
+= "\\text{Print}\\ " latexStr:.* {
+   return "[Print]" + latexStr.join('');
+}
 
 /***********************************
  * MandatoryWhiteSpace:

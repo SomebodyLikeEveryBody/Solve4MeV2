@@ -441,7 +441,7 @@ class MathLineInput {
             console.log('nerdamer:-- ' + parsedStr);
 
             // Display answer if nerdamer has a string output
-            if (parsedStr !== "[Unprocess]" && parsedStr !== undefined) {
+            if (parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== undefined) {
                 let nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
                     const nerdamerLatexAnswer = nerdamerAnswer.latex();
@@ -469,6 +469,11 @@ class MathLineInput {
 
                     g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
                 }
+            } else if (parsedStr.substring(0, 7) == "[Print]") {
+                let latexStr = parsedStr.substring("[Print]".length, parsedStr.length);
+                
+                answerMessagesArray.push(latexStr);
+                g_outputScreen.displayPrintLatexMessage(answerMessagesArray , this);
             }
             
             this.signalNoError();
@@ -680,7 +685,7 @@ class MathLineInput {
     }
 
     public isAPrintLine(): boolean {
-        return (this.value().substr(0, 18) === "\\text{Print}\\left(");
+        return (this.value().substr(0, 14) === "\\text{Print}\\ ");
     }
 
     public isAGraphLine(): boolean {
@@ -707,7 +712,7 @@ class MathLineInput {
     }
 
     public stopBeingAPrintLine(): MathLineInput {
-        this.setValue(this.value().substring("\\text{Print}\\left(".length, this.value().length - "\\right)".length));
+        this.setValue(this.value().substring("\\text{Print}\\ ".length, this.value().length));
         return this;
     }
 
@@ -777,7 +782,6 @@ class MathLineInput {
             this.stopBeingAPrintLine();
         } else {
             this.becomeAPrintLine();
-            this.keyStroke('Left');
         }
 
         this.saveUndoRedoState();
@@ -832,7 +836,7 @@ class MathLineInput {
 
     public becomeAPrintLine(): MathLineInput {
         if (!(this.isAPrintLine())) {
-            this.setValue("\\text{Print}\\left(" + this.value() + "\\right)");
+            this.setValue("\\text{Print}\\ " + this.value());
             this.saveUndoRedoState();
         }
 

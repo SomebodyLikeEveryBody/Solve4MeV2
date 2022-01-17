@@ -423,7 +423,7 @@ var MathLineInput = /** @class */ (function () {
             console.log('S4ML:-- ' + this.value());
             console.log('nerdamer:-- ' + parsedStr);
             // Display answer if nerdamer has a string output
-            if (parsedStr !== "[Unprocess]" && parsedStr !== undefined) {
+            if (parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== undefined) {
                 var nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
                     var nerdamerLatexAnswer = nerdamerAnswer.latex();
@@ -446,6 +446,11 @@ var MathLineInput = /** @class */ (function () {
                     }
                     g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
                 }
+            }
+            else if (parsedStr.substring(0, 7) == "[Print]") {
+                var latexStr = parsedStr.substring("[Print]".length, parsedStr.length);
+                answerMessagesArray.push(latexStr);
+                g_outputScreen.displayPrintLatexMessage(answerMessagesArray, this);
             }
             this.signalNoError();
         }
@@ -635,7 +640,7 @@ var MathLineInput = /** @class */ (function () {
         return this.value()[0] === "#";
     };
     MathLineInput.prototype.isAPrintLine = function () {
-        return (this.value().substr(0, 18) === "\\text{Print}\\left(");
+        return (this.value().substr(0, 14) === "\\text{Print}\\ ");
     };
     MathLineInput.prototype.isAGraphLine = function () {
         return (this.value().substr(0, 18) === "\\text{Graph}\\left(");
@@ -656,7 +661,7 @@ var MathLineInput = /** @class */ (function () {
         return this;
     };
     MathLineInput.prototype.stopBeingAPrintLine = function () {
-        this.setValue(this.value().substring("\\text{Print}\\left(".length, this.value().length - "\\right)".length));
+        this.setValue(this.value().substring("\\text{Print}\\ ".length, this.value().length));
         return this;
     };
     MathLineInput.prototype.stopBeingAGraphLine = function () {
@@ -714,7 +719,6 @@ var MathLineInput = /** @class */ (function () {
         }
         else {
             this.becomeAPrintLine();
-            this.keyStroke('Left');
         }
         this.saveUndoRedoState();
         return this;
@@ -760,7 +764,7 @@ var MathLineInput = /** @class */ (function () {
     };
     MathLineInput.prototype.becomeAPrintLine = function () {
         if (!(this.isAPrintLine())) {
-            this.setValue("\\text{Print}\\left(" + this.value() + "\\right)");
+            this.setValue("\\text{Print}\\ " + this.value());
             this.saveUndoRedoState();
         }
         return this;

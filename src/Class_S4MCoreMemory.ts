@@ -43,6 +43,10 @@ class S4MCoreMemory {
         return this;
     }
 
+    public getLastMathLineInputFocusedOut(): MathLineInput {
+        return this._lastMathLineInputFocusedOut;
+    }
+
     public currentMathLineInputFocusedIs(pMathLineInput: MathLineInput): S4MCoreMemory {
         this._currentMathLineInputFocused = pMathLineInput;
         return this;
