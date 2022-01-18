@@ -542,6 +542,7 @@ div.latex_printed
     align-items: center;
     background-color: white;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 div.latex_printed img

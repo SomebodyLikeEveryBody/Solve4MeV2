@@ -137,6 +137,8 @@ class OutputScreenPrintLatexMessage extends OutputScreenMessage {
         super(pLatexMessage, pMathLineInputSource);
         this._messages = pLatexMessage.body;
 
+        let encodedLatexUrl = this.encodeLatexUrl(this._messages[1]);
+
         // First div with question mark
         let firstDiv = $('<div class="answer_body_container"></div>');
             firstDiv.append($('<div class="answer_interrogation"></div>'));
@@ -149,7 +151,12 @@ class OutputScreenPrintLatexMessage extends OutputScreenMessage {
         // Second div with Latex image
         let secondDiv = $('<div class="answer_body_container"></div>');
             secondDiv.append($('<div class="print_image"></div>'));
-            secondDiv.append($('<div class="latex_printed"><img src="https://latex.codecogs.com/gif.latex?' +  this.encodeLatexUrl(this._messages[1]) + '" /></div>'));
+            secondDiv.append($('<div class="latex_printed" title="Open the image in a new tab"><img src="https://latex.codecogs.com/gif.latex?' +  encodedLatexUrl + '" /></div>'));
+            console.log(secondDiv.find('.latex_printed img'));
+            secondDiv.find('.latex_printed').click(() => {
+                window.open('https://latex.codecogs.com/gif.latex?' +  encodedLatexUrl, );
+            })
+
 
         this._jQEl.find('.message_body').append(secondDiv);
         this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
@@ -160,7 +167,7 @@ class OutputScreenPrintLatexMessage extends OutputScreenMessage {
             thirdDiv.append($('<div class="latex_img_code"></div>'));
 
         let inputTextWithImgCode = $('<input type="text" />')
-            inputTextWithImgCode.val('<img src="https://latex.codecogs.com/gif.latex?' + this.encodeLatexUrl(this._messages[1]) + '" />');
+            inputTextWithImgCode.val('<img src="https://latex.codecogs.com/gif.latex?' + encodedLatexUrl + '" />');
             inputTextWithImgCode.click(() => inputTextWithImgCode.select());
             inputTextWithImgCode.keydown((e: EventObject) => {
                 if (e.which === KeyCodes.ESCAPE_KEY) {

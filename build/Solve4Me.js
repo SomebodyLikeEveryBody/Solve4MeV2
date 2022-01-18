@@ -509,6 +509,7 @@ var OutputScreenPrintLatexMessage = /** @class */ (function (_super) {
     function OutputScreenPrintLatexMessage(pLatexMessage, pMathLineInputSource) {
         var _this = _super.call(this, pLatexMessage, pMathLineInputSource) || this;
         _this._messages = pLatexMessage.body;
+        var encodedLatexUrl = _this.encodeLatexUrl(_this._messages[1]);
         // First div with question mark
         var firstDiv = $('<div class="answer_body_container"></div>');
         firstDiv.append($('<div class="answer_interrogation"></div>'));
@@ -519,7 +520,11 @@ var OutputScreenPrintLatexMessage = /** @class */ (function (_super) {
         // Second div with Latex image
         var secondDiv = $('<div class="answer_body_container"></div>');
         secondDiv.append($('<div class="print_image"></div>'));
-        secondDiv.append($('<div class="latex_printed"><img src="https://latex.codecogs.com/gif.latex?' + _this.encodeLatexUrl(_this._messages[1]) + '" /></div>'));
+        secondDiv.append($('<div class="latex_printed" title="Open the image in a new tab"><img src="https://latex.codecogs.com/gif.latex?' + encodedLatexUrl + '" /></div>'));
+        console.log(secondDiv.find('.latex_printed img'));
+        secondDiv.find('.latex_printed').click(function () {
+            window.open('https://latex.codecogs.com/gif.latex?' + encodedLatexUrl);
+        });
         _this._jQEl.find('.message_body').append(secondDiv);
         _this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
         // Third div with html <img /> code
@@ -527,7 +532,7 @@ var OutputScreenPrintLatexMessage = /** @class */ (function (_super) {
         thirdDiv.append($('<div class="print_code"></div>'));
         thirdDiv.append($('<div class="latex_img_code"></div>'));
         var inputTextWithImgCode = $('<input type="text" />');
-        inputTextWithImgCode.val('<img src="https://latex.codecogs.com/gif.latex?' + _this.encodeLatexUrl(_this._messages[1]) + '" />');
+        inputTextWithImgCode.val('<img src="https://latex.codecogs.com/gif.latex?' + encodedLatexUrl + '" />');
         inputTextWithImgCode.click(function () { return inputTextWithImgCode.select(); });
         inputTextWithImgCode.keydown(function (e) {
             if (e.which === KeyCodes.ESCAPE_KEY) {
