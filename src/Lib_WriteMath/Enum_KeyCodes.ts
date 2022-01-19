@@ -35,6 +35,7 @@ enum KeyCodes {
     I_KEY = 73,
     K_KEY = 75,
     L_KEY = 76,
+    M_KEY = 77,
     N_KEY = 78,
     O_KEY = 79,
     P_KEY = 80,

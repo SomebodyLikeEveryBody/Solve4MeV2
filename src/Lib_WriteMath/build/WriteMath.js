@@ -42,6 +42,7 @@ var KeyCodes;
     KeyCodes[KeyCodes["I_KEY"] = 73] = "I_KEY";
     KeyCodes[KeyCodes["K_KEY"] = 75] = "K_KEY";
     KeyCodes[KeyCodes["L_KEY"] = 76] = "L_KEY";
+    KeyCodes[KeyCodes["M_KEY"] = 77] = "M_KEY";
     KeyCodes[KeyCodes["N_KEY"] = 78] = "N_KEY";
     KeyCodes[KeyCodes["O_KEY"] = 79] = "O_KEY";
     KeyCodes[KeyCodes["P_KEY"] = 80] = "P_KEY";
@@ -1079,6 +1080,11 @@ var ShortcutsManager = /** @class */ (function () {
             case KeyCodes.P_KEY:
                 pEventObj.preventDefault();
                 this._managedMathLineInput.printLine();
+                break;
+            case KeyCodes.M_KEY:
+                this._managedMathLineInput.writeLatexAtCursorPosition("\\left[_{ }^{ }\\right]");
+                this._managedMathLineInput.keyStroke('Left');
+                this._managedMathLineInput.keyStroke('Left');
                 break;
             //ctrl + right arrow
             case KeyCodes.RIGHTARROW_KEY:

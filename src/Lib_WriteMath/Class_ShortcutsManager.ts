@@ -124,6 +124,13 @@ class ShortcutsManager {
                 pEventObj.preventDefault();
                 this._managedMathLineInput.printLine();
                 break;
+            
+            case KeyCodes.M_KEY:
+                this._managedMathLineInput.writeLatexAtCursorPosition("\\left[_{ }^{ }\\right]");
+                this._managedMathLineInput.keyStroke('Left');
+                this._managedMathLineInput.keyStroke('Left');
+                break;
+
 
             //ctrl + right arrow
             case KeyCodes.RIGHTARROW_KEY:
