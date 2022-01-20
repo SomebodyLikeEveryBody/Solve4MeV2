@@ -1369,7 +1369,12 @@ var LettersPanel = /** @class */ (function (_super) {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition('m').saveUndoRedoState(); }
                 }),
-                new SelectAllKey(),
+                new LatexTouchKey({
+                    label: "#",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition('#').saveUndoRedoState(); }
+                }),
             ]),
             new LineKeys([
                 new LatexTouchKey({
@@ -1702,7 +1707,7 @@ var SymbolsPanel = /** @class */ (function (_super) {
                 new LatexTouchKey({
                     label: "\\theta",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition('\\theta').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
@@ -1747,7 +1752,7 @@ var SymbolsPanel = /** @class */ (function (_super) {
                 new LatexTouchKey({
                     label: "\\pi",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    style: VirtualKeyboardKeyStyle.DARK,
                     action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition('\\pi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({

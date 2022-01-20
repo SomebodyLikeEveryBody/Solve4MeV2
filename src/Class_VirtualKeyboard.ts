@@ -711,7 +711,12 @@ class LettersPanel extends KeyboardPanel{
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition('m').saveUndoRedoState(); }
                 }),
-                new SelectAllKey(),
+                new LatexTouchKey({
+                    label: "#",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition('#').saveUndoRedoState(); }
+                }),
             ]),
             new LineKeys([
                 new LatexTouchKey({
@@ -1041,7 +1046,7 @@ class SymbolsPanel extends KeyboardPanel {
                 new LatexTouchKey({
                     label: "\\theta",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,                   
+                    style: VirtualKeyboardKeyStyle.DARK,                   
                     action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition('\\theta').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
@@ -1086,7 +1091,7 @@ class SymbolsPanel extends KeyboardPanel {
                 new LatexTouchKey({
                     label: "\\pi",
                     width: 1,
-                    style: VirtualKeyboardKeyStyle.LIGHT,
+                    style: VirtualKeyboardKeyStyle.DARK,
                     action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition('\\pi').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
