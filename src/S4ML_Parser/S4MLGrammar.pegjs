@@ -76,6 +76,8 @@ Declaration "Declaration"
 
    g_s4mCoreMemory.setVar(newMemoryElement);
    processedMathLineInput.signalNoError();
+
+   return "";
 }
 
 /***********************************

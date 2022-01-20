@@ -422,9 +422,10 @@ var MathLineInput = /** @class */ (function () {
             var parsedStr = S4MLParser.parse(S4MLQuestion, { processedMathLineInput: this });
             var answerMessagesArray = [S4MLQuestion];
             console.log('S4ML:-- ' + this.value());
-            console.log('nerdamer:-- ' + parsedStr);
+            // console.log('nerdamer:-- ' + parsedStr);
+            nerdamer.set('SOLUTIONS_AS_OBJECT', true);
             // Display answer if nerdamer has a string output
-            if (parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== undefined) {
+            if (parsedStr !== undefined && parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== '') {
                 var nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
                     var nerdamerLatexAnswer = nerdamerAnswer.latex();

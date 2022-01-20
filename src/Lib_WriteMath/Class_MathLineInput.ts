@@ -438,10 +438,12 @@ class MathLineInput {
             const answerMessagesArray: string[] = [S4MLQuestion];
 
             console.log('S4ML:-- ' + this.value());
-            console.log('nerdamer:-- ' + parsedStr);
+            // console.log('nerdamer:-- ' + parsedStr);
+
+            nerdamer.set('SOLUTIONS_AS_OBJECT', true);
 
             // Display answer if nerdamer has a string output
-            if (parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== undefined) {
+            if (parsedStr !== undefined && parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== '') {
                 let nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
                     const nerdamerLatexAnswer = nerdamerAnswer.latex();

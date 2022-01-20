@@ -336,7 +336,12 @@ class NumbersPanel extends KeyboardPanel {
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition('\\cdot').saveUndoRedoState(); }
                 }),
-                new SelectAllKey(),
+                new LatexTouchKey({
+                    label: ",",
+                    width: 1,
+                    style: VirtualKeyboardKeyStyle.DARK,
+                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition(',').saveUndoRedoState(); }
+                }),
                 new BackspaceKey()
             ]),
             new LineKeys([
@@ -491,17 +496,17 @@ class NumbersPanel extends KeyboardPanel {
                     }
                 }),
                 new LatexTouchKey({
-                    label: "\\text{#}",
-                    title: "#",
+                    label: "x",
+                    title: "x",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition('#').saveUndoRedoState(); }
+                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition('x').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: ",",
+                    label: "y",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT    ,
-                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition(',').saveUndoRedoState(); }
+                    action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition('y').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
                     label: ".",

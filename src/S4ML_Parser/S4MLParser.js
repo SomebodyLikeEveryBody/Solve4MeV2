@@ -165,6 +165,8 @@
 
            g_s4mCoreMemory.setVar(newMemoryElement);
            processedMathLineInput.signalNoError();
+
+           return "";
         },
         peg$c4 = function(varName) {
               const processedMathLineInput = options.processedMathLineInput;

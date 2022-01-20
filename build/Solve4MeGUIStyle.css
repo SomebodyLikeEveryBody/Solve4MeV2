@@ -596,6 +596,11 @@ hr.error_message_separator
     margin-bottom: 10px;
 }
 
+div.answer_mathfield .mq-root-block {
+    overflow: auto;
+    scrollbar-color: #4a8ba0 transparent;
+}
+
 @media only screen and (max-width: 1000px)
 {
     div#Solve4Me_app
