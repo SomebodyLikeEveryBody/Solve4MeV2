@@ -51,7 +51,7 @@ class MathLineInput {
 
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
-            autoOperatorNames: 'acotan cotan atan tan asin sin acosec cosec asec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln solve factor',
+            autoOperatorNames: 'expand acotan cotan atan tan asin sin acosec cosec asec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln solve factor',
             substituteTextarea: (() => {
                 const JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
                 
@@ -450,7 +450,7 @@ class MathLineInput {
                     const evaluatedAnswer = nerdamerAnswer.evaluate();
                     const evaluatedLatexAnswer: string = evaluatedAnswer.latex();
                     // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
-                    const approxAnswer: string = evaluatedAnswer.text('decimals', 50);
+                    const approxAnswer: string = evaluatedAnswer.text('decimals', 50).replace(/\*/g, "\\cdot ")
 
                     answerMessagesArray.push(nerdamerLatexAnswer);
 

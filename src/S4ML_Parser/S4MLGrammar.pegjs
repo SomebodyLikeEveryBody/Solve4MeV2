@@ -305,6 +305,12 @@ S4MLObject
   / "\\operatorname{solve}\\left(" _ varName: VarAtLargeIdentifier _ "," _ equation:Equation _ "\\right)" {
       return "solve(" + equation + "," + varName + ")";
   }
+  / "\\operatorname{expand}\\left(" expression:Expression "\\right)" {
+     return "expand(" + expression + ")";
+  }
+  / "\\operatorname{expand}\\ " expression:Expression {
+     return "expand(" + expression + ")";
+  }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
      return deposedFuncName + "(" + expression + ")";
   }
