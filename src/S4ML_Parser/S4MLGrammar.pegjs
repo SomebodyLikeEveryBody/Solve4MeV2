@@ -316,7 +316,19 @@ S4MLObject
   }
 
 DeposedFuncName
- = "\\operatorname{acotan}" { return "acot" }
+ = "\\operatorname{acosH}" { return "acosh" }
+ / "\\operatorname{asinH}" { return "asinh" }
+ / "\\operatorname{atanH}" { return "atanh" }
+ / "\\operatorname{asecH}" { return "asech" }
+ / "\\operatorname{acosecH}" { return "acsch" }
+ / "\\operatorname{acotanH}" { return "acoth" }
+ / "\\operatorname{cosH}" { return "cosh" }
+ / "\\operatorname{sinH}" { return "sinh" }
+ / "\\operatorname{tanH}" { return "tanh" }
+ / "\\operatorname{secH}" { return "sech" }
+ / "\\operatorname{cosecH}" { return "csch" }
+ / "\\operatorname{cotanH}" { return "coth" }
+ / "\\operatorname{acotan}" { return "acot" }
  / "\\operatorname{cotan}" { return "cot" }
  / "\\operatorname{atan}" { return "atan" }
  / "\\operatorname{factor}" { return "factor" }
