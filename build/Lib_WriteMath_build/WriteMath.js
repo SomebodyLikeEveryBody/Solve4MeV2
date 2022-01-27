@@ -432,7 +432,7 @@ var MathLineInput = /** @class */ (function () {
                     var evaluatedAnswer = nerdamerAnswer.evaluate();
                     var evaluatedLatexAnswer = evaluatedAnswer.latex();
                     // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
-                    var approxAnswer = evaluatedAnswer.text('decimals', 50).replace(/\*/g, "\\cdot ");
+                    var approxAnswer = evaluatedAnswer.text('decimals', 50).replace(/\*/g, " \\cdot ");
                     answerMessagesArray.push(nerdamerLatexAnswer);
                     // if evaluatedLatexAnswer is different from all messages already shown
                     if (answerMessagesArray.indexOf(evaluatedLatexAnswer) === -1) {
