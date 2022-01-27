@@ -50,6 +50,24 @@ body
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+/* ScrollBar Custom on chrome */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4a8ba0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #417a8d
+}
+
+
 #Solve4Me_app
 {
     background-color: black;
@@ -104,10 +122,10 @@ body
     white-space: pre;
     display: block;
     overflow: auto;
-    scrollbar-color: #4a8ba0 transparent;
     border: none;
     border-bottom: black 1px solid;
     border-radius: 0px 0px 10px 10px;
+    scrollbar-color: #4a8ba0 transparent;
 }
 
 #input_screen p
