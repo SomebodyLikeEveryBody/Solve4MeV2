@@ -52,7 +52,8 @@ body
 
 /* ScrollBar Custom on chrome */
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 7px;
+    height: 7px;
 }
 
 ::-webkit-scrollbar-track {
