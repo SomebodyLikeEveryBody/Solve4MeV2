@@ -305,11 +305,23 @@ S4MLObject
   / "\\operatorname{solve}\\left(" _ varName: VarAtLargeIdentifier _ "," _ equation:Equation _ "\\right)" {
       return "solve(" + equation + "," + varName + ")";
   }
+  / "\\operatorname{polarForm}\\left(" expression:Expression "\\right)" {
+     return "polarform(" + expression + ")";
+  }
+  / "\\operatorname{cartForm}\\left(" expression:Expression "\\right)" {
+     return "rectform(" + expression + ")";
+  }
   / "\\operatorname{expand}\\left(" expression:Expression "\\right)" {
      return "expand(" + expression + ")";
   }
   / "\\operatorname{expand}\\ " expression:Expression {
      return "expand(" + expression + ")";
+  }
+  / "\\Re\\left(" expression:Expression "\\right)" {
+     return "realpart(" + expression + ")";
+  }
+  / "\\Im\\left(" expression:Expression "\\right)" {
+     return "imagpart(" + expression + ")";
   }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
      return deposedFuncName + "(" + expression + ")";
@@ -345,6 +357,7 @@ DeposedFuncName
  / "\\ln" { return "log" }
  / "\\log_{10}" { return "log10" }
  / "\\log" { return "log" }
+ / "\\arg" { return "arg" }
 
  
 /***********************************

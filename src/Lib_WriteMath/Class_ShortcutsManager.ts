@@ -125,6 +125,13 @@ class ShortcutsManager {
                 this._managedMathLineInput.printLine();
                 break;
             
+            //ctrl + ENTER ==> re-compute the instruction
+            case KeyCodes.ENTER_KEY:
+                pEventObj.preventDefault();
+                console.log('recompute');
+                this._managedMathLineInput.processContent()
+                break;
+                
             case KeyCodes.M_KEY:
                 this._managedMathLineInput.writeLatexAtCursorPosition("\\left[_{ }^{ }\\right]");
                 this._managedMathLineInput.keyStroke('Left');

@@ -86,7 +86,7 @@ var MathLineInput = /** @class */ (function () {
         this._numberLine = 1;
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
-            autoOperatorNames: 'expand acosH asinH atanH asecH acosecH acotanH cosH sinH tanH secH cosecH cotanH acotan cotan atan tan asin sin acosec cosec asec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln solve factor',
+            autoOperatorNames: 'expand acosH asinH atanH asecH acosecH acotanH cosH sinH tanH secH cosecH cotanH acotan cotan atan tan asin sin acosec cosec asec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln solve factor polarForm cartForm arg',
             substituteTextarea: (function () {
                 var JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
                 return JQTextarea.get(0);
@@ -1081,6 +1081,12 @@ var ShortcutsManager = /** @class */ (function () {
             case KeyCodes.P_KEY:
                 pEventObj.preventDefault();
                 this._managedMathLineInput.printLine();
+                break;
+            //ctrl + ENTER ==> re-compute the instruction
+            case KeyCodes.ENTER_KEY:
+                pEventObj.preventDefault();
+                console.log('recompute');
+                this._managedMathLineInput.processContent();
                 break;
             case KeyCodes.M_KEY:
                 this._managedMathLineInput.writeLatexAtCursorPosition("\\left[_{ }^{ }\\right]");
