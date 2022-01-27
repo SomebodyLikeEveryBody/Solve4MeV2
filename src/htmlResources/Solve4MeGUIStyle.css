@@ -65,7 +65,8 @@ body
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #417a8d
+    background: #417a8d;
+    cursor: default;
 }
 
 
