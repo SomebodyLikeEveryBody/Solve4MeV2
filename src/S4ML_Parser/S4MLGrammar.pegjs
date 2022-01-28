@@ -314,7 +314,7 @@ S4MLObject
   / "\\operatorname{expand}\\left(" expression:Expression "\\right)" {
      return "expand(" + expression + ")";
   }
-  / "\\operatorname{expand}\\ " expression:Expression {
+  / "\\operatorname{expand}" "\\ "? expression:Expression {
      return "expand(" + expression + ")";
   }
   / "\\Re\\left(" expression:Expression "\\right)" {

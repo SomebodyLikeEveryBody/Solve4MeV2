@@ -86,7 +86,7 @@ var MathLineInput = /** @class */ (function () {
         this._numberLine = 1;
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
-            autoOperatorNames: 'expand acosH asinH atanH asecH acosecH acotanH cosH sinH tanH secH cosecH cotanH acotan cotan atan tan asin sin acosec cosec asec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln solve factor polarForm cartForm arg',
+            autoOperatorNames: 'expand acosH asinH atanH asecH acosecH acotanH cosH sinH tanH secH cosecH cotanH acotan cotan atan tan asin sin acosec cosec asec sec acos cos Function isEven isOdd divides Equation diff Vector Matrix Bool min max log ln solve factor polarForm cartForm arg min max abs',
             substituteTextarea: (function () {
                 var JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
                 return JQTextarea.get(0);
@@ -989,6 +989,7 @@ var MathLineInput = /** @class */ (function () {
 var ShortcutsManager = /** @class */ (function () {
     function ShortcutsManager(pMathLineInput) {
         this._managedMathLineInput = pMathLineInput;
+        this._altGrIsDown = false;
         this.setEvents();
     }
     ShortcutsManager.prototype.setEvents = function () {
@@ -997,6 +998,7 @@ var ShortcutsManager = /** @class */ (function () {
         return this;
     };
     ShortcutsManager.prototype.setKeyUpEvents = function () {
+        var _this = this;
         this._managedMathLineInput.keyUp(function (e) {
             /*
              * Deactivate the browser behavior when the user press the alt key
@@ -1004,6 +1006,9 @@ var ShortcutsManager = /** @class */ (function () {
              * * */
             if (e.which === KeyCodes.ALT_KEY) {
                 e.preventDefault();
+            }
+            if (e.which === KeyCodes.ALTGR_KEY) {
+                _this._altGrIsDown = false;
             }
         });
         return this;
@@ -1021,20 +1026,27 @@ var ShortcutsManager = /** @class */ (function () {
                 e.preventDefault();
                 _this.bindAltShortcuts(e);
             }
+            if (_this._altGrIsDown === true) {
+                e.preventDefault();
+                _this.bindAltGrShortcuts(e);
+            }
+            if (e.which === KeyCodes.ALTGR_KEY) {
+                _this._altGrIsDown = true;
+            }
         });
         return this;
     };
     ShortcutsManager.prototype.bindCtrlShortcuts = function (pEventObj) {
         switch (pEventObj.which) {
-            //ctrl + [ ==> lfloor
+            //ctrl + [ ==> lbracket
             case KeyCodes.OPENHOOK_KEY:
                 pEventObj.preventDefault();
-                this._managedMathLineInput.appendCmdAtCursorPosition('\\lfloor');
+                this._managedMathLineInput.writeLatexAtCursorPosition('[');
                 break;
-            //ctrl + ] ==> rfloor
+            //ctrl + ] ==> rbracket
             case KeyCodes.CLOSEHOOK_KEY:
                 pEventObj.preventDefault();
-                this._managedMathLineInput.mathField.cmd('\\rfloor');
+                this._managedMathLineInput.writeLatexAtCursorPosition(']');
                 break;
             //ctrl + D ==> duplicate line
             case KeyCodes.D_KEY:
@@ -1162,6 +1174,19 @@ var ShortcutsManager = /** @class */ (function () {
         }
         return this;
     };
+    ShortcutsManager.prototype.bindAltGrShortcuts = function (pEventObj) {
+        switch (pEventObj.which) {
+            //altGR + [ ==> lceil
+            case KeyCodes.OPENHOOK_KEY:
+                this._managedMathLineInput.mathField.cmd('\\lceil');
+                break;
+            //altGR + [ ==> lfloor
+            case KeyCodes.CLOSEHOOK_KEY:
+                this._managedMathLineInput.mathField.cmd('\\rceil');
+                break;
+        }
+        return this;
+    };
     ShortcutsManager.prototype.bindAltShortcuts = function (pEventObj) {
         switch (pEventObj.which) {
             //alt + D
@@ -1285,11 +1310,11 @@ var ShortcutsManager = /** @class */ (function () {
                 break;
             //alt + [
             case KeyCodes.OPENHOOK_KEY:
-                this._managedMathLineInput.writeLatexAtCursorPosition('[');
+                this._managedMathLineInput.mathField.cmd('\\lfloor');
                 break;
             //alt + ]
             case KeyCodes.CLOSEHOOK_KEY:
-                this._managedMathLineInput.writeLatexAtCursorPosition(']');
+                this._managedMathLineInput.mathField.cmd('\\rfloor');
                 break;
             //alt + 8
             case KeyCodes.N8_KEY:

@@ -6,10 +6,12 @@
  * * */
 class ShortcutsManager {
 
-    protected _managedMathLineInput: MathLineInput;    
+    protected _managedMathLineInput: MathLineInput;  
+    protected _altGrIsDown: boolean;  
 
     public constructor(pMathLineInput: MathLineInput) {
         this._managedMathLineInput = pMathLineInput;
+        this._altGrIsDown = false;
 
         this.setEvents();
     }
@@ -31,6 +33,10 @@ class ShortcutsManager {
             if (e.which === KeyCodes.ALT_KEY) {
                 e.preventDefault();
             }
+
+            if (e.which === KeyCodes.ALTGR_KEY) {
+                this._altGrIsDown = false;
+            }
         });  
         
         return this;
@@ -50,6 +56,15 @@ class ShortcutsManager {
                 e.preventDefault();
                 this.bindAltShortcuts(e);
             }
+
+            if (this._altGrIsDown === true) {
+                e.preventDefault();
+                this.bindAltGrShortcuts(e);
+            }
+
+            if (e.which === KeyCodes.ALTGR_KEY) {
+                this._altGrIsDown = true;
+            }
         });
 
         return this;
@@ -58,16 +73,16 @@ class ShortcutsManager {
     protected bindCtrlShortcuts(pEventObj: EventObject): this {
         switch (pEventObj.which) {
 
-            //ctrl + [ ==> lfloor
+            //ctrl + [ ==> lbracket
             case KeyCodes.OPENHOOK_KEY:
                 pEventObj.preventDefault();
-                this._managedMathLineInput.appendCmdAtCursorPosition('\\lfloor');
+                this._managedMathLineInput.writeLatexAtCursorPosition('[');
                 break;
 
-            //ctrl + ] ==> rfloor
+            //ctrl + ] ==> rbracket
             case KeyCodes.CLOSEHOOK_KEY:
                 pEventObj.preventDefault();
-                this._managedMathLineInput.mathField.cmd('\\rfloor');
+                this._managedMathLineInput.writeLatexAtCursorPosition(']');
                 break;
 
             //ctrl + D ==> duplicate line
@@ -217,6 +232,23 @@ class ShortcutsManager {
             case KeyCodes.O_KEY:
                 pEventObj.preventDefault();
                 this._managedMathLineInput.displayOpenWidget();
+                break;
+        }
+
+        return this;
+    }
+
+    protected bindAltGrShortcuts(pEventObj: EventObject): this {
+        switch (pEventObj.which) {
+
+            //altGR + [ ==> lceil
+            case KeyCodes.OPENHOOK_KEY:
+                this._managedMathLineInput.mathField.cmd('\\lceil');
+                break;
+
+            //altGR + [ ==> lfloor
+            case KeyCodes.CLOSEHOOK_KEY:
+                this._managedMathLineInput.mathField.cmd('\\rceil');
                 break;
         }
 
@@ -374,12 +406,12 @@ class ShortcutsManager {
                 
             //alt + [
             case KeyCodes.OPENHOOK_KEY:
-                this._managedMathLineInput.writeLatexAtCursorPosition('[');
+                this._managedMathLineInput.mathField.cmd('\\lfloor');
                 break;
 
             //alt + ]
             case KeyCodes.CLOSEHOOK_KEY:
-                this._managedMathLineInput.writeLatexAtCursorPosition(']');
+                this._managedMathLineInput.mathField.cmd('\\rfloor');
                 break;
 
             //alt + 8

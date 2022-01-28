@@ -2715,16 +2715,24 @@ var OtherOperatorsPanel = /** @class */ (function (_super) {
                     action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition("\\lfloor").saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "?",
+                    label: "\\Re",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition("{\\rfloor").saveUndoRedoState(); }
+                    action: function () {
+                        g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("\\Re\\left(\\right)")
+                            .keyStroke('Left')
+                            .saveUndoRedoState();
+                    }
                 }),
                 new LatexTouchKey({
-                    label: "?",
+                    label: "\\Im",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
-                    action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition("\\lor").saveUndoRedoState(); }
+                    action: function () {
+                        g_s4mCoreMemory.getMathLineInputToEdit().focus().writeLatexAtCursorPosition("\\Im\\left(\\right)")
+                            .keyStroke('Left')
+                            .saveUndoRedoState();
+                    }
                 }),
                 new LatexTouchKey({
                     label: "\\coprod_{\\ }^{\\ }",
