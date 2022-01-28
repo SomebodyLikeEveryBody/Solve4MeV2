@@ -27,6 +27,13 @@ class S4MCoreMemory {
         this._varNameCorrespondanceTable = new VarNameCorrespondanceTable();
 
         this.defineConstants();
+        this.setNerdamerConfig();
+    }
+
+    protected setNerdamerConfig(): this {
+        nerdamer.set('SYMBOLIC_MIN_MAX', true);
+
+        return this;
     }
 
     protected defineConstants(): S4MCoreMemory {

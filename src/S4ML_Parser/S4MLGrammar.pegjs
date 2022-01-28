@@ -323,6 +323,27 @@ S4MLObject
   / "\\Im\\left(" expression:Expression "\\right)" {
      return "imagpart(" + expression + ")";
   }
+  / "\\min\\left(" firstExpression:Expression followingExpressionsCapture:("," Expression)* "\\right)" {
+     const followingExpressions = followingExpressionsCapture.map(array => array[1]);
+     const args = [firstExpression].concat(followingExpressions);
+
+     return "min(" + args.join(',') + ")";
+  }
+  / "\\max\\left(" firstExpression:Expression followingExpressionsCapture:("," Expression)* "\\right)" {
+     const followingExpressions = followingExpressionsCapture.map(array => array[1]);
+     const args = [firstExpression].concat(followingExpressions);
+
+     return "max(" + args.join(',') + ")";
+  }
+  / "\\left|" expression:Expression "\\right|" {
+     return "abs(" + expression + ")";
+  }
+  / "\\lfloor" " "? expression:Expression "\\rfloor" {
+     return "floor(" + expression + ")";
+  }
+  / "\\lceil" " "? expression:Expression "\\rceil" {
+     return "ceil(" + expression + ")";
+  }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
      return deposedFuncName + "(" + expression + ")";
   }

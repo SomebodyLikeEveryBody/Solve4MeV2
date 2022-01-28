@@ -200,7 +200,12 @@ var S4MCoreMemory = /** @class */ (function () {
         this._currentMathLineInputFocused = pFirstMathLineInput;
         this._varNameCorrespondanceTable = new VarNameCorrespondanceTable();
         this.defineConstants();
+        this.setNerdamerConfig();
     }
+    S4MCoreMemory.prototype.setNerdamerConfig = function () {
+        nerdamer.set('SYMBOLIC_MIN_MAX', true);
+        return this;
+    };
     S4MCoreMemory.prototype.defineConstants = function () {
         this.addVar({
             declaringMathLineInput: null,
