@@ -561,11 +561,12 @@ var OutputScreenPrintLatexMessage = /** @class */ (function (_super) {
     return OutputScreenPrintLatexMessage;
 }(OutputScreenMessage));
 var OutputScreen = /** @class */ (function () {
-    function OutputScreen(pJQueryElement) {
+    function OutputScreen(pJQueryElement, pVirtualKeyBoard) {
         this._jQEl = pJQueryElement;
         this._isVisible = true;
         this._messages = [];
         this._jQElContent = this._jQEl.find('#output_screen');
+        this._virtualKeyBoard = pVirtualKeyBoard;
         this.setEvents();
     }
     OutputScreen.prototype.setEvents = function () {
@@ -599,6 +600,7 @@ var OutputScreen = /** @class */ (function () {
             pMessage.renderMathAnswers();
         }
         pMessage.blinkAnimate();
+        this._virtualKeyBoard.hide();
     };
     OutputScreen.prototype.displayErrorMessage = function (pErrorObject, pErroredMathLineInput) {
         var newErrorMessage = new OutputScreenErrorMessage({

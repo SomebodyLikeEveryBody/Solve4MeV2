@@ -201,12 +201,14 @@ class OutputScreen {
     protected _jQElContent: JQueryElement;
     protected _isVisible: boolean;
     protected _messages: Array<OutputScreenMessage>;
+    protected _virtualKeyBoard: VirtualKeyboard;
 
-    public constructor(pJQueryElement: JQueryElement) {
+    public constructor(pJQueryElement: JQueryElement, pVirtualKeyBoard: VirtualKeyboard) {
         this._jQEl = pJQueryElement;
         this._isVisible = true;
         this._messages = [];
         this._jQElContent = this._jQEl.find('#output_screen');
+        this._virtualKeyBoard = pVirtualKeyBoard;
 
         this.setEvents();
     }
@@ -251,6 +253,8 @@ class OutputScreen {
         }
 
         pMessage.blinkAnimate();
+
+        this._virtualKeyBoard.hide();
     }
 
     public displayErrorMessage(pErrorObject: ErrorObject, pErroredMathLineInput: MathLineInput): OutputScreen {

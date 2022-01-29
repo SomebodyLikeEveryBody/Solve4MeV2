@@ -1,3 +1,13 @@
+29/01/2022
+----------
+
+il faut corriger le bug d'affichage des floor et ceil par nerdamer (qui en fait n'est pas la faute de nerdamer mais de mathquill qui n'utilise pas un latex standard pour ca)
+"\\left \\lfloor{" expression:Expression "}\\right \\rfloor"
+==>
+"\\lfloor " expression:Expression "\\rfloor "
+
+
+
 16/01/2022
 ----------
 le recurring c'est cool mais ca peut prendre masse de temps lors de calcul de puissances non entières ou de logarithme
