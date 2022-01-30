@@ -38,6 +38,18 @@
 
 {
    let currentlyParsing = false;
+
+   function displayMessageOnOutputScreen(pQuestion, pAnswers) {
+      // Sometimes the parsing reconization is triggered twice so the messager displays twice for some reason I didn't found out
+      // so I use a boolean currentParsing to avoid this behavior, while waiting to find the cause of this bug and solve it 
+      if (currentlyParsing === false) {
+         currentlyParsing = true;
+
+         g_s4mCoreMemory.unstoreErroredMathLineInput(options.processedMathLineInput);
+         g_outputScreen.removeMessagesOf(options.processedMathLineInput);
+         g_outputScreen.displayAnswerMessage([pQuestion, ...pAnswers], options.processedMathLineInput);
+      }
+   }
 }
 
 start
@@ -384,53 +396,59 @@ S4MLObject
   / "\\operatorname{fib}\\left(" number:Integer "\\right)" {
       return "fib(" + number + ")";
   }
-  / "\\operatorname{CF}\\left(" sign:"-"? number:Number "\\right)" {
+  / "\\operatorname{CF}\\left(" expression:Expression "," _ "raw" _ "\\right)" {
 
-      if (sign !== null) {
-         number = "-" + number;
+      const answer = nerdamer('continued_fraction(' + expression + ')').toString();
+      let retStr = '';
+
+      if (answer.match(/\[[-]?[0-9]+,[0-9]+,\[[0-9]*(,[0-9]+)*\]\]/g)) {
+         retStr = answer;
+      } else {
+         retStr = '\\text{CF}\\left(' + nerdamer.convertToLaTeX(nerdamer('simplify(' + expression + ')').toString()) + ',\\ raw\\right)';
       }
 
-      // take the result of nerdamer instruction, like [1, 3, [4, 5, 6, 7]], and display 3+1/(4+1/(5+1/(6+1/(7))))
-      const question = 'continued_fraction(' + number + ')';
-      const resultStr = nerdamer(question).toString();
-      const resultArray = resultStr.substring(1, resultStr.length - 1).split(',');
-      const signInt = parseInt(resultArray[0]);
-      const firstInt = signInt * parseInt(resultArray[1]);
-      let retStr = '' + firstInt;
-
-      if (resultArray[2] !== "[]") {
-         const followingInts = resultStr.substring(1, resultStr.length - 2).split('[')[1].split(',').map(intStr => parseInt(intStr))
-
-         for (let followingInt of followingInts) {
-            retStr += '+1/(' + (signInt * followingInt);
-         }
-
-         for (let followingInt of followingInts) {
-            retStr += ')';
-         }
-      }
-
-      // the \\operatorname{CF} is triggered twice so the messager displays twice for some reason I didn't found out
-      // so I use a boolean currentParsing to avoid this behavior, while waiting to find the cause of this bug and solve it 
-      if (currentParsing === false) {
-         currentlyParsing = true;
-         // we can't pass it to nerdamer as usual because if we do so, nerdamer will recompute the fraction and display the original number
-         // so we return nothing and display the answer here
-         g_s4mCoreMemory.unstoreErroredMathLineInput(options.processedMathLineInput);
-         g_outputScreen.removeMessagesOf(options.processedMathLineInput);
-         g_outputScreen.displayAnswerMessage(['\\text{CF}(' + number + ')', nerdamer.convertToLaTeX(retStr)], options.processedMathLineInput);
-      }
-      
-
-      return "[Unprocess]";
+      displayMessageOnOutputScreen('\\text{CF}\\left(' + expression + ',\\ raw\\right)', [retStr]);
+      return '[Unprocess]';
   }
-  / "\\operatorname{CF}\\left(" sign:"-"? number:Number "," _ "raw" _ "\\right)" {
+  / "\\operatorname{CF}\\left(" expression:Expression "\\right)" {
+      // take the result of nerdamer instruction, like [1, 3, [4, 5, 6, 7]], and display 3+1/(4+1/(5+1/(6+1/(7))))
+      const question = 'continued_fraction(' + expression + ')';
+      const resultStr = nerdamer(question).toString();
+      let retStr = '';
 
-      if (sign !== null) {
-         number = "-" + number;
+      // if the nerdamer answer is a processed answer, that is if it has a pattern like "[1, 2, [3, 4, 5]]" and not just "continued_fraction(expression)"
+      if (resultStr.match(/\[[-]?[0-9]+,[0-9]+,\[[0-9]*(,[0-9]+)*\]\]/g)) {
+         const resultArray = resultStr.substring(1, resultStr.length - 1).split(',');
+         const signInt = parseInt(resultArray[0]);
+         const firstInt = signInt * parseInt(resultArray[1]);
+
+         retStr = '' + firstInt;
+
+         //if the expression passed as argument is not just an integer
+         if (resultArray[2] !== "[]") {
+            const followingInts = resultStr.substring(1, resultStr.length - 2).split('[')[1].split(',').map(intStr => parseInt(intStr))
+
+            for (let followingInt of followingInts) {
+               retStr += '+1/(' + (signInt * followingInt);
+            }
+
+            for (let followingInt of followingInts) {
+               retStr += ')';
+            }
+
+            retStr = nerdamer.convertToLaTeX(retStr);
+            const numericalValue = nerdamer(expression);
+            displayMessageOnOutputScreen('\\text{CF}(' + expression + ')', [retStr, nerdamer.convertToLaTeX(numericalValue.toString()), numericalValue.text('decimals')]);
+         } else {
+            displayMessageOnOutputScreen('\\text{CF}(' + expression + ')', [retStr]);
+         }         
+      } else {
+         retStr = '\\text{CF}\\left(' + nerdamer.convertToLaTeX(nerdamer('simplify(' + expression + ')').toString()) + '\\right)';
+         displayMessageOnOutputScreen('\\text{CF}\\left(' + expression + '\\right)', [retStr]);
       }
 
-      return "continued_fraction(" + number + ")";
+      
+      return "[Unprocess]";
   }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
       return deposedFuncName + "(" + expression + ")";
