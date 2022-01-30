@@ -763,27 +763,31 @@ var VirtualKeyboard = /** @class */ (function () {
         });
         return this;
     };
-    VirtualKeyboard.prototype.show = function () {
-        var _this = this;
-        this._jQEl.animate({ width: 'toggle' }, 250, function () {
-            _this._isVisible = true;
-        });
-        return this;
-    };
     VirtualKeyboard.prototype.displayUnitsPanel = function () {
         this.displayPanel(this._panels.unitsPanel);
         return this;
     };
+    VirtualKeyboard.prototype.show = function () {
+        var _this = this;
+        if (!(this.isVisible())) {
+            this._jQEl.animate({ width: 'toggle' }, 250, function () {
+                _this._isVisible = true;
+            });
+        }
+        return this;
+    };
     VirtualKeyboard.prototype.hide = function () {
         var _this = this;
-        this._jQEl.animate({ width: 'toggle' }, 250, function () {
-            _this._isVisible = false;
-            _this.displayPanel(_this._panels.numbersPanel);
-        });
+        if (this.isVisible()) {
+            this._jQEl.animate({ width: 'toggle' }, 250, function () {
+                _this._isVisible = false;
+                _this.displayPanel(_this._panels.numbersPanel);
+            });
+        }
         return this;
     };
     VirtualKeyboard.prototype.toggle = function () {
-        if (this._isVisible) {
+        if (this.isVisible()) {
             this.hide();
         }
         else {
@@ -986,8 +990,8 @@ var NumbersPanel = /** @class */ (function (_super) {
                     action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition('9').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "\\frac{a}{b}",
-                    title: "a/b",
+                    label: "\\div",
+                    title: "/ (divide)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: function () { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition('/').saveUndoRedoState(); }

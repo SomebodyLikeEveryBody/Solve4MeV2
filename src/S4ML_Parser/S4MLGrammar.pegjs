@@ -37,7 +37,7 @@
  ********************/
 
 {
-   // console.log('OKAY');
+   let currentlyParsing = false;
 }
 
 start
@@ -286,66 +286,154 @@ Factor
  * */
 S4MLObject
  = Instanciation
- / DefinedVarAtLargeIdentifier
  / DeposedKeyword
+ / VarAtLargeIdentifier
+ 
 
  DeposedKeyword
   = "\\sqrt{" expression:Expression "}" {
-     return "sqrt(" + expression + ")";   
+      return "sqrt(" + expression + ")";   
   }
   / "\\log_" base:Number "\\left(" expression:Expression "\\right)" {
-     return "log(" + expression+ ")/log(" + base + ")";
+      return "log(" + expression+ ")/log(" + base + ")";
   }
   / "\\log_{" base:Number "}\\left(" expression:Expression "\\right)" {
-     return "log(" + expression+ ")/log(" + base + ")";
+      return "log(" + expression+ ")/log(" + base + ")";
   }
   / "\\operatorname{atan}_2\\left(" _ xValue:Expression _ "," _ yValue:Expression _ "\\right)" {
-     return "atan2(" + xValue + "," + yValue +")" 
+      return "atan2(" + xValue + "," + yValue +")" 
   }
   / "\\operatorname{solve}\\left(" _ varName: VarAtLargeIdentifier _ "," _ equation:Equation _ "\\right)" {
       return "solve(" + equation + "," + varName + ")";
   }
   / "\\operatorname{polarForm}\\left(" expression:Expression "\\right)" {
-     return "polarform(" + expression + ")";
+      return "polarform(" + expression + ")";
   }
   / "\\operatorname{cartForm}\\left(" expression:Expression "\\right)" {
-     return "rectform(" + expression + ")";
+      return "rectform(" + expression + ")";
   }
   / "\\operatorname{expand}\\left(" expression:Expression "\\right)" {
-     return "expand(" + expression + ")";
+      return "expand(" + expression + ")";
   }
   / "\\operatorname{expand}" "\\ "? expression:Expression {
-     return "expand(" + expression + ")";
+      return "expand(" + expression + ")";
   }
   / "\\Re\\left(" expression:Expression "\\right)" {
-     return "realpart(" + expression + ")";
+      return "realpart(" + expression + ")";
   }
   / "\\Im\\left(" expression:Expression "\\right)" {
-     return "imagpart(" + expression + ")";
+      return "imagpart(" + expression + ")";
   }
   / "\\min\\left(" firstExpression:Expression followingExpressionsCapture:("," Expression)* "\\right)" {
      const followingExpressions = followingExpressionsCapture.map(array => array[1]);
      const args = [firstExpression].concat(followingExpressions);
 
-     return "min(" + args.join(',') + ")";
+      return "min(" + args.join(',') + ")";
   }
   / "\\max\\left(" firstExpression:Expression followingExpressionsCapture:("," Expression)* "\\right)" {
      const followingExpressions = followingExpressionsCapture.map(array => array[1]);
      const args = [firstExpression].concat(followingExpressions);
 
-     return "max(" + args.join(',') + ")";
+      return "max(" + args.join(',') + ")";
   }
   / "\\left|" expression:Expression "\\right|" {
-     return "abs(" + expression + ")";
+      return "abs(" + expression + ")";
   }
   / "\\lfloor" " "? expression:Expression "\\rfloor" {
-     return "floor(" + expression + ")";
+      return "floor(" + expression + ")";
   }
   / "\\lceil" " "? expression:Expression "\\rceil" {
-     return "ceil(" + expression + ")";
+      return "ceil(" + expression + ")";
+  }
+  / "\\operatorname{simplify}\\left(" expression:Expression "\\right)" {
+      return "simplify(" + expression + ")";
+  }
+  / "\\text{Si}\\left(" expression:Expression "\\right)" {
+      return ('Si(' + expression + ')');
+  }
+  / "\\text{Ci}\\left(" expression:Expression "\\right)" {
+      return ('Ci(' + expression + ')');
+  }
+  / "\\text{Ei}\\left(" expression:Expression "\\right)" {
+      return ('Ei(' + expression + ')');
+  }
+  / "\\text{rect}\\left(" expression:Expression "\\right)" {
+      return ('rect(' + expression + ')');
+  }
+  / "\\Pi\\left(" expression:Expression "\\right)" {
+      return ('rect(' + expression + ')');
+  }
+  / "\\text{step}\\left(" expression:Expression "\\right)" {
+      return ('step(' + expression + ')');
+  }
+  / "\\text{erf}\\left(" expression:Expression "\\right)" {
+      return ('erf(' + expression + ')');
+  }
+  / "\\operatorname{factor}\\left(" number:Float "\\right)" {
+      return "pfactor(" + number + ")";
+  }
+  / value:(Integer / VarAtLargeIdentifier) "!" {
+      return "fact(" + value + ")";
+  }
+  / "\\operatorname{sign}\\left(" expression:Expression"\\right)" {
+      return "sign(" + expression + ")";
+  }
+  / "\\operatorname{round}\\left(" expression:Expression"\\right)" {
+      return "round(" + expression + ")";
+  }
+  / "\\operatorname{fib}\\left(" number:Integer "\\right)" {
+      return "fib(" + number + ")";
+  }
+  / "\\operatorname{CF}\\left(" sign:"-"? number:Number "\\right)" {
+
+      if (sign !== null) {
+         number = "-" + number;
+      }
+
+      // take the result of nerdamer instruction, like [1, 3, [4, 5, 6, 7]], and display 3+1/(4+1/(5+1/(6+1/(7))))
+      const question = 'continued_fraction(' + number + ')';
+      const resultStr = nerdamer(question).toString();
+      const resultArray = resultStr.substring(1, resultStr.length - 1).split(',');
+      const signInt = parseInt(resultArray[0]);
+      const firstInt = signInt * parseInt(resultArray[1]);
+      let retStr = '' + firstInt;
+
+      if (resultArray[2] !== "[]") {
+         const followingInts = resultStr.substring(1, resultStr.length - 2).split('[')[1].split(',').map(intStr => parseInt(intStr))
+
+         for (let followingInt of followingInts) {
+            retStr += '+1/(' + (signInt * followingInt);
+         }
+
+         for (let followingInt of followingInts) {
+            retStr += ')';
+         }
+      }
+
+      // the \\operatorname{CF} is triggered twice so the messager displays twice for some reason I didn't found out
+      // so I use a boolean currentParsing to avoid this behavior, while waiting to find the cause of this bug and solve it 
+      if (currentParsing === false) {
+         currentlyParsing = true;
+         // we can't pass it to nerdamer as usual because if we do so, nerdamer will recompute the fraction and display the original number
+         // so we return nothing and display the answer here
+         g_s4mCoreMemory.unstoreErroredMathLineInput(options.processedMathLineInput);
+         g_outputScreen.removeMessagesOf(options.processedMathLineInput);
+         g_outputScreen.displayAnswerMessage(['\\text{CF}(' + number + ')', nerdamer.convertToLaTeX(retStr)], options.processedMathLineInput);
+      }
+      
+
+      return "[Unprocess]";
+  }
+  / "\\operatorname{CF}\\left(" sign:"-"? number:Number "," _ "raw" _ "\\right)" {
+
+      if (sign !== null) {
+         number = "-" + number;
+      }
+
+      return "continued_fraction(" + number + ")";
   }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
-     return deposedFuncName + "(" + expression + ")";
+      return deposedFuncName + "(" + expression + ")";
   }
 
 DeposedFuncName
@@ -366,6 +454,8 @@ DeposedFuncName
  / "\\operatorname{atan}" { return "atan" }
  / "\\operatorname{factor}" { return "factor" }
  / "\\operatorname{asec}" { return "asec" }
+ / "\\operatorname{Shi}" { return "Shi" }
+ / "\\operatorname{Chi}" { return "Chi" }
  / "\\tan" { return "tan" }
  / "\\operatorname{asin}" { return "asin" }
  / "\\sin" { return "sin" }
@@ -379,7 +469,6 @@ DeposedFuncName
  / "\\log_{10}" { return "log10" }
  / "\\log" { return "log" }
  / "\\arg" { return "arg" }
-
  
 /***********************************
  * ContiguousFactors: ab, cdef, a(b+c), etc

@@ -56,30 +56,34 @@ class VirtualKeyboard {
         return this;
     }
 
-    public show(): VirtualKeyboard {
-        this._jQEl.animate({width:'toggle'},250, () => {
-            this._isVisible = true;
-        });
-
-        return this;
-    }
-
     public displayUnitsPanel(): VirtualKeyboard {
         this.displayPanel(this._panels.unitsPanel);
         return this;
     }
 
+    public show(): VirtualKeyboard {
+        if (!(this.isVisible())) {
+            this._jQEl.animate({width:'toggle'},250, () => {
+                this._isVisible = true;
+            });
+        }
+        
+        return this;
+    }
+
     public hide(): VirtualKeyboard {
-        this._jQEl.animate({width:'toggle'},250, () => {
-            this._isVisible = false;
-            this.displayPanel(this._panels.numbersPanel);
-        });
+        if (this.isVisible()) {
+            this._jQEl.animate({width:'toggle'},250, () => {
+                this._isVisible = false;
+                this.displayPanel(this._panels.numbersPanel);
+            });
+        }
 
         return this;
     }
 
     public toggle(): VirtualKeyboard {
-        if (this._isVisible) {
+        if (this.isVisible()) {
             this.hide();
         } else {
             this.show();
@@ -323,8 +327,8 @@ class NumbersPanel extends KeyboardPanel {
                     action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendValueAtCursorPosition('9').saveUndoRedoState(); }
                 }),
                 new LatexTouchKey({
-                    label: "\\frac{a}{b}",
-                    title: "a/b",
+                    label: "\\div",
+                    title: "/ (divide)",
                     width: 1,
                     style: VirtualKeyboardKeyStyle.LIGHT,
                     action: () => { g_s4mCoreMemory.getMathLineInputToEdit().focus().appendCmdAtCursorPosition('/').saveUndoRedoState(); }
