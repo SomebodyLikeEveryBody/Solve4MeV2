@@ -446,9 +446,17 @@ S4MLObject
          retStr = '\\text{CF}\\left(' + nerdamer.convertToLaTeX(nerdamer('simplify(' + expression + ')').toString()) + '\\right)';
          displayMessageOnOutputScreen('\\text{CF}\\left(' + expression + '\\right)', [retStr]);
       }
-
       
       return "[Unprocess]";
+  }
+  / "\\operatorname{line}\\left(\\left(" x1:Expression "," y1:Expression "\\right),\\left(" x2:Expression "," y2:Expression "\\right)\\right)" {
+      return "line([" + x1 + "," + y1 + "], [" + x2 + "," + y2 + "])";
+  }
+  / "\\sum_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^" endValue:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)" {
+     return "sum(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
+  }
+  / "\\sum_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^{" endValue:Expression "}\\left(" expression:Expression "\\right)" {
+     return "sum(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
   }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
       return deposedFuncName + "(" + expression + ")";
