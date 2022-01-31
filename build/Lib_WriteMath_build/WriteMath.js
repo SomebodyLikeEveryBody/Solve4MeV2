@@ -414,6 +414,11 @@ var MathLineInput = /** @class */ (function () {
         });
         return this;
     };
+    MathLineInput.prototype.formatNerdamerLatex = function (pNerdamerLatexStr) {
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\sum\\limits/g, "\\sum");
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\prod\\limits/g, "\\prod");
+        return pNerdamerLatexStr;
+    };
     MathLineInput.prototype.processContent = function () {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
         g_outputScreen.removeMessagesOf(this);
@@ -421,18 +426,19 @@ var MathLineInput = /** @class */ (function () {
             var S4MLQuestion = this.value();
             var parsedStr = S4MLParser.parse(S4MLQuestion, { processedMathLineInput: this });
             var answerMessagesArray = [S4MLQuestion.replace(/\\operatorname/g, "\\text")];
-            console.log('S4ML:-- ' + this.value());
-            console.log('nerdamer:-- ' + parsedStr);
+            console.log('S4ML Question:-- ' + this.value());
+            console.log('nerdamer instruction:-- ' + parsedStr);
             nerdamer.set('SOLUTIONS_AS_OBJECT', true);
             // Display answer if nerdamer has a string output
             if (parsedStr !== undefined && parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== '') {
                 var nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
-                    var nerdamerLatexAnswer = nerdamerAnswer.latex();
+                    var nerdamerLatexAnswer = this.formatNerdamerLatex(nerdamerAnswer.latex());
                     var evaluatedAnswer = nerdamerAnswer.evaluate();
-                    var evaluatedLatexAnswer = evaluatedAnswer.latex();
+                    var evaluatedLatexAnswer = this.formatNerdamerLatex(evaluatedAnswer.latex());
                     // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
-                    var approxAnswer = evaluatedAnswer.text('decimals', 50).replace(/\*/g, " \\cdot ");
+                    // const approxAnswer: string = evaluatedAnswer.text('decimals', 50).replace(/\*/g, " \\cdot ")
+                    var approxAnswer = nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50));
                     answerMessagesArray.push(nerdamerLatexAnswer);
                     // if evaluatedLatexAnswer is different from all messages already shown
                     if (answerMessagesArray.indexOf(evaluatedLatexAnswer) === -1) {
@@ -447,6 +453,7 @@ var MathLineInput = /** @class */ (function () {
                         answerMessagesArray.push(approxAnswer);
                     }
                     g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
+                    console.log(answerMessagesArray);
                 }
             }
             else if (parsedStr.substring(0, 7) == "[Print]") {

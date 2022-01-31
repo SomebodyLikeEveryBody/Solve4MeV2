@@ -428,6 +428,13 @@ class MathLineInput {
         return this;
     }
 
+    protected formatNerdamerLatex(pNerdamerLatexStr: string): string {
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\sum\\limits/g, "\\sum");
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\prod\\limits/g, "\\prod");
+
+        return pNerdamerLatexStr;
+    }
+
     public processContent(): MathLineInput {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
         g_outputScreen.removeMessagesOf(this);
@@ -437,8 +444,8 @@ class MathLineInput {
             const parsedStr = S4MLParser.parse(S4MLQuestion, {processedMathLineInput: this});
             const answerMessagesArray: string[] = [S4MLQuestion.replace(/\\operatorname/g, "\\text")];
 
-            console.log('S4ML:-- ' + this.value());
-            console.log('nerdamer:-- ' + parsedStr);
+            console.log('S4ML Question:-- ' + this.value());
+            console.log('nerdamer instruction:-- ' + parsedStr);
 
             nerdamer.set('SOLUTIONS_AS_OBJECT', true);
 
@@ -446,11 +453,12 @@ class MathLineInput {
             if (parsedStr !== undefined && parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== '') {
                 let nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
-                    const nerdamerLatexAnswer = nerdamerAnswer.latex();
+                    const nerdamerLatexAnswer = this.formatNerdamerLatex(nerdamerAnswer.latex());
                     const evaluatedAnswer = nerdamerAnswer.evaluate();
-                    const evaluatedLatexAnswer: string = evaluatedAnswer.latex();
+                    const evaluatedLatexAnswer: string = this.formatNerdamerLatex(evaluatedAnswer.latex());
                     // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
-                    const approxAnswer: string = evaluatedAnswer.text('decimals', 50).replace(/\*/g, " \\cdot ")
+                    // const approxAnswer: string = evaluatedAnswer.text('decimals', 50).replace(/\*/g, " \\cdot ")
+                    const approxAnswer: string = nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50));
 
                     answerMessagesArray.push(nerdamerLatexAnswer);
 
@@ -470,6 +478,7 @@ class MathLineInput {
                     }
 
                     g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
+                    console.log(answerMessagesArray);
                 }
             } else if (parsedStr.substring(0, 7) == "[Print]") {
                 let latexStr = parsedStr.substring("[Print]".length, parsedStr.length);

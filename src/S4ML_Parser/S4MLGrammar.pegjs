@@ -306,10 +306,10 @@ S4MLObject
   = "\\sqrt{" expression:Expression "}" {
       return "sqrt(" + expression + ")";   
   }
-  / "\\log_" base:Number "\\left(" expression:Expression "\\right)" {
+  / "\\log_" base:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)" {
       return "log(" + expression+ ")/log(" + base + ")";
   }
-  / "\\log_{" base:Number "}\\left(" expression:Expression "\\right)" {
+  / "\\log_{" base:(VarAtLargeIdentifier / Number) "}\\left(" expression:Expression "\\right)" {
       return "log(" + expression+ ")/log(" + base + ")";
   }
   / "\\operatorname{atan}_2\\left(" _ xValue:Expression _ "," _ yValue:Expression _ "\\right)" {
@@ -457,6 +457,12 @@ S4MLObject
   }
   / "\\sum_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^{" endValue:Expression "}\\left(" expression:Expression "\\right)" {
      return "sum(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
+  }
+  / "\\prod_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^" endValue:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)" {
+     return "product(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
+  }
+  / "\\prod_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^{" endValue:Expression "}\\left(" expression:Expression "\\right)" {
+     return "product(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
   }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
       return deposedFuncName + "(" + expression + ")";
