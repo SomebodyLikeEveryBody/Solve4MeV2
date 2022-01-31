@@ -458,7 +458,7 @@ class MathLineInput {
                     const evaluatedLatexAnswer: string = this.formatNerdamerLatex(evaluatedAnswer.latex());
                     // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
                     // const approxAnswer: string = evaluatedAnswer.text('decimals', 50).replace(/\*/g, " \\cdot ")
-                    const approxAnswer: string = nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50));
+                    const approxAnswer: string = nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50), {decimals: true});
 
                     answerMessagesArray.push(nerdamerLatexAnswer);
 

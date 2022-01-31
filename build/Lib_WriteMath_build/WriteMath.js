@@ -438,7 +438,7 @@ var MathLineInput = /** @class */ (function () {
                     var evaluatedLatexAnswer = this.formatNerdamerLatex(evaluatedAnswer.latex());
                     // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
                     // const approxAnswer: string = evaluatedAnswer.text('decimals', 50).replace(/\*/g, " \\cdot ")
-                    var approxAnswer = nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50));
+                    var approxAnswer = nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50), { decimals: true });
                     answerMessagesArray.push(nerdamerLatexAnswer);
                     // if evaluatedLatexAnswer is different from all messages already shown
                     if (answerMessagesArray.indexOf(evaluatedLatexAnswer) === -1) {
