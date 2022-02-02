@@ -464,6 +464,16 @@ S4MLObject
   / "\\prod_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^{" endValue:Expression "}\\left(" expression:Expression "\\right)" {
      return "product(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
   }
+  / "\\lim_{" varName:VarAtLargeIdentifier "\\rightarrow" limit:Expression "}\\left(" expression:Expression "\\right)" {
+     return "limit(" + expression + ", " + varName + ", " + limit +  ")";
+  }
+  / "\\lim_{" varName:VarAtLargeIdentifier "\\rightarrow" minusSign:("-")? "\\infty}\\left(" expression:Expression "\\right)" {
+     if (minusSign === null) {
+        minusSign = '';
+     }
+     
+     return "limit(" + expression + ", " + varName + ", " + minusSign + "Infinity)";
+  }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
       return deposedFuncName + "(" + expression + ")";
   }
@@ -890,7 +900,7 @@ SpecialLetter
  / "\\chi"
  / "\\Psi"
  / "\\psi"
- / "\\Omega"
+ / "\\Omega "
  / "\\omega") {
    return (str);
  }
