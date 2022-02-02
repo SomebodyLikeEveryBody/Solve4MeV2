@@ -474,6 +474,26 @@ S4MLObject
      
      return "limit(" + expression + ", " + varName + ", " + minusSign + "Infinity)";
   }
+  / "\\frac{\\text{d}_" expression:VarAtLargeIdentifier "^" level1:Integer "}{\\text{d}_" varName:VarAtLargeIdentifier "^" level2:Integer "}" {
+     if (!g_s4mCoreMemory.hasAVarNamed(expression)) {
+        throw {name: "Var Error", message: "Variable \"" + expression + "\" is undefined." }
+     }
+
+     if (parseInt(level1) === parseInt(level2)) {
+        return "diff(" + expression + ", " + varName + ", " + level1 +")"
+     } else {
+        throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
+     }
+  }
+  / "\\frac{\\text{d}}{\\text{d}_" varName:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
+     return "diff(" + expression + ", " + varName + ", 1)";
+  }
+  / "\\frac{\\text{d}_" expression:Expression "}{\\text{d}_" varName:VarAtLargeIdentifier "}" {
+     return "diff(" + expression + ", " + varName + ", 1)";
+  }
+  / "\\left(\\frac{\\text{d}}{\\text{d}_" varName:VarAtLargeIdentifier "}\\right)^" level:Integer "\\left(" expression:Expression "\\right)" {
+     return "diff(" + expression + ", " + varName + ", " + level + ")";
+  }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
       return deposedFuncName + "(" + expression + ")";
   }
@@ -908,6 +928,7 @@ SpecialLetter
 SpecialChar
  = "\\text{°}"
  / "\\text{°C}"
+ / "\\text{d}"
 
 /***********************************
  * MathBBLetter: R, Z, Q, etc
