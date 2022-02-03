@@ -152,6 +152,7 @@ div#output_container
     width: calc(50% - 1px);
     height: 100%;
     margin: 0px;
+    scrollbar-color: #e1f8ff transparent;
 }
 
 button#looper, button#looper:hover
@@ -670,7 +671,7 @@ div.answer_mathfield .mq-root-block {
     div#output_container
     {
         width: 100%;
-        height: 50%;   
+        height: 50%;
     }
 
     button#do_solve

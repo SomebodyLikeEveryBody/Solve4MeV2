@@ -467,12 +467,12 @@ S4MLObject
   / "\\lim_{" varName:VarAtLargeIdentifier "\\rightarrow" limit:Expression "}\\left(" expression:Expression "\\right)" {
      return "limit(" + expression + ", " + varName + ", " + limit +  ")";
   }
-  / "\\lim_{" varName:VarAtLargeIdentifier "\\rightarrow" minusSign:("-")? "\\infty}\\left(" expression:Expression "\\right)" {
-     if (minusSign === null) {
+  / "\\lim_{" varName:VarAtLargeIdentifier "\\rightarrow" sign:("+" / "-")? "\\infty}\\left(" expression:Expression "\\right)" {
+     if (sign === null) {
         minusSign = '';
      }
      
-     return "limit(" + expression + ", " + varName + ", " + minusSign + "Infinity)";
+     return "limit(" + expression + ", " + varName + ", " + sign + "Infinity)";
   }
   / "\\frac{\\text{d}_" expression:VarAtLargeIdentifier "^" level1:Integer "}{\\text{d}_" varName:VarAtLargeIdentifier "^" level2:Integer "}" {
      if (!g_s4mCoreMemory.hasAVarNamed(expression)) {
@@ -493,6 +493,21 @@ S4MLObject
   }
   / "\\left(\\frac{\\text{d}}{\\text{d}_" varName:VarAtLargeIdentifier "}\\right)^" level:Integer "\\left(" expression:Expression "\\right)" {
      return "diff(" + expression + ", " + varName + ", " + level + ")";
+  }
+  / "\\int_{ }^{ }\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
+     return "integrate(" + expression + ", " + varName + ")";
+  }
+  / "\\int_" down:(VarAtLargeIdentifier / Number) "^" up:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
+     return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
+  }
+  / "\\int_{" down:Expression "}^" up:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
+     return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
+  }
+  / "\\int_" down:(VarAtLargeIdentifier / Number) "^{" up:Expression "}\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
+     return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
+  }
+  / "\\int_{" down:Expression "}^{" up:Expression "}\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
+     return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
   }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
       return deposedFuncName + "(" + expression + ")";
@@ -523,6 +538,7 @@ DeposedFuncName
  / "\\sin" { return "sin" }
  / "\\operatorname{acosec}" { return "acsc" }
  / "\\operatorname{cosec}" { return "csc" }
+ / "\\operatorname{roots}" { return "roots" }
  / "\\sec" { return "sec" }
  / "\\operatorname{acos}" { return "acos" }
  / "\\cos" { return "cos" }
