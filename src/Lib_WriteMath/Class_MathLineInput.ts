@@ -432,6 +432,7 @@ class MathLineInput {
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\sum\\limits/g, "\\sum");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\prod\\limits/g, "\\prod");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\lim\\limits/g, "\\lim");
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\bmod/g, "%");
 
         return pNerdamerLatexStr;
     }
@@ -450,7 +451,7 @@ class MathLineInput {
 
             nerdamer.set('SOLUTIONS_AS_OBJECT', true);
 
-            // Display answer if nerdamer has a string output
+            // // Display answer if nerdamer has a string output
             if (parsedStr !== undefined && parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== '') {
                 let nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
@@ -458,7 +459,6 @@ class MathLineInput {
                     const evaluatedAnswer = nerdamerAnswer.evaluate();
                     const evaluatedLatexAnswer: string = this.formatNerdamerLatex(evaluatedAnswer.latex());
                     // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
-                    // const approxAnswer: string = evaluatedAnswer.text('decimals', 50).replace(/\*/g, " \\cdot ")
                     const approxAnswer: string = nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50), {decimals: true});
 
                     answerMessagesArray.push(nerdamerLatexAnswer);
