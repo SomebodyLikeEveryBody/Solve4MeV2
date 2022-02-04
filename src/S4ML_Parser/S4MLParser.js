@@ -487,7 +487,7 @@
         peg$c157 = peg$literalExpectation("\\infty}\\left(", false),
         peg$c158 = function(varName, sign, expression) {
              if (sign === null) {
-                minusSign = '';
+                sign = '';
              }
              
              return "limit(" + expression + ", " + varName + ", " + sign + "Infinity)";

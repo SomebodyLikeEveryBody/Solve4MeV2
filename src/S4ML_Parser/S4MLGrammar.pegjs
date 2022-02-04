@@ -469,7 +469,7 @@ S4MLObject
   }
   / "\\lim_{" varName:VarAtLargeIdentifier "\\rightarrow" sign:("+" / "-")? "\\infty}\\left(" expression:Expression "\\right)" {
      if (sign === null) {
-        minusSign = '';
+        sign = '';
      }
      
      return "limit(" + expression + ", " + varName + ", " + sign + "Infinity)";

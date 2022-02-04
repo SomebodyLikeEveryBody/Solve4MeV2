@@ -102,7 +102,7 @@ class OutputScreenAnswerMessage extends OutputScreenMessage {
                 newDiv.append($('<div class="answer_interrogation"></div>'));
                 first = false;
             } else {
-                newDiv.append($('<div class="answer_equal"></div>'));
+                newDiv.append($('<div class="answer_equal" title="Copy Latex message in clipboard"></div>').click(() => console.log('copy mathquill content into clipboard')));
             }
             
             newDiv.append($('<div class="answer_mathfield"></div>'));
@@ -215,7 +215,7 @@ class OutputScreen {
 
     protected setEvents(): OutputScreen {
         this._jQEl.mousedown((e: EventObject) => {
-            e.preventDefault();
+            // e.preventDefault();
         })
 
         return this;

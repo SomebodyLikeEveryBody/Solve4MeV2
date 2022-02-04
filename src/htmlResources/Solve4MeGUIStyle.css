@@ -130,6 +130,11 @@ body
     scrollbar-color: #4a8ba0 transparent;
 }
 
+div.answer_equal
+{
+    cursor: pointer;
+}
+
 #input_screen p
 {
     display: block;
