@@ -155,8 +155,17 @@ InOperator
  = "\\in"
 
 Equation
+ = EquationBracked
+ / EquationBasic
+
+EquationBasic
  = expr1:Expression operator:EqualOperator expr2:Expression {
     return expr1 + operator + expr2;
+ }
+
+EquationBracked
+ = _ "\\left(" equationBasic:EquationBasic "\\right)" _ {
+    return equationBasic;
  }
 
 /***********************************
@@ -316,7 +325,50 @@ S4MLObject
       return "atan2(" + xValue + "," + yValue +")" 
   }
   / "\\operatorname{solve}\\left(" _ varName: VarAtLargeIdentifier _ "," _ equation:Equation _ "\\right)" {
-      return "solve(" + equation + "," + varName + ")";
+      nerdamer.set('SOLUTIONS_AS_OBJECT', true);
+      const answersStr = [];
+      const answersArray = [];
+
+      const answersObjArray = nerdamer('solve(' + equation + ', ' + varName + ')').symbol.elements;
+
+      for (const answer of answersObjArray) {
+         answersStr.push(nerdamer(answer).toString());
+      }
+
+      answersArray.push('\\left[' + answersStr.map((exp) => nerdamer.convertToLaTeX(exp)).join('\\ \\ ,\\ \\ ') + '\\right]');
+      answersArray.push('\\left[' + answersStr.map((exp) => nerdamer.convertToLaTeX(nerdamer(exp).evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
+      answersArray.push('\\left[' + answersStr.map((exp) => nerdamer.convertToLaTeX(nerdamer(exp).evaluate().text('decimals', 50), {decimals: true})).join('\\ \\ ,\\ \\ ') + '\\right]');
+
+      displayMessageOnOutputScreen('\\text{solve}\\left(' + varName + ',\\ ' + nerdamer.convertToLaTeX(equation) + '\\right)', answersArray);
+
+      return '[Unprocess]';
+  }
+  / "\\operatorname{solve}\\left(\\left[" firstEquation:Equation _ followingEquations:("," Equation)* "\\right]\\right)" {
+
+      nerdamer.set('SOLUTIONS_AS_OBJECT', true);
+
+      let equationsArray = [firstEquation].concat(followingEquations.map((el) => el[1]));
+   
+      const answerObj = nerdamer('solveEquations([ ' + equationsArray.join(',') + '])');
+      const answersArray = [];
+      const varValuesArray = [];
+
+      //faut faire un objet genre Answers['x']=[v1, v2, v3], Answers['y'] = [v4, v5, v6], etc
+      //ou v1 v2 v3 c'est genre nerdamer(), evaluate et text()
+      //comme ca apres on les push dans l'array de reponse et on l'affiche
+      //je vais dodo bn
+
+      for (const varName in answerObj.symbol) {
+         varValuesArray.push(varName + ' = ' + answerObj.symbol[varName]);
+      }
+
+      answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el)).join('\\ \\ ,\\ \\ ') + '\\right]');
+      answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el.evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
+      answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el.evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
+
+      displayMessageOnOutputScreen('\\text{solve}\\left(\\left(' + equationsArray.map((el) => nerdamer.convertToLaTeX(el)).join('\\right)\\ \\ ,\\ \\ \\left(') + '\\right)\\right)', answersArray);
+
+      return '[Unprocess]';
   }
   / "\\operatorname{polarForm}\\left(" expression:Expression "\\right)" {
       return "polarform(" + expression + ")";
@@ -508,6 +560,15 @@ S4MLObject
   }
   / "\\int_{" down:Expression "}^{" up:Expression "}\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
      return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
+  }
+  / "\\operatorname{lcm}\\left(" v1:Expression "," v2:Expression "\\right)" {
+     return "lcm(" + v1 + "," + v2 + ")";
+  }
+  / "\\gcd\\left(" v1:Expression "," v2:Expression "\\right)" {
+     return "gcd(" + v1 + "," + v2 + ")";
+  }
+  / "\\deg\\left(" expression:Expression "\\right)" {
+     return "deg(" + expression +")";
   }
   / deposedFuncName:DeposedFuncName "\\left(" expression:Expression "\\right)" {
       return deposedFuncName + "(" + expression + ")";

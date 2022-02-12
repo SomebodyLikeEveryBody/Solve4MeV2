@@ -1,3 +1,42 @@
+09/02/2022:
+----------
+les objectifs sont:
+- faire le systeme qui permet d'avoir des variables au nom complexe, genre a_{\text{pouet}}, \\theta, etc
+- faire le systeme de copier losqu'on clique sur l'image égale de la zone de réponse
+- il faudrait corriger le bug de convertToLatex qui fait n'importe quoi avec les floor et ceil
+- il faudrait que quand on selectionne tout et qu'on fait ceil ou floor, ca encadre avec ceil ou floor plutot que de remplacer tout par le caractere
+- corriger le bug d'affichage de limit(x*sin(x), x, Infinity)
+
+- mean
+- median
+- mode
+
+
+remarque sur le fait de parser des variables dans une expression:
+on peut, dans une expression nerdamer, recuperer une liste des variables utilisées en faisant 
+let e = nerdamer('a-b^c')
+e.variables() ==> return ['a', 'b', 'c']
+
+on peut faire des assertions en utilisant les fonctions nerdamer
+eq
+lt
+gt
+lte
+gte
+
+et enfin, on peut definir des fonctions mathematiques en faisant
+nerdamer.setFunction('funcName', ['x', 'y', ..., 'z'], '')
+==> voir comment flush la memoire de ce genre de fonctions pour les open et les save
+==> ya pas les ensembles de définition ==> ca serait intéréssant de pouvoir déclarer des fonctions en precisant l'ensemble de départ et l'ensemble d'arrivée et que ca throw des erreurs si ca correspond pas aux domaines
+==> ca serait aussi intéressant que, sans precision des ensembles de départ et d'arrivée, ca considère direct que c'est les domaines de départ et d'arrivée de l'expression
+
+bien paramétrer nerdamer pour que les variables définies de base genre i, e, m kg etc soient correctement gérés, avec nerdamer.set()
+https://nerdamer.com/functions/nerdamer.set.html
+
+
+
+
+
 29/01/2022
 ----------
 

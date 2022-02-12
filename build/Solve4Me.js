@@ -488,7 +488,7 @@ var OutputScreenAnswerMessage = /** @class */ (function (_super) {
                 first = false;
             }
             else {
-                newDiv.append($('<div class="answer_equal" title="Copy Latex message in clipboard"></div>').click(function () { return console.log('copy mathquill content into clipboard'); }));
+                newDiv.append($('<div class="answer_equal" title="Copy Latex message in clipboard"></div>').click(function () { document.execCommand("copy"); console.log('copied'); }));
             }
             newDiv.append($('<div class="answer_mathfield"></div>'));
             newMathField = MathQuill.getInterface(2).StaticMath(newDiv.find('.answer_mathfield').get(0));

@@ -86,7 +86,7 @@ var MathLineInput = /** @class */ (function () {
         this._numberLine = 1;
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
-            autoOperatorNames: 'expand acosH asinH atanH asecH acosecH acotanH cosH sinH tanH secH cosecH cotanH acotan cotan atan tan asin sin acosec cosec asec sec acos cos Equation diff Vector Matrix Bool min max log ln solve factor polarForm cartForm arg min max abs simplify Shi Chi sign round fib CF line lim roots',
+            autoOperatorNames: 'expand acosH asinH atanH asecH acosecH acotanH cosH sinH tanH secH cosecH cotanH acotan cotan atan tan asin sin acosec cosec asec sec acos cos Equation diff Vector Matrix Bool min max log ln solve factor polarForm cartForm arg min max abs simplify Shi Chi sign round fib CF line lim roots lcm gcd deg',
             substituteTextarea: (function () {
                 var JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
                 return JQTextarea.get(0);
@@ -431,7 +431,7 @@ var MathLineInput = /** @class */ (function () {
             console.log('S4ML Question:-- ' + this.value());
             console.log('nerdamer instruction:-- ' + parsedStr);
             nerdamer.set('SOLUTIONS_AS_OBJECT', true);
-            // // Display answer if nerdamer has a string output
+            // Display answer if nerdamer has a string output
             if (parsedStr !== undefined && parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== '') {
                 var nerdamerAnswer = nerdamer(parsedStr);
                 if (nerdamerAnswer.toString() !== "undefined") {
