@@ -428,12 +428,17 @@ class MathLineInput {
         return this;
     }
 
+    protected formatVarAtLargeNameFromNerdamerToS4ML(pNerdamerVarName: string): string {
+        const retVarName: string = pNerdamerVarName.replace(/OPNCRL/g, '{').replace(/CLSCRL/g, '}').replace(/BCKSLSH/g, '\\').replace(/SPACE/g, ' ');
+        return retVarName;
+     }
+
     protected formatNerdamerLatex(pNerdamerLatexStr: string): string {
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/OPNCRL/g, '{').replace(/CLSCRL/g, '}').replace(/BCKSLSH/g, '\\').replace(/SPACE/g, ' ');
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\sum\\limits/g, "\\sum");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\prod\\limits/g, "\\prod");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\lim\\limits/g, "\\lim");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\bmod/g, "%");
-
         return pNerdamerLatexStr;
     }
 
@@ -453,13 +458,13 @@ class MathLineInput {
 
             // Display answer if nerdamer has a string output
             if (parsedStr !== undefined && parsedStr !== "[Unprocess]" && parsedStr.substring(0, 7) !== "[Print]" && parsedStr !== '') {
-                let nerdamerAnswer = nerdamer(parsedStr);
+                let nerdamerAnswer = nerdamer(parsedStr)
                 if (nerdamerAnswer.toString() !== "undefined") {
                     const nerdamerLatexAnswer = this.formatNerdamerLatex(nerdamerAnswer.latex());
                     const evaluatedAnswer = nerdamerAnswer.evaluate();
                     const evaluatedLatexAnswer: string = this.formatNerdamerLatex(evaluatedAnswer.latex());
                     // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
-                    const approxAnswer: string = nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50), {decimals: true});
+                    const approxAnswer: string = this.formatVarAtLargeNameFromNerdamerToS4ML(nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50), {decimals: true}));
 
                     answerMessagesArray.push(nerdamerLatexAnswer);
 

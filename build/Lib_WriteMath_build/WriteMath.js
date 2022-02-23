@@ -414,7 +414,12 @@ var MathLineInput = /** @class */ (function () {
         });
         return this;
     };
+    MathLineInput.prototype.formatVarAtLargeNameFromNerdamerToS4ML = function (pNerdamerVarName) {
+        var retVarName = pNerdamerVarName.replace(/OPNCRL/g, '{').replace(/CLSCRL/g, '}').replace(/BCKSLSH/g, '\\').replace(/SPACE/g, ' ');
+        return retVarName;
+    };
     MathLineInput.prototype.formatNerdamerLatex = function (pNerdamerLatexStr) {
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/OPNCRL/g, '{').replace(/CLSCRL/g, '}').replace(/BCKSLSH/g, '\\').replace(/SPACE/g, ' ');
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\sum\\limits/g, "\\sum");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\prod\\limits/g, "\\prod");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\lim\\limits/g, "\\lim");
@@ -439,7 +444,7 @@ var MathLineInput = /** @class */ (function () {
                     var evaluatedAnswer = nerdamerAnswer.evaluate();
                     var evaluatedLatexAnswer = this.formatNerdamerLatex(evaluatedAnswer.latex());
                     // const recurringNumericalAnswer: string = evaluatedAnswer.text('recurring');
-                    var approxAnswer = nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50), { decimals: true });
+                    var approxAnswer = this.formatVarAtLargeNameFromNerdamerToS4ML(nerdamer.convertToLaTeX(evaluatedAnswer.text('decimals', 50), { decimals: true }));
                     answerMessagesArray.push(nerdamerLatexAnswer);
                     // if evaluatedLatexAnswer is different from all messages already shown
                     if (answerMessagesArray.indexOf(evaluatedLatexAnswer) === -1) {
@@ -1071,7 +1076,7 @@ var ShortcutsManager = /** @class */ (function () {
             //ctrl + F ==> Function()
             case KeyCodes.F_KEY:
                 pEventObj.preventDefault();
-                this._managedMathLineInput.writeLatexAtCursorPosition('\\text{Function}\\left(_{}^{}\\right)');
+                this._managedMathLineInput.writeLatexAtCursorPosition('\\text{f}^{\\circ }\\left(_{}^{}\\right)');
                 this._managedMathLineInput.keyStroke('Left');
                 this._managedMathLineInput.keyStroke('Left');
                 break;

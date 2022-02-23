@@ -50,6 +50,17 @@
          g_outputScreen.displayAnswerMessage([pQuestion, ...pAnswers], options.processedMathLineInput);
       }
    }
+
+   function formatVarAtLargeNameFromS4MLToNerdamer(pS4MLVarName) {
+      const retVarName = pS4MLVarName.replace(/\{/g, 'OPNCRL').replace(/\}/g, 'CLSCRL').replace(/\\/g, 'BCKSLSH').replace(/ /g, 'SPACE');
+
+      return retVarName;
+   }
+
+   function formatVarAtLargeNameFromNerdamerToS4ML(pNerdamerVarName) {
+      const retVarName = pNerdamerVarName.replace(/OPNCRL/g, '{').replace(/CLSCRL/g, '}').replace(/BCKSLSH/g, '\\').replace(/SPACE/g, ' ');
+      return retVarName;
+   }
 }
 
 start
@@ -339,7 +350,7 @@ S4MLObject
       answersArray.push('\\left[' + answersStr.map((exp) => nerdamer.convertToLaTeX(nerdamer(exp).evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
       answersArray.push('\\left[' + answersStr.map((exp) => nerdamer.convertToLaTeX(nerdamer(exp).evaluate().text('decimals', 50), {decimals: true})).join('\\ \\ ,\\ \\ ') + '\\right]');
 
-      displayMessageOnOutputScreen('\\text{solve}\\left(' + varName + ',\\ ' + nerdamer.convertToLaTeX(equation) + '\\right)', answersArray);
+      displayMessageOnOutputScreen('\\text{solve}\\left(' + varName + '\\ \\ |\\\ \\ \\left(' + nerdamer.convertToLaTeX(equation) + '\\right)\\ \\right)', answersArray);
 
       return '[Unprocess]';
   }
@@ -356,15 +367,30 @@ S4MLObject
       //faut faire un objet genre Answers['x']=[v1, v2, v3], Answers['y'] = [v4, v5, v6], etc
       //ou v1 v2 v3 c'est genre nerdamer(), evaluate et text()
       //comme ca apres on les push dans l'array de reponse et on l'affiche
+      //test avec \operatorname{solve}\left(\left[x^2+y^2=42,\ \frac{x^2}{y}=7\right]\right)
       //je vais dodo bn
 
-      for (const varName in answerObj.symbol) {
-         varValuesArray.push(varName + ' = ' + answerObj.symbol[varName]);
-      }
+      // let tempObj = {}
+      // for (const varName in answerObj.symbol) {
+      //    tempObj[varName] = [answerObj.symbol[varName], nerdamer(answerObj.symbol[varName]).evaluate(), nerdamer(answerObj.symbol[varName]).evaluate().text('decimals', 50)];
+      //    varValuesArray.push(tempObj);
+      //    tempObj = {};
+      // }
 
-      answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el)).join('\\ \\ ,\\ \\ ') + '\\right]');
-      answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el.evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
-      answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el.evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
+      // const variablesArray = varValuesArray.map(obj => Object.keys(obj));
+      // const nerdamerAnswer = '\\left[';
+      // const evaluatedAnswer = '\\left[';
+      // const textAnswer = '\\left[';
+
+      // for (const varName of variablesArray) {
+      //    nerdamerAnswer += 'nerdamerAnswer'; 
+      //    evaluatedAnswer = 
+      // }
+
+      // answersArray.push('\\left[' + ().join(',') + '\\right]');
+      // answersArray.push('\\left[' + varValuesArray.map((obj) => nerdamer.convertToLaTeX(el)).join('\\ \\ ,\\ \\ ') + '\\right]');
+      // answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el.evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
+      // answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el.evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
 
       displayMessageOnOutputScreen('\\text{solve}\\left(\\left(' + equationsArray.map((el) => nerdamer.convertToLaTeX(el)).join('\\right)\\ \\ ,\\ \\ \\left(') + '\\right)\\right)', answersArray);
 
@@ -707,6 +733,8 @@ FunctionInstanciation
        instruction: functionVarDef.instruction
     };
 
+   // nerdamer.setFunction(, functionVarDef.varName, functionVarDef.instruction)
+
    return (funcObj);
  }
 
@@ -803,7 +831,7 @@ VarAtLargeIdentifier
  / SpecialChar
  / Constant
  / VarIdentifier) {
-    return (varName);
+    return (formatVarAtLargeNameFromS4MLToNerdamer(varName));
  }
 
 /***********************************
@@ -870,14 +898,6 @@ VectorIdentifier
  * */
 VarIdentifier
  = mainId:(Letter / MathBBLetter / SpecialLetter) indexes:IdentifierIndex? {
-      // let retArray = [mainId];
-
-      // if (index !== null) {
-      //    retArray = retArray.concat(index);
-      // }
-
-      // return retArray.join('UNDERSCORE');
-
       let indexesStr = '';
       if (indexes !== null) {
          indexes.reverse();
