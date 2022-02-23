@@ -52,7 +52,7 @@
    }
 
    function formatVarAtLargeNameFromS4MLToNerdamer(pS4MLVarName) {
-      const retVarName = pS4MLVarName.replace(/\{/g, 'OPNCRL').replace(/\}/g, 'CLSCRL').replace(/\\/g, 'BCKSLSH').replace(/ /g, 'SPACE');
+      const retVarName = pS4MLVarName.replace(/\{/g, 'OPNCRL').replace(/\}/g, 'CLSCRL').replace(/\\/g, 'BCKSLSH').replace(/ /g, 'SPACE').replace(/BCKSLSHpi/, 'pi');
 
       return retVarName;
    }

@@ -213,7 +213,7 @@ var S4MCoreMemory = /** @class */ (function () {
             varValue: '',
             processedVarValue: new MathObj(),
         });
-        this._varNameCorrespondanceTable.addExplicitNerdamerCorrespondanceOf('\\pi', 'pi');
+        this._varNameCorrespondanceTable.addExplicitNerdamerCorrespondanceOf('BCKSLSHpi', 'pi');
         return this;
     };
     S4MCoreMemory.prototype.getLastMathLineInputFocusedOut = function () {
