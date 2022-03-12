@@ -359,10 +359,12 @@ S4MLObject
       nerdamer.set('SOLUTIONS_AS_OBJECT', true);
 
       let equationsArray = [firstEquation].concat(followingEquations.map((el) => el[1]));
+      console.log(equationsArray.join(','));
    
       const answerObj = nerdamer('solveEquations([ ' + equationsArray.join(',') + '])');
-      const answersArray = [];
-      const varValuesArray = [];
+      console.log(answerObj.symbol);
+      // const answersArray = [];
+      // const varValuesArray = [];
 
       //faut faire un objet genre Answers['x']=[v1, v2, v3], Answers['y'] = [v4, v5, v6], etc
       //ou v1 v2 v3 c'est genre nerdamer(), evaluate et text()
@@ -392,9 +394,11 @@ S4MLObject
       // answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el.evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
       // answersArray.push('\\left[' + varValuesArray.map((el) => nerdamer.convertToLaTeX(el.evaluate().toString())).join('\\ \\ ,\\ \\ ') + '\\right]');
 
-      displayMessageOnOutputScreen('\\text{solve}\\left(\\left(' + equationsArray.map((el) => nerdamer.convertToLaTeX(el)).join('\\right)\\ \\ ,\\ \\ \\left(') + '\\right)\\right)', answersArray);
+      // displayMessageOnOutputScreen('\\text{solve}\\left(\\left(' + equationsArray.map((el) => nerdamer.convertToLaTeX(el)).join('\\right)\\ \\ ,\\ \\ \\left(') + '\\right)\\right)', answersArray);
 
       return '[Unprocess]';
+
+      // return "solveEquations([" + equationsArray.join(',') + "])"
   }
   / "\\operatorname{polarForm}\\left(" expression:Expression "\\right)" {
       return "polarform(" + expression + ")";
@@ -526,6 +530,12 @@ S4MLObject
       }
       
       return "[Unprocess]";
+  }
+  / "\\operatorname{PF}\\left(" expression:Expression "\\right)" {
+     return "partfrac(" + expression +")";
+  }
+  / "\\operatorname{PF}\\left(" expression:Expression "," varName:VarAtLargeIdentifier "\\right)" {
+     return "partfrac(" + expression +", " + varName +")";
   }
   / "\\operatorname{line}\\left(\\left(" x1:Expression "," y1:Expression "\\right),\\left(" x2:Expression "," y2:Expression "\\right)\\right)" {
       return "line([" + x1 + "," + y1 + "], [" + x2 + "," + y2 + "])";
@@ -1017,7 +1027,7 @@ SpecialLetter
  / "\\chi"
  / "\\Psi"
  / "\\psi"
- / "\\Omega "
+ / "\\Omega"
  / "\\omega") {
    return (str);
  }

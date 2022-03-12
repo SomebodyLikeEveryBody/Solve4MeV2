@@ -51,7 +51,7 @@ class MathLineInput {
 
         this._mathField = MathQuill.getInterface(2).MathField(this._jQEl.get(0), {
             autoCommands: 'implies infinity lor land neg union notin forall nabla Angstrom alpha beta gamma Gamma delta Delta zeta eta theta Theta iota kappa lambda Lambda mu nu pi Pi rho sigma Sigma tau phi Phi chi psi Psi omega Omega',
-            autoOperatorNames: 'expand acosH asinH atanH asecH acosecH acotanH cosH sinH tanH secH cosecH cotanH acotan cotan atan tan asin sin acosec cosec asec sec acos cos Equation diff Vector Matrix Bool min max log ln solve factor polarForm cartForm arg min max abs simplify Shi Chi sign round fib CF line lim roots lcm gcd deg',
+            autoOperatorNames: 'expand acosH asinH atanH asecH acosecH acotanH cosH sinH tanH secH cosecH cotanH acotan cotan atan tan asin sin acosec cosec asec sec acos cos Equation diff Vector Matrix Bool min max log ln solve factor polarForm cartForm arg min max abs simplify Shi Chi sign round fib CF PF line lim roots lcm gcd deg',
             substituteTextarea: (() => {
                 const JQTextarea = $('<textarea autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" x-palm-disable-ste-all="true" inputmode="none"></textarea>');
                 
@@ -439,6 +439,10 @@ class MathLineInput {
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\prod\\limits/g, "\\prod");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\lim\\limits/g, "\\lim");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\bmod/g, "%");
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\left \\lfloor\{/g, "\\lfloor ");
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\}\\right \\rfloor/g, " \\rfloor ");
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\left \\lceil\{/g, "\\lceil ");
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\}\\right \\rceil/g, " \\rceil ");
         return pNerdamerLatexStr;
     }
 
