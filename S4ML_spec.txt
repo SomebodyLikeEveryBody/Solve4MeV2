@@ -1,3 +1,11 @@
+15/03/2022:
+----------
+okay pour les variables au nom compliqué
+- corriger le systeme où ca derive par rapport a une variable avec le d droit, plutot utiliser la notion de differentielle
+- faire le systeme de copier losqu'on clique sur l'image égale de la zone de réponse
+- il faudrait que quand on selectionne tout et qu'on fait ceil ou floor, ca encadre avec ceil ou floor plutot que de remplacer tout par le caractere
+- 
+
 09/02/2022:
 ----------
 les objectifs sont:

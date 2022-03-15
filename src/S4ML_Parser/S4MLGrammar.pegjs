@@ -644,23 +644,27 @@ S4MLObject
   / "\\operatorname{line}\\left(\\left(" x1:Expression "," y1:Expression "\\right),\\left(" x2:Expression "," y2:Expression "\\right)\\right)" {
       return "line([" + x1 + "," + y1 + "], [" + x2 + "," + y2 + "])";
   }
-  // sum frmo a to b of (expression)
+  // sum from a to b of (expression)
   / "\\sum_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^" endValue:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)" {
      return "sum(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
   }
-  // 
+  // sum from a to b of (expression)
   / "\\sum_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^{" endValue:Expression "}\\left(" expression:Expression "\\right)" {
      return "sum(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
   }
+  // product from a to b of (expression)
   / "\\prod_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^" endValue:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)" {
      return "product(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
   }
+  // product from a to b of (expression)
   / "\\prod_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^{" endValue:Expression "}\\left(" expression:Expression "\\right)" {
      return "product(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
   }
+  // lim for x tends to a of (expression)
   / "\\lim_{" varName:VarAtLargeIdentifier "\\rightarrow" limit:Expression "}\\left(" expression:Expression "\\right)" {
      return "limit(" + expression + ", " + varName + ", " + limit +  ")";
   }
+  // lim for x tends to a of (expression)
   / "\\lim_{" varName:VarAtLargeIdentifier "\\rightarrow" sign:("+" / "-")? "\\infty}\\left(" expression:Expression "\\right)" {
      if (sign === null) {
         sign = '';

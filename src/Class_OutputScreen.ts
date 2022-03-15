@@ -152,10 +152,9 @@ class OutputScreenPrintLatexMessage extends OutputScreenMessage {
         let secondDiv = $('<div class="answer_body_container"></div>');
             secondDiv.append($('<div class="print_image"></div>'));
             secondDiv.append($('<div class="latex_printed" title="Open the image in a new tab"><img src="https://latex.codecogs.com/gif.latex?' +  encodedLatexUrl + '" /></div>'));
-            // secondDiv.append($('<div class="latex_printed" title="Open the image in a new tab"><img src="https://timodenk.com/api/tex2img/' +  encodedLatexUrl + '?format=svg" /></div>'));
             console.log(secondDiv.find('.latex_printed img'));
             secondDiv.find('.latex_printed').click(() => {
-                window.open('https://timodenk.com/api/tex2img/' +  encodedLatexUrl + '?format=svg');
+                window.open('https://latex.codecogs.com/gif.latex?' +  encodedLatexUrl);
             });
 
 

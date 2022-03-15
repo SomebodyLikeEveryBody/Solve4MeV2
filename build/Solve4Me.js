@@ -526,10 +526,9 @@ var OutputScreenPrintLatexMessage = /** @class */ (function (_super) {
         var secondDiv = $('<div class="answer_body_container"></div>');
         secondDiv.append($('<div class="print_image"></div>'));
         secondDiv.append($('<div class="latex_printed" title="Open the image in a new tab"><img src="https://latex.codecogs.com/gif.latex?' + encodedLatexUrl + '" /></div>'));
-        // secondDiv.append($('<div class="latex_printed" title="Open the image in a new tab"><img src="https://timodenk.com/api/tex2img/' +  encodedLatexUrl + '?format=svg" /></div>'));
         console.log(secondDiv.find('.latex_printed img'));
         secondDiv.find('.latex_printed').click(function () {
-            window.open('https://timodenk.com/api/tex2img/' + encodedLatexUrl + '?format=svg');
+            window.open('https://latex.codecogs.com/gif.latex?' + encodedLatexUrl);
         });
         _this._jQEl.find('.message_body').append(secondDiv);
         _this._jQEl.find('.message_body').append($('<hr class="answer_message_separator" />'));
