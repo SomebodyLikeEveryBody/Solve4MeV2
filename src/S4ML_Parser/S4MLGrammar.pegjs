@@ -323,18 +323,92 @@ S4MLObject
  
 
  DeposedKeyword
+  // sqrt(x)
   = "\\sqrt{" expression:Expression "}" {
       return "sqrt(" + expression + ")";   
   }
+  // partial (d/dx) (3x^2)
+  / "\\left(\\frac{\\partial" _ "}{\\partial" _ "" varRef:VarAtLargeIdentifier "}\\right)\\left(" expression:Expression "\\right)" {
+      return "diff(" + expression + ", " + varRef + ", 1)";
+      return "42";
+  }
+  // partial d/dx (3x^2)
+  / "\\frac{\\partial" _ "}{\\partial" _ varRef:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
+      return "diff(" + expression + ", " + varRef + ", 1)";
+  }
+  // partial df/dx
+  / "\\frac{\\partial" _ varNameTop:VarAtLargeIdentifier "}{\\partial" _ varNameBottom:VarAtLargeIdentifier "}" {
+      return "diff(" + varNameTop + ", " + varNameBottom + ", 1)";
+  }
+  // partial d^nf/d^nx
+  / "\\frac{\\partial" _ "^" topLevel:Integer "" _ "" varTopName:VarAtLargeIdentifier "}{\\partial" _ "^" bottomLevel:Integer ""_ varBottomName:VarAtLargeIdentifier "}" {
+      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
+         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
+      }
+     
+      return "diff(" + varTopName + ", " + varBottomName + ", " + topLevel + ")";
+  }
+  // partial d^{n}f/d^{n}x
+  / "\\frac{\\partial" _ "^{" topLevel:Integer "}" varTopName:VarAtLargeIdentifier "}{\\partial" _ "^{" bottomLevel:Integer "}" varBottomName:VarAtLargeIdentifier "}" {
+      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
+         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
+      }
+     
+      return "diff(" + varTopName + ", " + varBottomName + ", " + topLevel + ")";
+  }
+  // partial (d/dx)^n (f)
+  / "\\left(\\frac{\\partial" _ "}{\\partial" _ "" varBottomName:VarAtLargeIdentifier "}\\right)^" level:Integer "\\left(" varTopName:VarAtLargeIdentifier "\\right)" {
+      return "diff(" + varTopName + ", " + varBottomName + ", " + level + ")";
+  }
+  // partial (d/dx)^{n} (f)
+  / "\\left(\\frac{\\partial" _ "}{\\partial" _ "" varBottomName:VarAtLargeIdentifier "}\\right)^{" level:Integer "}\\left(" varTopName:VarAtLargeIdentifier "\\right)" {
+      return "diff(" + varTopName + ", " + varBottomName + ", " + level + ")";
+  }
+  // partial d^n/d^nx (f)
+  / "\\frac{\\partial" _ "^" topLevel:Integer "}{\\partial" _ "^" bottomLevel:Integer "" varRef:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
+      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
+         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
+      }
+
+      return "diff(" + expression + ", " + varRef + ", " + topLevel + ")";
+  }
+  // partial d^{n}/d^{n}x (f)
+  / "\\frac{\\partial" _ "^{" topLevel:Integer "}}{\\partial" _ "^{" bottomLevel:Integer "}" varRef:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
+      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
+         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
+      }
+
+      return "diff(" + expression + ", " + varRef + ", " + topLevel + ")";
+  }
+  // partial (d^n/d^nx) (f)
+  / "\\left(\\frac{\\partial" _ "^" topLevel:Integer "}{\\partial" _ "^" bottomLevel:Integer "" varRef:VarAtLargeIdentifier "}\\right)\\left(" expression:Expression "\\right)" {
+      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
+         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
+      }
+
+      return "diff(" + expression + ", " + varRef + ", " + topLevel + ")";
+  }
+  // partial (d^{n}/d^{n}x) (f)
+  / "\\left(\\frac{\\partial" _ "^{" topLevel:Integer "}}{\\partial" _ "^{" bottomLevel:Integer "}" varRef:VarAtLargeIdentifier "}\\right)\\left(" expression:Expression "\\right)" {
+      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
+         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
+      }
+
+      return "diff(" + expression + ", " + varRef + ", " + topLevel + ")";
+  }
+  // log_n(x)
   / "\\log_" base:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)" {
       return "log(" + expression+ ")/log(" + base + ")";
   }
+  // log_{n}(x)
   / "\\log_{" base:(VarAtLargeIdentifier / Number) "}\\left(" expression:Expression "\\right)" {
       return "log(" + expression+ ")/log(" + base + ")";
   }
+  // atan_2(x, y)
   / "\\operatorname{atan}_2\\left(" _ xValue:Expression _ "," _ yValue:Expression _ "\\right)" {
       return "atan2(" + xValue + "," + yValue +")" 
   }
+  // solve(x, 3x=42)
   / "\\operatorname{solve}\\left(" _ varName: VarAtLargeIdentifier _ "," _ equation:Equation _ "\\right)" {
       nerdamer.set('SOLUTIONS_AS_OBJECT', true);
       const answersStr = [];
@@ -354,6 +428,7 @@ S4MLObject
 
       return '[Unprocess]';
   }
+  // solve([x+y=42, y=6])
   / "\\operatorname{solve}\\left(\\left[" firstEquation:Equation _ followingEquations:("," Equation)* "\\right]\\right)" {
 
       nerdamer.set('SOLUTIONS_AS_OBJECT', true);
@@ -400,84 +475,109 @@ S4MLObject
 
       // return "solveEquations([" + equationsArray.join(',') + "])"
   }
+  // polarForm(a+ib)
   / "\\operatorname{polarForm}\\left(" expression:Expression "\\right)" {
       return "polarform(" + expression + ")";
   }
+  // cartForm(Ke^ib)
   / "\\operatorname{cartForm}\\left(" expression:Expression "\\right)" {
       return "rectform(" + expression + ")";
   }
-  / "\\operatorname{expand}\\left(" expression:Expression "\\right)" {
+  // expand((x+y)^2)
+  / "\\operatorname{expand}" _ "\\left(" expression:Expression "\\right)" {
       return "expand(" + expression + ")";
   }
-  / "\\operatorname{expand}" "\\ "? expression:Expression {
+  // expand (x+y)^2
+  / "\\operatorname{expand}" _ expression:Expression {
       return "expand(" + expression + ")";
   }
+  // Re(a+ib)
   / "\\Re\\left(" expression:Expression "\\right)" {
       return "realpart(" + expression + ")";
   }
+  // Im(a+ib)
   / "\\Im\\left(" expression:Expression "\\right)" {
       return "imagpart(" + expression + ")";
   }
+  // min(a, b, c, d)
   / "\\min\\left(" firstExpression:Expression followingExpressionsCapture:("," Expression)* "\\right)" {
      const followingExpressions = followingExpressionsCapture.map(array => array[1]);
      const args = [firstExpression].concat(followingExpressions);
 
       return "min(" + args.join(',') + ")";
   }
+  // max(a, b, c, d)
   / "\\max\\left(" firstExpression:Expression followingExpressionsCapture:("," Expression)* "\\right)" {
      const followingExpressions = followingExpressionsCapture.map(array => array[1]);
      const args = [firstExpression].concat(followingExpressions);
 
       return "max(" + args.join(',') + ")";
   }
+  // |x|
   / "\\left|" expression:Expression "\\right|" {
       return "abs(" + expression + ")";
   }
+  // floor expression
   / "\\lfloor" " "? expression:Expression "\\rfloor" {
       return "floor(" + expression + ")";
   }
+  // ceil expression
   / "\\lceil" " "? expression:Expression "\\rceil" {
       return "ceil(" + expression + ")";
   }
+  // simplify ((x^2+3x-4)/(x^3+6x-42))
   / "\\operatorname{simplify}\\left(" expression:Expression "\\right)" {
       return "simplify(" + expression + ")";
   }
+  // Si(x), hyperbolic sinus
   / "\\text{Si}\\left(" expression:Expression "\\right)" {
       return ('Si(' + expression + ')');
   }
+  // Ci(x), hyperbolic cosinus
   / "\\text{Ci}\\left(" expression:Expression "\\right)" {
       return ('Ci(' + expression + ')');
   }
+  // Ei(x), exponential hyperbolic
   / "\\text{Ei}\\left(" expression:Expression "\\right)" {
       return ('Ei(' + expression + ')');
   }
+  // rect(x), rectangular function
   / "\\text{rect}\\left(" expression:Expression "\\right)" {
       return ('rect(' + expression + ')');
   }
+  // rect(x), rectangular function
   / "\\Pi\\left(" expression:Expression "\\right)" {
       return ('rect(' + expression + ')');
   }
+  // step(x), step function
   / "\\text{step}\\left(" expression:Expression "\\right)" {
       return ('step(' + expression + ')');
   }
+  // erf(x), erf function
   / "\\text{erf}\\left(" expression:Expression "\\right)" {
       return ('erf(' + expression + ')');
   }
+  // factor(x^2+3x+1)
   / "\\operatorname{factor}\\left(" number:Float "\\right)" {
       return "pfactor(" + number + ")";
   }
+  // n!
   / value:(Integer / VarAtLargeIdentifier) "!" {
       return "fact(" + value + ")";
   }
+  // sign(-3)
   / "\\operatorname{sign}\\left(" expression:Expression"\\right)" {
       return "sign(" + expression + ")";
   }
+  // round(3.14)
   / "\\operatorname{round}\\left(" expression:Expression"\\right)" {
       return "round(" + expression + ")";
   }
+  // fib(32), Fibonacci function
   / "\\operatorname{fib}\\left(" number:Integer "\\right)" {
       return "fib(" + number + ")";
   }
+  // CF(3.14), continuous function
   / "\\operatorname{CF}\\left(" expression:Expression "," _ "raw" _ "\\right)" {
 
       const answer = nerdamer('continued_fraction(' + expression + ')').toString();
@@ -492,6 +592,7 @@ S4MLObject
       displayMessageOnOutputScreen('\\text{CF}\\left(' + expression + ',\\ raw\\right)', [retStr]);
       return '[Unprocess]';
   }
+  // CF(3.14), continuous function
   / "\\operatorname{CF}\\left(" expression:Expression "\\right)" {
       // take the result of nerdamer instruction, like [1, 3, [4, 5, 6, 7]], and display 3+1/(4+1/(5+1/(6+1/(7))))
       const question = 'continued_fraction(' + expression + ')';
@@ -531,18 +632,23 @@ S4MLObject
       
       return "[Unprocess]";
   }
+  // PF(x^2+3x+4), partial fraction
   / "\\operatorname{PF}\\left(" expression:Expression "\\right)" {
      return "partfrac(" + expression +")";
   }
+  // PF(x^2+3x+4), partial fraction
   / "\\operatorname{PF}\\left(" expression:Expression "," varName:VarAtLargeIdentifier "\\right)" {
      return "partfrac(" + expression +", " + varName +")";
   }
+  // line((a, b), (x, y))
   / "\\operatorname{line}\\left(\\left(" x1:Expression "," y1:Expression "\\right),\\left(" x2:Expression "," y2:Expression "\\right)\\right)" {
       return "line([" + x1 + "," + y1 + "], [" + x2 + "," + y2 + "])";
   }
+  // sum frmo a to b of (expression)
   / "\\sum_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^" endValue:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)" {
      return "sum(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
   }
+  // 
   / "\\sum_{" counter:VarAtLargeIdentifier "=" startValue:Expression "}^{" endValue:Expression "}\\left(" expression:Expression "\\right)" {
      return "sum(" + expression + ", " + counter + ", " + startValue + ", " + endValue + ")";
   }
@@ -573,7 +679,8 @@ S4MLObject
         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
      }
   }
-  / "\\frac{\\text{d}}{\\text{d}_" varName:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
+
+  / "\\frac{\\text{d}}{\\text{d}" varName:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
      return "diff(" + expression + ", " + varName + ", 1)";
   }
   / "\\frac{\\text{d}_" expression:Expression "}{\\text{d}_" varName:VarAtLargeIdentifier "}" {
@@ -1057,6 +1164,7 @@ Constant
     let forbiddensStr = [
        "Let",
        "Given",
+       "d",
     ];
 
     if (forbiddensStr.includes(str)) {
@@ -1065,6 +1173,7 @@ Constant
          message: "Using a forbidden keyword for naming a constant."
       };
     }
+
     return str;
  }
 
