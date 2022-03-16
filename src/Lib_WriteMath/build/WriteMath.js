@@ -428,6 +428,8 @@ var MathLineInput = /** @class */ (function () {
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\}\\right \\rfloor/g, " \\rfloor ");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\left \\lceil\{/g, "\\lceil ");
         pNerdamerLatexStr = pNerdamerLatexStr.replace(/\}\\right \\rceil/g, " \\rceil ");
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\mathrm\{sin\}/g, " \\operatorname{sin}");
+        pNerdamerLatexStr = pNerdamerLatexStr.replace(/\\int\\limits/g, " \\int");
         return pNerdamerLatexStr;
     };
     MathLineInput.prototype.processContent = function () {

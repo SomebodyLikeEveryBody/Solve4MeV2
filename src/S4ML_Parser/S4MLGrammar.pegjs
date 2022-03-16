@@ -672,48 +672,26 @@ S4MLObject
      
      return "limit(" + expression + ", " + varName + ", " + sign + "Infinity)";
   }
-  / "\\frac{\\text{d}_" expression:VarAtLargeIdentifier "^" level1:Integer "}{\\text{d}_" varName:VarAtLargeIdentifier "^" level2:Integer "}" {
-     if (!g_s4mCoreMemory.hasAVarNamed(expression)) {
-        throw {name: "Var Error", message: "Variable \"" + expression + "\" is undefined." }
-     }
-
-     if (parseInt(level1) === parseInt(level2)) {
-        return "diff(" + expression + ", " + varName + ", " + level1 +")"
-     } else {
-        throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
-     }
-  }
-
-  / "\\frac{\\text{d}}{\\text{d}" varName:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
-     return "diff(" + expression + ", " + varName + ", 1)";
-  }
-  / "\\frac{\\text{d}_" expression:Expression "}{\\text{d}_" varName:VarAtLargeIdentifier "}" {
-     return "diff(" + expression + ", " + varName + ", 1)";
-  }
-  / "\\left(\\frac{\\text{d}}{\\text{d}_" varName:VarAtLargeIdentifier "}\\right)^" level:Integer "\\left(" expression:Expression "\\right)" {
-     return "diff(" + expression + ", " + varName + ", " + level + ")";
-  }
-  / "\\int_{ }^{ }\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
+  // undefined integral of expression by x
+  / "\\int" _ "_{" _ "}^{" _ "}" _ "\\left(" expression:Expression "\\right)\\text{d}" varName:VarAtLargeIdentifier {
      return "integrate(" + expression + ", " + varName + ")";
   }
-  / "\\int_" down:(VarAtLargeIdentifier / Number) "^" up:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
+  / "\\int" _ "_{" _ "}^{" _ "}" _ "\\left(" expression:Expression "\\right)\\text{d}{" varName:VarAtLargeIdentifier "}" {
+     return "integrate(" + expression + ", " + varName + ")";
+  }
+  // defined integral of expression between a and b by x
+  / "\\int" _ "_" "{"? down:Expression "}"? "^" "{"? up:Expression "}"? "\\left(" expression:Expression "\\right)\\text{d}" "{"? varName:VarAtLargeIdentifier "}"? {
      return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
   }
-  / "\\int_{" down:Expression "}^" up:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
-     return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
-  }
-  / "\\int_" down:(VarAtLargeIdentifier / Number) "^{" up:Expression "}\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
-     return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
-  }
-  / "\\int_{" down:Expression "}^{" up:Expression "}\\left(" expression:Expression "\\right)\\text{d}_" "{"? varName:VarAtLargeIdentifier "}"? {
-     return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
-  }
+  // lcm(a, b)
   / "\\operatorname{lcm}\\left(" v1:Expression "," v2:Expression "\\right)" {
      return "lcm(" + v1 + "," + v2 + ")";
   }
+  // gcd(a, b)
   / "\\gcd\\left(" v1:Expression "," v2:Expression "\\right)" {
      return "gcd(" + v1 + "," + v2 + ")";
   }
+  // deg(x^2+3x)
   / "\\deg\\left(" expression:Expression "\\right)" {
      return "deg(" + expression +")";
   }
