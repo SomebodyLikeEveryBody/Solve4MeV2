@@ -1,3 +1,10 @@
+03/14/2022:
+----------
+--> il faut qu'on modifie le parser pour qu'on puisse avoir des variables genre \vec{\text{AB}}
+    en gros, c'est pas forcément des lettres mais ca peut etre direct du texte, soyons ouverts
+
+
+
 15/03/2022:
 ----------
 okay pour les variables au nom compliqué
