@@ -36,7 +36,7 @@
 /* S4MLGrammar.pegjs *
  ********************/
 
-{
+{  
    let currentlyParsing = false;
 
    function displayMessageOnOutputScreen(pQuestion, pAnswers) {
@@ -327,75 +327,35 @@ S4MLObject
   = "\\sqrt{" expression:Expression "}" {
       return "sqrt(" + expression + ")";   
   }
-  // partial (d/dx) (3x^2)
-  / "\\left(\\frac{\\partial" _ "}{\\partial" _ "" varRef:VarAtLargeIdentifier "}\\right)\\left(" expression:Expression "\\right)" {
-      return "diff(" + expression + ", " + varRef + ", 1)";
-      return "42";
-  }
-  // partial d/dx (3x^2)
-  / "\\frac{\\partial" _ "}{\\partial" _ varRef:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
+  // *****************************************************************************************
+  // partial (d_x) (3x^2)
+  / "\\partial" _ "_" varRef:VarAtLargeIdentifier "\\left(" expression:Expression "\\right)" {
       return "diff(" + expression + ", " + varRef + ", 1)";
   }
-  // partial df/dx
-  / "\\frac{\\partial" _ varNameTop:VarAtLargeIdentifier "}{\\partial" _ varNameBottom:VarAtLargeIdentifier "}" {
-      return "diff(" + varNameTop + ", " + varNameBottom + ", 1)";
+  // partial (d_{x}) (3x^2)
+  / "\\partial" _ "_{" varRef:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
+      return "diff(" + expression + ", " + varRef + ", 1)";
   }
-  // partial d^nf/d^nx
-  / "\\frac{\\partial" _ "^" topLevel:Integer "" _ "" varTopName:VarAtLargeIdentifier "}{\\partial" _ "^" bottomLevel:Integer ""_ varBottomName:VarAtLargeIdentifier "}" {
-      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
-         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
-      }
-     
-      return "diff(" + varTopName + ", " + varBottomName + ", " + topLevel + ")";
+  // partial (d_x^n) (3x^2)
+  / "\\partial" _ "_" varRef:VarAtLargeIdentifier "^" level:Integer "\\left(" expression:Expression "\\right)" {
+      return "diff(" + expression + ", " + varRef + ", " + level + ")";
   }
-  // partial d^{n}f/d^{n}x
-  / "\\frac{\\partial" _ "^{" topLevel:Integer "}" varTopName:VarAtLargeIdentifier "}{\\partial" _ "^{" bottomLevel:Integer "}" varBottomName:VarAtLargeIdentifier "}" {
-      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
-         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
-      }
-     
-      return "diff(" + varTopName + ", " + varBottomName + ", " + topLevel + ")";
+  // partial (d_{x}^n) (3x^2)
+  / "\\partial" _ "_{" varRef:VarAtLargeIdentifier "}^" level:Integer "\\left(" expression:Expression "\\right)" {
+      return "diff(" + expression + ", " + varRef + ", " + level + ")";
   }
-  // partial (d/dx)^n (f)
-  / "\\left(\\frac{\\partial" _ "}{\\partial" _ "" varBottomName:VarAtLargeIdentifier "}\\right)^" level:Integer "\\left(" varTopName:VarAtLargeIdentifier "\\right)" {
-      return "diff(" + varTopName + ", " + varBottomName + ", " + level + ")";
+  // partial (d_x^{n}) (3x^2)
+  / "\\partial" _ "_" varRef:VarAtLargeIdentifier "^{" level:Integer "}\\left(" expression:Expression "\\right)" {
+      //return "diff(" + expression + ", " + varRef + ", " + level + ")";
+      return '42';
   }
-  // partial (d/dx)^{n} (f)
-  / "\\left(\\frac{\\partial" _ "}{\\partial" _ "" varBottomName:VarAtLargeIdentifier "}\\right)^{" level:Integer "}\\left(" varTopName:VarAtLargeIdentifier "\\right)" {
-      return "diff(" + varTopName + ", " + varBottomName + ", " + level + ")";
+  // partial (d_{x}^{n}) (3x^2)
+  / "\\partial" _ "_{" varRef:VarAtLargeIdentifier "}^{" level:Integer "}\\left(" expression:Expression "\\right)" {
+      return "diff(" + expression + ", " + varRef + ", " + level + ")";
   }
-  // partial d^n/d^nx (f)
-  / "\\frac{\\partial" _ "^" topLevel:Integer "}{\\partial" _ "^" bottomLevel:Integer "" varRef:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
-      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
-         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
-      }
+  // *****************************************************************************************
+  
 
-      return "diff(" + expression + ", " + varRef + ", " + topLevel + ")";
-  }
-  // partial d^{n}/d^{n}x (f)
-  / "\\frac{\\partial" _ "^{" topLevel:Integer "}}{\\partial" _ "^{" bottomLevel:Integer "}" varRef:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
-      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
-         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
-      }
-
-      return "diff(" + expression + ", " + varRef + ", " + topLevel + ")";
-  }
-  // partial (d^n/d^nx) (f)
-  / "\\left(\\frac{\\partial" _ "^" topLevel:Integer "}{\\partial" _ "^" bottomLevel:Integer "" varRef:VarAtLargeIdentifier "}\\right)\\left(" expression:Expression "\\right)" {
-      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
-         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
-      }
-
-      return "diff(" + expression + ", " + varRef + ", " + topLevel + ")";
-  }
-  // partial (d^{n}/d^{n}x) (f)
-  / "\\left(\\frac{\\partial" _ "^{" topLevel:Integer "}}{\\partial" _ "^{" bottomLevel:Integer "}" varRef:VarAtLargeIdentifier "}\\right)\\left(" expression:Expression "\\right)" {
-      if (parseInt(topLevel) !== parseInt(bottomLevel)) {
-         throw {name: "Syntax Error", message: "You need to put the same degree of derivation up and down. The syntax you used is not managed yet..." }
-      }
-
-      return "diff(" + expression + ", " + varRef + ", " + topLevel + ")";
-  }
   // log_n(x)
   / "\\log_" base:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)" {
       return "log(" + expression+ ")/log(" + base + ")";
