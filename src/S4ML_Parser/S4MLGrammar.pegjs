@@ -327,7 +327,7 @@ S4MLObject
   = "\\sqrt{" expression:Expression "}" {
       return "sqrt(" + expression + ")";   
   }
-  // *****************************************************************************************
+  // **********************************[DERIVATION]****************************************
   // partial (d_x) (3x^2)
   / "\\partial" _ "_" varRef:VarAtLargeIdentifier "\\left(" expression:Expression "\\right)" {
       return "diff(" + expression + ", " + varRef + ", 1)";
@@ -355,6 +355,17 @@ S4MLObject
   }
   // *****************************************************************************************
   
+  // **********************************[PRIMITIVATION]****************************************
+  //  \varrho _x(3x)
+  / "\\varrho" _ "_" varRef:VarAtLargeIdentifier "\\left(" expression:Expression "\\right)" {
+      return "integrate(" + expression + ", " + varRef + ")";
+  }
+  // varrho _{x}) (3x^2)
+  / "\\varrho" _ "_{" varRef:VarAtLargeIdentifier "}\\left(" expression:Expression "\\right)" {
+      return "integrate(" + expression + ", " + varRef + ")";
+  }
+  // *****************************************************************************************
+
 
   // log_n(x)
   / "\\log_" base:(VarAtLargeIdentifier / Number) "\\left(" expression:Expression "\\right)" {
@@ -639,8 +650,14 @@ S4MLObject
   / "\\int" _ "_{" _ "}^{" _ "}" _ "\\left(" expression:Expression "\\right)\\text{d}{" varName:VarAtLargeIdentifier "}" {
      return "integrate(" + expression + ", " + varName + ")";
   }
-  // defined integral of expression between a and b by x
-  / "\\int" _ "_" "{"? down:Expression "}"? "^" "{"? up:Expression "}"? "\\left(" expression:Expression "\\right)\\text{d}" "{"? varName:VarAtLargeIdentifier "}"? {
+  // defined integral of expression between a and b numbers by x
+  / "\\int" _ "_" down:Number "^" up:Number "\\left(" expression:Expression "\\right)\\text{d}" "{"? varName:VarAtLargeIdentifier "}"? {
+  
+     return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
+  }
+  // "\\int" _ "_" "{"? down:Expression "}"? "^" "{"? up:Expression "}"? "\\left(" expression:Expression "\\right)\\text{d}" "{"? varName:VarAtLargeIdentifier "}"? {
+  / "\\int" _ "_" down:Expression "^" up:Expression "\\left(" expression:Expression "\\right)\\text{d}" "{"? varName:VarAtLargeIdentifier "}"? {
+  
      return "defint(" + expression + ", " + down+ ", " + up + ", " + varName +")";
   }
   // lcm(a, b)
