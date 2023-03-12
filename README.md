@@ -1,13 +1,10 @@
 <h1 align="center">
   <img src="https://raw.githubusercontent.com/SomebodyLikeEveryBody/Solve4Me/a1594a04d73b211939985aca1dd6f1413d38a4db/logo.svg" alt="Solve4Me" title="Solve4Me" height="200px">
-  <br>
 </h1>
 
-# Solve4Me
+&rarr; Try the [Beta here](https://somebodylikeeverybody.github.io/Solve4MeV2/build/index.htm)
 
-Try the [Beta here](https://somebodylikeeverybody.github.io/Solve4MeV2/build/index.htm)
-
-## Purpose
+## Solve4Me's Purpose
 
 Solve4Me is supposed to become / be a powerful mathematical calculator, with 3 specificities:
 1) All its operation is completely front-end, no server calls are needed and it can run in a browser with a simple drag and drop via the file protocol. The calculation core is done with the [Nerdamer project](https://github.com/jiggzson/nerdamer).
