@@ -1,4 +1,9 @@
-# Solve4MeV2
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/SomebodyLikeEveryBody/Solve4Me/a1594a04d73b211939985aca1dd6f1413d38a4db/logo.svg" alt="Solve4Me" title="Solve4Me" height="200px">
+  <br>
+</h1>
+
+# Solve4Me
 
 Try the [Beta here](https://somebodylikeeverybody.github.io/Solve4MeV2/build/index.htm)
 
