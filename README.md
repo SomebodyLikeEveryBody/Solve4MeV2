@@ -9,7 +9,11 @@
 Solve4Me is supposed to become / be a powerful mathematical calculator, with 3 specificities:
 1) All its operation is completely front-end, no server calls are needed and it can run in a browser with a simple drag and drop via the file protocol. The calculation core is done with the [Nerdamer project](https://github.com/jiggzson/nerdamer).
 
+![0](https://somebodylikeeverybody.github.io/Solve4MeV2/ReadMeFiles/0.png)
+
 2) Unlike other calculation tools, such as SageMath for example which is a remarkable tool, here the entry of the calculation is done directly in mathematical language as it would be written on paper (with management of exponents, indices, Greek letters and other mathematical symbols), via the [MathQuill project](https://github.com/mathquill/mathquill). It means that the mathematical formulas you write is managed in LateX in the background. The output is also formatted to be read as if we read the answer on a paper sheet. The output share the same behaviour.
+
+![1](https://somebodylikeeverybody.github.io/Solve4MeV2/ReadMeFiles/1.png)
 
 3) You can save and open your page with ```Ctrl + S``` and ```Ctrl + O``` shortcuts to work on it later.
 
