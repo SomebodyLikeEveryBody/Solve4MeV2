@@ -20,7 +20,7 @@ Solve4Me is supposed to become / be a powerful mathematical calculator, with 3 s
 
 3) You can save and open your page with ```Ctrl + S``` and ```Ctrl + O``` shortcuts to work on it later.
 
-![4](https://somebodylikeeverybody.github.io/Solve4MeV2/ReadMeFiles/4.png)
+![save](https://somebodylikeeverybody.github.io/Solve4MeV2/ReadMeFiles/4.png)
 
 ## How to use - Basis
 
