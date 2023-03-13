@@ -4,6 +4,8 @@
 
 &rarr; Try the [Beta here](https://somebodylikeeverybody.github.io/Solve4MeV2/build/index.htm)
 
+![Intro](https://somebodylikeeverybody.github.io/Solve4MeV2/ReadMeFiles/introFull.png)
+
 ## What is Solve4Me ?
 
 Solve4Me is supposed to become / be a powerful mathematical calculator, with 3 specificities:
