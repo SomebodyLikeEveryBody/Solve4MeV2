@@ -4,7 +4,7 @@
 
 &rarr; Try the [Beta here](https://somebodylikeeverybody.github.io/Solve4MeV2/build/index.htm)
 
-## Solve4Me's Purpose
+## What is Solve4Me ?
 
 Solve4Me is supposed to become / be a powerful mathematical calculator, with 3 specificities:
 1) All its operation is completely front-end, no server calls are needed and it can run in a browser with a simple drag and drop via the file protocol. The calculation core is done with the [Nerdamer project](https://github.com/jiggzson/nerdamer).
