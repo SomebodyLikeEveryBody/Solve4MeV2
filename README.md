@@ -24,11 +24,11 @@ Solve4Me is supposed to become / be a powerful mathematical calculator, with 3 s
 
 ## How to use - Basis
 
-Incoming
+Incoming...
 
 ## How to use - Operators
 
-Incoming
+Incoming...
 
 ## Example of what you can write
 
