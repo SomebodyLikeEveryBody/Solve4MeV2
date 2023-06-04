@@ -1082,7 +1082,7 @@ var ShortcutsManager = /** @class */ (function () {
             //ctrl + F ==> Function()
             case KeyCodes.F_KEY:
                 pEventObj.preventDefault();
-                this._managedMathLineInput.writeLatexAtCursorPosition('\\text{f}^{\\circ }\\left(_{}^{}\\right)');
+                this._managedMathLineInput.writeLatexAtCursorPosition('\\digamma^{\\circ }\\left(_{}^{}\\right)');
                 this._managedMathLineInput.keyStroke('Left');
                 this._managedMathLineInput.keyStroke('Left');
                 break;
