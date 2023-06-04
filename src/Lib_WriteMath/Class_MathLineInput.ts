@@ -448,13 +448,30 @@ class MathLineInput {
         return pNerdamerLatexStr;
     }
 
+    public isNoProcessSetInURL(): Boolean {
+        
+        let retBool: boolean = false;
+
+        window.location.href.replace( location.hash, '' ).replace( /[?&]+([^=&]+)=?([^&]*)?/gi, ( m: string, key: string, value:string ) : string => {
+            if ( key === "noProcess" && value === "true")
+            retBool = true;
+
+            return '';
+       });
+
+       return retBool;
+        
+    }
+
     public processContent(): MathLineInput {
         g_s4mCoreMemory.unstoreErroredMathLineInput(this);
         g_outputScreen.removeMessagesOf(this);
         
         try {
             const S4MLQuestion = this.value()
-            const parsedStr = S4MLParser.parse(S4MLQuestion, {processedMathLineInput: this});
+
+            // No processing if $_GET['noProcess']
+            const parsedStr = (this.isNoProcessSetInURL() === true ? '[Unprocess]' : S4MLParser.parse(S4MLQuestion, {processedMathLineInput: this}));
             const answerMessagesArray: string[] = [S4MLQuestion.replace(/\\operatorname/g, "\\text")];
 
             console.log('S4ML Question:-- ' + this.value());
