@@ -509,8 +509,8 @@ class MathLineInput {
                     g_outputScreen.displayAnswerMessage(answerMessagesArray, this);
                     console.log(answerMessagesArray);
                 }
-            } else if (parsedStr.substring(0, 7) == "[Print]") {
-                let latexStr = parsedStr.substring("[Print]".length, parsedStr.length);
+            } else if ((parsedStr.substring(0, 7) == "[Print]") || (S4MLQuestion.substring(0,12) === "\\text{Print}")) {
+                const latexStr = this.isNoProcessSetInURL() ? S4MLQuestion.substring("\\text{Print}\\ ".length, S4MLQuestion.length) :parsedStr.substring("[Print]".length, parsedStr.length);
                 
                 answerMessagesArray.push(latexStr);
                 g_outputScreen.displayPrintLatexMessage(answerMessagesArray , this);
